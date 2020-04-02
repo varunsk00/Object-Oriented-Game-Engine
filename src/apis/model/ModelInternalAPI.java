@@ -5,7 +5,7 @@ import ooga.model.actions.Action;
 public interface ModelInternalAPI {
 
   /**
-   * Within the ooga.model.actions package,
+   * Called
    * @return
    */
   Action getCurrentAction();
