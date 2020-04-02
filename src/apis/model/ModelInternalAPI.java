@@ -2,10 +2,10 @@ package apis.model;
 
 import ooga.model.actions.Action;
 
-public interface ModelInternal {
+public interface ModelInternalAPI {
 
   /**
-   * Within
+   * Within the ooga.model.actions package,
    * @return
    */
   Action getCurrentAction();
