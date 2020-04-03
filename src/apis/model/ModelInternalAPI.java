@@ -2,6 +2,11 @@ package apis.model;
 
 import ooga.model.actions.Action;
 
+/**
+ * Internal API for the model. Illustrates how different classes within the model communicate to each other.
+ * Each method represents how information is processed and passed between classes in
+ * the model.
+ */
 public interface ModelInternalAPI {
 
   /**

@@ -1,7 +1,8 @@
 package apis.model;
 
 /**
- * External API for the model. Handles the 
+ * External API for the model. Mediates how other components (view, controller)
+ * communicate and send information to the model.
  */
 public interface ModelExternalAPI {
 
