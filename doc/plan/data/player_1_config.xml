@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<data media="sim">
+<Player>
+  <Name>Mario</Name>
+  <Movement>
+    <Forward>D</Forward>
+    <Backward>A</Backward>
+    <Up>W</Up>
+    <Down>S</Down>
+  </Movement>
+  <Actions>
+    <Smash>
+      <Animation>smash.gif</Animation>
+      <Damage>50</Damage>
+      <Duration>5</Duration>
+    </Smash>
+    <Spring>
+      <Speed>10</Speed>
+      <Duration>3</Duration>
+    </Spring>
+  </Actions>
+</Player>
+</data>

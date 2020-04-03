@@ -1,0 +1,18 @@
+Use Case 4: The User goes Home from a current game by pressing “H”
+
+1. KeyBinds class receives the keyboard input of “H” from the ModelController using
+the implemented sendUserData() method.
+    within ModelController:
+
+    sendUserData() {
+        return data;
+    }
+
+2. The GameLibrary class’s goHome() method is invoked within the MainController class.
+3. The MainController tells the ViewController to switch scenes to display the GameSelect screen
+ over the game. This will happen by calling the implemented setUpGameView() (with input
+ parameter as the default screen) to display the Game Select screen over the game.
+
+    within MainController:
+
+    myViewController.setUpGameView(GameCabinet.sendGame);

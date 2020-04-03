@@ -1,0 +1,24 @@
+Use Case 2: The User selects a Game from the Game Select Screen
+
+1. The GameCabinet class passes the currently selected game (as a String) into the
+Model and View Controller classes (called ModelController and ViewController).
+
+    within GameCabinet:
+
+    sendGame(String selectedGame) {
+        return selectedGame;
+    }
+
+2. Then, the MainController will call the method
+ setUpGameModel() from the ModelController class (that extends the ModelExternalAPI) to set up the back end side.
+
+    within MainController:
+
+    myModelController.setUpGameModel(GameCabinet.sendGame);
+
+3. The ViewController calls the method setUpViewModel from the ViewController class (that implements the ViewExternalAPI)
+to set up the front end
+
+    within MainController:
+
+    myViewController.setUpGameView(GameCabinet.sendGame);

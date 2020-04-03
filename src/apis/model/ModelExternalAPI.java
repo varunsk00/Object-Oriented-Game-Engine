@@ -11,4 +11,15 @@ public interface ModelExternalAPI {
    * Called in parallel with view.
    */
   void addEntity();
+
+  /**
+   * Sets up the back end side of the game
+   * @param gameSelect : game selected
+   */
+  void setUpGameModel(String gameSelect);
+
+  /**
+   * Sends user data from the front end to back end
+   */
+  String sendUserData();
 }
