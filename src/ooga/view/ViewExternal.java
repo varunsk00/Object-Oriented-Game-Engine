@@ -23,4 +23,14 @@ public class ViewExternal implements ViewExternalAPI {
   public void updateEntity(int id, String newValue) {
 
   }
+
+  @Override
+  public void setUpGameView(String gameSelect) {
+
+  }
+
+  @Override
+  public void checkCollisions() {
+
+  }
 }
