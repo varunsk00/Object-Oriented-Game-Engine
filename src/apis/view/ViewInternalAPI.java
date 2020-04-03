@@ -13,6 +13,4 @@ public interface ViewInternalAPI {
    * @param newy - the new y position to move to
    */
   void update(double newx, double newy);
-
-
 }

@@ -1,0 +1,8 @@
+Use Case 1
+Move the Player to the right using the “D” key.
+
+
+
+KeyBinds class receives the keyboard input of “D”
+Based on an XML file that associates key input of “D” with a specific Action (for example ForwardAction), the Entity class creates a map from KeyPresses (String) to Action objects.
+Entity.java calls a method of KeyBinds within its updateEntity() method that returns the currently pressed key bind as an Action object and executes the change to the model accordingly.
