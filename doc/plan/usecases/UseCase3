@@ -1,0 +1,21 @@
+Use Case 3: The User selects 2-Players in the Game’s title screen
+
+1. The ModelController class instantiates two Avatar objects using the Player API method called createPlayer().
+
+    within ModelController:
+
+    this.createPlayer();
+
+2. The second Avatar object is instantiated with the Player2.xml file to have the appropriate keybinds, again using the
+createPlayer() method.
+
+  within Player implementation classes:
+
+   void createPlayer(String type) {
+        ResourceBundle playerBundle = ResourceBundle.getBundle("final_team15.doc.data.Mario");
+        this.ID = playerBundle.getString("ID");
+        this.height = playerBundle.getString("Height");
+        /**
+        * Read rest of data file
+        */
+   }

@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<data media="sim">
+  <Game>FlappyBird</Game>
+  <Lives>3</Lives>
+  <Level>
+    <BlockType>Brick</BlockType>>
+    <NumBlocks>20</NumBlocks>
+    <Background>sky.png</Background>
+  </Level>
+</data>

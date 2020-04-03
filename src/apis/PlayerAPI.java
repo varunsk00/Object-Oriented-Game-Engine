@@ -9,4 +9,10 @@ public interface PlayerAPI {
    * @param filename the filepath where the game data and rules are stored
    */
   void loadGame(String filename);
+
+  /**
+   * Creates a Player object based on the type of player (that would be specified in an XML file)
+   * @param type
+   */
+  void createPlayer(String type);
 }

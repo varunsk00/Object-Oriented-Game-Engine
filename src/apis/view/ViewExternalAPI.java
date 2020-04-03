@@ -41,4 +41,10 @@ public interface ViewExternalAPI {
    * @param newValue - the new value for the entity
    */
   void updateEntity(int id, String newValue);
+
+  /**
+   * Sets up the front end side of the game
+   * @param gameSelect : game selected
+   */
+  void setUpGameView(String gameSelect);
 }
