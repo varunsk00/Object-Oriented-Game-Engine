@@ -1,24 +1,14 @@
 package apis;
 
+import javax.swing.text.html.parser.Entity;
+
 public interface DataAPI {
 
   /**
-   *
-   * @param filepath
+   * Creates an entity of the specified type and returns it for
+   * the Game Engine to use in its game.
+   * @param entityName - the name of the entity to be created corresponding
+   *                   to the name in the game data properties files
    */
-  void loadProperties(String filepath);
-
-  /**
-   * Saves the current game state into an XML
-   * file. ALlows the user to quit and load a
-   * different name.
-   */
-  void saveState();
-
-  /**
-   * Loads a new game state based on an XML
-   * file. Constructs a working game engine
-   * and
-   */
-  void loadState();
+  Entity createEntity(String entityName);
 }
