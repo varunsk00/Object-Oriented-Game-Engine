@@ -5,7 +5,6 @@ The avatar is supported by a block beneath it
 Within Entity.java
 
 public void update(){
-  Controller.checkCollisions();
   while(actionStack.size() != 0){
     actionStack.remove().execute(this);
   }
@@ -16,14 +15,21 @@ public void collide(Entity e){
   actionStack.add(collisionMap.get(e.getType));
 }
 
-Within Controller.java
+Within ViewController.java
 
 public checkCollisions(){
   for(Entity e : EntityList){\
     for(Entity j : EntityList){
       if(!j.equals(e) && j.isOverLapping(e)){
-        j.collide(e);
+        modelController.collide(e, j)
       }
     }
   }
+}
+
+Within ModelController.java
+
+public collide(Entity e, Entity j){
+  e.collide(j);
+  j.collide(e);
 }

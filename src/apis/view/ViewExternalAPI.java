@@ -1,5 +1,7 @@
 package apis.view;
 
+import javax.swing.text.html.parser.Entity;
+
 /**
  * This interface represents the External API for the view section of the
  * project. These methods can be called by the model to change the state
@@ -47,4 +49,10 @@ public interface ViewExternalAPI {
    * @param gameSelect : game selected
    */
   void setUpGameView(String gameSelect);
+
+  /**
+   * Iterates through all Entities and checks if their renderings are
+   * colliding on screen.
+   */
+  void checkCollisions();
 }
