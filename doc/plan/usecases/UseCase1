@@ -1,8 +1,24 @@
 Use Case 1
 Move the Player to the right using the “D” key.
 
+Within Keybinds.java:
+
+Map<String, Action> keyBinds;
+Action currentAction;
+
+private void setCurrentInput(KeyboardEventHandler e){
+  currentAction = gameBinds.get(e.getCharacter());
+}
 
 
-KeyBinds class receives the keyboard input of “D”
-Based on an XML file that associates key input of “D” with a specific Action (for example ForwardAction), the Entity class creates a map from KeyPresses (String) to Action objects.
-Entity.java calls a method of KeyBinds within its updateEntity() method that returns the currently pressed key bind as an Action object and executes the change to the model accordingly.
+public Action getCurrentAction(){
+  return currentAction;
+}
+
+Within Entity.java
+
+public void update(){
+  ActionStack.add(myControlScheme.getCurrentAction());
+  ActionStack.remove().execute(this);
+  EntityView.update(this.getX(), this.getY());
+}

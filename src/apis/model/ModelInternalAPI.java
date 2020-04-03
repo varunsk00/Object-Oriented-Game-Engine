@@ -1,5 +1,6 @@
 package apis.model;
 
+import javax.swing.text.html.parser.Entity;
 import ooga.model.actions.Action;
 
 /**
@@ -15,4 +16,9 @@ public interface ModelInternalAPI {
    * @return an Action object specifying how the entity should act
    */
   Action getCurrentAction();
+
+  /**
+   * Called by an entity to execute
+   */
+  void execute(Entity e);
 }

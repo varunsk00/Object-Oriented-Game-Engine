@@ -1,0 +1,29 @@
+Use Case 5
+The avatar is supported by a block beneath it
+
+
+Within Entity.java
+
+public void update(){
+  Controller.checkCollisions();
+  while(actionStack.size() != 0){
+    actionStack.remove().execute(this);
+  }
+  EntityView.update(this.getX(), this.getY());
+}
+
+public void collide(Entity e){
+  actionStack.add(collisionMap.get(e.getType));
+}
+
+Within Controller.java
+
+public checkCollisions(){
+  for(Entity e : EntityList){\
+    for(Entity j : EntityList){
+      if(!j.equals(e) && j.isOverLapping(e)){
+        j.collide(e);
+      }
+    }
+  }
+}
