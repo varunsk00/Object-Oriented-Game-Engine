@@ -1,10 +1,14 @@
 package ooga.model.controlschemes;
 
 import java.util.Map;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
 
 public class Keybindings extends ControlScheme {
   private Map<String, Action> keyBinds;
+  private Scene keyChecker;
 
   public Keybindings(){
 
@@ -14,12 +18,13 @@ public class Keybindings extends ControlScheme {
     keyBinds = bindings;
   }
 
-  private void setCurrentInput(KeyboardEventHandler e){
-    currentAction = keyBinds.get(e.getCharacter());
+  @Override
+  public Action getCurrentAction() {
+    return currentAction;
   }
 
   @Override
-  public Action getCurrentAction() {
-    return null;
+  public void handleKeyInput(KeyEvent keyEvent) {
+    currentAction = keyBinds.get(keyEvent.getText());
   }
 }
