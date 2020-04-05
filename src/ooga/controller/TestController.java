@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javax.swing.text.html.parser.Entity;
@@ -19,14 +20,17 @@ public class TestController {
   private Pane testPane;
   private Group EntityList;
 
+  private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
+  private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
+
   private double xVelocity = 0;
   private double yVelocity = 0;
-  private double gravity = 20;
+  private double gravity = 100;
   private boolean isGrounded;
 
 
@@ -36,6 +40,7 @@ public class TestController {
     EntityList = new Group();
     testPane.getChildren().add(EntityList);
     EntityList.getChildren().add(testRectangle);
+    EntityList.getChildren().add(testGround);
 
     testScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
@@ -50,7 +55,9 @@ public class TestController {
   }
 
   private void step (double elapsedTime) {
-    if(testRectangle.getY() < 100) {
+    testRectangle.setX(testRectangle.getX() + xVelocity * elapsedTime * 1);
+    testRectangle.setY(testRectangle.getY() + yVelocity * elapsedTime * 1);
+    if(testRectangle.getY() < groundY - testRectangle.getHeight()) {
       yVelocity += gravity * elapsedTime;
     }
     else{
@@ -59,9 +66,8 @@ public class TestController {
     if (isGrounded){
       System.out.println(yVelocity);
       yVelocity = 0;
+      testRectangle.setY(groundY - testRectangle.getHeight());
     }
-    testRectangle.setX(testRectangle.getX() + xVelocity * elapsedTime * 1);
-    testRectangle.setY(testRectangle.getY() + yVelocity * elapsedTime * 1);
 
     /* potential update code for Entity
     for (EntityWrapper currentEntity : EntityList) {
@@ -79,12 +85,12 @@ public class TestController {
 
   private void handleKeyInput (KeyCode code) {
     if (code == KeyCode.SPACE && isGrounded) {
+      yVelocity = -200;
       isGrounded = false;
-      yVelocity = -100;
     } else if (code == KeyCode.D) {
-      xVelocity = 20;
+      xVelocity = 100;
     } else if (code == KeyCode.A) {
-      xVelocity = -20;
+      xVelocity = -100;
     }
   }
 
