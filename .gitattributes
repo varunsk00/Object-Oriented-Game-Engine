@@ -13,7 +13,7 @@
 *.jsp           text
 *.jspf          text
 *.jspx          text
-*.properties    text
+*.resources.properties    text
 *.sh            text
 *.tld           text
 *.txt           text

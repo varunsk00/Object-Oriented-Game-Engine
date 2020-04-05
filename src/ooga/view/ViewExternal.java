@@ -1,6 +1,6 @@
 package ooga.view;
 
-import apis.view.ViewExternalAPI;
+import ooga.apis.view.ViewExternalAPI;
 
 public class ViewExternal implements ViewExternalAPI {
 
@@ -21,6 +21,16 @@ public class ViewExternal implements ViewExternalAPI {
 
   @Override
   public void updateEntity(int id, String newValue) {
+
+  }
+
+  @Override
+  public void setUpGameView(String gameSelect) {
+
+  }
+
+  @Override
+  public void checkCollisions() {
 
   }
 }
