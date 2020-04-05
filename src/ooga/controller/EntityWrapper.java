@@ -8,6 +8,8 @@ public class EntityWrapper {
   private EntityView myView;
 
   public EntityWrapper(){
+    myModel = new EntityModel();
+    myView = new EntityView();
   }
 
   public void update(){
