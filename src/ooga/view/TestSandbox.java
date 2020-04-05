@@ -3,6 +3,7 @@ package ooga.view;
 import java.awt.Dimension;
 import java.util.ResourceBundle;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -16,14 +17,17 @@ import ooga.controller.TestController;
 
 public class TestSandbox {
 
-  //TODO: This is a TestSandbox for beginning testing purposes -- taken from Frank's Slogo program, so feel free to change
+  //TODO: This is a TestSandbox for beginning testing purposes -- taken from Frank's Slogo program, so feel free to change because this is really bad code
+
 
 
   private static final int SCENE_WIDTH = 1000;
   private static final int SCENE_HEIGHT = 600;
   private Scene myScene;
   private Pane myBackgroundPane;
+  private Group group;
   private TestController testController;
+
 
   public TestSandbox(Stage stage) {
     initModel();
@@ -43,7 +47,7 @@ public class TestSandbox {
   }
 
   private void initController(){
-    testController = new TestController(myScene);
+    testController = new TestController(myBackgroundPane, myScene);
   }
 
   private void initStage(Stage primaryStage) {
