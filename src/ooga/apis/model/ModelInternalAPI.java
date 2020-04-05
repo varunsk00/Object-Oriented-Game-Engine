@@ -1,4 +1,4 @@
-package apis.model;
+package ooga.apis.model;
 
 import javax.swing.text.html.parser.Entity;
 import ooga.model.actions.Action;

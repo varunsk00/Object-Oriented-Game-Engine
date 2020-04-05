@@ -30,5 +30,5 @@ public interface ModelExternalAPI {
    * @param e - one of the Entities colliding
    * @param j - the other Entity colliding
    */
-  void collide(Entity e, Entity j);
+  void collide(EntityWrapper e, EntityWrapper j);
 }

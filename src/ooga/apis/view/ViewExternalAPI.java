@@ -1,4 +1,4 @@
-package apis.view;
+package ooga.apis.view;
 
 import javax.swing.text.html.parser.Entity;
 

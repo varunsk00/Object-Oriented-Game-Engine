@@ -1,5 +1,7 @@
 package ooga.model.actions;
 
+import ooga.model.EntityModel;
+
 public class Move extends Action{
     private double XVel;
     private double YVel;
@@ -8,8 +10,8 @@ public class Move extends Action{
         this.YVel = yvel;
     }
     @Override
-    public void execute() {
-        //EntityModel.setXVel(XVel);
-        //EntityModel.setYVel(YVel);
+    public void execute(EntityModel entityModel) {
+//        entityModel.setXVel(XVel);
+//        entityModel.setYVel(YVel);
     }
 }

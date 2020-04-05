@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entity>
+  <Info>
+    <Image>sampleSprite</Image>
+    <XPos>100</XPos>
+    <YPos>100</YPos>
+  </Info>
+  <Controls>
+    <Scheme name="Keybindings"/>
+    <Control id="w" action="move" param="10"></Control>
+    <Control id="s" action="move" param="-10"></Control>
+  </Controls>
+  <Collisions>
+
+  </Collisions>
+</Entity>
