@@ -31,7 +31,11 @@ public class TestController {
   private double xVelocity = 0;
   private double yVelocity = 0;
   private double gravity = 100;
+  private double friction = 40;
+  private double xAcceleration = 0;
   private boolean isGrounded;
+  private boolean keyPressed;
+
 
 
   public TestController(Pane pane, Scene testScene){
@@ -42,7 +46,8 @@ public class TestController {
     EntityList.getChildren().add(testRectangle);
     EntityList.getChildren().add(testGround);
 
-    testScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+    testScene.setOnKeyPressed(e -> handlePressInput(e.getCode()));
+    testScene.setOnKeyReleased(e -> handleReleaseInput(e.getCode()));
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
     //TODO: Timeline Code -- don't remove
@@ -57,17 +62,8 @@ public class TestController {
   private void step (double elapsedTime) {
     testRectangle.setX(testRectangle.getX() + xVelocity * elapsedTime * 1);
     testRectangle.setY(testRectangle.getY() + yVelocity * elapsedTime * 1);
-    if(testRectangle.getY() < groundY - testRectangle.getHeight()) {
-      yVelocity += gravity * elapsedTime;
-    }
-    else{
-      isGrounded = true;
-    }
-    if (isGrounded){
-      System.out.println(yVelocity);
-      yVelocity = 0;
-      testRectangle.setY(groundY - testRectangle.getHeight());
-    }
+    applyGravity(elapsedTime);
+    applyAcceleration(elapsedTime);
 
     /* potential update code for Entity
     for (EntityWrapper currentEntity : EntityList) {
@@ -82,15 +78,46 @@ public class TestController {
     }
      */
   }
+  private void applyGravity(double elapsedTime){
+    if(testRectangle.getY() < groundY - testRectangle.getHeight()) {
+      yVelocity += gravity * elapsedTime;
+    }
+    else{
+      isGrounded = true;
+    }
+    if (isGrounded){
+      yVelocity = 0;
+      testRectangle.setY(groundY - testRectangle.getHeight());
+    }
+  }
 
-  private void handleKeyInput (KeyCode code) {
+  private void applyAcceleration(double elapsedTime){
+    if(Math.abs(xVelocity) < 100) {
+      xVelocity += xAcceleration * elapsedTime;
+    }
+    if(Math.abs(xVelocity) > 0) {
+      xVelocity += -Math.signum(xVelocity) * friction * elapsedTime;
+    }
+    System.out.println(xVelocity);
+  }
+
+  private void handlePressInput (KeyCode code) {
+    if (code == KeyCode.D) {
+      xAcceleration = 75;
+      keyPressed = true;
+    } else if (code == KeyCode.A) {
+      xAcceleration = -75;
+      keyPressed = true;
+    }
+
     if (code == KeyCode.SPACE && isGrounded) {
       yVelocity = -200;
       isGrounded = false;
-    } else if (code == KeyCode.D) {
-      xVelocity = 100;
-    } else if (code == KeyCode.A) {
-      xVelocity = -100;
+    }
+  }
+  private void handleReleaseInput (KeyCode code) {
+    if (code == KeyCode.D || code == KeyCode.A) {
+      xAcceleration = 0;
     }
   }
 
