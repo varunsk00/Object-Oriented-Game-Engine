@@ -1,6 +1,7 @@
-package apis.model;
+package ooga.apis.model;
 
 import javax.swing.text.html.parser.Entity;
+import ooga.controller.EntityWrapper;
 
 /**
  * External API for the model. Mediates how other components (view, controller)
@@ -30,5 +31,5 @@ public interface ModelExternalAPI {
    * @param e - one of the Entities colliding
    * @param j - the other Entity colliding
    */
-  void collide(Entity e, Entity j);
+  void collide(EntityWrapper e, EntityWrapper j);
 }
