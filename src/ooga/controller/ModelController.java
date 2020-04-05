@@ -1,6 +1,6 @@
 package ooga.controller;
 
-import apis.model.ModelExternalAPI;
+import ooga.apis.model.ModelExternalAPI;
 
 public class ModelController implements ModelExternalAPI {
 

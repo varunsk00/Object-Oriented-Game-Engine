@@ -1,7 +1,6 @@
 package ooga.controller;
 
-import apis.view.ViewExternalAPI;
-import javafx.scene.input.KeyEvent;
+import ooga.apis.view.ViewExternalAPI;
 
 public class ViewController implements ViewExternalAPI {
   private Controller myController;

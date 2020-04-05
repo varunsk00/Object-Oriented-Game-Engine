@@ -1,4 +1,4 @@
-package apis.view;
+package ooga.apis.view;
 
 /**
  * The internal API for the view. Defines how each class inside the

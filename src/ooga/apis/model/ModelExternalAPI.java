@@ -1,4 +1,4 @@
-package apis.model;
+package ooga.apis.model;
 
 /**
  * External API for the model. Mediates how other components (view, controller)

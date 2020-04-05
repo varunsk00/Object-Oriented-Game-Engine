@@ -1,4 +1,4 @@
-package apis;
+package ooga.apis;
 
 public interface DataAPI {
 

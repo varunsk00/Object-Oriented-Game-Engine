@@ -1,6 +1,6 @@
 package ooga.view;
 
-import apis.view.ViewExternalAPI;
+import ooga.apis.view.ViewExternalAPI;
 
 public class ViewExternal implements ViewExternalAPI {
 

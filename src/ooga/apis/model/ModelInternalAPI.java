@@ -1,4 +1,4 @@
-package apis.model;
+package ooga.apis.model;
 
 import ooga.model.actions.Action;
 

@@ -1,4 +1,4 @@
-package apis.view;
+package ooga.apis.view;
 
 /**
  * This interface represents the External API for the view section of the
