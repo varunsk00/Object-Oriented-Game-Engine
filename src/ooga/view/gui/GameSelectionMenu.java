@@ -26,6 +26,8 @@ public class GameSelectionMenu extends Group {
         this.playableGamesList.add(newGamePreview);
 
     }
+
+
     private void scrollLeft() {
         GamePreview temp = playableGamesList.get(0);
         double e = temp.getXPos();
