@@ -22,6 +22,7 @@ public class TestController {
 
   private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
+  private EntityWrapper entityWrapper;
   private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -45,9 +46,13 @@ public class TestController {
     testPane.getChildren().add(EntityList);
     EntityList.getChildren().add(testRectangle);
     EntityList.getChildren().add(testGround);
+    entityWrapper = new EntityWrapper("sampleKeybindings");
+    EntityList.getChildren().add(entityWrapper.getRender());
 
-    testScene.setOnKeyPressed(e -> handlePressInput(e.getCode()));
-    testScene.setOnKeyReleased(e -> handleReleaseInput(e.getCode()));
+    testScene.setOnKeyPressed(e -> {
+      entityWrapper.handleKeyInput(e); //FIXME i would like to
+    });
+    testScene.setOnKeyReleased(e-> entityWrapper.handleKeyReleased());
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
     //TODO: Timeline Code -- don't remove
@@ -62,8 +67,19 @@ public class TestController {
   private void step (double elapsedTime) {
     testRectangle.setX(testRectangle.getX() + xVelocity * elapsedTime * 1);
     testRectangle.setY(testRectangle.getY() + yVelocity * elapsedTime * 1);
-    applyGravity(elapsedTime);
-    applyAcceleration(elapsedTime);
+
+    if(testRectangle.getY() < groundY - testRectangle.getHeight()) {
+      yVelocity += gravity * elapsedTime;
+    }
+    else{
+      isGrounded = true;
+    }
+    if (isGrounded){
+      //System.out.println(yVelocity);
+      yVelocity = 0;
+      testRectangle.setY(groundY - testRectangle.getHeight());
+    }
+    entityWrapper.update();
 
     /* potential update code for Entity
     for (EntityWrapper currentEntity : EntityList) {

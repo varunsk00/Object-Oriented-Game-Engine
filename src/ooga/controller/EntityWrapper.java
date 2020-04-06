@@ -1,9 +1,11 @@
 package ooga.controller;
 
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import ooga.model.EntityModel;
 import ooga.util.EntityParser;
-import ooga.view.EntityView;
+import ooga.view.application.EntityView;
 
 public class EntityWrapper {
   private EntityModel myModel;
@@ -11,9 +13,9 @@ public class EntityWrapper {
   private EntityParser myParser;
 
   public EntityWrapper(String entityName){
+    myParser = new EntityParser(entityName);
     myModel = new EntityModel(this);
     myView = new EntityView(this);
-    myParser = new EntityParser(entityName);
   }
 
   public void update(){
@@ -26,4 +28,8 @@ public class EntityWrapper {
   }
 
   public EntityParser getParser(){return myParser;}
+
+  public Node getRender(){return myView.getRender();}
+
+  public void handleKeyReleased() {myModel.handleKeyReleased();}
 }

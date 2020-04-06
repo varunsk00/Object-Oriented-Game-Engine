@@ -1,4 +1,4 @@
-package ooga.view;
+package ooga.view.application;
 
 import java.awt.Dimension;
 import java.util.ResourceBundle;

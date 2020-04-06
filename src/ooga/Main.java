@@ -1,22 +1,14 @@
 package ooga;
-
-
-import javafx.application.Application;
-import javafx.stage.Stage;
-import ooga.view.TestSandbox;
+import ooga.view.gui.GameCabinet;
 
 /**
  * Feel free to completely change this code or delete it entirely. 
  */
-public class Main extends Application {
+public class Main {
     /**
      * Start of the program.
      */
   public static void main (String[] args) {
-    launch(args);
-  }
-
-  public void start(Stage primaryStage) {
-    new TestSandbox(primaryStage);
+    GameCabinet simulator = new GameCabinet(args);
   }
 }
