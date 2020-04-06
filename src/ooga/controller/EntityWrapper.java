@@ -3,7 +3,7 @@ package ooga.controller;
 import javafx.scene.input.KeyEvent;
 import ooga.model.EntityModel;
 import ooga.util.EntityParser;
-import ooga.view.EntityView;
+import ooga.view.application.EntityView;
 
 public class EntityWrapper {
   private EntityModel myModel;

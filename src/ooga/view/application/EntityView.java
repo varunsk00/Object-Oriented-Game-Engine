@@ -1,4 +1,4 @@
-package ooga.view;
+package ooga.view.application;
 
 import javafx.scene.image.ImageView;
 import ooga.controller.EntityWrapper;

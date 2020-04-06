@@ -1,4 +1,4 @@
-package ooga.view;
+package ooga.view.gui;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

@@ -64,7 +64,7 @@ public class TestController {
       isGrounded = true;
     }
     if (isGrounded){
-      System.out.println(yVelocity);
+     // System.out.println(yVelocity);
       yVelocity = 0;
       testRectangle.setY(groundY - testRectangle.getHeight());
     }
