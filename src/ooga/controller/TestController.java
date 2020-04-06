@@ -50,6 +50,7 @@ public class TestController {
     EntityList.getChildren().add(entityWrapper.getRender());
 
     testScene.setOnKeyPressed(e -> {
+      handlePressInput(e.getCode());
       entityWrapper.handleKeyInput(e); //FIXME i would like to
     });
     testScene.setOnKeyReleased(e-> entityWrapper.handleKeyReleased());
