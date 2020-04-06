@@ -3,6 +3,7 @@ package ooga.model;
 import java.util.Stack;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
+import ooga.model.actions.AccelerateX;
 import ooga.model.actions.Action;
 import ooga.model.controlschemes.ControlScheme;
 
@@ -31,15 +32,22 @@ public class EntityModel {
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
     }
+    if(Math.abs(xVel) > 0) {
+      double parameter = -Math.signum(xVel) * 1;
+      String param = String.valueOf(parameter);
+      actionStack.push(new AccelerateX(param));
+    }
     while(!actionStack.isEmpty()){
       actionStack.pop().execute(this);
     }
     limitSpeed();
     setX(xPos + xVel * elapsedTime);
     setY(yPos + yVel * elapsedTime);
-//    System.out.println(xVel);
+    System.out.println(xVel);
 
   }
+
+
 
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
