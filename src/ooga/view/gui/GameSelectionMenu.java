@@ -60,8 +60,29 @@ public class GameSelectionMenu extends Group {
         GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
         for (int i = playableGamesList.size()-1; i > 0; i --) {
             playableGamesList.set(i, playableGamesList.get(i-1));
+            double oldXPos = playableGamesList.get(i).getXPos()+playableGamesList.get(i).getWidth()/2;
+            PathTransition p = new PathTransition();
+            MoveTo m = new MoveTo(playableGamesList.get(i).getXPos()+playableGamesList.get(i).getWidth()/2, 300);
+            LineTo l = new LineTo(oldXPos+250, 300);
+            Path path = new Path();
+            path.getElements().add(m);
+            path.getElements().add(l);
+            p.setNode(playableGamesList.get(i));
+            p.setDuration(Duration.millis(2000));
+            p.setPath(path);
+            p.play();
         }
         playableGamesList.set(0, temp);
+        PathTransition p = new PathTransition();
+        MoveTo m = new MoveTo(playableGamesList.get(0).getXPos()+playableGamesList.get(0).getWidth()/2, 300);
+        LineTo l = new LineTo(playableGamesList.get(0).getXPos()+playableGamesList.get(0).getWidth()/2-500, 300);
+        Path path = new Path();
+        path.getElements().add(m);
+        path.getElements().add(l);
+        p.setNode(playableGamesList.get(playableGamesList.size()-1));
+        p.setDuration(Duration.millis(2000));
+        p.setPath(path);
+        p.play();
         reinitializePreviewPos();
     }
     private void initLeftArrow() {
