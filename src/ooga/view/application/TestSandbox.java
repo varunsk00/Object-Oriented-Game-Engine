@@ -21,8 +21,8 @@ public class TestSandbox {
 
 
 
-  private static final int SCENE_WIDTH = 1000;
-  private static final int SCENE_HEIGHT = 600;
+  private static final int SCENE_WIDTH = 1280;
+  private static final int SCENE_HEIGHT = 720;
   private Scene myScene;
   private Pane myBackgroundPane;
   private Group group;

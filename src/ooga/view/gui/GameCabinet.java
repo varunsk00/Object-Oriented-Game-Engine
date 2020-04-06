@@ -20,8 +20,8 @@ import java.util.ResourceBundle;
 
 public class GameCabinet extends Application {
     private Scene myScene;
-    private static final int SCENE_HEIGHT = 576;
-    private static final int SCENE_WIDTH = 1080;
+    private static final int SCENE_WIDTH = 1280;
+    private static final int SCENE_HEIGHT = 720;
     private static final double FRAMES_PER_SECOND = 30;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private GameSelectionMenu myGameCabinet;
