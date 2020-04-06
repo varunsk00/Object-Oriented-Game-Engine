@@ -2,13 +2,13 @@ package ooga.model.actions;
 
 import ooga.model.EntityModel;
 
-public class Die extends Action {
+public class Spawn extends Action {
     private String entityType;
-    public Die(String value){
+    public Spawn(String value){
         this.entityType = value;
     }
     @Override
     public void execute(EntityModel entityModel) {
-        //entityModel.deleteEntity(entityType);
+        //entityModel.spawnEntity(entityType);
     }
 }
