@@ -27,7 +27,9 @@ public class Keybindings extends ControlScheme {
   }
 
   @Override
-  public void handleKeyReleased() {
-    currentAction = new ArrayList<>();
+  public void handleKeyReleased(KeyEvent keyEvent) {
+    if(actionMap.containsKey(keyEvent.getCode().toString())) {
+      currentAction.remove(actionMap.get(keyEvent.getCode().toString()));
+    }
   }
 }

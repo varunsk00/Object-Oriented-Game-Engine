@@ -64,7 +64,7 @@ public class TestController {
       entityWrapper.handleKeyInput(e); //FIXME i would like to
     });
     testScene.setOnKeyReleased(e-> {
-      entityWrapper.handleKeyReleased();
+      entityWrapper.handleKeyReleased(e);
       handleReleaseInput(e.getCode());
     });
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));

@@ -22,15 +22,15 @@ public class EntityWrapper {
     myView.update(myModel.getX(), myModel.getY());
   }
 
-  public void handleKeyInput(KeyEvent event) {
-    System.out.println(event.getCode().toString());
-    myModel.handleKeyInput(event);
-  }
+  public void handleKeyInput(KeyEvent event) {myModel.handleKeyInput(event); }
 
   public EntityParser getParser(){return myParser;}
   public EntityModel getModel(){return myModel;}
 
   public Node getRender(){return myView.getRender();}
 
-  public void handleKeyReleased() {myModel.handleKeyReleased();}
+  public void handleKeyReleased(KeyEvent keyEvent) {myModel.handleKeyReleased(keyEvent);}
+
+  public void spawnEntity(String param) {
+  }
 }

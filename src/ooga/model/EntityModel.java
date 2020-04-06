@@ -51,8 +51,8 @@ public class EntityModel {
   }
 
 
-  public void handleKeyReleased() {
-    controlScheme.handleKeyReleased();
+  public void handleKeyReleased(KeyEvent event) {
+    controlScheme.handleKeyReleased(event);
   }
 
   private void limitSpeed(){
@@ -88,6 +88,7 @@ public class EntityModel {
   public void setXVelocity(double newXVelocity){xVel = newXVelocity;}
 
   public void setYVelocity(double newYVelocity){yVel = newYVelocity;}
+
   public boolean isOnGround(){
     return onGround;
   }
@@ -99,4 +100,6 @@ public class EntityModel {
   public Stack<Action> getActionStack() {
     return actionStack;
   }
+
+  public void spawnEntity(String param) {myEntity.spawnEntity(param);}
 }
