@@ -1,13 +1,18 @@
 package ooga.view.gui;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PathTransition;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.binding.DoubleBinding;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.view.application.TestSandbox;
@@ -49,6 +54,7 @@ public class GameCabinet extends Application {
         setupUI();
         handleGameSelect(myStage);
         Scene scene = new Scene(mainFrame, SCENE_WIDTH, SCENE_HEIGHT);
+        scene.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         myStage.setScene(scene);
         myStage.show();
     }
@@ -87,11 +93,25 @@ public class GameCabinet extends Application {
         GamePreview g1 = new GamePreview(Color.BLUE);
         GamePreview g2 = new GamePreview(Color.RED);
         GamePreview g3 = new GamePreview(Color.GREEN);
+        GamePreview g4 = new GamePreview(Color.YELLOW);
+        GamePreview g5 = new GamePreview(Color.ORANGE);
         myGames.add(g1);
         myGames.add(g2);
         myGames.add(g3);
-        this.myGameCabinet = new GameSelectionMenu(myGames);
+        myGames.add(g4);
+        //myGames.add(g5);
+        myGameCabinet = new GameSelectionMenu(myGames);
     }
+    private void handleAltScrollInput(KeyCode code) {
+        System.out.println("here");
+        if (code == KeyCode.RIGHT) {
+            myGameCabinet.scrollRight();
+        }
+        else if (code == KeyCode.LEFT) {
+            myGameCabinet.scrollLeft();
+        }
+    }
+
 
     public void setupUI() {
         mainFrame.setCenter(myGameCabinet);

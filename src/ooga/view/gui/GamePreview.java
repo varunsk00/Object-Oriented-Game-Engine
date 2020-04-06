@@ -9,8 +9,8 @@ public class GamePreview extends Rectangle {
     private double xPos;
 
     public GamePreview(Paint color) {
-        this.setHeight(50);
-        this.setWidth(50);
+        this.setHeight(100);
+        this.setWidth(100);
         this.setY(275);
         this.setFill(color);
         //this.gameName = color.toString();

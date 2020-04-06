@@ -2,6 +2,7 @@ package ooga.view.gui;
 
 import javafx.animation.PathTransition;
 import javafx.scene.Group;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
@@ -18,7 +19,9 @@ public class GameSelectionMenu extends Group {
         initLeftArrow();
         initRightArrow();
         leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
+       // leftScrollArrow.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         rightScrollArrow.setOnMouseClicked(e -> scrollRight());
+       // rightScrollArrow.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         initializePreviewPos();
     }
     public void addNewGamePreview(GamePreview newGamePreview) {
@@ -26,17 +29,14 @@ public class GameSelectionMenu extends Group {
         this.playableGamesList.add(newGamePreview);
 
     }
-
-
-    private void scrollLeft() {
+    public void scrollLeft() {
         GamePreview temp = playableGamesList.get(0);
-        double e = temp.getXPos();
         for (int i = 0; i < playableGamesList.size()-1; i ++) {
             playableGamesList.set(i, playableGamesList.get(i+1));
-            double oldXPos = playableGamesList.get(i).getXPos()+playableGamesList.get(i).getWidth()/2;
+            double oldXPos = playableGamesList.get(i).getXPos()+playableGamesList.get(i).getWidth()/4;
             PathTransition p = new PathTransition();
-            MoveTo m = new MoveTo(playableGamesList.get(i).getXPos()+playableGamesList.get(i).getWidth()/2, 300);
-            LineTo l = new LineTo(oldXPos-250, 300);
+            MoveTo m = new MoveTo(oldXPos+playableGamesList.get(i).getWidth()/4, 325);
+            LineTo l = new LineTo(oldXPos+playableGamesList.get(i).getWidth()/4-(800/playableGamesList.size()-playableGamesList.get(i).getWidth()/4), 325);
             Path path = new Path();
             path.getElements().add(m);
             path.getElements().add(l);
@@ -47,8 +47,8 @@ public class GameSelectionMenu extends Group {
         }
         playableGamesList.set(playableGamesList.size()-1, temp);
         PathTransition p = new PathTransition();
-        MoveTo m = new MoveTo(playableGamesList.get(playableGamesList.size()-1).getXPos()+playableGamesList.get(playableGamesList.size()-1).getWidth()/2, 300);
-        LineTo l = new LineTo(playableGamesList.get(playableGamesList.size()-1).getXPos()+playableGamesList.get(playableGamesList.size()-1).getWidth()/2+500, 300);
+        MoveTo m = new MoveTo(playableGamesList.get(playableGamesList.size()-1).getXPos()+playableGamesList.get(0).getWidth()/4, 325);
+        LineTo l = new LineTo(playableGamesList.get(playableGamesList.size()-1).getXPos()+playableGamesList.get(0).getWidth()/4+(playableGamesList.size()*(800/playableGamesList.size()-playableGamesList.get(0).getWidth()/4)+10*(playableGamesList.size()-1))-(800/playableGamesList.size()-playableGamesList.get(0).getWidth()/4), 325);
         Path path = new Path();
         path.getElements().add(m);
         path.getElements().add(l);
@@ -58,14 +58,14 @@ public class GameSelectionMenu extends Group {
         p.play();
         reinitializePreviewPos();
     }
-    private void scrollRight() {
+    public void scrollRight() {
         GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
         for (int i = playableGamesList.size()-1; i > 0; i --) {
             playableGamesList.set(i, playableGamesList.get(i-1));
-            double oldXPos = playableGamesList.get(i).getXPos()+playableGamesList.get(i).getWidth()/2;
+            double oldXPos = playableGamesList.get(i).getXPos()+playableGamesList.get(i).getWidth()/4;
             PathTransition p = new PathTransition();
-            MoveTo m = new MoveTo(playableGamesList.get(i).getXPos()+playableGamesList.get(i).getWidth()/2, 300);
-            LineTo l = new LineTo(oldXPos+250, 300);
+            MoveTo m = new MoveTo(oldXPos+playableGamesList.get(i).getWidth()/4, 325);
+            LineTo l = new LineTo(oldXPos+playableGamesList.get(i).getWidth()/4+(800/playableGamesList.size()-playableGamesList.get(i).getWidth()/4), 325);
             Path path = new Path();
             path.getElements().add(m);
             path.getElements().add(l);
@@ -76,12 +76,12 @@ public class GameSelectionMenu extends Group {
         }
         playableGamesList.set(0, temp);
         PathTransition p = new PathTransition();
-        MoveTo m = new MoveTo(playableGamesList.get(0).getXPos()+playableGamesList.get(0).getWidth()/2, 300);
-        LineTo l = new LineTo(playableGamesList.get(0).getXPos()+playableGamesList.get(0).getWidth()/2-500, 300);
+        MoveTo m = new MoveTo(playableGamesList.get(0).getXPos()+playableGamesList.get(0).getWidth()/4, 325);
+        LineTo l = new LineTo(((playableGamesList.get(0).getXPos()+playableGamesList.get(0).getWidth()/4)-(playableGamesList.size()*(800/playableGamesList.size()-playableGamesList.get(0).getWidth()/4)+10*(playableGamesList.size()-1)-(800/playableGamesList.size()-playableGamesList.get(0).getWidth()/4))), 325);
         Path path = new Path();
         path.getElements().add(m);
         path.getElements().add(l);
-        p.setNode(playableGamesList.get(playableGamesList.size()-1));
+        p.setNode(playableGamesList.get(0));
         p.setDuration(Duration.millis(2000));
         p.setPath(path);
         p.play();
@@ -106,15 +106,20 @@ public class GameSelectionMenu extends Group {
         this.getChildren().add(rightScrollArrow);
     }
     private void reinitializePreviewPos() {
-        for (int i = 0; i < 3; i ++) {
-            playableGamesList.get(i).setXPos((i+1)*200+(50*i));
+        for (int i = 0; i < playableGamesList.size(); i ++) {
+            playableGamesList.get(i).setXPos((i+1)*(800/playableGamesList.size()-playableGamesList.get(0).getWidth()/4)+(10*i));
         }
     }
     private void initializePreviewPos() {
-        for (int i = 0; i < 3; i ++) {
-            playableGamesList.get(i).setX((i+1)*200+50*i);
-            playableGamesList.get(i).setXPos((i+1)*200+50*i);
+        for (int i = 0; i < playableGamesList.size(); i ++) {
+            playableGamesList.get(i).setScaleX(1.0/playableGamesList.size()*4);
+            playableGamesList.get(i).setScaleY(1.0/playableGamesList.size()*4);
+            playableGamesList.get(i).setX((i+1)*(800/playableGamesList.size()-playableGamesList.get(0).getWidth()/4)+10*i);
+            playableGamesList.get(i).setXPos((i+1)*(800/playableGamesList.size()-playableGamesList.get(0).getWidth()/4)+(10*i));
+            System.out.println(playableGamesList.get(i).getXPos());
             this.getChildren().add(playableGamesList.get(i));
         }
     }
+
+
 }
