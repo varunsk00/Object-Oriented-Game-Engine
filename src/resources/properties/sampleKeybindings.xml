@@ -7,8 +7,8 @@
   </Info>
   <Controls>
     <Scheme name="Keybindings"/>
-    <Control id="w" action="move" param="10"></Control>
-    <Control id="s" action="move" param="-10"></Control>
+    <Control id="w" action="MoveX" param="10.0"></Control>
+    <Control id="s" action="MoveX" param="-10.0"></Control>
   </Controls>
   <Collisions>
 
