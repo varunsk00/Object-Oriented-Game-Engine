@@ -2,17 +2,19 @@ package ooga.model.actions;
 
 import ooga.model.EntityModel;
 
-public class VelocityY extends Action {
+public class Jump extends Action {
   private double yVelocity;
 
-  public VelocityY(String parameter){
+  public Jump(String parameter){
     super(parameter);
     yVelocity = Double.parseDouble(param);
   }
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setYVelocity(yVelocity);
-    System.out.println("he");
+    if(entity.isOnGround()) {
+      entity.setYVelocity(yVelocity);
+      entity.setOnGround(false);
+    }
   }
 }

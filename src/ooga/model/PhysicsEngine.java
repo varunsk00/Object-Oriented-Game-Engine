@@ -16,6 +16,7 @@ public class PhysicsEngine {
   private EntityModel entityModel;
 
   public PhysicsEngine(String physicsProfile) {
+    //TODO: Add a parser that parses through a physics file for the constants of friction
 //    PhysicsParser physicsParser = new PhysicsParser(physicsProfile);
 //    gravityForce = physicsParser.getDragForce();
 //    dragForce = physicsParser.getDragForce();
@@ -24,15 +25,22 @@ public class PhysicsEngine {
 
   public void applyForces(EntityModel currentEntityModel){
     entityModel = currentEntityModel;
-    applyFriction();
+    applyResistiveForces();
     applyGravity();
   }
 
-  private void applyFriction(){
-    if(entityModel.isOnGround() && Math.abs(entityModel.getXVelocity()) > 0){
-      double frictionDirection = -Math.signum(entityModel.getXVelocity());
-      String frictionParameter = String.valueOf(frictionDirection * frictionForce);
-      entityModel.getActionStack().push(new AccelerateX(frictionParameter));
+  //
+  private void applyResistiveForces() {
+    if (Math.abs(entityModel.getXVelocity()) > 0) {
+      double opposingDirection = -Math.signum(entityModel.getXVelocity());
+      if (entityModel.isOnGround()) {
+        String frictionParameter = String.valueOf(opposingDirection * frictionForce);
+        entityModel.getActionStack().push(new AccelerateX(frictionParameter));
+      }
+      else{
+        String dragParameter = String.valueOf(opposingDirection * dragForce);
+        entityModel.getActionStack().push(new AccelerateX(dragParameter));
+      }
     }
   }
 

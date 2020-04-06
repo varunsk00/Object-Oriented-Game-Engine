@@ -17,7 +17,7 @@
     <Control id="W" action="MoveY" param="-10.0"></Control>
     <Control id="D" action="AccelerateX" param="11.0"></Control>
     <Control id="A" action="AccelerateX" param="-11.0"></Control>
-    <Control id="SPACE" action="VelocityY" param="-100.0"></Control>
+    <Control id="SPACE" action="Jump" param="-500.0"></Control>
   </Controls>
   <Collisions>
 

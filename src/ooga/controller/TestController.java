@@ -73,11 +73,7 @@ public class TestController {
   }
 
   private void step (double elapsedTime) {
-    testRectangle.setX(testRectangle.getX() + xVelocity * elapsedTime * 1);
-    testRectangle.setY(testRectangle.getY() + yVelocity * elapsedTime * 1);
 
-//    applyGravity(elapsedTime);
-//    applyAcceleration(elapsedTime);
     physicsEngine.applyForces(entityWrapper.getModel());
     entityWrapper.update(elapsedTime);
 
@@ -93,28 +89,6 @@ public class TestController {
       }
     }
      */
-  }
-  private void applyGravity(double elapsedTime){
-    if(testRectangle.getY() < groundY - testRectangle.getHeight()) {
-      yVelocity += gravity * elapsedTime;
-    }
-    else{
-      isGrounded = true;
-    }
-    if (isGrounded){
-      yVelocity = 0;
-      testRectangle.setY(groundY - testRectangle.getHeight());
-    }
-  }
-
-  private void applyAcceleration(double elapsedTime){
-    if(Math.abs(xVelocity) < 100) {
-      xVelocity += xAcceleration * elapsedTime;
-    }
-    if(Math.abs(xVelocity) > 0) {
-      xVelocity += -Math.signum(xVelocity) * friction * elapsedTime;
-    }
-    //System.out.println(xVelocity);
   }
 
   private void handlePressInput (KeyCode code) {

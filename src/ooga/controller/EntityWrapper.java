@@ -24,6 +24,7 @@ public class EntityWrapper {
   }
 
   public void handleKeyInput(KeyEvent event) {
+    System.out.println(event.getCode().toString());
     myModel.handleKeyInput(event);
   }
 
