@@ -1,6 +1,8 @@
 package ooga.model.controlschemes;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
 
@@ -8,11 +10,12 @@ public class Pattern extends ControlScheme {
   private List<Action> actionList;
   private int index;
 
-  public Pattern(){
-  }
-
-  public Pattern(List<Action> actions){
-    actionList = actions;
+  public Pattern(Map<String, Action> actions){
+    super(actions);
+    actionList = new ArrayList<>();
+    for(String s : actionMap.keySet()){
+      actionList.add(Integer.parseInt(s), actionMap.get(s));
+    }
     index = 0;
   }
   @Override

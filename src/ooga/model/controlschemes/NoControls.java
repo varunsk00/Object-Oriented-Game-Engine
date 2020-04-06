@@ -3,20 +3,21 @@ package ooga.model.controlschemes;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
+import ooga.model.actions.NoAction;
 
-public class Keybindings extends ControlScheme {
+public class NoControls extends ControlScheme {
 
-  public Keybindings(Map<String, Action> bindings){
-    super(bindings);
+  public NoControls(Map<String, Action> controls) {
+    super(controls);
   }
 
   @Override
   public Action getCurrentAction() {
-    return currentAction;
+    return new NoAction();
   }
 
   @Override
   public void handleKeyInput(KeyEvent keyEvent) {
-    currentAction = actionMap.get(keyEvent.getText());
+
   }
 }
