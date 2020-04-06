@@ -13,6 +13,5 @@ public class AccelerateX extends Action {
   @Override
   public void execute(EntityModel entity) {
     entity.setXVelocity(entity.getXVelocity() + xAcceleration);
-    System.out.println(entity.getXVelocity());
   }
 }

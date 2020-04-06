@@ -23,10 +23,12 @@ public class EntityWrapper {
   }
 
   public void handleKeyInput(KeyEvent event) {
+    System.out.println(event.getCode().toString());
     myModel.handleKeyInput(event);
   }
 
   public EntityParser getParser(){return myParser;}
+  public EntityModel getModel(){return myModel;}
 
   public Node getRender(){return myView.getRender();}
 
