@@ -28,6 +28,7 @@ public class EntityWrapper {
   }
 
   public EntityParser getParser(){return myParser;}
+  public EntityModel getModel(){return myModel;}
 
   public Node getRender(){return myView.getRender();}
 

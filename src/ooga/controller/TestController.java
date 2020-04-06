@@ -12,6 +12,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javax.swing.text.html.parser.Entity;
+import ooga.model.PhysicsEngine;
 
 
 public class TestController {
@@ -19,6 +20,7 @@ public class TestController {
   private Scene myCurrentScene;
   private Pane testPane;
   private Group EntityList;
+  private PhysicsEngine physicsEngine;
 
   private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
@@ -49,6 +51,8 @@ public class TestController {
     entityWrapper = new EntityWrapper("sampleKeybindings");
     EntityList.getChildren().add(entityWrapper.getRender());
 
+    physicsEngine = new PhysicsEngine("dummyString");
+
     testScene.setOnKeyPressed(e -> {
       handlePressInput(e.getCode());
       entityWrapper.handleKeyInput(e); //FIXME i would like to
@@ -74,6 +78,7 @@ public class TestController {
 
 //    applyGravity(elapsedTime);
 //    applyAcceleration(elapsedTime);
+    physicsEngine.applyForces(entityWrapper.getModel());
     entityWrapper.update(elapsedTime);
 
     /* potential update code for Entity

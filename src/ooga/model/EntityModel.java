@@ -15,6 +15,7 @@ public class EntityModel {
   private double yVel;
   private double xVelMax = 100;
   private double yVelMax = 100;
+  private boolean onGround = true;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
 
@@ -32,11 +33,11 @@ public class EntityModel {
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
     }
-    if(Math.abs(xVel) > 0) {
-      double parameter = -Math.signum(xVel) * 1;
-      String param = String.valueOf(parameter);
-      actionStack.push(new AccelerateX(param));
-    }
+//    if(Math.abs(xVel) > 0) {
+//      double parameter = -Math.signum(xVel) * 1;
+//      String param = String.valueOf(parameter);
+//      actionStack.push(new AccelerateX(param));
+//    }
     while(!actionStack.isEmpty()){
       actionStack.pop().execute(this);
     }
@@ -76,5 +77,12 @@ public class EntityModel {
 
   public void handleKeyReleased() {
     controlScheme.handleKeyReleased();
+  }
+  public boolean isOnGround(){
+    return onGround;
+  }
+
+  public Stack<Action> getActionStack() {
+    return actionStack;
   }
 }
