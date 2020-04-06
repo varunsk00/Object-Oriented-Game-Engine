@@ -66,8 +66,8 @@ public class GameCabinet extends Application {
 
     private void updateCurrentGame(){ //FIXME: STREAMLINE GAME CHECKING FROM FILE ONCE COLORS REPLACED WITH GAME NAME
         for(GamePreview game: myGames){
-            if(game.getGameName() != null) {
-                if(game.getGameName().equals("0x008000ff")) {
+            if(game.getGamePressed() != null) {
+                if(game.getGamePressed().equals("0x008000ff")) {
                     game.resetGameName();
                     new TestSandbox(myStage);
                     myStage.setTitle("TestSandbox");

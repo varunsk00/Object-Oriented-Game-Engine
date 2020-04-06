@@ -23,7 +23,7 @@ public class GamePreview extends Rectangle {
     public double getXPos() {
         return this.xPos;
     }
-    public String getGameName(){
+    public String getGamePressed(){
         return gameName;
     }
     public void resetGameName(){
