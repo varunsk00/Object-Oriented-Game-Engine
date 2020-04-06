@@ -53,7 +53,10 @@ public class TestController {
       handlePressInput(e.getCode());
       entityWrapper.handleKeyInput(e); //FIXME i would like to
     });
-    testScene.setOnKeyReleased(e-> entityWrapper.handleKeyReleased());
+    testScene.setOnKeyReleased(e-> {
+      entityWrapper.handleKeyReleased();
+      handleReleaseInput(e.getCode());
+    });
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
     //TODO: Timeline Code -- don't remove
@@ -69,18 +72,9 @@ public class TestController {
     testRectangle.setX(testRectangle.getX() + xVelocity * elapsedTime * 1);
     testRectangle.setY(testRectangle.getY() + yVelocity * elapsedTime * 1);
 
-    if(testRectangle.getY() < groundY - testRectangle.getHeight()) {
-      yVelocity += gravity * elapsedTime;
-    }
-    else{
-      isGrounded = true;
-    }
-    if (isGrounded){
-      //System.out.println(yVelocity);
-      yVelocity = 0;
-      testRectangle.setY(groundY - testRectangle.getHeight());
-    }
-    entityWrapper.update();
+    applyGravity(elapsedTime);
+    applyAcceleration(elapsedTime);
+    //entityWrapper.update();
 
     /* potential update code for Entity
     for (EntityWrapper currentEntity : EntityList) {
