@@ -41,6 +41,7 @@ public class TestController {
   private double xAcceleration = 0;
   private boolean isGrounded;
   private boolean keyPressed;
+  private Timeline animation;
 
 
 
@@ -66,7 +67,7 @@ public class TestController {
 
     //TODO: Timeline Code -- don't remove
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
-    Timeline animation = new Timeline();
+    animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
@@ -129,12 +130,14 @@ public class TestController {
       BoxBlur bb = new BoxBlur();
       menu = new InGameMenu("TestSandBox");
       EntityList.setEffect(bb);
+      animation.pause();
       testPane.getChildren().add(menu);
       escCounter++;
     }
     else if (code == KeyCode.Q && escCounter == 1) {
       testPane.getChildren().remove(testPane.getChildren().size()-1);
       EntityList.setEffect(null);
+      animation.play();
       escCounter--;
     }
     if (code == KeyCode.SPACE && isGrounded) {
