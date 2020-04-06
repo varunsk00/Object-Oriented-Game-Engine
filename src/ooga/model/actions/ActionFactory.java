@@ -30,12 +30,15 @@ public class ActionFactory {
     }
   }
 
+  /*
   public Action makeAction(String action, Stack<Action> previous, Stack<List<Action>> listActions,
       Map<String, List<String>> myActions) {
     String formalAction = validateAction(action, myActions);
 
     return buildAction(formalAction);
   }
+
+   */
 }
 
 

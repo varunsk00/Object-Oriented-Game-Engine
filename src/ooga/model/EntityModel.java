@@ -26,7 +26,9 @@ public class EntityModel {
   }
 
   public void update(){
-    actionStack.add(controlScheme.getCurrentAction());
+    for(Action action : controlScheme.getCurrentAction()){
+      actionStack.push(action);
+    }
     while(!actionStack.isEmpty()){
       actionStack.pop().execute(this);
     }
@@ -36,17 +38,12 @@ public class EntityModel {
 
   public double getY(){return yPos;}
 
-  public void setxPos(double xPos)
-  { this.xPos = xPos;}
 
-  public void setyVel(double yPos){this.yPos = yPos;}
+  public void setX(double newX){xPos = newX;}
 
-  public void setXVel(double xVel) {
-    this.xVel = xVel;
+  public void setY(double newY){yPos = newY;}
+
+  public void handleKeyReleased() {
+    controlScheme.handleKeyReleased();
   }
-
-  public void setYVel(double yVel) {
-    this.yVel = yVel;
-  }
-
 }
