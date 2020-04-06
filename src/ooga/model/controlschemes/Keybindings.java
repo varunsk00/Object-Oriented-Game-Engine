@@ -21,8 +21,8 @@ public class Keybindings extends ControlScheme {
 
   @Override
   public void handleKeyInput(KeyEvent keyEvent) {
-    if(actionMap.containsKey(keyEvent.getText())) {
-      currentAction.add(actionMap.get(keyEvent.getText()));
+    if(actionMap.containsKey(keyEvent.getCode().toString())) {
+      currentAction.add(actionMap.get(keyEvent.getCode().toString()));
     }
   }
 

@@ -98,6 +98,7 @@ public class EntityParser {
         Element crlElement = (Element)control;
         String key = crlElement.getAttribute("id");
 
+
         Class controlAction = null;
         String actionName = crlElement.getAttribute("action");
         try{
@@ -124,7 +125,7 @@ public class EntityParser {
     NodeList controlSchema = controlElement.getElementsByTagName("Scheme");
     Node scheme = controlSchema.item(0);
     if(scheme.getNodeType() == Node.ELEMENT_NODE){
-      return(((Element)scheme).getAttribute("name"));
+      return ((Element)scheme).getAttribute("name");
     }
     return "NoControls";
   }

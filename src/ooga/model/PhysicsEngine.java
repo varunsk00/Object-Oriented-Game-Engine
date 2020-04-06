@@ -4,6 +4,7 @@ import java.util.Stack;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
 import ooga.model.actions.AccelerateX;
+import ooga.model.actions.AccelerateY;
 import ooga.model.actions.Action;
 import ooga.model.controlschemes.ControlScheme;
 
@@ -24,6 +25,7 @@ public class PhysicsEngine {
   public void applyForces(EntityModel currentEntityModel){
     entityModel = currentEntityModel;
     applyFriction();
+    applyGravity();
   }
 
   private void applyFriction(){
@@ -31,6 +33,16 @@ public class PhysicsEngine {
       double frictionDirection = -Math.signum(entityModel.getXVelocity());
       String frictionParameter = String.valueOf(frictionDirection * frictionForce);
       entityModel.getActionStack().push(new AccelerateX(frictionParameter));
+    }
+  }
+
+  private void applyGravity(){
+    if(entityModel.isOnGround()){
+      entityModel.setYVelocity(0);
+    }
+    else{
+      String gravityParameter = String.valueOf(gravityForce);
+      entityModel.getActionStack().push(new AccelerateY(gravityParameter));
     }
   }
 }

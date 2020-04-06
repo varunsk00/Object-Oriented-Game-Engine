@@ -15,7 +15,7 @@ public class EntityModel {
   private double yVel;
   private double xVelMax = 100;
   private double yVelMax = 100;
-  private boolean onGround = true;
+  private boolean onGround = false;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
 
@@ -33,18 +33,19 @@ public class EntityModel {
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
     }
-//    if(Math.abs(xVel) > 0) {
-//      double parameter = -Math.signum(xVel) * 1;
-//      String param = String.valueOf(parameter);
-//      actionStack.push(new AccelerateX(param));
-//    }
+    if(getY() < 200 /* 300 - this.getHeight()*/){
+      onGround = false;
+    }
+    else{
+      onGround = true;
+    }
     while(!actionStack.isEmpty()){
       actionStack.pop().execute(this);
     }
     limitSpeed();
     setX(xPos + xVel * elapsedTime);
     setY(yPos + yVel * elapsedTime);
-    System.out.println(xVel);
+//    System.out.println(getY());
 
   }
 
