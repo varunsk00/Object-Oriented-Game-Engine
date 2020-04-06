@@ -64,7 +64,7 @@ public class GameCabinet extends Application {
         this.myGameCabinet = new GameSelectionMenu(myGames);
     }
 
-    private void updateCurrentGame(){
+    private void updateCurrentGame(){ //FIXME: STREAMLINE GAME CHECKING FROM FILE ONCE COLORS REPLACED WITH GAME NAME
         for(GamePreview game: myGames){
             if(game.getGameName() != null) {
                 if(game.getGameName().equals("0x008000ff")) {
