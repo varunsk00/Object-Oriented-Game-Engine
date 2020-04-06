@@ -1,6 +1,6 @@
 package ooga.view.gui;
-import ooga.view.application.TestSandbox;
-
+import ooga.view.application.TestSandboxGreen;
+import ooga.view.application.TestSandboxBlue;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,6 +10,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ooga.view.application.TestSandboxRed;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,13 +66,23 @@ public class GameCabinet extends Application {
         this.myGameCabinet = new GameSelectionMenu(myGames);
     }
 
-    private void updateCurrentGame(){ //FIXME: STREAMLINE GAME CHECKING FROM FILE ONCE COLORS REPLACED WITH GAME NAME
+    private void updateCurrentGame(){ //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
         for(GamePreview game: myGames){
             if(game.getGamePressed() != null) {
                 if(game.getGamePressed().equals("0x008000ff")) {
                     game.resetGameName();
-                    new TestSandbox(myStage);
-                    myStage.setTitle("TestSandbox");
+                    new TestSandboxGreen(myStage);
+                    myStage.setTitle("TestSandboxGreen");
+                }
+                else if(game.getGamePressed().equals("0x0000ffff")) {
+                    game.resetGameName();
+                    new TestSandboxBlue(myStage);
+                    myStage.setTitle("TestSandboxBlue");
+                }
+                else if(game.getGamePressed().equals("0xff0000ff")) {
+                    game.resetGameName();
+                    new TestSandboxRed(myStage);
+                    myStage.setTitle("TestSandboxRed");
                 }
             }
         }

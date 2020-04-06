@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ooga.controller.TestController;
 
-public class TestSandbox {
+public class TestSandboxGreen {
 
   //TODO: This is a TestSandbox for beginning testing purposes -- taken from Frank's Slogo program, so feel free to change because this is really bad code
 
@@ -29,7 +29,7 @@ public class TestSandbox {
   private TestController testController;
 
 
-  public TestSandbox(Stage stage) {
+  public TestSandboxGreen(Stage stage) {
     initModel();
     initView();
     initStage(stage);
