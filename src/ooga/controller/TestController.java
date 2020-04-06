@@ -72,9 +72,9 @@ public class TestController {
     testRectangle.setX(testRectangle.getX() + xVelocity * elapsedTime * 1);
     testRectangle.setY(testRectangle.getY() + yVelocity * elapsedTime * 1);
 
-    applyGravity(elapsedTime);
-    applyAcceleration(elapsedTime);
-    //entityWrapper.update();
+//    applyGravity(elapsedTime);
+//    applyAcceleration(elapsedTime);
+    entityWrapper.update(elapsedTime);
 
     /* potential update code for Entity
     for (EntityWrapper currentEntity : EntityList) {
@@ -109,7 +109,7 @@ public class TestController {
     if(Math.abs(xVelocity) > 0) {
       xVelocity += -Math.signum(xVelocity) * friction * elapsedTime;
     }
-    System.out.println(xVelocity);
+    //System.out.println(xVelocity);
   }
 
   private void handlePressInput (KeyCode code) {

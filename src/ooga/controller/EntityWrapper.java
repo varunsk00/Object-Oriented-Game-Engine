@@ -18,8 +18,8 @@ public class EntityWrapper {
     myView = new EntityView(this);
   }
 
-  public void update(){
-    myModel.update();
+  public void update(double elapsedTime){
+    myModel.update(elapsedTime);
     myView.update(myModel.getX(), myModel.getY());
   }
 
