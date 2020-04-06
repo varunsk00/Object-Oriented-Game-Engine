@@ -1,11 +1,10 @@
 package ooga.controller;
 
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import ooga.model.EntityModel;
 import ooga.util.EntityParser;
-import ooga.view.application.EntityView;
+import ooga.view.EntityView;
 
 public class EntityWrapper {
   private EntityModel myModel;

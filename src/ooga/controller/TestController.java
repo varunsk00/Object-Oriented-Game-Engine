@@ -5,12 +5,16 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import ooga.view.application.menu.InGameMenu;
+import ooga.view.application.menu.MenuButtons;
+
 import javax.swing.text.html.parser.Entity;
 
 
@@ -28,7 +32,8 @@ public class TestController {
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-
+  private InGameMenu menu;
+  private int escCounter = 0;
   private double xVelocity = 0;
   private double yVelocity = 0;
   private double gravity = 100;
@@ -120,7 +125,18 @@ public class TestController {
       xAcceleration = -75;
       keyPressed = true;
     }
-
+    else if (code == KeyCode.ESCAPE && escCounter < 1) {
+      BoxBlur bb = new BoxBlur();
+      menu = new InGameMenu("TestSandBox");
+      EntityList.setEffect(bb);
+      testPane.getChildren().add(menu);
+      escCounter++;
+    }
+    else if (code == KeyCode.Q && escCounter == 1) {
+      testPane.getChildren().remove(testPane.getChildren().size()-1);
+      EntityList.setEffect(null);
+      escCounter--;
+    }
     if (code == KeyCode.SPACE && isGrounded) {
       yVelocity = -200;
       isGrounded = false;
