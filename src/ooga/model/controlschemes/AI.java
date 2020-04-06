@@ -20,11 +20,18 @@ public class AI extends ControlScheme {
     }
   }
   @Override
-  public Action getCurrentAction() {
+  public List<Action> getCurrentAction() {
     int index = (int)Math.floor(Math.random()*possibleActions.size());
-    return possibleActions.get(index);
+    List<Action> currentActions = new ArrayList<>();
+    currentActions.add(possibleActions.get(index));
+    return currentActions;
   }
 
   @Override
   public void handleKeyInput(KeyEvent keyEvent) {return;}
+
+  @Override
+  public void handleKeyReleased() {
+
+  }
 }

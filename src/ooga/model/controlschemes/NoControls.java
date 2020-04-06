@@ -1,5 +1,7 @@
 package ooga.model.controlschemes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
@@ -12,12 +14,17 @@ public class NoControls extends ControlScheme {
   }
 
   @Override
-  public Action getCurrentAction() {
-    return new NoAction();
+  public List<Action> getCurrentAction() {
+    return new ArrayList<>();
   }
 
   @Override
   public void handleKeyInput(KeyEvent keyEvent) {
+
+  }
+
+  @Override
+  public void handleKeyReleased() {
 
   }
 }

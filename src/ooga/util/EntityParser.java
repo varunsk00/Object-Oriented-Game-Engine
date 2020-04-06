@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javax.xml.parsers.DocumentBuilder;
@@ -20,14 +21,18 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class EntityParser {
-  private static final String TXT_FILEPATH = "/src/resources/";
+  private static final String TXT_FILEPATH = "src/resources/";
+  private static final String IMG_FILEPATH = "resources/";
+  private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
+  private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
+  private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
+
   private File myFile;
   private Document myDoc;
-  private Stage myStage;
 
 
   public EntityParser (String entityName){
-    myFile = new File(TXT_FILEPATH + entityName);
+    myFile = new File(TXT_FILEPATH + "properties/" + entityName + ".xml");
     setupDocument();
   }
 
@@ -37,12 +42,12 @@ public class EntityParser {
     try {
       builder = factory.newDocumentBuilder();
     } catch (ParserConfigurationException e) {
-      //FIXME add error handling
+      System.out.println("asdfff");
     }
     try {
       myDoc = builder.parse(myFile);
     } catch (SAXException | IOException e) {
-      //FIXME add error handling
+      e.printStackTrace();
     }
     myDoc.getDocumentElement().normalize();
   }
@@ -61,7 +66,7 @@ public class EntityParser {
 
     Class controlClass = null;
     try{
-      controlClass = Class.forName(controlType);
+      controlClass = Class.forName(CONTROLS_PREFIX + controlType);
     } catch (ClassNotFoundException e) {
       //FIXME add error handling
     }
@@ -94,24 +99,18 @@ public class EntityParser {
         String key = crlElement.getAttribute("id");
 
         Class controlAction = null;
+        String actionName = crlElement.getAttribute("action");
         try{
-          String actionName = crlElement.getAttribute("move");
-          controlAction = Class.forName(actionName);
+          controlAction = Class.forName(ACTIONS_PREFIX + actionName);
         } catch (ClassNotFoundException e) {
           //FIXME add error handling
         }
 
         Action action = new NoAction();
         try{
-          action = (Action) (controlAction.getConstructor(Action.class)
+          action = (Action) (controlAction.getConstructor(String.class)
               .newInstance(crlElement.getAttribute("param")));
-        } catch (InstantiationException e) {
-          //FIXME add error handling
-        } catch (InvocationTargetException e) {
-          //FIXME add error handling
-        } catch (NoSuchMethodException e) {
-          //FIXME add error handling
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException  | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
           //FIXME add error handling
         }
         controlMap.put(key, action);
@@ -130,5 +129,29 @@ public class EntityParser {
     return "NoControls";
   }
 
-  public static ImageView generateImage(){return null;}
+  public ImageView generateImage(){
+    NodeList info = myDoc.getElementsByTagName("Info");
+    Node infoNode = info.item(0);
+    ImageView output = null; //FIXME set default sprite
+
+    if(infoNode.getNodeType() == Node.ELEMENT_NODE){
+      Element infoElement = (Element)infoNode;
+      output = loadImage(infoElement);
+      output.setX(Double.parseDouble(getElementValue(infoElement, "XPos")));
+      output.setY(Double.parseDouble(getElementValue(infoElement, "YPos")));
+      output.setFitHeight(Double.parseDouble(getElementValue(infoElement, "Height")));
+      output.setFitWidth(Double.parseDouble(getElementValue(infoElement, "Width")));
+    }
+    return output;
+  }
+
+  private ImageView loadImage(Element infoElement) {
+    Image entityImage = new Image(this.getClass().getClassLoader()
+        .getResourceAsStream(IMG_FILEPATH + getElementValue(infoElement, "Image") + ".png"));
+    return new ImageView(entityImage);
+  }
+
+  private String getElementValue(Element element, String node){
+    return element.getElementsByTagName(node).item(0).getTextContent();
+  }
 }

@@ -19,15 +19,22 @@ public class Pattern extends ControlScheme {
     index = 0;
   }
   @Override
-  public Action getCurrentAction() {
+  public List<Action> getCurrentAction() {
     Action output = actionList.get(index);
     index++;
     if(index >= actionList.size()){
       index = 0;
     }
-    return output;
+    List<Action> currentActions = new ArrayList<>();
+    currentActions.add(output);
+    return currentActions;
   }
 
   @Override
   public void handleKeyInput(KeyEvent keyEvent) {return;}
+
+  @Override
+  public void handleKeyReleased() {
+
+  }
 }
