@@ -19,7 +19,7 @@ import javax.swing.text.html.parser.Entity;
 import ooga.model.PhysicsEngine;
 
 
-public class TestController {
+public class TestController implements Controller {
 
   private Scene myCurrentScene;
   private Pane testPane;
@@ -47,14 +47,14 @@ public class TestController {
 
 
 
-  public TestController(Pane pane, Scene testScene){
+  public TestController (Pane pane, Scene testScene){
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     testPane = pane;
     EntityList = new Group();
     testPane.getChildren().add(EntityList);
     EntityList.getChildren().add(testRectangle);
     EntityList.getChildren().add(testGround);
-    entityWrapper = new EntityWrapper("sampleKeybindings");
+    entityWrapper = new EntityWrapper("sampleKeybindings", this);
     EntityList.getChildren().add(entityWrapper.getRender());
 
     physicsEngine = new PhysicsEngine("dummyString");
@@ -131,6 +131,11 @@ public class TestController {
   }
 
   private void handleMouseInput(double x, double y) {
+  }
+
+  @Override
+  public void spawnEntity(String name) {
+    
   }
 }
 

@@ -10,8 +10,10 @@ public class EntityWrapper {
   private EntityModel myModel;
   private EntityView myView;
   private EntityParser myParser;
+  private Controller myController;
 
-  public EntityWrapper(String entityName){
+  public EntityWrapper(String entityName, Controller controller){
+    myController = controller;
     myParser = new EntityParser(entityName);
     myModel = new EntityModel(this);
     myView = new EntityView(this);
@@ -31,6 +33,5 @@ public class EntityWrapper {
 
   public void handleKeyReleased(KeyEvent keyEvent) {myModel.handleKeyReleased(keyEvent);}
 
-  public void spawnEntity(String param) {
-  }
+  public void spawnEntity(String param) {myController.spawnEntity(param);}
 }
