@@ -3,12 +3,13 @@ package ooga.model.actions;
 import ooga.model.EntityModel;
 
 public class Die extends Action {
-    private String entityType;
-    public Die(String value){
-        this.entityType = value;
+
+    public Die(String parameter) {
+        super(parameter);
     }
+
     @Override
     public void execute(EntityModel entityModel) {
-        //entityModel.deleteEntity(entityType);
+        //EntityModel.setDead(true);
     }
 }

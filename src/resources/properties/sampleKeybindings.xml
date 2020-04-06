@@ -4,11 +4,15 @@
     <Image>sampleSprite</Image>
     <XPos>100</XPos>
     <YPos>100</YPos>
+    <Height>100</Height>
+    <Width>100</Width>
   </Info>
   <Controls>
     <Scheme name="Keybindings"/>
-    <Control id="w" action="move" param="10"></Control>
-    <Control id="s" action="move" param="-10"></Control>
+    <Control id="s" action="MoveY" param="10.0"></Control>
+    <Control id="w" action="MoveY" param="-10.0"></Control>
+    <Control id="d" action="MoveX" param="10.0"></Control>
+    <Control id="a" action="MoveX" param="-10.0"></Control>
   </Controls>
   <Collisions>
 
