@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Entity>
   <Info>
-    <Image>JankyBird_pix</Image>
+    <Image>mario_fire</Image>
     <XPos>100</XPos>
     <YPos>100</YPos>
     <XVel>10</XVel>
@@ -13,10 +13,22 @@
   </Info>
   <Controls>
     <Scheme name="Keybindings"/>
-    <Control id="D" action="AccelerateX" param="15.0"></Control>
-    <Control id="A" action="AccelerateX" param="-15.0"></Control>
-    <Control id="SPACE" action="Jump" param="-500.0"></Control>
-    <Control id="F" action="SpawnRelative" param="Mario_Fireball"></Control>
+    <Bundle>
+      <ID>D</ID>
+      <Control action="AccelerateX" param="15.0"></Control>
+    </Bundle>
+    <Bundle>
+      <ID>A</ID>
+      <Control action="AccelerateX" param="-15.0"></Control>
+    </Bundle>
+    <Bundle>
+      <ID>SPACE</ID>
+      <Control action="Jump" param="-500.0"></Control>
+    </Bundle>
+    <Bundle>
+      <ID>F</ID>
+      <Control action="SpawnRelative" param="Mario_Fireball"></Control>
+    </Bundle>
   </Controls>
   <Collisions>
 

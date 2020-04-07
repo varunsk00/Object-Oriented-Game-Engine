@@ -11,6 +11,7 @@ public class EntityWrapper {
   private EntityView myView;
   private EntityParser myParser;
   private Controller myController;
+  private int id;
 
   public EntityWrapper(String entityName, Controller controller){
     myController = controller;

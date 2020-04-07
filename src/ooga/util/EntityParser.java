@@ -58,7 +58,7 @@ public class EntityParser {
     NodeList controls = myDoc.getElementsByTagName("Controls");
     Node controlNode = controls.item(0);
 
-    List<Map<String, Action>> controlMap = new ArrayList<Map<String, Action>>();
+    List<ActionBundle> controlMap = new ArrayList<ActionBundle>();
     String controlType = "NoControls"; //FIXME magic number
     if(controlNode.getNodeType() == Node.ELEMENT_NODE){
       Element controlElement = (Element) controlNode;
@@ -84,16 +84,30 @@ public class EntityParser {
     return myScheme;
   }
 
-  private List<Map<String, Action>> readControlMap(Element controlElement) {
-    NodeList controls = controlElement.getElementsByTagName("Control");
-    List<Map<String, Action>> controlMap = new ArrayList<Map<String, Action>>();
+  private List<ActionBundle> readControlMap(Element controlElement) {
+    NodeList bundles = controlElement.getElementsByTagName("Bundle");
+    List<ActionBundle> controlMap = new ArrayList<ActionBundle>();
+
+    for(int i = 0; i < bundles.getLength(); i++){
+      Node bundle = bundles.item(i);
+      if(bundle.getNodeType() == Node.ELEMENT_NODE){
+        Element bundleElement = (Element)bundle;
+        controlMap.add(readControls(bundleElement));
+      }
+    }
+    return controlMap;
+  }
+
+  private ActionBundle readControls(Element bundleElement) {
+    ActionBundle outputBundle = new ActionBundle();
+    outputBundle.setId(getElementValue(bundleElement, "ID"));
+
+    NodeList controls = bundleElement.getElementsByTagName("Control");
     for(int i = 0; i < controls.getLength(); i++){
       Node control = controls.item(i);
       if(control.getNodeType() == Node.ELEMENT_NODE){
         Element crlElement = (Element)control;
-        String key = crlElement.getAttribute("id");
-
-
+        //TODO actionfactory makeaction (action, param)
         Class controlAction = null;
         String actionName = crlElement.getAttribute("action");
         try{
@@ -109,12 +123,11 @@ public class EntityParser {
         } catch (InstantiationException  | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
           //FIXME add error handling
         }
-        HashMap<String, Action> keyActionPair = new HashMap<>();
-        keyActionPair.put(key, action);
-        controlMap.add(keyActionPair);
+        outputBundle.addAction(action);
       }
     }
-    return controlMap;
+
+    return outputBundle;
   }
 
   private String readControlScheme(Element controlElement) {

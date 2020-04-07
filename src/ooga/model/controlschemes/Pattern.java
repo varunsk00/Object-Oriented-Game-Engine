@@ -5,33 +5,43 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
+import ooga.util.ActionBundle;
 
 public class Pattern extends ControlScheme {
-  private List<Action> actionList;
+//  private List<List<Action>> patternList;
   private int index;
+  private int frameDuration;
 
-  public Pattern(List<Map<String, Action>> actions){
+  public Pattern(List<ActionBundle> actions){
     super(actions);
-    actionList = new ArrayList<>();
-    for(Map<String, Action> map : actions) {
-      for (String s : map.keySet()) {
-        for (int i = 0; i < Integer.parseInt(s); i++) {
-          actionList.add(map.get(s));
-        }
-      }
-      System.out.println(actionList);
-      index = 0;
-    }
+//    patternList = new ArrayList<>();
+//    for(ActionBundle bundle : actionMap) {
+//      List<Action> tempList = new ArrayList<>(map.values());
+//      for (String s : map.keySet()) {
+//        for (int i = 0; i < Integer.parseInt(s); i++) {
+//          patternList.add(tempList);
+//        }
+//        break;
+//      }
+//    }
+    index = 0;
+    frameDuration = 0;
   }
   @Override
   public List<Action> getCurrentAction() {
-    Action output = actionList.get(index);
-    index++;
-    if(index >= actionList.size()){
-      index = 0;
+    ActionBundle output = actionMap.get(index);
+    frameDuration++;
+
+    if(frameDuration >= Integer.parseInt(output.getId())) {
+      index++;
+      if(index >= actionMap.size()){
+        index = 0;
+      }
+      frameDuration = 0;
     }
+
     List<Action> currentActions = new ArrayList<>();
-    currentActions.add(output);
+    currentActions.addAll(output.getActions());
     return currentActions;
   }
 

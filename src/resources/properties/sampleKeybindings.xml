@@ -13,12 +13,22 @@
   </Info>
   <Controls>
     <Scheme name="Keybindings"/>
-    <Control id="S" action="MoveY" param="10.0"></Control>
-    <Control id="W" action="MoveY" param="-10.0"></Control>
-    <Control id="D" action="AccelerateX" param="11.0"></Control>
-    <Control id="A" action="AccelerateX" param="-11.0"></Control>
-    <Control id="SPACE" action="Jump" param="-500.0"></Control>
-    <Control id="F" action="SpawnRelative" param="sampleAI"></Control>
+    <Bundle>
+      <ID>D</ID>
+      <Control action="AccelerateX" param="15.0"></Control>
+    </Bundle>
+    <Bundle>
+      <ID>A</ID>
+      <Control action="AccelerateX" param="-15.0"></Control>
+    </Bundle>
+    <Bundle>
+      <ID>SPACE</ID>
+      <Control action="Jump" param="-500.0"></Control>
+    </Bundle>
+    <Bundle>
+      <ID>F</ID>
+      <Control action="SpawnRelative" param="Mario_Fireball"></Control>
+    </Bundle>
   </Controls>
   <Collisions>
 
