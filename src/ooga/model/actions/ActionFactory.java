@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import ooga.model.EntityModel;
+import ooga.model.actions.actionExceptions.InvalidActionException;
 
 public class ActionFactory {
 
@@ -40,24 +41,29 @@ public class ActionFactory {
   }
 
 
-  public Action makeAction(String action, String param) throws Exception {
-    String formalAction = action;
-    //String formalAction = validateAction(action, myActions); //TODO: check if action is valid
+  public Action makeAction(String action, String param) throws InvalidActionException {
+    //String formalAction = action;
+    String formalAction = validateAction(action); //TODO: check if action is valid
 
     return buildAction(formalAction, param);
   }
 
-  private String validateAction(String action, Map<String, String> myActions)
-      throws Exception {
+  private String validateAction(String action)
+      throws InvalidActionException {
     if(myActions.containsKey(action)) {
       return action;
     }
-    throw new Exception("Wrong Command"); //TODO: fix exception handling
+    throw new InvalidActionException("Action does not exist"); //TODO: fix exception handling
   }
 
-  private Action buildAction(String formalAction, String param)
-      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-    return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(String.class).newInstance(param);
+  private Action buildAction(String formalAction, String param) {
+    try {
+      return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(String.class).newInstance(param);
+    }
+    catch
+      (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        throw new InvalidActionException("Action could not be found.");
+    }
   }
 
 

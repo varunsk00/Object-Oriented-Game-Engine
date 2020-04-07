@@ -31,7 +31,5 @@ public class AI extends ControlScheme {
   public void handleKeyInput(KeyEvent keyEvent) {return;}
 
   @Override
-  public void handleKeyReleased() {
-
-  }
+  public void handleKeyReleased(KeyEvent keyEvent) {return;}
 }

@@ -53,7 +53,7 @@ public class EntityParser {
     myDoc.getDocumentElement().normalize();
   }
 
-  public ControlScheme parseControls() throws Exception {
+  public ControlScheme parseControls() {
     NodeList controls = myDoc.getElementsByTagName("Controls");
     Node controlNode = controls.item(0);
 
@@ -90,7 +90,7 @@ public class EntityParser {
     return myScheme;
   }
 
-  private Map<String, Action> readControlMap(Element controlElement) throws Exception {
+  private Map<String, Action> readControlMap(Element controlElement) {
     NodeList controls = controlElement.getElementsByTagName("Control");
     Map<String, Action> controlMap = new HashMap<String, Action>();
     for(int i = 0; i < controls.getLength(); i++){
@@ -100,27 +100,10 @@ public class EntityParser {
         String key = crlElement.getAttribute("id");
 
         ActionFactory actionFactory = new ActionFactory();
-
-
-
-        Class controlAction = null;
         String actionName = crlElement.getAttribute("action");
         String paramName = crlElement.getAttribute("param");
         Action testAction = actionFactory.makeAction(actionName, paramName);
 
-//        try{
-//          controlAction = Class.forName(ACTIONS_PREFIX + actionName);
-//        } catch (ClassNotFoundException e) {
-//          //FIXME add error handling
-//        }
-//
-//        Action action = new NoAction();
-//        try{
-//          action = (Action) (controlAction.getConstructor(String.class)
-//              .newInstance(crlElement.getAttribute("param")));
-//        } catch (InstantiationException  | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-//          //FIXME add error handling
-//        }
         controlMap.put(key, testAction);
 
       }
@@ -132,7 +115,7 @@ public class EntityParser {
     NodeList controlSchema = controlElement.getElementsByTagName("Scheme");
     Node scheme = controlSchema.item(0);
     if(scheme.getNodeType() == Node.ELEMENT_NODE){
-      return(((Element)scheme).getAttribute("name"));
+      return ((Element)scheme).getAttribute("name");
     }
     return "NoControls";
   }

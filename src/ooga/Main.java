@@ -1,22 +1,19 @@
 package ooga;
+import javafx.embed.swing.JFXPanel;
+import ooga.view.gui.startup.Boot;
 
-
-import javafx.application.Application;
-import javafx.stage.Stage;
-import ooga.view.TestSandbox;
+import java.io.FileNotFoundException;
 
 /**
  * Feel free to completely change this code or delete it entirely. 
  */
-public class Main extends Application {
+public class Main {
     /**
      * Start of the program.
      */
-  public static void main (String[] args) {
-    launch(args);
-  }
 
-  public void start(Stage primaryStage) throws Exception {
-    new TestSandbox(primaryStage);
+  public static void main (String[] args) throws FileNotFoundException {
+      JFXPanel fxPanel = new JFXPanel();
+      Boot arcade = new Boot(args);
   }
 }
