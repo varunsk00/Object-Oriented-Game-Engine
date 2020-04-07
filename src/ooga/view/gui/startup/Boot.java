@@ -33,7 +33,7 @@ public class Boot extends Application {
         launch(args);
     }
 
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("BOOGA");
         myStage = primaryStage;
         library = new GameCabinet(myStage);

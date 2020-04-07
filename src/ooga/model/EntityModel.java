@@ -1,5 +1,7 @@
 package ooga.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
@@ -18,11 +20,13 @@ public class EntityModel {
   private boolean onGround = false;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
+  private Map<String, Action> myActions;
 
   public EntityModel(EntityWrapper entityWrapper) {
     myEntity = entityWrapper;
     controlScheme = myEntity.getParser().parseControls();
     actionStack = new Stack<>();
+    myActions = new HashMap<String, Action>();
   }
 
   public void update(double elapsedTime){
@@ -76,6 +80,7 @@ public class EntityModel {
   public double getX(){return xPos;}
 
   public double getY(){return yPos;}
+
 
   public void setX(double newX){xPos = newX;}
 

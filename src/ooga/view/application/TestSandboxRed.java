@@ -21,7 +21,7 @@ public class TestSandboxRed {
     private TestController testController;
 
 
-    public TestSandboxRed(Stage stage) {
+    public TestSandboxRed(Stage stage) { //FIXME ADD ERROR HANDLING
         this.currentStage = stage;
         initModel();
         initView();
@@ -39,7 +39,7 @@ public class TestSandboxRed {
         myBackgroundPane.setBackground(new Background(commandBackground));
     }
 
-    private void initController(){
+    private void initController() { //FIXME ADD ERROR HANDLING
         testController = new TestController(myBackgroundPane, myScene, currentStage);
     }
 

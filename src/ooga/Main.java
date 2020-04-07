@@ -11,6 +11,7 @@ public class Main {
     /**
      * Start of the program.
      */
+
   public static void main (String[] args) throws FileNotFoundException {
       JFXPanel fxPanel = new JFXPanel();
       Boot arcade = new Boot(args);

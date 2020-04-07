@@ -23,7 +23,7 @@ public class GameCabinet {
     private Scene myScene;
     private BorderPane mainFrame = new BorderPane();
 
-    public GameCabinet(Stage primaryStage) {
+    public GameCabinet(Stage primaryStage) { //FIXME ADD ERROR HANDLING
         initGameSelect();
         mainFrame.setCenter(myGameCabinet);
         initStage(primaryStage);
@@ -51,7 +51,7 @@ public class GameCabinet {
         primaryStage.show();
     }
 
-    public void updateCurrentGame(Stage myStage){ //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
+    public void updateCurrentGame(Stage myStage) { //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
         for(GamePreview game: myGames){
             if(game.getGamePressed() != null) {
                 if(game.getGamePressed().equals("0x008000ff")) {

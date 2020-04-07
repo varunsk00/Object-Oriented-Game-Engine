@@ -50,7 +50,8 @@ public class TestController implements Controller {
 
 
 
-  public TestController (Pane pane, Scene testScene, Stage stage){
+  public TestController (Pane pane, Scene testScene, Stage stage) { //FIXME add exception stuff
+
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stage;
     testPane = pane;
@@ -64,7 +65,7 @@ public class TestController implements Controller {
     physicsEngine = new PhysicsEngine("dummyString");
 
     testScene.setOnKeyPressed(e -> {
-      handlePressInput(e.getCode());
+        handlePressInput(e.getCode());
       entityWrapper.handleKeyInput(e); //FIXME i would like to
     });
     testScene.setOnKeyReleased(e-> {

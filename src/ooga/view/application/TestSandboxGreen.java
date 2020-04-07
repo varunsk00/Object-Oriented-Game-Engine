@@ -21,6 +21,7 @@ public class TestSandboxGreen {
   private TestController testController;
 
 
+
   public TestSandboxGreen(Stage stage) {
     this.currentStage = stage;
     initModel();
@@ -38,6 +39,7 @@ public class TestSandboxGreen {
     BackgroundFill commandBackground = new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY);
     myBackgroundPane.setBackground(new Background(commandBackground));
   }
+
 
   private void initController(){
     testController = new TestController(myBackgroundPane, myScene, currentStage);

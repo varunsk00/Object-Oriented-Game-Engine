@@ -43,7 +43,7 @@ public class TestSandboxBlue {
         myBackgroundPane.setBackground(new Background(commandBackground));
     }
 
-    private void initController(){
+    private void initController() { //FIXME ADD ERROR HANDLING
         testController = new TestController(myBackgroundPane, myScene, currentStage);
     }
 
