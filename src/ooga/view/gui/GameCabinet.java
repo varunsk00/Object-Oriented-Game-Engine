@@ -21,6 +21,7 @@ public class GameCabinet extends Pane {
         this.myGames = new ArrayList<>();
         initGameSelect();
         gameSelectionMenu = new GameSelectionMenu(myGames);
+        this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         this.getChildren().add(gameSelectionMenu);
         updateCurrentGame(primaryStage);
     }
@@ -64,19 +65,19 @@ public class GameCabinet extends Pane {
         for(GamePreview game: myGames){
             if(game.getGamePressed() != null) {
                 if(game.getGamePressed().equals("green")) {
-                    game.resetGameName();
-                    new TestSandboxGreen(myStage);
-                    myStage.setTitle("TestSandboxGreen");
+     //               game.resetGameName();
+     //               new TestSandboxGreen(myStage);
+     //               myStage.setTitle("TestSandboxGreen");
                 }
                 else if(game.getGamePressed().equals("blue")) {
-                    game.resetGameName();
-                    new TestSandboxBlue(myStage);
-                    myStage.setTitle("TestSandboxBlue");
+     //               game.resetGameName();
+     //               new TestSandboxBlue(myStage);
+     //               myStage.setTitle("TestSandboxBlue");
                 }
                 else if(game.getGamePressed().equals("red")) {
-                    game.resetGameName();
-                    new TestSandboxRed(myStage);
-                    myStage.setTitle("TestSandboxRed");
+     //               game.resetGameName();
+     //               new TestSandboxRed(myStage);
+     //               myStage.setTitle("TestSandboxRed");
                 }
             }
         }
