@@ -10,8 +10,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
-import javax.swing.text.TextAction;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -51,7 +49,7 @@ public class Welcome extends VBox {
     }
 
 
-    private void renderButton() { //FIXME: FIGURE OUT WHY BUTTONS AREN'T WORKING (TOOLKIT ERROR)
+    private void renderButton() {
         myButton = new VBox();
         Button playButton = makeButton("Play", event -> playPressed = true);
         myButton.getChildren().add(playButton);
@@ -69,9 +67,8 @@ public class Welcome extends VBox {
 
     private Button makeButton(String key, EventHandler e) {
         Button tempButton = new Button(key);
-        //tempButton.setMaxWidth(Double.MAX_VALUE);
-        tempButton.setScaleX(3.0);
-        tempButton.setScaleY(3.0);
+        tempButton.setScaleX(3.0); //FIXME: MAGIC NUMBER
+        tempButton.setScaleY(3.0); //FIXME: MAGIC NUMBER
         tempButton.setOnAction(e);
         return tempButton;
     }

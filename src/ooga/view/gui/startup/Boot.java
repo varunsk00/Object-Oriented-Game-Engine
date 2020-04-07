@@ -3,8 +3,6 @@ package ooga.view.gui.startup;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -28,7 +26,8 @@ public class Boot extends Application {
     private Welcome welcomeScreen = new Welcome();
     private GameCabinet library;
     private MediaPlayer welcomeMusic;
-    public Boot() throws FileNotFoundException { }
+    public Boot() throws FileNotFoundException {
+    }
 
     public Boot(String[] args) throws FileNotFoundException {
         launch(args);
@@ -45,7 +44,7 @@ public class Boot extends Application {
         myStage.show();
     }
 
-    private void initBootupScreen(){
+    private void initBootupScreen(){ //FIXME: filepath declared as variable
         mainFrame.setCenter(welcomeScreen);
         welcomeMusic = new MediaPlayer (new Media(new File("src/resources/sample_menu_music.wav").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
         playSound(welcomeMusic);
@@ -59,7 +58,7 @@ public class Boot extends Application {
         animation.play();
     }
 
-    private void step() {
+    private void step() { //FIXME: Please fix this monstrosity of if statements
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
             mainFrame.setCenter(library.getLibrary());
