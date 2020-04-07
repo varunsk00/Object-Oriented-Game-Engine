@@ -1,4 +1,4 @@
-package ooga.view.application;
+package ooga.view;
 
 import javafx.scene.Group;
 import javafx.scene.Node;

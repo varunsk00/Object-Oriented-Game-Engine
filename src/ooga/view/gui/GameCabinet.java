@@ -1,139 +1,84 @@
 package ooga.view.gui;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.PathTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.beans.binding.DoubleBinding;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import ooga.view.application.TestSandbox;
+import ooga.view.application.TestSandboxBlue;
+import ooga.view.application.TestSandboxGreen;
+import ooga.view.application.TestSandboxRed;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class GameCabinet extends Application {
-    private Scene myScene;
-    private static final int SCENE_HEIGHT = 576;
-    private static final int SCENE_WIDTH = 1080;
-    private static final double FRAMES_PER_SECOND = 30;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    private GameSelectionMenu myGameCabinet;
+public class GameCabinet extends Pane {
+    private static final int SCENE_WIDTH = 1280;
+    private static final int SCENE_HEIGHT = 720;
+    private GameSelectionMenu gameSelectionMenu;
     private List<GamePreview> myGames;
-    private Timeline animation;
-    private ResourceBundle myResources;
-    private HBox customizationPanel = new HBox();
-    private BorderPane mainView = new BorderPane();
-    private BorderPane mainFrame = new BorderPane();
-    private Stage myStage;
-    String selectedGame;
 
-    public GameCabinet() { }
-
-    public GameCabinet(String[] args) {
-        launch(args);
-    }
-
-
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("BOOGA");
-        myStage = primaryStage;
-        startAnimationLoop();
-        initGameSelect();
-        setupUI();
-        handleGameSelect(myStage);
-        Scene scene = new Scene(mainFrame, SCENE_WIDTH, SCENE_HEIGHT);
-        scene.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
-        myGameCabinet.setManaged(false);
-        myGameCabinet.setLayoutX(40);
-        myGameCabinet.setLayoutY(-100);
-        myStage.setScene(scene);
-        myStage.show();
-    }
-
-    private void startAnimationLoop() {
-       KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step());
-        animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
-    }
-    private void step() {
-        var last_updated = new Date().getTime();
-        if(new Date().getTime() > last_updated + 100) {
-            last_updated = new Date().getTime();
-        }
-           updateCurrentGame();
-    }
-
-    private void updateCurrentGame(){
-        for(GamePreview game: myGames){
-            if(game.getGameName() != null) {
-                if(game.getGameName().equals("0x008000ff")) {
-                    game.resetGameName();
-                    new TestSandbox(myStage);
-                    myStage.setTitle("TestSandbox");
-                    //myStage.setScene(new TestSandbox(myStage));
-                }
-            }
-        }
-    }
-
-    public String getSelectedGame(){
-        return selectedGame;
-    }
-
-    private void initGameSelect(){
+    public GameCabinet(Stage primaryStage) { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
+        initGameSelect();
+        gameSelectionMenu = new GameSelectionMenu(myGames);
+        this.getChildren().add(gameSelectionMenu);
+        updateCurrentGame(primaryStage);
+    }
+
+    public GameSelectionMenu getLibrary(){
+        return gameSelectionMenu;
+    }
+
+    private void initGameSelect(){ //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
         GamePreview g1 = new GamePreview(Color.BLUE);
         GamePreview g2 = new GamePreview(Color.RED);
         GamePreview g3 = new GamePreview(Color.GREEN);
         GamePreview g4 = new GamePreview(Color.YELLOW);
         GamePreview g5 = new GamePreview(Color.ORANGE);
+        g1.setGameName("blue");
+        g2.setGameName("red");
+        g3.setGameName("green");
+        g4.setGameName("yellow");
+        g5.setGameName("orange");
         myGames.add(g1);
         myGames.add(g2);
         myGames.add(g3);
         myGames.add(g4);
         myGames.add(g5);
-        myGameCabinet = new GameSelectionMenu(myGames);
 
     }
-    private void handleAltScrollInput(KeyCode code) {
+    public void handleAltScrollInput(KeyCode code) {
+        System.out.println(code);
         if (code == KeyCode.RIGHT) {
-            myGameCabinet.scrollRight();
+            this.gameSelectionMenu.scrollRight();
         }
         else if (code == KeyCode.LEFT) {
-            myGameCabinet.scrollLeft();
+            this.gameSelectionMenu.scrollLeft();
         }
 
     }
 
 
-    public void setupUI() {
-        mainFrame.setCenter(myGameCabinet);
-    }
 
-    private void handleGameSelect(Stage primaryStage) {
+    public void updateCurrentGame(Stage myStage) { //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
         for(GamePreview game: myGames){
-//            if(!game.getGameName().equals(null)){
-//                System.out.println("YEET");
-//            }
+            if(game.getGamePressed() != null) {
+                if(game.getGamePressed().equals("green")) {
+                    game.resetGameName();
+                    new TestSandboxGreen(myStage);
+                    myStage.setTitle("TestSandboxGreen");
+                }
+                else if(game.getGamePressed().equals("blue")) {
+                    game.resetGameName();
+                    new TestSandboxBlue(myStage);
+                    myStage.setTitle("TestSandboxBlue");
+                }
+                else if(game.getGamePressed().equals("red")) {
+                    game.resetGameName();
+                    new TestSandboxRed(myStage);
+                    myStage.setTitle("TestSandboxRed");
+                }
+            }
         }
-//        if (selectedGame.equals("0x008000ff")){
-//            System.out.println("YEET");
-//        }
     }
-
 }

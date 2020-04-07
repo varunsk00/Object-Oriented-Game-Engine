@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import ooga.model.actions.Action;
+import ooga.model.actions.ActionFactory;
 import ooga.model.actions.NoAction;
 import ooga.model.controlschemes.ControlScheme;
 import org.w3c.dom.Document;
@@ -52,7 +53,7 @@ public class EntityParser {
     myDoc.getDocumentElement().normalize();
   }
 
-  public ControlScheme parseControls(){
+  public ControlScheme parseControls() {
     NodeList controls = myDoc.getElementsByTagName("Controls");
     Node controlNode = controls.item(0);
 
@@ -98,22 +99,12 @@ public class EntityParser {
         Element crlElement = (Element)control;
         String key = crlElement.getAttribute("id");
 
-        Class controlAction = null;
+        ActionFactory actionFactory = new ActionFactory();
         String actionName = crlElement.getAttribute("action");
-        try{
-          controlAction = Class.forName(ACTIONS_PREFIX + actionName);
-        } catch (ClassNotFoundException e) {
-          //FIXME add error handling
-        }
+        String paramName = crlElement.getAttribute("param");
+        Action testAction = actionFactory.makeAction(actionName, paramName);
 
-        Action action = new NoAction();
-        try{
-          action = (Action) (controlAction.getConstructor(String.class)
-              .newInstance(crlElement.getAttribute("param")));
-        } catch (InstantiationException  | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-          //FIXME add error handling
-        }
-        controlMap.put(key, action);
+        controlMap.put(key, testAction);
 
       }
     }
@@ -124,7 +115,7 @@ public class EntityParser {
     NodeList controlSchema = controlElement.getElementsByTagName("Scheme");
     Node scheme = controlSchema.item(0);
     if(scheme.getNodeType() == Node.ELEMENT_NODE){
-      return(((Element)scheme).getAttribute("name"));
+      return ((Element)scheme).getAttribute("name");
     }
     return "NoControls";
   }

@@ -17,5 +17,5 @@ public abstract class ControlScheme {
 
   public abstract void handleKeyInput(KeyEvent keyEvent);
 
-  public abstract void handleKeyReleased();
+  public abstract void handleKeyReleased(KeyEvent keyEvent);
 }

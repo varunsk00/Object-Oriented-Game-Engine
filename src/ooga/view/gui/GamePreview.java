@@ -14,7 +14,7 @@ public class GamePreview extends Rectangle {
         this.setY(275);
         this.setFill(color);
         //this.gameName = color.toString();
-        this.setOnMouseClicked(e -> this.gameName = color.toString());
+       // this.setOnMouseClicked(e -> this.gameName = color.toString());
         //this.setOnMouseClicked(e -> System.out.println(color));
     }
     public void setXPos(double xPos) {
@@ -23,10 +23,13 @@ public class GamePreview extends Rectangle {
     public double getXPos() {
         return this.xPos;
     }
-    public String getGameName(){
+    public String getGamePressed(){
         return gameName;
     }
     public void resetGameName(){
         gameName = null;
+    }
+    public void setGameName(String name){
+        gameName = name;
     }
 }

@@ -2,31 +2,67 @@ package ooga.view.gui;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
+import javafx.animation.Transition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
-
-
+import javax.imageio.ImageIO;
 import java.util.List;
-
-public class GameSelectionMenu extends Group {
+//TODO: REMOVE ALL MAGIC NUMBERS, REFACTOR MORE - SPECIFICALLY SCROLLLEFT AND RIGHT,
+// FIGURE OUT HOW TO HANDLE ONLY 3 GAMES, FIX BUTTON NOT GETTING GAME NAME, FACTOR OUT FUNCTIONS INTO A FACTORY FOR ALL UI
+public class GameSelectionMenu extends BorderPane {
     Polygon leftScrollArrow;
     Polygon rightScrollArrow;
     List<GamePreview> playableGamesList;
+    Button selectGameButton;
+    private VBox menuFrame;
+    private HBox gameSelectionBox;
+    private VBox selectButtonAndNameBox;
+    private Group gameSwitchGroup;
+
     public GameSelectionMenu(List<GamePreview> playableGames) {
         this.playableGamesList = playableGames;
-        initLeftArrow();
-        initRightArrow();
-        leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
-        rightScrollArrow.setOnMouseClicked(e -> scrollRight());
-        initializePreviewPos();
+        this.menuFrame = new VBox();
+        this.gameSelectionBox = new HBox();
+        this.selectButtonAndNameBox = new VBox();
+        this.gameSwitchGroup = new Group();
+        initGameSwitchGroup();
+        initSelectionUI();
+        initCompleteView();
     }
     public void addNewGamePreview(GamePreview newGamePreview) {
-        this.getChildren().add(newGamePreview);
+        gameSwitchGroup.getChildren().add(newGamePreview);
         this.playableGamesList.add(newGamePreview);
-
+    }
+    private void initGameSwitchGroup() {
+        initLeftArrow();
+        initRightArrow();
+        initializePreviewPos();
+        gameSelectionBox.getChildren().add(gameSwitchGroup);
+        gameSelectionBox.setMinHeight(300);
+        gameSelectionBox.setAlignment(Pos.CENTER);
+    }
+    private void initSelectionUI() {
+        createGameSelectButton();
+        selectButtonAndNameBox.getChildren().add(selectGameButton);
+        selectButtonAndNameBox.setPadding(new Insets(50, 50, 50, 425));
+    }
+    private void initCompleteView() {
+        menuFrame.getChildren().add(gameSelectionBox);
+        menuFrame.getChildren().add(selectButtonAndNameBox);
+        menuFrame.setAlignment(Pos.CENTER);
+        menuFrame.setSpacing(50);
+        this.setLayoutX(175);
+        this.setLayoutY(200);
+        this.setCenter(menuFrame);
     }
     public void scrollLeft() {
         GamePreview temp = playableGamesList.get(0);
@@ -39,7 +75,6 @@ public class GameSelectionMenu extends Group {
                     MoveTo m = new MoveTo(850, 325);
                     LineTo l = new LineTo(oldXPos - 250, 325);
                     playPathTransition(playableGamesList.get(i), m, l);
-
                 } else {
                     MoveTo m = new MoveTo(oldXPos + 50, 325);
                     LineTo l = new LineTo(oldXPos - 250, 325);
@@ -50,16 +85,17 @@ public class GameSelectionMenu extends Group {
         playableGamesList.set(playableGamesList.size()-1, temp);
         playFadeTransition(playableGamesList.get(playableGamesList.size()-1), false, 500);
         MoveTo m = new MoveTo(playableGamesList.get(playableGamesList.size()-1).getXPos() + 50, 325);
-        LineTo l = new LineTo(100, 325);
+        LineTo l = new LineTo(150, 325);
         playPathTransition(playableGamesList.get(playableGamesList.size()-1), m, l);
         reinitializePreviewPos();
+        playGrowOrShrinkTransition(false);
     }
     public void scrollRight() {
         GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
         for (int i = playableGamesList.size()-1; i > 0; i --) {
             playableGamesList.set(i, playableGamesList.get(i - 1));
             double oldXPos = playableGamesList.get(i).getXPos();
-            if (oldXPos > 100 && oldXPos <= 1050) {
+            if (oldXPos > 100 && oldXPos < 850) {
                 if (oldXPos == 750) {
                     playFadeTransition(playableGamesList.get(i),false, 500);
                     MoveTo m = new MoveTo(oldXPos + 50, 325);
@@ -79,6 +115,7 @@ public class GameSelectionMenu extends Group {
         LineTo l = new LineTo(200, 325);
         playPathTransition(playableGamesList.get(0), m, l);
         reinitializePreviewPos();
+        playGrowOrShrinkTransition(true);
     }
     private void initLeftArrow() {
         leftScrollArrow = new Polygon();
@@ -89,7 +126,8 @@ public class GameSelectionMenu extends Group {
         leftScrollArrow.setTranslateY(275);
         leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.LIGHTGRAY));
         leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.WHITE));
-        this.getChildren().add(leftScrollArrow);
+        leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
+        gameSwitchGroup.getChildren().add(leftScrollArrow);
     }
     private void initRightArrow() {
         rightScrollArrow = new Polygon();
@@ -98,21 +136,34 @@ public class GameSelectionMenu extends Group {
         rightScrollArrow.setStroke(Color.RED);
         rightScrollArrow.setTranslateX(850);
         rightScrollArrow.setTranslateY(275);
-        rightScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.LIGHTGRAY));
-        rightScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.WHITE));
-        this.getChildren().add(rightScrollArrow);
+        rightScrollArrow.setOnMousePressed(e -> rightScrollArrow.setFill(Color.LIGHTGRAY));
+        rightScrollArrow.setOnMouseReleased(e -> rightScrollArrow.setFill(Color.WHITE));
+        rightScrollArrow.setOnMouseClicked(e -> scrollRight());
+        gameSwitchGroup.getChildren().add(rightScrollArrow);
     }
     private void reinitializePreviewPos() {
         for (int i = 0; i < playableGamesList.size(); i ++) {
             playableGamesList.get(i).setXPos(100 + playableGamesList.get(i).getWidth()/2 + 300*i);
+            if (playableGamesList.get(i).getXPos() < 850) {
+                playableGamesList.get(i).setVisible(true);
+            }
         }
     }
     private void initializePreviewPos() {
         for (int i = 0; i < playableGamesList.size(); i ++) {
             playableGamesList.get(i).setX((100+ playableGamesList.get(i).getWidth()/2)+300*i);
             playableGamesList.get(i).setXPos((100+ playableGamesList.get(i).getWidth()/2)+300*i);
-            this.getChildren().add(playableGamesList.get(i));
-
+            gameSwitchGroup.getChildren().add(playableGamesList.get(i));
+            if (playableGamesList.get(i).getXPos() > 900 || playableGamesList.get(i).getXPos() < 100) {
+                playableGamesList.get(i).setVisible(false);
+            }
+            else {
+                if (playableGamesList.get(i).getXPos() == 450) {
+                   playableGamesList.get(i).setScaleX(2.2);
+                   playableGamesList.get(i).setScaleY(2.2);
+                }
+                playableGamesList.get(i).setVisible(true);
+            }
         }
     }
     private void playFadeTransition(Node node, Boolean isReversed, int duration) {
@@ -139,6 +190,61 @@ public class GameSelectionMenu extends Group {
         p.setPath(path);
         p.play();
     }
+    /***
+     * @param direction - true == left, false == right
+     */
+    private void playGrowOrShrinkTransition(boolean direction) {
+        growCenterGame();
+        Transition growOrShrinkTransition = new Transition() {
+            {
+                setCycleDuration(Duration.millis(1000));
+            }
+            @Override
+            protected void interpolate(double frac) {
+                if (direction) {
+                    playableGamesList.get(2).setScaleX(playableGamesList.get(2).getScaleX() - .022);
+                    playableGamesList.get(2).setScaleY(playableGamesList.get(2).getScaleY() - .022);
+                } else {
+                    playableGamesList.get(0).setScaleX(playableGamesList.get(0).getScaleX() - .022);
+                    playableGamesList.get(0).setScaleY(playableGamesList.get(0).getScaleY() - .022);
+                }
+            }
+        };
+        growOrShrinkTransition.play();
+    }
+    private void growCenterGame() {
+        Transition growCenterGameTransition = new Transition() {
+            {
+                setCycleDuration(Duration.millis(1000));
+            }
+            @Override
+            protected void interpolate(double frac) {
+                playableGamesList.get(1).setScaleX(playableGamesList.get(1).getScaleX() + .022);
+                playableGamesList.get(1).setScaleY(playableGamesList.get(1).getScaleY() + .022);
+            }
+        };
+        growCenterGameTransition.play();
+    }
+    public void createGameSelectButton() {
+        selectGameButton = makeButton("Select", e -> System.out.println(playableGamesList.get(1).getGamePressed()));
+    }
+    private Button makeButton(String property, EventHandler<ActionEvent> handler) {
+        // represent all supported image suffixes
+        final String IMAGEFILE_SUFFIXES = String
+                .format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
+        Button result = new Button();
+     //   String label = resources.getString(property);
+        String label = property;
+      //  if (label.matches(IMAGEFILE_SUFFIXES)) {
+       //     result.setGraphic(new ImageView(
+       //             new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_FOLDER + label))));
+       // } else {
+            result.setText(label);
+      //  }
+        result.setOnAction(handler);
+        return result;
+    }
 
 
 }
+

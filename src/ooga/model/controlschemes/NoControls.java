@@ -19,12 +19,8 @@ public class NoControls extends ControlScheme {
   }
 
   @Override
-  public void handleKeyInput(KeyEvent keyEvent) {
-
-  }
+  public void handleKeyInput(KeyEvent keyEvent) {return;}
 
   @Override
-  public void handleKeyReleased() {
-
-  }
+  public void handleKeyReleased(KeyEvent keyEvent) {return;}
 }
