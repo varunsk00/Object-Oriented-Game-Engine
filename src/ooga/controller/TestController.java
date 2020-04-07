@@ -11,12 +11,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.application.menu.MenuButtons;
 
 import javax.swing.text.html.parser.Entity;
 import ooga.model.PhysicsEngine;
+import ooga.view.gui.GameCabinet;
 
 
 public class TestController implements Controller {
@@ -44,11 +46,13 @@ public class TestController implements Controller {
   private boolean isGrounded;
   private boolean keyPressed;
   private Timeline animation;
+  private Stage currentStage;
 
 
 
-  public TestController (Pane pane, Scene testScene){
+  public TestController (Pane pane, Scene testScene, Stage stage){
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
+    currentStage = stage;
     testPane = pane;
     EntityList = new Group();
     testPane.getChildren().add(EntityList);
@@ -118,6 +122,10 @@ public class TestController implements Controller {
       EntityList.setEffect(null);
       animation.play();
       escCounter--;
+    }
+    else if (code == KeyCode.H) {
+      System.out.println("HOME");
+      new GameCabinet(currentStage);
     }
     if (code == KeyCode.SPACE && isGrounded) {
       yVelocity = -200;

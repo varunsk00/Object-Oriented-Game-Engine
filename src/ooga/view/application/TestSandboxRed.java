@@ -16,11 +16,13 @@ public class TestSandboxRed {
     private static final int SCENE_HEIGHT = 720;
     private Scene myScene;
     private Pane myBackgroundPane;
+    private Stage currentStage;
     private Group group;
     private TestController testController;
 
 
     public TestSandboxRed(Stage stage) {
+        this.currentStage = stage;
         initModel();
         initView();
         initStage(stage);
@@ -38,7 +40,7 @@ public class TestSandboxRed {
     }
 
     private void initController(){
-        testController = new TestController(myBackgroundPane, myScene);
+        testController = new TestController(myBackgroundPane, myScene, currentStage);
     }
 
     private void initStage(Stage primaryStage) {

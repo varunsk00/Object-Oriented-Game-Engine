@@ -15,44 +15,23 @@ import ooga.view.application.TestSandboxRed;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameCabinet extends Application {
+public class GameCabinet {
     private static final int SCENE_WIDTH = 1280;
     private static final int SCENE_HEIGHT = 720;
-    private static final double FRAMES_PER_SECOND = 30;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private GameSelectionMenu myGameCabinet;
     private List<GamePreview> myGames;
-    private Timeline animation;
+    private Scene myScene;
     private BorderPane mainFrame = new BorderPane();
-    private Stage myStage;
 
-    public GameCabinet() { }
-
-    public GameCabinet(String[] args) {
-        launch(args);
-    }
-
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("BOOGA");
-        myStage = primaryStage;
-        startAnimationLoop();
+    public GameCabinet(Stage primaryStage) {
         initGameSelect();
         mainFrame.setCenter(myGameCabinet);
-        Scene scene = new Scene(mainFrame, SCENE_WIDTH, SCENE_HEIGHT);
-        myStage.setScene(scene);
-        myStage.show();
+        initStage(primaryStage);
+        updateCurrentGame(primaryStage);
     }
 
-    private void startAnimationLoop() {
-        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step());
-        animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
-    }
-
-    private void step() {
-        updateCurrentGame();
+    public GameSelectionMenu getLibrary(){
+        return myGameCabinet;
     }
 
     private void initGameSelect(){ //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
@@ -66,7 +45,13 @@ public class GameCabinet extends Application {
         this.myGameCabinet = new GameSelectionMenu(myGames);
     }
 
-    private void updateCurrentGame(){ //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
+    private void initStage(Stage primaryStage) {
+        myScene = new Scene(mainFrame, SCENE_WIDTH, SCENE_HEIGHT);
+        primaryStage.setScene(myScene);
+        primaryStage.show();
+    }
+
+    public void updateCurrentGame(Stage myStage){ //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
         for(GamePreview game: myGames){
             if(game.getGamePressed() != null) {
                 if(game.getGamePressed().equals("0x008000ff")) {

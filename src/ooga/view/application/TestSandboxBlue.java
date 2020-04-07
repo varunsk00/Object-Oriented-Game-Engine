@@ -7,20 +7,26 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import ooga.controller.TestController;
+
+import java.io.File;
 
 public class TestSandboxBlue {
     private static final int SCENE_WIDTH = 1280;
     private static final int SCENE_HEIGHT = 720;
     private Scene myScene;
     private Pane myBackgroundPane;
+    private Stage currentStage;
     private Group group;
     private TestController testController;
 
-
     public TestSandboxBlue(Stage stage) {
+        this.currentStage = stage;
         initModel();
         initView();
         initStage(stage);
@@ -38,7 +44,7 @@ public class TestSandboxBlue {
     }
 
     private void initController(){
-        testController = new TestController(myBackgroundPane, myScene);
+        testController = new TestController(myBackgroundPane, myScene, currentStage);
     }
 
     private void initStage(Stage primaryStage) {
