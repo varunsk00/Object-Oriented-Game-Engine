@@ -18,7 +18,7 @@ public class FinalController implements Controller {
       entity.update(elapsedTime);
     }
   }
-  
+
   @Override
   public void addEntity(EntityWrapper newEntity) {
     entityList.add(newEntity);
