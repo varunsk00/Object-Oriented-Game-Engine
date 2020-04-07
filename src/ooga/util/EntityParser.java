@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import ooga.model.actions.Action;
+import ooga.model.actions.ActionFactory;
 import ooga.model.actions.NoAction;
 import ooga.model.controlschemes.ControlScheme;
 import org.w3c.dom.Document;
@@ -52,7 +53,7 @@ public class EntityParser {
     myDoc.getDocumentElement().normalize();
   }
 
-  public ControlScheme parseControls(){
+  public ControlScheme parseControls() throws Exception {
     NodeList controls = myDoc.getElementsByTagName("Controls");
     Node controlNode = controls.item(0);
 
@@ -89,7 +90,7 @@ public class EntityParser {
     return myScheme;
   }
 
-  private Map<String, Action> readControlMap(Element controlElement) {
+  private Map<String, Action> readControlMap(Element controlElement) throws Exception {
     NodeList controls = controlElement.getElementsByTagName("Control");
     Map<String, Action> controlMap = new HashMap<String, Action>();
     for(int i = 0; i < controls.getLength(); i++){
@@ -98,22 +99,29 @@ public class EntityParser {
         Element crlElement = (Element)control;
         String key = crlElement.getAttribute("id");
 
+        ActionFactory actionFactory = new ActionFactory();
+
+
+
         Class controlAction = null;
         String actionName = crlElement.getAttribute("action");
-        try{
-          controlAction = Class.forName(ACTIONS_PREFIX + actionName);
-        } catch (ClassNotFoundException e) {
-          //FIXME add error handling
-        }
+        String paramName = crlElement.getAttribute("param");
+        Action testAction = actionFactory.makeAction(actionName, paramName);
 
-        Action action = new NoAction();
-        try{
-          action = (Action) (controlAction.getConstructor(String.class)
-              .newInstance(crlElement.getAttribute("param")));
-        } catch (InstantiationException  | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-          //FIXME add error handling
-        }
-        controlMap.put(key, action);
+//        try{
+//          controlAction = Class.forName(ACTIONS_PREFIX + actionName);
+//        } catch (ClassNotFoundException e) {
+//          //FIXME add error handling
+//        }
+//
+//        Action action = new NoAction();
+//        try{
+//          action = (Action) (controlAction.getConstructor(String.class)
+//              .newInstance(crlElement.getAttribute("param")));
+//        } catch (InstantiationException  | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+//          //FIXME add error handling
+//        }
+        controlMap.put(key, testAction);
 
       }
     }

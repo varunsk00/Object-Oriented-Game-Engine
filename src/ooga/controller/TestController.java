@@ -35,7 +35,7 @@ public class TestController {
   private boolean isGrounded;
 
 
-  public TestController(Pane pane, Scene testScene){
+  public TestController(Pane pane, Scene testScene) throws Exception {
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     testPane = pane;
     EntityList = new Group();

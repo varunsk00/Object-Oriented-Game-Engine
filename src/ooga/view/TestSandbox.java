@@ -29,7 +29,7 @@ public class TestSandbox {
   private TestController testController;
 
 
-  public TestSandbox(Stage stage) {
+  public TestSandbox(Stage stage) throws Exception {
     initModel();
     initView();
     initStage(stage);
@@ -46,7 +46,7 @@ public class TestSandbox {
     myBackgroundPane.setBackground(new Background(commandBackground));
   }
 
-  private void initController(){
+  private void initController() throws Exception {
     testController = new TestController(myBackgroundPane, myScene);
   }
 

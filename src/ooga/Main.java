@@ -16,7 +16,7 @@ public class Main extends Application {
     launch(args);
   }
 
-  public void start(Stage primaryStage) {
+  public void start(Stage primaryStage) throws Exception {
     new TestSandbox(primaryStage);
   }
 }

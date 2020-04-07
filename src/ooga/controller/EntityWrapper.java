@@ -12,7 +12,7 @@ public class EntityWrapper {
   private EntityView myView;
   private EntityParser myParser;
 
-  public EntityWrapper(String entityName){
+  public EntityWrapper(String entityName) throws Exception {
     myParser = new EntityParser(entityName);
     myModel = new EntityModel(this);
     myView = new EntityView(this);

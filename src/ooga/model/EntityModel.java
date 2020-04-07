@@ -1,5 +1,7 @@
 package ooga.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
@@ -14,11 +16,13 @@ public class EntityModel {
   private double yVel;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
+  private Map<String, Action> myActions;
 
-  public EntityModel(EntityWrapper entityWrapper) {
+  public EntityModel(EntityWrapper entityWrapper) throws Exception {
     myEntity = entityWrapper;
     controlScheme = myEntity.getParser().parseControls();
     actionStack = new Stack<>();
+    myActions = new HashMap<String, Action>();
   }
 
   public void handleKeyInput(KeyEvent event) {
@@ -45,5 +49,9 @@ public class EntityModel {
 
   public void handleKeyReleased() {
     controlScheme.handleKeyReleased();
+  }
+
+  public void addAction(String key, Action action) {
+    myActions.put(key, action);
   }
 }
