@@ -7,6 +7,7 @@ import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
 import ooga.model.actions.AccelerateX;
 import ooga.model.actions.Action;
+import ooga.model.actions.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 
 public class EntityModel {
@@ -21,10 +22,12 @@ public class EntityModel {
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
   private Map<String, Action> myActions;
+  private Map<CollisionKey, Action> myCollisions;
 
   public EntityModel(EntityWrapper entityWrapper) {
     myEntity = entityWrapper;
     controlScheme = myEntity.getParser().parseControls();
+    myCollisions = myEntity.getParser().parseCollisions();
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
   }

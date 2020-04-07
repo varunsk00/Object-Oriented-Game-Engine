@@ -20,6 +20,8 @@
     <Control id="SPACE" action="Jump" param="-500.0"></Control>
   </Controls>
   <Collisions>
-
+    <Collision id="Brick" action="MoveX" param="-10.0" orientation="A"></Collision>
+    <Collision id="Brick" action="AccelerateX" param="0" orientation="E W"></Collision>
+    <Collision id="Brick" action="MoveY" param="-10.0" orientation="S"></Collision>
   </Collisions>
 </Entity>

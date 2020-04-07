@@ -13,8 +13,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
+import ooga.model.actions.CollisionKey;
 import ooga.model.actions.NoAction;
 import ooga.model.controlschemes.ControlScheme;
+import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.XMLException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -27,6 +30,9 @@ public class EntityParser {
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
   private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
+  public static final String CORRUPTED_FIELD = "XML file has corrupted/missing fields";
+  public final String CLASS_NOT_FOUND = "Control Scheme not valid";
+
 
   private File myFile;
   private Document myDoc;
@@ -43,12 +49,12 @@ public class EntityParser {
     try {
       builder = factory.newDocumentBuilder();
     } catch (ParserConfigurationException e) {
-      System.out.println("asdfff");
+      throw new XMLException(CORRUPTED_FIELD);
     }
     try {
       myDoc = builder.parse(myFile);
     } catch (SAXException | IOException e) {
-      e.printStackTrace();
+      throw new XMLException(CORRUPTED_FIELD);
     }
     myDoc.getDocumentElement().normalize();
   }
@@ -69,7 +75,7 @@ public class EntityParser {
     try{
       controlClass = Class.forName(CONTROLS_PREFIX + controlType);
     } catch (ClassNotFoundException e) {
-      //FIXME add error handling
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
     }
 
     ControlScheme myScheme = null;
@@ -78,16 +84,55 @@ public class EntityParser {
       myScheme = (ControlScheme) (controlClass.getConstructor(Map.class)
           .newInstance(controlMap));
     } catch (InstantiationException e) {
-      //FIXME add error handling
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
     } catch (InvocationTargetException e) {
-      //FIXME add error handling
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
     } catch (NoSuchMethodException e) {
-      //FIXME add error handling
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
     } catch (IllegalAccessException e) {
-      //FIXME add error handling
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
     }
 
     return myScheme;
+  }
+
+  public Map<CollisionKey, Action> parseCollisions() {
+    NodeList controls = myDoc.getElementsByTagName("Collisions");
+    Node controlNode = controls.item(0);
+
+    Map<CollisionKey, Action> collisionMap = new HashMap<CollisionKey, Action>();
+    String controlType = ""; //FIXME magic number
+
+    if(controlNode.getNodeType() == Node.ELEMENT_NODE){
+      Element controlElement = (Element) controlNode;
+      collisionMap = readCollisionMap(controlElement);
+    }
+    return collisionMap;
+  }
+
+  private Map<CollisionKey, Action> readCollisionMap(Element controlElement) {
+    NodeList collisions = controlElement.getElementsByTagName("Collision");
+    Map<CollisionKey, Action> collisionMap = new HashMap<CollisionKey, Action>();
+
+    //FIXME refactor into one method to reduce code reuse (parseCollision+parseControls)
+    for(int i = 0; i < collisions.getLength(); i++) {
+      Node collision = collisions.item(i);
+      if(collision.getNodeType() == Node.ELEMENT_NODE) {
+        Element crlElement = (Element) collision;
+        String key = crlElement.getAttribute("id");
+
+        ActionFactory actionFactory = new ActionFactory();
+        String actionName = crlElement.getAttribute("action");
+        String paramName = crlElement.getAttribute("param");
+
+        Action testAction = actionFactory.makeAction(actionName, paramName);
+
+        String orientation = crlElement.getAttribute("orientation");
+        collisionMap.put(new CollisionKey(key, orientation), testAction);
+
+      }
+    }
+    return collisionMap;
   }
 
   private Map<String, Action> readControlMap(Element controlElement) {
@@ -105,7 +150,6 @@ public class EntityParser {
         Action testAction = actionFactory.makeAction(actionName, paramName);
 
         controlMap.put(key, testAction);
-
       }
     }
     return controlMap;
