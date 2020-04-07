@@ -226,7 +226,7 @@ public class GameSelectionMenu extends BorderPane {
         growCenterGameTransition.play();
     }
     public void createGameSelectButton() {
-        selectGameButton = makeButton("Select", e -> System.out.println(playableGamesList.get(1).getGamePressed()));
+        selectGameButton = makeButton("Select", e -> playableGamesList.get(1).chooseGame());
     }
     private Button makeButton(String property, EventHandler<ActionEvent> handler) {
         // represent all supported image suffixes

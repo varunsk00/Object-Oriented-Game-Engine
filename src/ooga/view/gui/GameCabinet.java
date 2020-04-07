@@ -63,21 +63,21 @@ public class GameCabinet extends Pane {
 
     public void updateCurrentGame(Stage myStage) { //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
         for(GamePreview game: myGames){
-            if(game.getGamePressed() != null) {
-                if(game.getGamePressed().equals("green")) {
-     //               game.resetGameName();
-     //               new TestSandboxGreen(myStage);
-     //               myStage.setTitle("TestSandboxGreen");
+            if(game.getGamePressed()) {
+                if(game.getGameName().equals("green")) {
+                    game.resetGameName();
+                    new TestSandboxGreen(myStage);
+                    myStage.setTitle("TestSandboxGreen");
                 }
-                else if(game.getGamePressed().equals("blue")) {
-     //               game.resetGameName();
-     //               new TestSandboxBlue(myStage);
-     //               myStage.setTitle("TestSandboxBlue");
+                else if(game.getGameName().equals("blue")) {
+                    game.resetGameName();
+                    new TestSandboxBlue(myStage);
+                    myStage.setTitle("TestSandboxBlue");
                 }
-                else if(game.getGamePressed().equals("red")) {
-     //               game.resetGameName();
-     //               new TestSandboxRed(myStage);
-     //               myStage.setTitle("TestSandboxRed");
+                else if(game.getGameName().equals("red")) {
+                    game.resetGameName();
+                    new TestSandboxRed(myStage);
+                    myStage.setTitle("TestSandboxRed");
                 }
             }
         }

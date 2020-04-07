@@ -7,6 +7,7 @@ import javafx.scene.shape.Rectangle;
 public class GamePreview extends Rectangle {
     private String gameName;
     private double xPos;
+    private boolean isPressed;
 
     public GamePreview(Paint color) {
         this.setHeight(100);
@@ -14,7 +15,7 @@ public class GamePreview extends Rectangle {
         this.setY(275);
         this.setFill(color);
         //this.gameName = color.toString();
-       // this.setOnMouseClicked(e -> this.gameName = color.toString());
+        this.setOnMouseClicked(e -> isPressed=true);
         //this.setOnMouseClicked(e -> System.out.println(color));
     }
     public void setXPos(double xPos) {
@@ -23,13 +24,19 @@ public class GamePreview extends Rectangle {
     public double getXPos() {
         return this.xPos;
     }
-    public String getGamePressed(){
-        return gameName;
+    public boolean getGamePressed(){
+        return this.isPressed;
     }
     public void resetGameName(){
-        gameName = null;
+        this.isPressed = false;
     }
     public void setGameName(String name){
         gameName = name;
+    }
+    public String getGameName() {
+        return this.gameName;
+    }
+    public void chooseGame() {
+        this.isPressed = true;
     }
 }

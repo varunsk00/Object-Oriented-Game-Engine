@@ -45,7 +45,7 @@ public class TestSandboxRed {
 
     private void initStage(Stage primaryStage) {
         myScene = new Scene(myBackgroundPane, SCENE_WIDTH, SCENE_HEIGHT);
-        primaryStage.setScene(myScene);
+       primaryStage.setScene(myScene);
         primaryStage.show();
     }
 }

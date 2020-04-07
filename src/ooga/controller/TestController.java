@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -47,6 +48,7 @@ public class TestController implements Controller {
   private boolean keyPressed;
   private Timeline animation;
   private Stage currentStage;
+  private Scene oldScene;
 
 
 
@@ -54,6 +56,7 @@ public class TestController implements Controller {
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stage;
+    oldScene = stage.getScene();
     testPane = pane;
     EntityList = new Group();
     testPane.getChildren().add(EntityList);
@@ -126,7 +129,7 @@ public class TestController implements Controller {
     }
     else if (code == KeyCode.H) {
       System.out.println("HOME");
-      new GameCabinet(currentStage);
+      currentStage.setScene(oldScene);
     }
     if (code == KeyCode.SPACE && isGrounded) {
       yVelocity = -200;
