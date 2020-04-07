@@ -52,11 +52,11 @@ public class TestController implements Controller {
 
 
 
-  public TestController (Pane pane, Scene testScene, Stage stage) { //FIXME add exception stuff
+  public TestController (Pane pane, Scene testScene, Stage stage, Scene oldScene) { //FIXME add exception stuff
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stage;
-    oldScene = stage.getScene();
+    this.oldScene = oldScene;
     testPane = pane;
     EntityList = new Group();
     testPane.getChildren().add(EntityList);
