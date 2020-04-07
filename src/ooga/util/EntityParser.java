@@ -76,16 +76,9 @@ public class EntityParser {
     try{
       myScheme = (ControlScheme) (controlClass.getConstructor(Map.class)
           .newInstance(controlMap));
-    } catch (InstantiationException e) {
-      //FIXME add error handling
-    } catch (InvocationTargetException e) {
-      //FIXME add error handling
-    } catch (NoSuchMethodException e) {
-      //FIXME add error handling
-    } catch (IllegalAccessException e) {
-      //FIXME add error handling
+    } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+      e.printStackTrace();
     }
-
     return myScheme;
   }
 

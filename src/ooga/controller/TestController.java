@@ -1,5 +1,8 @@
 package ooga.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -23,12 +26,14 @@ public class TestController implements Controller {
 
   private Scene myCurrentScene;
   private Pane testPane;
-  private Group EntityList;
+  private Group EntityGroup;
   private PhysicsEngine physicsEngine;
 
   private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
   private EntityWrapper entityWrapper;
+  private List<EntityWrapper> entityList;
+  private List<EntityWrapper> entityBuffer;
   private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -50,21 +55,28 @@ public class TestController implements Controller {
   public TestController (Pane pane, Scene testScene){
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     testPane = pane;
-    EntityList = new Group();
-    testPane.getChildren().add(EntityList);
-    EntityList.getChildren().add(testRectangle);
-    EntityList.getChildren().add(testGround);
-    entityWrapper = new EntityWrapper("sampleKeybindings", this);
-    EntityList.getChildren().add(entityWrapper.getRender());
+    EntityGroup = new Group();
+    entityList = new ArrayList<>();
+    entityBuffer = new ArrayList<>();
+    testPane.getChildren().add(EntityGroup);
+    EntityGroup.getChildren().add(testRectangle);
+    EntityGroup.getChildren().add(testGround);
+    entityList.add(new EntityWrapper("samplePattern", this));
+    entityWrapper = entityList.get(0);
+    EntityGroup.getChildren().add(entityWrapper.getRender());
 
     physicsEngine = new PhysicsEngine("dummyString");
 
     testScene.setOnKeyPressed(e -> {
       handlePressInput(e.getCode());
-      entityWrapper.handleKeyInput(e); //FIXME i would like to
+      for(EntityWrapper entity : entityList){
+        entity.handleKeyInput(e);//FIXME i would like to
+      }
     });
     testScene.setOnKeyReleased(e-> {
-      entityWrapper.handleKeyReleased(e);
+      for(EntityWrapper entity : entityList){
+        entity.handleKeyReleased(e);//FIXME i would like to
+      }
       handleReleaseInput(e.getCode());
     });
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
@@ -81,11 +93,18 @@ public class TestController implements Controller {
   private void step (double elapsedTime) {
 
     physicsEngine.applyForces(entityWrapper.getModel());
-    entityWrapper.update(elapsedTime);
+
+
+    for(EntityWrapper entity : entityList){
+      entity.update(elapsedTime);
+    }
+
+    entityList.addAll(entityBuffer);
+    entityBuffer = new ArrayList<>();
 
     /* potential update code for Entity
-    for (EntityWrapper currentEntity : EntityList) {
-      for (EntityWrapper targetEntity : EntityList) {
+    for (EntityWrapper currentEntity : EntityGroup) {
+      for (EntityWrapper targetEntity : EntityGroup) {
         if(currentEntity.equals(targetEntity)){
           continue;
         }
@@ -108,14 +127,14 @@ public class TestController implements Controller {
     else if (code == KeyCode.ESCAPE && escCounter < 1) {
       BoxBlur bb = new BoxBlur();
       menu = new InGameMenu("TestSandBox");
-      EntityList.setEffect(bb);
+      EntityGroup.setEffect(bb);
       animation.pause();
       testPane.getChildren().add(menu);
       escCounter++;
     }
     else if (code == KeyCode.Q && escCounter == 1) {
       testPane.getChildren().remove(testPane.getChildren().size()-1);
-      EntityList.setEffect(null);
+      EntityGroup.setEffect(null);
       animation.play();
       escCounter--;
     }
@@ -135,7 +154,9 @@ public class TestController implements Controller {
 
   @Override
   public void spawnEntity(String name) {
-    
+    EntityWrapper newEntity = new EntityWrapper(name, this);
+    entityBuffer.add(newEntity);
+    EntityGroup.getChildren().add(newEntity.getRender());
   }
 }
 

@@ -28,11 +28,6 @@ public class EntityModel {
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
     checkGroundStatus();
-
-    //FIXME: BUG
-    // - Description: Pressing down D or A and then pressing another key will stop acceleration until D or A is pressed again
-    // - Replication: Hold down D and then press another key while holding down D. Acceleration will stop even if D is still pressed down
-    // - Comments: Use sout(xVel) for debugging
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
     }

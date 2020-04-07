@@ -1,9 +1,10 @@
 package ooga.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class FinalController {
+public class FinalController implements Controller {
   private ViewController myViewAPI;
   private List<EntityWrapper> entityList;
 
@@ -12,6 +13,14 @@ public class FinalController {
     entityList = new ArrayList<>();
   }
 
+  private void step(double elapsedTime){
+    for(EntityWrapper entity : entityList){
+      entity.update(elapsedTime);
+    }
+  }
+
+  @Override
   public void spawnEntity(String param) {
+    entityList.add(new EntityWrapper(param, this));
   }
 }
