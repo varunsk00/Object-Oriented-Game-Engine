@@ -20,6 +20,7 @@ import ooga.view.application.TestSandbox;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -55,20 +56,26 @@ public class GameCabinet extends Application {
         handleGameSelect(myStage);
         Scene scene = new Scene(mainFrame, SCENE_WIDTH, SCENE_HEIGHT);
         scene.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
+        myGameCabinet.setManaged(false);
+        myGameCabinet.setLayoutX(40);
+        myGameCabinet.setLayoutY(-100);
         myStage.setScene(scene);
         myStage.show();
     }
 
     private void startAnimationLoop() {
-        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step());
+       KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step());
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
     }
-
     private void step() {
-        updateCurrentGame();
+        var last_updated = new Date().getTime();
+        if(new Date().getTime() > last_updated + 100) {
+            last_updated = new Date().getTime();
+        }
+           updateCurrentGame();
     }
 
     private void updateCurrentGame(){
@@ -99,17 +106,18 @@ public class GameCabinet extends Application {
         myGames.add(g2);
         myGames.add(g3);
         myGames.add(g4);
-        //myGames.add(g5);
+        myGames.add(g5);
         myGameCabinet = new GameSelectionMenu(myGames);
+
     }
     private void handleAltScrollInput(KeyCode code) {
-        System.out.println("here");
         if (code == KeyCode.RIGHT) {
             myGameCabinet.scrollRight();
         }
         else if (code == KeyCode.LEFT) {
             myGameCabinet.scrollLeft();
         }
+
     }
 
 
