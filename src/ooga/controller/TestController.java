@@ -61,7 +61,7 @@ public class TestController implements Controller {
     testPane.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
-    entityList.add(new EntityWrapper("samplePattern", this));
+    entityList.add(new EntityWrapper("sampleKeybindings", this));
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
 
@@ -153,10 +153,16 @@ public class TestController implements Controller {
   }
 
   @Override
-  public void spawnEntity(String name) {
-    EntityWrapper newEntity = new EntityWrapper(name, this);
+  public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
     EntityGroup.getChildren().add(newEntity.getRender());
   }
+
+//  @Override
+//  public void spawnEntity(String name) {
+//    EntityWrapper newEntity = new EntityWrapper(name, this);
+//    entityBuffer.add(newEntity);
+//    EntityGroup.getChildren().add(newEntity.getRender());
+//  }
 }
 

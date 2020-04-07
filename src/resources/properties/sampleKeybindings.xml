@@ -18,7 +18,7 @@
     <Control id="D" action="AccelerateX" param="11.0"></Control>
     <Control id="A" action="AccelerateX" param="-11.0"></Control>
     <Control id="SPACE" action="Jump" param="-500.0"></Control>
-    <Control id="F" action="Spawn" param="sampleKeybindings"></Control>
+    <Control id="F" action="Spawn" param="samplePattern"></Control>
   </Controls>
   <Collisions>
 

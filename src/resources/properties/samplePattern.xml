@@ -15,7 +15,6 @@
     <Scheme name="Pattern"/>
     <Control id="60" action="MoveX" param="10.0"></Control>
     <Control id="60" action="MoveX" param="-10.0"></Control>
-    <Control id="60" action="NoAction" param="11.0"></Control>
   </Controls>
   <Collisions>
 

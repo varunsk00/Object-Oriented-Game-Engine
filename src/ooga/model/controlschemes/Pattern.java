@@ -10,13 +10,18 @@ public class Pattern extends ControlScheme {
   private List<Action> actionList;
   private int index;
 
-  public Pattern(Map<String, Action> actions){
+  public Pattern(List<Map<String, Action>> actions){
     super(actions);
     actionList = new ArrayList<>();
-    for(String s : actionMap.keySet()){
-      actionList.add(Integer.parseInt(s), actionMap.get(s));
+    for(Map<String, Action> map : actions) {
+      for (String s : map.keySet()) {
+        for (int i = 0; i < Integer.parseInt(s); i++) {
+          actionList.add(map.get(s));
+        }
+      }
+      System.out.println(actionList);
+      index = 0;
     }
-    index = 0;
   }
   @Override
   public List<Action> getCurrentAction() {

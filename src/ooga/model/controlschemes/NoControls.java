@@ -9,7 +9,7 @@ import ooga.model.actions.NoAction;
 
 public class NoControls extends ControlScheme {
 
-  public NoControls(Map<String, Action> controls) {
+  public NoControls(List<Map<String, Action>> controls) {
     super(controls);
   }
 

@@ -3,7 +3,9 @@ package ooga.util;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,7 +58,7 @@ public class EntityParser {
     NodeList controls = myDoc.getElementsByTagName("Controls");
     Node controlNode = controls.item(0);
 
-    Map<String, Action> controlMap = new HashMap<String, Action>();
+    List<Map<String, Action>> controlMap = new ArrayList<Map<String, Action>>();
     String controlType = "NoControls"; //FIXME magic number
     if(controlNode.getNodeType() == Node.ELEMENT_NODE){
       Element controlElement = (Element) controlNode;
@@ -74,7 +76,7 @@ public class EntityParser {
     ControlScheme myScheme = null;
 
     try{
-      myScheme = (ControlScheme) (controlClass.getConstructor(Map.class)
+      myScheme = (ControlScheme) (controlClass.getConstructor(List.class)
           .newInstance(controlMap));
     } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
       e.printStackTrace();
@@ -82,9 +84,9 @@ public class EntityParser {
     return myScheme;
   }
 
-  private Map<String, Action> readControlMap(Element controlElement) {
+  private List<Map<String, Action>> readControlMap(Element controlElement) {
     NodeList controls = controlElement.getElementsByTagName("Control");
-    Map<String, Action> controlMap = new HashMap<String, Action>();
+    List<Map<String, Action>> controlMap = new ArrayList<Map<String, Action>>();
     for(int i = 0; i < controls.getLength(); i++){
       Node control = controls.item(i);
       if(control.getNodeType() == Node.ELEMENT_NODE){
@@ -107,8 +109,9 @@ public class EntityParser {
         } catch (InstantiationException  | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
           //FIXME add error handling
         }
-        controlMap.put(key, action);
-
+        HashMap<String, Action> keyActionPair = new HashMap<>();
+        keyActionPair.put(key, action);
+        controlMap.add(keyActionPair);
       }
     }
     return controlMap;

@@ -33,7 +33,11 @@ public class EntityWrapper {
 
   public void handleKeyReleased(KeyEvent keyEvent) {myModel.handleKeyReleased(keyEvent);}
 
-  public void spawnEntity(String param) {myController.spawnEntity(param);}
+  public EntityWrapper spawnEntity(String param) {
+    EntityWrapper newEntity = new EntityWrapper(param, myController);
+    myController.addEntity(newEntity);
+    return newEntity;
+  }
 
   public void setX(double newX){myModel.setX(newX);}
 

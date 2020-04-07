@@ -1,16 +1,21 @@
 package ooga.model.controlschemes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
-import ooga.model.actions.NoAction;
 
 public class Keybindings extends ControlScheme {
+  private Map<String, Action> keyBindings;
 
-  public Keybindings(Map<String, Action> bindings){
+  public Keybindings(List<Map<String, Action>> bindings){
     super(bindings);
+    keyBindings = new HashMap<>();
+    for(Map<String, Action> map : actionMap){
+      keyBindings.putAll(map);
+    }
     currentAction = new ArrayList<>();
   }
 
@@ -21,15 +26,15 @@ public class Keybindings extends ControlScheme {
 
   @Override
   public void handleKeyInput(KeyEvent keyEvent) {
-    if(actionMap.containsKey(keyEvent.getCode().toString()) && !currentAction.contains(actionMap.get(keyEvent.getCode().toString()))) {
-      currentAction.add(actionMap.get(keyEvent.getCode().toString()));
+    if(keyBindings.containsKey(keyEvent.getCode().toString()) && !currentAction.contains(keyBindings.get(keyEvent.getCode().toString()))) {
+      currentAction.add(keyBindings.get(keyEvent.getCode().toString()));
     }
   }
 
   @Override
   public void handleKeyReleased(KeyEvent keyEvent) {
-    if(actionMap.containsKey(keyEvent.getCode().toString())) {
-      currentAction.remove(actionMap.get(keyEvent.getCode().toString()));
+    if(keyBindings.containsKey(keyEvent.getCode().toString()) && currentAction.contains(keyBindings.get(keyEvent.getCode().toString()))) {
+      currentAction.remove(keyBindings.get(keyEvent.getCode().toString()));
     }
   }
 }

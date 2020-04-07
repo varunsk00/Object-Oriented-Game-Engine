@@ -7,9 +7,9 @@ import ooga.model.actions.Action;
 
 public abstract class ControlScheme {
   protected List<Action> currentAction;
-  protected Map<String, Action> actionMap;
+  protected List<Map<String, Action>> actionMap;
 
-  public ControlScheme(Map<String, Action> controls){
+  public ControlScheme(List<Map<String, Action>> controls){
     actionMap = controls;
   }
 

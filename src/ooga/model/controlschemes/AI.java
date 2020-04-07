@@ -10,12 +10,14 @@ import ooga.model.actions.Action;
 public class AI extends ControlScheme {
   private List<Action> possibleActions;
 
-  public AI(Map<String, Action> actions){
+  public AI(List<Map<String, Action>> actions){
     super(actions);
     possibleActions = new ArrayList<>();
-    for(String s : actionMap.keySet()){
-      for(int i = 0; i < Integer.parseInt(s); i++){
-        possibleActions.add(actionMap.get(s));
+    for(Map<String, Action> map : actionMap){
+      for(String s : map.keySet()){
+        for(int i = 0; i < Integer.parseInt(s); i++){
+          possibleActions.add(map.get(s));
+        }
       }
     }
   }
