@@ -1,21 +1,13 @@
 package ooga.util;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import ooga.model.actions.Action;
-import ooga.model.controlschemes.ControlScheme;
-import ooga.util.config.XMLException;
-import ooga.view.application.TestSandboxBlue;
+
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import java.io.FileReader;
+import java.util.Iterator;
 
 public class GameParser {
   private static final String TXT_FILEPATH = "src/resources/";
@@ -32,38 +24,10 @@ public class GameParser {
 
 
   public GameParser (String entityName){
+    JSONObject gameConfig = new JSONObject();
     myFile = new File(TXT_FILEPATH + "properties/" + entityName + ".xml");
-    setupDocument();
   }
 
 
-  private void setupDocument() { //FIXME streamline into API?
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = null;
-    try {
-      builder = factory.newDocumentBuilder();
-    } catch (ParserConfigurationException e) {
-      throw new XMLException(CORRUPTED_FILE);
-    }
-    try {
-      myDoc = builder.parse(myFile);
-    } catch (SAXException | IOException e) {
-      throw new XMLException(CORRUPTED_FIELD);
-    }
-    myDoc.getDocumentElement().normalize();
-  }
 
-  public TestSandboxBlue parseGameConfig() {
-    NodeList controls = myDoc.getElementsByTagName("Controls");
-    Node controlNode = controls.item(0);
-
-    //TestSandboxBlue temp = new TestSandboxBlue();
-    String controlType = "NoControls"; //FIXME magic number
-    if (controlNode.getNodeType() == Node.ELEMENT_NODE) {
-      Element controlElement = (Element) controlNode;
-      //controlMap = readControlMap(controlElement);
-      //controlType = readControlScheme(controlElement);
-    }
-    return null;
-  }
 }

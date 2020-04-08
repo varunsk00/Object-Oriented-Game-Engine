@@ -128,7 +128,7 @@ public class EntityParser {
         String actionName = crlElement.getAttribute("action");
         String paramName = crlElement.getAttribute("param");
 
-        Action testAction = actionFactory.makeAction(actionName, paramName);
+        Action testAction = actionFactory.makeAction(actionName, null, null);
 
         String orientation = crlElement.getAttribute("orientation");
         collisionMap.put(new CollisionKey(key, orientation), testAction);
@@ -166,7 +166,7 @@ public class EntityParser {
         ActionFactory actionFactory = new ActionFactory();
         String actionName = crlElement.getAttribute("action");
         String paramName = crlElement.getAttribute("param");
-        Action testAction = actionFactory.makeAction(actionName, paramName);
+        Action testAction = actionFactory.makeAction(actionName, null, null);
 
         outputBundle.addAction(testAction);
       }

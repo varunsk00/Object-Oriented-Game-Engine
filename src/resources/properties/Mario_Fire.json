@@ -1,0 +1,52 @@
+{
+  "entityName": "Fire Mario",
+  "image": "mario_fire",
+  "xPos": 100,
+  "yPos": 100,
+  "xVel": 10,
+  "yVel": 10,
+  "maxXVel": 100,
+  "maxYVel": 100,
+  "height": 100,
+  "width": 100,
+  "scheme": "Keybindings",
+  "actionBundles": [
+    {
+      "ID": "D",
+      "Control": [
+        {
+          "action": "AccelerateX",
+          "param": "15.0"
+        }
+      ]
+    },
+    {
+      "ID": "A",
+      "Control": [
+        {
+          "action": "AccelerateX",
+          "param": "-15.0"
+        }
+      ]
+    },
+    {
+      "ID": "SPACE",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-500.0"
+        }
+      ]
+    },
+    {
+      "ID": "F",
+      "Control": [
+        {
+          "action": "SpawnRelative",
+          "param": "Mario_Fireball",
+          "coolDown": "1000"
+        }
+      ]
+    }
+  ]
+}

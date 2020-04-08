@@ -27,7 +27,7 @@ public class EntityModel {
   public EntityModel(EntityWrapper entityWrapper) {
     myEntity = entityWrapper;
     controlScheme = myEntity.getParser().parseControls();
-    myCollisions = myEntity.getParser().parseCollisions();
+    //myCollisions = myEntity.getParser().parseCollisions();
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
   }
