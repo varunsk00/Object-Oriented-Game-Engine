@@ -52,7 +52,7 @@ public class ActionFactory {
     if(myActions.containsKey(action)) {
       return action;
     }
-    throw new InvalidActionException("Action does not exist"); //TODO: fix exception handling
+    throw new InvalidActionException(action.toString() + " doesnt exist"); //TODO: fix exception handling
   }
 
   private Action buildAction(String formalAction, Class<?> classTypes[], Object param[]) {
