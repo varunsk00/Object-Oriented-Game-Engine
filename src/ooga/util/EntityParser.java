@@ -30,6 +30,7 @@ public class EntityParser {
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
   private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
+  public static final String CORRUPTED_FILE = "Error with file input. Check game file or choose another game.";
   public static final String CORRUPTED_FIELD = "XML file has corrupted/missing fields";
   public final String CLASS_NOT_FOUND = "Control Scheme not valid";
 
@@ -49,12 +50,12 @@ public class EntityParser {
     try {
       builder = factory.newDocumentBuilder();
     } catch (ParserConfigurationException e) {
-      throw new XMLException(CORRUPTED_FIELD);
+      throw new XMLException(CORRUPTED_FILE);
     }
     try {
       myDoc = builder.parse(myFile);
     } catch (SAXException | IOException e) {
-      throw new XMLException(CORRUPTED_FIELD);
+      throw new XMLException(CORRUPTED_FILE);
     }
     myDoc.getDocumentElement().normalize();
   }
