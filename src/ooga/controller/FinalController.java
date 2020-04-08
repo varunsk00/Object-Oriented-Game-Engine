@@ -9,7 +9,7 @@ public class FinalController implements Controller {
   private List<EntityWrapper> entityList;
 
   public FinalController(){
-    myViewAPI = new ViewController(this);
+    //myViewAPI = new ViewController(this);
     entityList = new ArrayList<>();
   }
 

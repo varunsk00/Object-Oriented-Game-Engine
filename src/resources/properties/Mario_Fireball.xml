@@ -2,8 +2,8 @@
 <Entity>
   <Info>
     <Image>mario_fireball</Image>
-    <XPos>1000</XPos>
-    <YPos>100</YPos>
+    <XPos>-1000</XPos>
+    <YPos>-100</YPos>
     <XVel>10</XVel>
     <YVel>10</YVel>
     <MaxXVel>100</MaxXVel>

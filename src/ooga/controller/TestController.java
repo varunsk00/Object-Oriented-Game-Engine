@@ -10,16 +10,19 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.application.menu.MenuButtons;
 
 import javax.swing.text.html.parser.Entity;
 import ooga.model.PhysicsEngine;
+import ooga.view.gui.GameCabinet;
 
 
 public class TestController implements Controller {
@@ -49,11 +52,16 @@ public class TestController implements Controller {
   private boolean isGrounded;
   private boolean keyPressed;
   private Timeline animation;
+  private Stage currentStage;
+  private Scene oldScene;
 
 
 
-  public TestController (Pane pane, Scene testScene){
+  public TestController (Pane pane, Scene testScene, Stage stage, Scene oldScene) { //FIXME add exception stuff
+
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
+    currentStage = stage;
+    this.oldScene = oldScene;
     testPane = pane;
     EntityGroup = new Group();
     entityList = new ArrayList<>();
@@ -61,7 +69,7 @@ public class TestController implements Controller {
     testPane.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
-    entityList.add(new EntityWrapper("sampleKeybindings", this));
+    entityList.add(new EntityWrapper("Mario_Fire", this));
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
 
@@ -137,6 +145,10 @@ public class TestController implements Controller {
       EntityGroup.setEffect(null);
       animation.play();
       escCounter--;
+    }
+    else if (code == KeyCode.H) {
+      System.out.println("HOME");
+      currentStage.setScene(oldScene);
     }
     if (code == KeyCode.SPACE && isGrounded) {
       yVelocity = -200;

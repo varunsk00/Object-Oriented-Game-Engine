@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import ooga.model.actions.Action;
+import ooga.model.actions.ActionFactory;
 import ooga.model.actions.NoAction;
 import ooga.model.controlschemes.ControlScheme;
 import org.w3c.dom.Document;
@@ -54,7 +55,7 @@ public class EntityParser {
     myDoc.getDocumentElement().normalize();
   }
 
-  public ControlScheme parseControls(){
+  public ControlScheme parseControls() {
     NodeList controls = myDoc.getElementsByTagName("Controls");
     Node controlNode = controls.item(0);
 
@@ -107,23 +108,12 @@ public class EntityParser {
       Node control = controls.item(i);
       if(control.getNodeType() == Node.ELEMENT_NODE){
         Element crlElement = (Element)control;
-        //TODO actionfactory makeaction (action, param)
-        Class controlAction = null;
-        String actionName = crlElement.getAttribute("action");
-        try{
-          controlAction = Class.forName(ACTIONS_PREFIX + actionName);
-        } catch (ClassNotFoundException e) {
-          //FIXME add error handling
-        }
 
-        Action action = new NoAction();
-        try{
-          action = (Action) (controlAction.getConstructor(String.class)
-              .newInstance(crlElement.getAttribute("param")));
-        } catch (InstantiationException  | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-          //FIXME add error handling
-        }
-        outputBundle.addAction(action);
+        ActionFactory actionFactory = new ActionFactory();
+        String actionName = crlElement.getAttribute("action");
+        String paramName = crlElement.getAttribute("param");
+        Action testAction = actionFactory.makeAction(actionName, paramName);
+        outputBundle.addAction(testAction);
       }
     }
 

@@ -13,7 +13,8 @@ public class EntityWrapper {
   private Controller myController;
   private int id;
 
-  public EntityWrapper(String entityName, Controller controller){
+
+  public EntityWrapper(String entityName, Controller controller) {
     myController = controller;
     myParser = new EntityParser(entityName);
     myModel = new EntityModel(this);
