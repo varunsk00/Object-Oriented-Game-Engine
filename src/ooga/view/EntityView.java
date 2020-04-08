@@ -17,9 +17,10 @@ public class EntityView {
     myEntity.setY(myImage.getY());
   }
 
-  public void update(double newX, double newY){
+  public void update(double newX, double newY, boolean forwards){
     myImage.setX(newX);
     myImage.setY(newY);
+    myImage.setScaleX(forwards ? 1 : -1);
   };
 
   public Node getRender(){

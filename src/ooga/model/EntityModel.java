@@ -11,12 +11,14 @@ import ooga.model.controlschemes.ControlScheme;
 
 public class EntityModel {
   private EntityWrapper myEntity;
+  private boolean forwards;
   private double xPos;
   private double yPos;
   private double xVel;
   private double yVel;
   private double xVelMax = 100;
   private double yVelMax = 100;
+  private int health;
   private boolean onGround = false;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
@@ -27,6 +29,7 @@ public class EntityModel {
     controlScheme = myEntity.getParser().parseControls();
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
+    forwards = true;
   }
 
   public void update(double elapsedTime){
@@ -42,8 +45,6 @@ public class EntityModel {
     limitSpeed();
     setX(xPos + xVel * elapsedTime);
     setY(yPos + yVel * elapsedTime);
-//    System.out.println(getY());
-
   }
 
   public void handleKeyInput(KeyEvent event) {
@@ -77,7 +78,6 @@ public class EntityModel {
 
   public double getY(){return yPos;}
 
-
   public void setX(double newX){xPos = newX;}
 
   public void setY(double newY){yPos = newY;}
@@ -86,9 +86,9 @@ public class EntityModel {
 
   public double getYVelocity(){return yVel;}
 
-  public void setXVelocity(double newXVelocity){xVel = newXVelocity;}
+  public void setXVelocity(double newXVelocity){xVel = newXVelocity; }
 
-  public void setYVelocity(double newYVelocity){yVel = newYVelocity;}
+  public void setYVelocity(double newYVelocity){yVel = newYVelocity; }
 
   public boolean isOnGround(){
     return onGround;
@@ -106,10 +106,17 @@ public class EntityModel {
     EntityWrapper newEntity = spawnEntity(param);
     newEntity.setX(this.getX());
     newEntity.setY(this.getY());
+    newEntity.setForwards(this.getForwards());
   }
 
   public EntityWrapper spawnEntity(String param) {
     EntityWrapper newEntity = myEntity.spawnEntity(param);
     return newEntity;
+  }
+
+  public boolean getForwards() {return forwards;}
+
+  public void setForwards(boolean direction) {
+    forwards = direction;
   }
 }

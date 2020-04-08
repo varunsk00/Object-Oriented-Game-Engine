@@ -41,11 +41,11 @@ public class ActionFactory {
   }
 
 
-  public Action makeAction(String action, String param) throws InvalidActionException {
+  public Action makeAction(String action, Class<?>[] classes, Object[] params) throws InvalidActionException {
     //String formalAction = action;
     String formalAction = validateAction(action); //TODO: check if action is valid
 
-    return buildAction(formalAction, param);
+    return buildAction(formalAction, classes, params);
   }
 
   private String validateAction(String action)
@@ -56,13 +56,23 @@ public class ActionFactory {
     throw new InvalidActionException("Action does not exist"); //TODO: fix exception handling
   }
 
-  private Action buildAction(String formalAction, String param) {
+//  private Action buildAction(String formalAction, String param) {
+//    try {
+//      return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(String.class).newInstance(param);
+//    }
+//    catch
+//      (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+//        throw new InvalidActionException("Action could not be found.");
+//    }
+//  }
+
+  private Action buildAction(String formalAction, Class<?> classtypes[], Object param[]) {
     try {
-      return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(String.class).newInstance(param);
+      return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(classtypes).newInstance(param);
     }
     catch
-      (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-        throw new InvalidActionException("Action could not be found.");
+    (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      throw new InvalidActionException("Action could not be found.");
     }
   }
 

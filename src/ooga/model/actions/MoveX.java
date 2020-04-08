@@ -12,6 +12,6 @@ public class MoveX extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setX(entity.getX() + xdistance);
+    entity.setXVelocity(xdistance*(entity.getForwards() ? 1 : -1));
   }
 }

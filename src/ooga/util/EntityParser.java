@@ -112,7 +112,13 @@ public class EntityParser {
         ActionFactory actionFactory = new ActionFactory();
         String actionName = crlElement.getAttribute("action");
         String paramName = crlElement.getAttribute("param");
-        Action testAction = actionFactory.makeAction(actionName, paramName);
+        Action testAction;
+        System.out.println(crlElement.getAttribute("cooldown"));
+        if(crlElement.getAttribute("cooldown").equals("")){
+          testAction = actionFactory.makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
+        } else {
+          testAction = actionFactory.makeAction(actionName, new Class<?>[]{String.class, String.class}, new Object[]{paramName, crlElement.getAttribute("cooldown")});
+        }
         outputBundle.addAction(testAction);
       }
     }

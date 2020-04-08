@@ -14,7 +14,9 @@ public class AI extends ControlScheme {
   public AI(List<ActionBundle> actions){
     super(actions);
     possibleActions = new ArrayList<>();
+    int total = 0;
     for(ActionBundle bundle : actionMap){
+      total += Integer.parseInt(bundle.getId());
 //      for(String s : map.keySet()){
 //        for(int i = 0; i < Integer.parseInt(s); i++){
 //          possibleActions.add(map.get(s));

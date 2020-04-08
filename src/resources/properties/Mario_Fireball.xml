@@ -15,12 +15,12 @@
     <Scheme name="Pattern"/>
     <Bundle>
       <ID>10</ID>
-      <Control action="MoveX" param="10.0"></Control>
+      <Control action="MoveX" param="1000.0"></Control>
       <Control action="MoveY" param="-10.0"></Control>
     </Bundle>
     <Bundle>
       <ID>10</ID>
-      <Control action="MoveX" param="10.0"></Control>
+      <Control action="MoveX" param="1000.0"></Control>
       <Control action="MoveY" param="10.0"></Control>
     </Bundle>
   </Controls>
