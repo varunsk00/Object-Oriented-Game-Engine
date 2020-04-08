@@ -16,7 +16,7 @@
       "Control": [
         {
           "action": "MoveX",
-          "param": "1000.0"
+          "param": "10.0"
         },
         {
           "action": "MoveY",
@@ -29,7 +29,7 @@
       "Control": [
         {
           "action": "MoveX",
-          "param": "1000.0"
+          "param": "10.0"
         },
         {
           "action": "MoveY",
