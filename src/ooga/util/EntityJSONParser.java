@@ -83,10 +83,10 @@ public class EntityJSONParser {
     ImageView output = null;
 
     output = loadImage(imageName);
-    output.setX((Long) jsonObject.get("xPos"));
-    output.setY((Long) jsonObject.get("yPos"));
-    output.setFitHeight((Long) jsonObject.get("height"));
-    output.setFitWidth((Long) jsonObject.get("width"));
+    output.setX(Double.parseDouble(jsonObject.get("xPos").toString()));
+    output.setY(Double.parseDouble(jsonObject.get("yPos").toString()));
+    output.setFitHeight(Double.parseDouble(jsonObject.get("height").toString()));
+    output.setFitWidth(Double.parseDouble(jsonObject.get("width").toString()));
     return output;
   }
 
