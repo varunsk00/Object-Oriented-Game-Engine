@@ -2,28 +2,16 @@ package ooga.model.controlschemes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
 import ooga.util.ActionBundle;
 
 public class Pattern extends ControlScheme {
-//  private List<List<Action>> patternList;
   private int index;
   private int frameDuration;
 
   public Pattern(List<ActionBundle> actions){
     super(actions);
-//    patternList = new ArrayList<>();
-//    for(ActionBundle bundle : actionMap) {
-//      List<Action> tempList = new ArrayList<>(map.values());
-//      for (String s : map.keySet()) {
-//        for (int i = 0; i < Integer.parseInt(s); i++) {
-//          patternList.add(tempList);
-//        }
-//        break;
-//      }
-//    }
     index = 0;
     frameDuration = 0;
   }
