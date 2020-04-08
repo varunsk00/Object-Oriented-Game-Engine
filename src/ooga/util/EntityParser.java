@@ -3,7 +3,9 @@ package ooga.util;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -64,7 +66,7 @@ public class EntityParser {
     NodeList controls = myDoc.getElementsByTagName("Controls");
     Node controlNode = controls.item(0);
 
-    Map<String, Action> controlMap = new HashMap<String, Action>();
+    List<ActionBundle> controlMap = new ArrayList<ActionBundle>();
     String controlType = "NoControls"; //FIXME magic number
     if(controlNode.getNodeType() == Node.ELEMENT_NODE){
       Element controlElement = (Element) controlNode;
@@ -82,7 +84,7 @@ public class EntityParser {
     ControlScheme myScheme = null;
 
     try{
-      myScheme = (ControlScheme) (controlClass.getConstructor(Map.class)
+      myScheme = (ControlScheme) (controlClass.getConstructor(List.class)
           .newInstance(controlMap));
     } catch (InstantiationException e) {
       throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
@@ -92,8 +94,8 @@ public class EntityParser {
       throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
     } catch (IllegalAccessException e) {
       throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
-    }
 
+    }
     return myScheme;
   }
 
@@ -136,24 +138,41 @@ public class EntityParser {
     return collisionMap;
   }
 
-  private Map<String, Action> readControlMap(Element controlElement) {
-    NodeList controls = controlElement.getElementsByTagName("Control");
-    Map<String, Action> controlMap = new HashMap<String, Action>();
+
+  private List<ActionBundle> readControlMap(Element controlElement) {
+    NodeList bundles = controlElement.getElementsByTagName("Bundle");
+    List<ActionBundle> controlMap = new ArrayList<ActionBundle>();
+
+    for(int i = 0; i < bundles.getLength(); i++){
+      Node bundle = bundles.item(i);
+      if(bundle.getNodeType() == Node.ELEMENT_NODE){
+        Element bundleElement = (Element)bundle;
+        controlMap.add(readControls(bundleElement));
+      }
+    }
+    return controlMap;
+  }
+
+  private ActionBundle readControls(Element bundleElement) {
+    ActionBundle outputBundle = new ActionBundle();
+    outputBundle.setId(getElementValue(bundleElement, "ID"));
+
+    NodeList controls = bundleElement.getElementsByTagName("Control");
     for(int i = 0; i < controls.getLength(); i++){
       Node control = controls.item(i);
       if(control.getNodeType() == Node.ELEMENT_NODE){
         Element crlElement = (Element)control;
-        String key = crlElement.getAttribute("id");
 
         ActionFactory actionFactory = new ActionFactory();
         String actionName = crlElement.getAttribute("action");
         String paramName = crlElement.getAttribute("param");
         Action testAction = actionFactory.makeAction(actionName, paramName);
 
-        controlMap.put(key, testAction);
+        outputBundle.addAction(testAction);
       }
     }
-    return controlMap;
+
+    return outputBundle;
   }
 
   private String readControlScheme(Element controlElement) {

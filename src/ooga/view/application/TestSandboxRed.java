@@ -19,10 +19,12 @@ public class TestSandboxRed {
     private Stage currentStage;
     private Group group;
     private TestController testController;
+    private Scene oldScene;
 
 
     public TestSandboxRed(Stage stage) { //FIXME ADD ERROR HANDLING
         this.currentStage = stage;
+        oldScene = currentStage.getScene();
         initModel();
         initView();
         initStage(stage);
@@ -40,12 +42,12 @@ public class TestSandboxRed {
     }
 
     private void initController() { //FIXME ADD ERROR HANDLING
-        testController = new TestController(myBackgroundPane, myScene, currentStage);
+        testController = new TestController(myBackgroundPane, myScene, currentStage, oldScene);
     }
 
     private void initStage(Stage primaryStage) {
         myScene = new Scene(myBackgroundPane, SCENE_WIDTH, SCENE_HEIGHT);
-        primaryStage.setScene(myScene);
+       primaryStage.setScene(myScene);
         primaryStage.show();
     }
 }

@@ -57,11 +57,13 @@ public class GameParser {
     NodeList controls = myDoc.getElementsByTagName("Controls");
     Node controlNode = controls.item(0);
 
-    TestSandboxBlue temp = new TestSandboxBlue();
+    //TestSandboxBlue temp = new TestSandboxBlue();
     String controlType = "NoControls"; //FIXME magic number
-    if(controlNode.getNodeType() == Node.ELEMENT_NODE){
+    if (controlNode.getNodeType() == Node.ELEMENT_NODE) {
       Element controlElement = (Element) controlNode;
-      controlMap = readControlMap(controlElement);
-      controlType = readControlScheme(controlElement);
+      //controlMap = readControlMap(controlElement);
+      //controlType = readControlScheme(controlElement);
     }
+    return null;
+  }
 }

@@ -6,10 +6,11 @@ import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
 import ooga.model.actions.NoAction;
+import ooga.util.ActionBundle;
 
 public class NoControls extends ControlScheme {
 
-  public NoControls(Map<String, Action> controls) {
+  public NoControls(List<ActionBundle> controls) {
     super(controls);
   }
 

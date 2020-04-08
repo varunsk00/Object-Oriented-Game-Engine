@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
+import ooga.util.ActionBundle;
 
 public abstract class ControlScheme {
   protected List<Action> currentAction;
-  protected Map<String, Action> actionMap;
+  protected List<ActionBundle> actionMap;
 
-  public ControlScheme(Map<String, Action> controls){
+  public ControlScheme(List<ActionBundle> controls){
     actionMap = controls;
   }
 

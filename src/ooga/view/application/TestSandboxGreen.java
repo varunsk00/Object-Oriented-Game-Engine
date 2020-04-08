@@ -19,11 +19,14 @@ public class TestSandboxGreen {
   private Stage currentStage;
   private Group group;
   private TestController testController;
+  private Scene oldScene;
+
 
 
 
   public TestSandboxGreen(Stage stage) {
     this.currentStage = stage;
+    oldScene = currentStage.getScene();
     initModel();
     initView();
     initStage(stage);
@@ -42,7 +45,7 @@ public class TestSandboxGreen {
 
 
   private void initController(){
-    testController = new TestController(myBackgroundPane, myScene, currentStage);
+    testController = new TestController(myBackgroundPane, myScene, currentStage, oldScene);
   }
 
   private void initStage(Stage primaryStage) {

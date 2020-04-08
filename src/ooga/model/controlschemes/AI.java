@@ -6,17 +6,20 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
+import ooga.util.ActionBundle;
 
 public class AI extends ControlScheme {
   private List<Action> possibleActions;
 
-  public AI(Map<String, Action> actions){
+  public AI(List<ActionBundle> actions){
     super(actions);
     possibleActions = new ArrayList<>();
-    for(String s : actionMap.keySet()){
-      for(int i = 0; i < Integer.parseInt(s); i++){
-        possibleActions.add(actionMap.get(s));
-      }
+    for(ActionBundle bundle : actionMap){
+//      for(String s : map.keySet()){
+//        for(int i = 0; i < Integer.parseInt(s); i++){
+//          possibleActions.add(map.get(s));
+//        }
+//      }
     }
   }
   @Override

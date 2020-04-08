@@ -3,8 +3,13 @@ package ooga.view.gui.startup;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -13,7 +18,6 @@ import ooga.view.gui.GameCabinet;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
 
 public class Boot extends Application {
     private static final int SCENE_WIDTH = 1280;
@@ -32,7 +36,7 @@ public class Boot extends Application {
     public Boot(String[] args) throws FileNotFoundException {
         launch(args);
     }
-
+    //TODO: make better css
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("BOOGA");
         myStage = primaryStage;
@@ -40,6 +44,7 @@ public class Boot extends Application {
         initBootupScreen();
         startAnimationLoop();
         Scene scene = new Scene(mainFrame, SCENE_WIDTH, SCENE_HEIGHT);
+        scene.getStylesheets().add("ooga/view/styling/default.css");
         myStage.setScene(scene);
         myStage.show();
     }
@@ -61,7 +66,8 @@ public class Boot extends Application {
     private void step() { //FIXME: Please fix this monstrosity of if statements
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
-            mainFrame.setCenter(library.getLibrary());
+            mainFrame.setCenter(library);
+            mainFrame.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         }
         if(!myStage.getTitle().equals("BOOGA")){
             welcomeMusic.stop();

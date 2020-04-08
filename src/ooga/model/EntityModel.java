@@ -36,10 +36,6 @@ public class EntityModel {
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
     checkGroundStatus();
 
-    //FIXME: BUG
-    // - Description: Pressing down D or A and then pressing another key will stop acceleration until D or A is pressed again
-    // - Replication: Hold down D and then press another key while holding down D. Acceleration will stop even if D is still pressed down
-    // - Comments: Use sout(xVel) for debugging
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
     }
@@ -109,5 +105,14 @@ public class EntityModel {
     return actionStack;
   }
 
-  public void spawnEntity(String param) {myEntity.spawnEntity(param);}
+  public void spawnRelative(String param){
+    EntityWrapper newEntity = spawnEntity(param);
+    newEntity.setX(this.getX());
+    newEntity.setY(this.getY());
+  }
+
+  public EntityWrapper spawnEntity(String param) {
+    EntityWrapper newEntity = myEntity.spawnEntity(param);
+    return newEntity;
+  }
 }
