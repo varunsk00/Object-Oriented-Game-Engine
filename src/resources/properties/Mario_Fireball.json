@@ -1,0 +1,41 @@
+{
+  "entityName": "Fireball",
+  "image": "mario_fireball",
+  "xPos": -1000,
+  "yPos": -100,
+  "xVel": 10,
+  "yVel": 10,
+  "maxXVel": 100,
+  "maxYVel": 100,
+  "height": 100,
+  "width": 100,
+  "scheme": "Pattern",
+  "actionBundles": [
+    {
+      "ID": "10",
+      "Control": [
+        {
+          "action": "MoveX",
+          "param": "10.0"
+        },
+        {
+          "action": "MoveY",
+          "param": "-10.0"
+        }
+      ]
+    },
+    {
+      "ID": "10",
+      "Control": [
+        {
+          "action": "MoveX",
+          "param": "10.0"
+        },
+        {
+          "action": "MoveY",
+          "param": "10.0"
+        }
+      ]
+    }
+  ]
+}
