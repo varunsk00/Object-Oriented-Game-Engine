@@ -18,7 +18,14 @@ public class CollisionKey {
     return orientation;
   }
 
-  public boolean equals(CollisionKey targetCollisionKey){
-    return this.ID.equals(targetCollisionKey.getID()) && this.orientation.equals(targetCollisionKey.getOrientation());
+  @Override
+  public boolean equals(Object targetCollisionKey) {
+    if (targetCollisionKey.getClass().equals(this.getClass())) {
+      return this.ID.equals(((CollisionKey) targetCollisionKey).getID()) &&
+          this.orientation.equals(((CollisionKey) targetCollisionKey).getOrientation());
+    }
+    else {
+      return false;
+    }
   }
 }
