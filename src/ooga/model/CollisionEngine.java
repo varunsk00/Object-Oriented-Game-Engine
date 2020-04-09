@@ -38,17 +38,14 @@ public class CollisionEngine {
 
       String targetEntityID = "Brick";//targetEntity.getID(); //FIXME: Change to the method to get a targetEntity ID
       String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity, targetEntity);
-
-      System.out.println("Collision!");
-      System.out.println(targetEntityCollisionSide);
+      
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID, targetEntityCollisionSide);
-
-      Action collisionAction = subjectEntityCollisionMap.get(targetEntityCollisionKey);
-      System.out.println(collisionAction);
-      //subjectEntity.getActionStack().push(collisionAction);
-      /*if(subjectEntity.getX()%2 == 0) {
-        subjectEntity.getActionStack().push(new MoveX("-100"));
-      }*/
+      for(CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()){
+        if(collisionMapKey.getID().equals(targetEntityCollisionKey.getID()) && collisionMapKey.getOrientation().equals(targetEntityCollisionKey.getOrientation())){
+          Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
+          subjectEntity.getActionStack().push(collisionAction);
+        }
+      }
 
     }
   }
