@@ -14,6 +14,7 @@ public class Jump extends Action {
   public void execute(EntityModel entity) {
     if(entity.isOnGround()) {
       entity.setYVelocity(yVelocity);
+      soundBoard.playSoundEffect(param);
       entity.setOnGround(false);
     }
   }

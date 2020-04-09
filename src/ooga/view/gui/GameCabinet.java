@@ -63,6 +63,7 @@ public class GameCabinet extends Pane {
                 String gameName = game.getGameName();
                 myStage.setTitle(game.getGameName().toUpperCase());
                 av.switchStage(myStage, gameName);
+                av.switchMusic(gameName);
             }
         }
     }
