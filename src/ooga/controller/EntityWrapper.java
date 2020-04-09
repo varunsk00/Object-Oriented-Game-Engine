@@ -39,16 +39,4 @@ public class EntityWrapper {
     myController.addEntity(newEntity);
     return newEntity;
   }
-
-  public void setX(double newX){myModel.setX(newX);}
-
-  public void setY(double newY){myModel.setY(newY);}
-
-  public void setXVelocity(double newXVel){myModel.setXVelocity(newXVel);}
-
-  public double getXVelocity(){return myModel.getXVelocity();}
-
-  public boolean getForwards(){return myModel.getForwards();}
-
-  public void setForwards(boolean direction) {myModel.setForwards(direction); }
 }

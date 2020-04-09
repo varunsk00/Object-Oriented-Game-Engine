@@ -104,9 +104,9 @@ public class EntityModel {
 
   public void spawnRelative(String param){
     EntityWrapper newEntity = spawnEntity(param);
-    newEntity.setX(this.getX());
-    newEntity.setY(this.getY());
-    newEntity.setForwards(this.getForwards());
+    newEntity.getModel().setX(this.getX());
+    newEntity.getModel().setY(this.getY());
+    newEntity.getModel().setForwards(this.getForwards());
   }
 
   public EntityWrapper spawnEntity(String param) {

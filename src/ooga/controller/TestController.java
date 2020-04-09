@@ -17,6 +17,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ooga.model.levels.Camera;
+import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.application.menu.MenuButtons;
 
@@ -54,6 +56,9 @@ public class TestController implements Controller {
   private Timeline animation;
   private Stage currentStage;
   private Scene oldScene;
+  private InfiniteLevelBuilder builder;
+  private Camera camera;
+  private Pane level;
 
 
 
@@ -62,7 +67,11 @@ public class TestController implements Controller {
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stage;
     this.oldScene = oldScene;
-    testPane = pane;
+    builder = new InfiniteLevelBuilder(this);
+
+    level = builder.generateLevel();
+
+    testPane = level;
     EntityGroup = new Group();
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
@@ -70,6 +79,9 @@ public class TestController implements Controller {
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
     entityList.add(new EntityWrapper("Mario_Fire", this));
+
+
+    camera = new Camera(oldScene, level, entityList.get(0).getRender());
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
 
@@ -106,7 +118,7 @@ public class TestController implements Controller {
     for(EntityWrapper entity : entityList){
       entity.update(elapsedTime);
     }
-
+    builder.updateLevel(camera.getViewPort(), level);
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
 
@@ -168,6 +180,11 @@ public class TestController implements Controller {
   public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
     EntityGroup.getChildren().add(newEntity.getRender());
+  }
+
+  @Override
+  public List<EntityWrapper> getEntityList() {
+    return entityList;
   }
 
 //  @Override
