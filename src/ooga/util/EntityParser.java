@@ -15,8 +15,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
+import ooga.model.actions.CollisionKey;
 import ooga.model.actions.NoAction;
 import ooga.model.controlschemes.ControlScheme;
+import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.XMLException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -29,6 +32,10 @@ public class EntityParser {
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
   private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
+  public static final String CORRUPTED_FILE = "Error with file input. Check game file or choose another game.";
+  public static final String CORRUPTED_FIELD = "XML file has corrupted/missing fields";
+  public final String CLASS_NOT_FOUND = "Control Scheme not valid";
+
 
   private File myFile;
   private Document myDoc;
@@ -45,12 +52,12 @@ public class EntityParser {
     try {
       builder = factory.newDocumentBuilder();
     } catch (ParserConfigurationException e) {
-      System.out.println("asdfff");
+      throw new XMLException(CORRUPTED_FILE);
     }
     try {
       myDoc = builder.parse(myFile);
     } catch (SAXException | IOException e) {
-      e.printStackTrace();
+      throw new XMLException(CORRUPTED_FILE);
     }
     myDoc.getDocumentElement().normalize();
   }
@@ -71,7 +78,7 @@ public class EntityParser {
     try{
       controlClass = Class.forName(CONTROLS_PREFIX + controlType);
     } catch (ClassNotFoundException e) {
-      //FIXME add error handling
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
     }
 
     ControlScheme myScheme = null;
@@ -79,11 +86,58 @@ public class EntityParser {
     try{
       myScheme = (ControlScheme) (controlClass.getConstructor(List.class)
           .newInstance(controlMap));
-    } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-      e.printStackTrace();
+    } catch (InstantiationException e) {
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
+    } catch (InvocationTargetException e) {
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
+    } catch (NoSuchMethodException e) {
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
+    } catch (IllegalAccessException e) {
+      throw new InvalidControlSchemeException(CLASS_NOT_FOUND);
+
     }
     return myScheme;
   }
+
+  public Map<CollisionKey, Action> parseCollisions() {
+    NodeList controls = myDoc.getElementsByTagName("Collisions");
+    Node controlNode = controls.item(0);
+
+    Map<CollisionKey, Action> collisionMap = new HashMap<CollisionKey, Action>();
+    String controlType = ""; //FIXME magic number
+
+    if(controlNode.getNodeType() == Node.ELEMENT_NODE){
+      Element controlElement = (Element) controlNode;
+      collisionMap = readCollisionMap(controlElement);
+    }
+    return collisionMap;
+  }
+
+  private Map<CollisionKey, Action> readCollisionMap(Element controlElement) {
+    NodeList collisions = controlElement.getElementsByTagName("Collision");
+    Map<CollisionKey, Action> collisionMap = new HashMap<CollisionKey, Action>();
+
+    //FIXME refactor into one method to reduce code reuse (parseCollision+parseControls)
+    for(int i = 0; i < collisions.getLength(); i++) {
+      Node collision = collisions.item(i);
+      if(collision.getNodeType() == Node.ELEMENT_NODE) {
+        Element crlElement = (Element) collision;
+        String key = crlElement.getAttribute("id");
+
+        ActionFactory actionFactory = new ActionFactory();
+        String actionName = crlElement.getAttribute("action");
+        String paramName = crlElement.getAttribute("param");
+
+        Action testAction = actionFactory.makeAction(actionName, null, null);
+
+        String orientation = crlElement.getAttribute("orientation");
+        collisionMap.put(new CollisionKey(key, orientation), testAction);
+
+      }
+    }
+    return collisionMap;
+  }
+
 
   private List<ActionBundle> readControlMap(Element controlElement) {
     NodeList bundles = controlElement.getElementsByTagName("Bundle");
@@ -112,7 +166,8 @@ public class EntityParser {
         ActionFactory actionFactory = new ActionFactory();
         String actionName = crlElement.getAttribute("action");
         String paramName = crlElement.getAttribute("param");
-        Action testAction = actionFactory.makeAction(actionName, paramName);
+        Action testAction = actionFactory.makeAction(actionName, null, null);
+
         outputBundle.addAction(testAction);
       }
     }
