@@ -13,6 +13,8 @@ import ooga.model.controlschemes.ControlScheme;
 public class EntityModel {
   private EntityWrapper myEntity;
   private boolean forwards;
+  private double entityWidth = 100;
+  private double entityHeight = 100;
   private double xPos;
   private double yPos;
   private double xVel;
@@ -85,6 +87,11 @@ public class EntityModel {
 
   public void setY(double newY){yPos = newY;}
 
+  public double getWidth(){return entityWidth;}
+
+  public double getHeight(){return entityHeight;}
+
+
   public double getXVelocity(){return xVel;}
 
   public double getYVelocity(){return yVel;}
@@ -103,6 +110,10 @@ public class EntityModel {
 
   public Stack<Action> getActionStack() {
     return actionStack;
+  }
+
+  public Map<CollisionKey, Action> getCollisionMap() {
+    return myCollisions;
   }
 
   public void spawnRelative(String param){

@@ -16,6 +16,7 @@ public class SpawnRelative extends Spawn {
   public void execute(EntityModel entityModel) {
     if(System.currentTimeMillis() - pasttime >= cooldown) {
       entityModel.spawnRelative(param);
+      soundBoard.playSoundEffect(param);
       pasttime = System.currentTimeMillis();
     }
   }

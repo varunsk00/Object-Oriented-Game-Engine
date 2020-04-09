@@ -1,5 +1,6 @@
 package ooga.controller;
 
+import java.nio.file.attribute.AclEntryType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +20,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.model.levels.Camera;
 import ooga.model.levels.InfiniteLevelBuilder;
+import ooga.model.CollisionEngine;
+
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.application.menu.MenuButtons;
 
@@ -33,10 +36,13 @@ public class TestController implements Controller {
   private Pane testPane;
   private Group EntityGroup;
   private PhysicsEngine physicsEngine;
+  private CollisionEngine collisionEngine;
+
 
   private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
   private EntityWrapper entityWrapper;
+  private EntityWrapper entityBrick;
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entityBuffer;
   private Line testGround = new Line(0, groundY, 1000, groundY);
@@ -59,6 +65,7 @@ public class TestController implements Controller {
   private InfiniteLevelBuilder builder;
   private Camera camera;
   private Pane level;
+
 
 
 
@@ -90,7 +97,14 @@ public class TestController implements Controller {
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
 
+    entityList.add(new EntityWrapper("Brick", this));
+    entityBrick = entityList.get(1);
+    EntityGroup.getChildren().add(entityBrick.getRender());
+
+
+
     physicsEngine = new PhysicsEngine("dummyString");
+    collisionEngine = new CollisionEngine();
 
     testScene.setOnKeyPressed(e -> {
 
@@ -107,38 +121,34 @@ public class TestController implements Controller {
     });
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
+
+    setUpTimeline();
+  }
+
+  private void setUpTimeline(){
     //TODO: Timeline Code -- don't remove
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
-
   }
 
   private void step (double elapsedTime) {
-//    System.out.println(camera.getViewPort().xProperty());
-    physicsEngine.applyForces(entityWrapper.getModel());
+
     camera.update();
-    for(EntityWrapper entity : entityList){
-      entity.update(elapsedTime);
-    }
+
     builder.updateLevel(camera.getViewPort(), level);
+    for(EntityWrapper subjectEntity : entityList){
+      for(EntityWrapper targetEntity : entityList){
+        collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+      }
+      physicsEngine.applyForces(entityWrapper.getModel());
+      subjectEntity.update(elapsedTime);
+    }
+
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
-
-    /* potential update code for Entity
-    for (EntityWrapper currentEntity : EntityGroup) {
-      for (EntityWrapper targetEntity : EntityGroup) {
-        if(currentEntity.equals(targetEntity)){
-          continue;
-        }
-        else {
-          EntityWrapper.update();
-        }
-      }
-    }
-     */
   }
 
   private void handlePressInput (KeyCode code) {
