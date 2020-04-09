@@ -41,9 +41,10 @@ public class CollisionEngine {
       
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID, targetEntityCollisionSide);
       for(CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()){
-        if(collisionMapKey.getID().equals(targetEntityCollisionKey.getID()) && collisionMapKey.getOrientation().equals(targetEntityCollisionKey.getOrientation())){
+        if(targetEntityCollisionKey.equals(collisionMapKey)){
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
           subjectEntity.getActionStack().push(collisionAction);
+          break;
         }
       }
 

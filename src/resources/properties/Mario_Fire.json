@@ -65,7 +65,7 @@
       "Control": [
         {
           "action": "MoveX",
-          "param": "-100.0",
+          "param": "-100",
           "orientation": "W"
         }
       ]
