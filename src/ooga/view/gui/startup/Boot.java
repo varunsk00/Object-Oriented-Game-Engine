@@ -24,6 +24,7 @@ public class Boot extends Application {
     private static final int SCENE_HEIGHT = 720;
     private static final double FRAMES_PER_SECOND = 30;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private final String RESOURCES_PACKAGE = this.getClass().getPackageName() + ".resources.";
     private Timeline animation;
     private BorderPane mainFrame = new BorderPane();
     private Stage myStage;
@@ -51,19 +52,25 @@ public class Boot extends Application {
 
     private void initBootupScreen(){ //FIXME: filepath declared as variable
         mainFrame.setCenter(welcomeScreen);
-        welcomeMusic = new MediaPlayer (new Media(new File("src/resources/sample_menu_music.wav").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
+        welcomeMusic = new MediaPlayer (new Media(new File("src/ooga/view/gui/resources/menu.mp3").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
         playSound(welcomeMusic);
     }
 
     private void startAnimationLoop() {
-        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step());
+        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
+            try {
+                step();
+            } catch (Exception ex) { //FIXME: REPLACE WITH STRING
+                ex.printStackTrace();
+            }
+        });
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
     }
 
-    private void step() { //FIXME: Please fix this monstrosity of if statements
+    private void step() throws Exception { //FIXME: Please fix this monstrosity of if statements
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
             mainFrame.setCenter(library);
@@ -72,11 +79,13 @@ public class Boot extends Application {
         if(!myStage.getTitle().equals("BOOGA")){
             welcomeMusic.stop();
         }
+
         library.updateCurrentGame(myStage);
     }
 
     private void playSound(MediaPlayer sound){
         sound.seek(Duration.ZERO);
+        sound.setCycleCount(MediaPlayer.INDEFINITE);
         sound.play();
     }
 
