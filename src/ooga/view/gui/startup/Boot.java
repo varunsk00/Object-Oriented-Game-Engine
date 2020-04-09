@@ -51,7 +51,7 @@ public class Boot extends Application {
 
     private void initBootupScreen(){ //FIXME: filepath declared as variable
         mainFrame.setCenter(welcomeScreen);
-        welcomeMusic = new MediaPlayer (new Media(new File("src/resources/sample_menu_music.wav").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
+        welcomeMusic = new MediaPlayer (new Media(new File("src/resources/menu.wav").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
         playSound(welcomeMusic);
     }
 
@@ -78,6 +78,7 @@ public class Boot extends Application {
         if(!myStage.getTitle().equals("BOOGA")){
             welcomeMusic.stop();
         }
+
         library.updateCurrentGame(myStage);
     }
 

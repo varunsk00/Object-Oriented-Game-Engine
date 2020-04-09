@@ -11,11 +11,11 @@ import java.util.List;
 public class GameCabinet extends Pane {
     private GameSelectionMenu gameSelectionMenu;
     private List<GamePreview> myGames;
-    private GameLauncher sm;
+    private AVManager av;
 
     public GameCabinet(Stage primaryStage) throws Exception { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
-        this.sm = new GameLauncher();
+        this.av = new AVManager();
         initGameSelect();
         gameSelectionMenu = new GameSelectionMenu(myGames);
         this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
@@ -62,7 +62,7 @@ public class GameCabinet extends Pane {
                 game.resetGameName();
                 String gameName = game.getGameName();
                 myStage.setTitle(game.getGameName().toUpperCase());
-                sm.switchStage(myStage, gameName);
+                av.switchStage(myStage, gameName);
             }
         }
     }
