@@ -22,12 +22,6 @@ public class GameCabinet extends Pane {
         this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         updateCurrentGame(stageManager);
     }
-//    public void scrollLeft() {
-//        gameSelectionMenu.scrollLeft();
-//    }
-//    public void scrollRight() {
-//        gameSelectionMenu.scrollRight();
-//    }
 
     public GameSelectionMenu getLibrary(){
         return gameSelectionMenu;
@@ -53,8 +47,8 @@ public class GameCabinet extends Pane {
         myGames.add(g3);
         myGames.add(g4);
         myGames.add(g5);
-
     }
+    
     public void handleAltScrollInput(KeyCode code) {
         if (code == KeyCode.RIGHT) {
             this.gameSelectionMenu.scrollRight();

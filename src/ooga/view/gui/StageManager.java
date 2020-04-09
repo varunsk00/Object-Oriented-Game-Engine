@@ -15,7 +15,7 @@ public class StageManager {
         this.stage = primaryStage;
         stage.setTitle("BOOGA");
         stage.setWidth(1280);
-       stage.setHeight(720);
+        stage.setHeight(720);
         stage.show();
         stage.setFullScreen(true);
     }
@@ -32,6 +32,7 @@ public class StageManager {
         stage.setScene(newScene);
         stage.setTitle(title);
         currentScene = newScene;
+        currentScene.getStylesheets().add("ooga/view/styling/default.css");
     }
     public void switchRoot(Parent parent) {
         stage.getScene().setRoot(parent);
@@ -48,6 +49,7 @@ public class StageManager {
     public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
         currentScene = new Scene(parentNode);
+        currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);
         stage.setFullScreen(true);

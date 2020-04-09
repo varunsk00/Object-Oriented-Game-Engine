@@ -30,8 +30,6 @@ public class Driver {
     private final String RESOURCES_PACKAGE = this.getClass().getPackageName() + ".resources.";
     private Timeline animation;
     private AnimationTimer animationTimer;
-    private BorderPane mainFrame = new BorderPane();
-    private Stage myStage;
     private Welcome welcomeScreen = new Welcome();
     private GameCabinet library;
     private MediaPlayer welcomeMusic;
@@ -44,15 +42,10 @@ public class Driver {
         library = new GameCabinet(stageManager);
         initBootupScreen();
         startAnimationLoop();
-        
-        Scene scene = new Scene(mainFrame, SCENE_WIDTH, SCENE_HEIGHT);
-//        scene.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
-        scene.getStylesheets().add("ooga/view/styling/default.css");
     }
 
     private void initBootupScreen(){ //FIXME: filepath declared as variable
         stageManager.createAndSwitchScenes(welcomeScreen);
-        mainFrame.setCenter(welcomeScreen);
         welcomeMusic = new MediaPlayer (new Media(new File("src/ooga/view/gui/resources/menu.mp3").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
         playSound(welcomeMusic);
     }
@@ -75,12 +68,10 @@ public class Driver {
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
             stageManager.createAndSwitchScenes(library);
-            mainFrame.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         }
         library.updateCurrentGame(stageManager);
 
         if(!stageManager.getCurrentTitle().equals("BOOGA")){
-
             welcomeMusic.stop();
         }
     }
