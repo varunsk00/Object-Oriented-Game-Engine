@@ -158,7 +158,7 @@ public class GameSelectionMenu extends BorderPane {
             }
         }
         gameName.setText(playableGamesList.get(1).getGameName());
-        gameName.setFill(Color.web(playableGamesList.get(1).getGameName()));
+        gameName.setFill(playableGamesList.get(1).getColor());
     }
     private void initializePreviewPos() {
         for (int i = 0; i < playableGamesList.size(); i ++) {
@@ -173,7 +173,7 @@ public class GameSelectionMenu extends BorderPane {
                    playableGamesList.get(i).setScaleX(2.1);
                    playableGamesList.get(i).setScaleY(2.1);
                    gameName.setText(playableGamesList.get(i).getGameName());
-                   gameName.setFill(Color.web(playableGamesList.get(i).getGameName()));
+                   gameName.setFill(playableGamesList.get(1).getColor());
                 }
                 playableGamesList.get(i).setVisible(true);
             }

@@ -10,6 +10,7 @@ public class GamePreview extends Rectangle {
     private Image gameImage;
     private double xPos;
     private boolean isPressed;
+    private Paint gamePreviewColor;
 
     public GamePreview(Paint color) {
         this.setHeight(100);
@@ -17,6 +18,7 @@ public class GamePreview extends Rectangle {
         this.setY(275);
         this.setFill(color);
         this.setOnMouseClicked(e -> isPressed=true);
+        this.gamePreviewColor = color;
     }
     public void setXPos(double xPos) {
         this.xPos = xPos;
@@ -38,5 +40,8 @@ public class GamePreview extends Rectangle {
     }
     public void chooseGame() {
         this.isPressed = true;
+    }
+    public Paint getColor() {
+        return this.gamePreviewColor;
     }
 }

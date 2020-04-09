@@ -19,9 +19,18 @@ public class StageManager {
         stage.show();
         stage.setFullScreen(true);
     }
+
+    /**
+     * overloaded method
+     * @param newScene
+     */
     public void switchScenes(Scene newScene) {
+        this.switchScenes(newScene, stage.getTitle());
+    }
+    public void switchScenes(Scene newScene, String title) {
         pastScene = stage.getScene();
         stage.setScene(newScene);
+        stage.setTitle(title);
         currentScene = newScene;
     }
     public void switchRoot(Parent parent) {
@@ -34,6 +43,7 @@ public class StageManager {
         return pastScene;
     }
     public void createAndSwitchScenes(Parent parentNode) {
+        pastScene = stage.getScene();
         currentScene = new Scene(parentNode);
         stage.setScene(currentScene);
         stage.setFullScreen(true);

@@ -25,6 +25,7 @@ import ooga.view.application.menu.MenuButtons;
 import javax.swing.text.html.parser.Entity;
 import ooga.model.PhysicsEngine;
 import ooga.view.gui.GameCabinet;
+import ooga.view.gui.StageManager;
 
 
 public class TestController implements Controller {
@@ -57,16 +58,17 @@ public class TestController implements Controller {
   private boolean isGrounded;
   private boolean keyPressed;
   private Timeline animation;
-  private Stage currentStage;
+  private StageManager currentStage;
   private Scene oldScene;
+  private Scene testScene;
 
 
 
 
-  public TestController (Pane pane, Scene testScene, Stage stage, Scene oldScene) { //FIXME add exception stuff
+  public TestController (Pane pane, StageManager stageManager, Scene oldScene) { //FIXME add exception stuff
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
-    currentStage = stage;
+    currentStage = stageManager;
     this.oldScene = oldScene;
     testPane = pane;
     EntityGroup = new Group();
@@ -82,6 +84,8 @@ public class TestController implements Controller {
     entityList.add(new EntityWrapper("Brick", this));
     entityBrick = entityList.get(1);
     EntityGroup.getChildren().add(entityBrick.getRender());
+    this.testScene = stageManager.getCurrentScene();
+
 
 
 
@@ -155,7 +159,7 @@ public class TestController implements Controller {
     }
     else if (code == KeyCode.H) {
       System.out.println("HOME");
-      currentStage.setScene(oldScene);
+      currentStage.switchScenes(oldScene);
     }
     if (code == KeyCode.SPACE && isGrounded) {
       yVelocity = -200;
