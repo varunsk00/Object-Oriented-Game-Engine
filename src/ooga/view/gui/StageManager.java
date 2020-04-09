@@ -18,6 +18,7 @@ public class StageManager {
         stage.setHeight(720);
         stage.show();
         stage.setFullScreen(true);
+        stage.setResizable(false);
     }
 
     /**
@@ -52,7 +53,6 @@ public class StageManager {
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);
-        stage.setFullScreen(true);
     }
     public String getCurrentTitle() {
         return stage.getTitle();
