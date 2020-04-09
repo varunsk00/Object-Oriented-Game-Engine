@@ -1,7 +1,5 @@
 package ooga.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -11,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.xml.parsers.ParserConfigurationException;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
 import ooga.model.actions.CollisionKey;

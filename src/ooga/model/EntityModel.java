@@ -12,6 +12,8 @@ import ooga.model.controlschemes.ControlScheme;
 
 public class EntityModel {
   private EntityWrapper myEntity;
+  private double entityWidth;
+  private double entityHeight;
   private double xPos;
   private double yPos;
   private double xVel;
@@ -84,6 +86,11 @@ public class EntityModel {
   public void setX(double newX){xPos = newX;}
 
   public void setY(double newY){yPos = newY;}
+
+  public double getWidth(){return entityWidth;}
+
+  public double getHeight(){return entityHeight;}
+
 
   public double getXVelocity(){return xVel;}
 
