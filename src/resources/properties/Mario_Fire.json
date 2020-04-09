@@ -48,5 +48,38 @@
         }
       ]
     }
+  ],
+  "collisionBundles": [
+    {
+      "ID": "Brick",
+      "Control": [
+        {
+          "action": "MoveX",
+          "param": "-10.0",
+          "orientation": "A"
+        }
+      ]
+    },
+    {
+      "ID": "Brick",
+      "Control": [
+        {
+          "action": "AccelerateX",
+          "param": "0.0",
+          "orientation": "E W"
+        }
+      ]
+    },
+    {
+      "ID": "Brick",
+      "Control": [
+        {
+          "action": "MoveY",
+          "param": "-10.0",
+          "orientation": "S"
+        }
+      ]
+    }
   ]
+
 }

@@ -6,12 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.xml.parsers.ParserConfigurationException;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
+import ooga.model.actions.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import org.json.simple.JSONArray;
@@ -75,6 +78,33 @@ public class EntityJSONParser {
       e.printStackTrace();
     }
     return myScheme;
+  }
+
+  public Map<CollisionKey, Action> parseCollisions() {
+    JSONArray collisionArray = (JSONArray) jsonObject.get("collisionBundles");
+    Map<CollisionKey, Action> collisionMap = new HashMap<CollisionKey, Action>();
+
+    if(collisionArray != null) {
+
+      for (int i = 0; i < collisionArray.size(); i++) {
+        JSONObject collisionEntry = (JSONObject) collisionArray.get(i);
+        String key = (String) collisionEntry.get("ID");
+
+        JSONArray controlArr = (JSONArray) collisionEntry.get("Control");
+        for (int j = 0; j < controlArr.size(); j++) {
+          JSONObject controlEntry = (JSONObject) controlArr.get(j);
+          ActionFactory actionFactory = new ActionFactory();
+          String actionName = (String) controlEntry.get("action");
+          String paramName = (String) controlEntry.get("param");
+          String orientation = (String) controlEntry.get("orientation");
+
+          Action newAction = actionFactory
+              .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
+          collisionMap.put(new CollisionKey(key, orientation), newAction);
+        }
+      }
+    }
+    return collisionMap;
 
   }
 
