@@ -56,14 +56,20 @@ public class Boot extends Application {
     }
 
     private void startAnimationLoop() {
-        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step());
+        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
+            try {
+                step();
+            } catch (Exception ex) { //FIXME: REPLACE WITH STRING
+                ex.printStackTrace();
+            }
+        });
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
     }
 
-    private void step() { //FIXME: Please fix this monstrosity of if statements
+    private void step() throws Exception { //FIXME: Please fix this monstrosity of if statements
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
             mainFrame.setCenter(library);
