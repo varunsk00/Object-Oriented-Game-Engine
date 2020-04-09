@@ -1,0 +1,15 @@
+{
+  "entityName": "Pipebody",
+  "image": "sampleSprite",
+  "xPos": -1000,
+  "yPos": -100,
+  "xVel": 10,
+  "yVel": 10,
+  "maxXVel": 100,
+  "maxYVel": 100,
+  "height": 100,
+  "width": 75,
+  "scheme": "NoControls",
+  "actionBundles": [
+  ]
+}

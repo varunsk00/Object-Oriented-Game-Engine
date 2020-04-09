@@ -17,6 +17,10 @@
         {
           "action": "AccelerateX",
           "param": "15.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "forwards"
         }
       ]
     },
@@ -26,6 +30,10 @@
         {
           "action": "AccelerateX",
           "param": "-15.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "backwards"
         }
       ]
     },

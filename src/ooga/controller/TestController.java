@@ -72,10 +72,15 @@ public class TestController implements Controller {
     level = builder.generateLevel();
 
     testPane = level;
+    for(int i = 0; i < 20; i++){
+      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
+    }
+    testScene.setRoot(testPane);
+
     EntityGroup = new Group();
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    testPane.getChildren().add(EntityGroup);
+    level.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
     entityList.add(new EntityWrapper("Mario_Fire", this));
@@ -112,10 +117,9 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-
+//    System.out.println(camera.getViewPort().xProperty());
     physicsEngine.applyForces(entityWrapper.getModel());
-
-
+    camera.update();
     for(EntityWrapper entity : entityList){
       entity.update(elapsedTime);
     }
