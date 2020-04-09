@@ -22,7 +22,6 @@ public class ActionFactory {
 
   public ActionFactory() {
     setGeneralCommands();
-
     /*
     setMovementCommands();
     setControlCommands();
@@ -53,22 +52,18 @@ public class ActionFactory {
     if(myActions.containsKey(action)) {
       return action;
     }
-    throw new InvalidActionException("Action does not exist"); //TODO: fix exception handling
+    throw new InvalidActionException(action.toString() + " doesnt exist"); //TODO: fix exception handling
   }
 
-//  private Action buildAction(String formalAction, String param) {
-//    try {
-//      return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(String.class).newInstance(param);
-//    }
-//    catch
-//      (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-//        throw new InvalidActionException("Action could not be found.");
-//    }
-//  }
-
-  private Action buildAction(String formalAction, Class<?> classtypes[], Object param[]) {
+  private Action buildAction(String formalAction, Class<?> classTypes[], Object param[]) {
     try {
-      return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(classtypes).newInstance(param);
+//      Class<?> params[] = {String.class, String.class};
+//      Class<?> paramsSingle[] = {String.class};
+//      Object fields[] = {"15.0", "test"};
+//      Object fieldsSingle[] = {"15.0"};
+//      Action oneParams = (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(paramsSingle).newInstance(fieldsSingle);
+//      Action twoParams = (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(params).newInstance(fields);
+      return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(classTypes).newInstance(param);
     }
     catch
     (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

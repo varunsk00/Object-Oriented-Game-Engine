@@ -88,6 +88,7 @@ public class TestController implements Controller {
     physicsEngine = new PhysicsEngine("dummyString");
 
     testScene.setOnKeyPressed(e -> {
+
       handlePressInput(e.getCode());
       for(EntityWrapper entity : entityList){
         entity.handleKeyInput(e);//FIXME i would like to
