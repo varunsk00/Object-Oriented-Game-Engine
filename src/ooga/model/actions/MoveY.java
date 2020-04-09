@@ -8,6 +8,7 @@ public class MoveY extends Action {
   public MoveY(String parameter){
     super(parameter);
     ydistance = Double.parseDouble(param);
+    System.out.println("movey");
   }
 
   @Override

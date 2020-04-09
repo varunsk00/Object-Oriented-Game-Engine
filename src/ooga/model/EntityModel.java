@@ -12,8 +12,8 @@ import ooga.model.controlschemes.ControlScheme;
 
 public class EntityModel {
   private EntityWrapper myEntity;
-  private double entityWidth;
-  private double entityHeight;
+  private double entityWidth = 100;
+  private double entityHeight = 100;
   private double xPos;
   private double yPos;
   private double xVel;
@@ -110,6 +110,10 @@ public class EntityModel {
 
   public Stack<Action> getActionStack() {
     return actionStack;
+  }
+
+  public Map<CollisionKey, Action> getCollisionMap() {
+    return myCollisions;
   }
 
   public void spawnRelative(String param){

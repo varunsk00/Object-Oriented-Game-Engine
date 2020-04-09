@@ -56,7 +56,7 @@
         {
           "action": "MoveX",
           "param": "-10.0",
-          "orientation": "A"
+          "orientation": "N"
         }
       ]
     },
@@ -64,9 +64,9 @@
       "ID": "Brick",
       "Control": [
         {
-          "action": "AccelerateX",
-          "param": "0.0",
-          "orientation": "E W"
+          "action": "MoveX",
+          "param": "-100.0",
+          "orientation": "W"
         }
       ]
     },
@@ -75,7 +75,7 @@
       "Control": [
         {
           "action": "MoveY",
-          "param": "-10.0",
+          "param": "-100.0",
           "orientation": "S"
         }
       ]
