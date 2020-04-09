@@ -29,7 +29,7 @@ public class Keybindings extends ControlScheme {
   public void handleKeyInput(KeyEvent keyEvent) {
     if(keyBindings.containsKey(keyEvent.getCode().toString()) && !currentAction.containsAll(keyBindings.get(keyEvent.getCode().toString()))) {
       currentAction.addAll(keyBindings.get(keyEvent.getCode().toString()));
-      System.out.println(keyEvent.getCode().toString());
+      //System.out.println(keyEvent.getCode().toString());
     }
   }
 
@@ -38,7 +38,7 @@ public class Keybindings extends ControlScheme {
     if (keyBindings.containsKey(keyEvent.getCode().toString()) && currentAction
         .containsAll(keyBindings.get(keyEvent.getCode().toString()))) {
       currentAction.removeAll(keyBindings.get(keyEvent.getCode().toString()));
-      System.out.println(keyEvent.getCode().toString());
+      //System.out.println(keyEvent.getCode().toString());
     }
   }
 }

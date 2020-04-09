@@ -8,6 +8,7 @@ public class MoveX extends Action {
   public MoveX(String parameter){
     super(parameter);
     xdistance = Double.parseDouble(param);
+
   }
 
   @Override
