@@ -80,7 +80,7 @@ public class TestController implements Controller {
 //        //handlePressInput(e.getCode());
 //      entityWrapper.handleKeyInput(e); //FIXME i would like to
 //=======
-      handlePressInput(e.getCode());
+//  /    handlePressInput(e.getCode());
       for(EntityWrapper entity : entityList){
         entity.handleKeyInput(e);//FIXME i would like to
       }
@@ -89,7 +89,7 @@ public class TestController implements Controller {
       for(EntityWrapper entity : entityList){
         entity.handleKeyReleased(e);//FIXME i would like to
       }
-      handleReleaseInput(e.getCode());
+      //handleReleaseInput(e.getCode());
     });
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
@@ -99,10 +99,10 @@ public class TestController implements Controller {
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
-
   }
 
   private void step (double elapsedTime) {
+
 
     physicsEngine.applyForces(entityWrapper.getModel());
 
@@ -128,43 +128,43 @@ public class TestController implements Controller {
      */
   }
 
-  private void handlePressInput (KeyCode code) {
-    if (code == KeyCode.D) {
-      xAcceleration = 75;
-      keyPressed = true;
-    } else if (code == KeyCode.A) {
-      xAcceleration = -75;
-      keyPressed = true;
-    }
-    else if (code == KeyCode.ESCAPE && escCounter < 1) {
-      BoxBlur bb = new BoxBlur();
-      menu = new InGameMenu("TestSandBox");
-      EntityGroup.setEffect(bb);
-      animation.pause();
-      testPane.getChildren().add(menu);
-      escCounter++;
-    }
-    else if (code == KeyCode.Q && escCounter == 1) {
-      testPane.getChildren().remove(testPane.getChildren().size()-1);
-      EntityGroup.setEffect(null);
-      animation.play();
-      escCounter--;
-    }
-    else if (code == KeyCode.H) {
-      System.out.println("HOME");
-      currentStage.setScene(oldScene);
-    }
-    if (code == KeyCode.SPACE && isGrounded) {
-      yVelocity = -200;
-      isGrounded = false;
-    }
-  }
-  private void handleReleaseInput (KeyCode code) {
-    if (code == KeyCode.D || code == KeyCode.A) {
-      xAcceleration = 0;
-    }
-  }
-
+//  private void handlePressInput (KeyCode code) {
+//    if (code == KeyCode.D) {
+//      xAcceleration = 75;
+//      keyPressed = true;
+//    } else if (code == KeyCode.A) {
+//      xAcceleration = -75;
+//      keyPressed = true;
+//    }
+//    else if (code == KeyCode.ESCAPE && escCounter < 1) {
+//      BoxBlur bb = new BoxBlur();
+//      menu = new InGameMenu("TestSandBox");
+//      EntityGroup.setEffect(bb);
+//      animation.pause();
+//      testPane.getChildren().add(menu);
+//      escCounter++;
+//    }
+//    else if (code == KeyCode.Q && escCounter == 1) {
+//      testPane.getChildren().remove(testPane.getChildren().size()-1);
+//      EntityGroup.setEffect(null);
+//      animation.play();
+//      escCounter--;
+//    }
+//    else if (code == KeyCode.H) {
+//      System.out.println("HOME");
+//      currentStage.setScene(oldScene);
+//    }
+//    if (code == KeyCode.SPACE && isGrounded) {
+//      yVelocity = -200;
+//      isGrounded = false;
+//    }
+//  }
+//  private void handleReleaseInput (KeyCode code) {
+//    if (code == KeyCode.D || code == KeyCode.A) {
+//      xAcceleration = 0;
+//    }
+//  }
+//
   private void handleMouseInput(double x, double y) {
   }
 
