@@ -27,6 +27,7 @@ public class Driver {
     private static final int SCENE_HEIGHT = 720;
     private static final double FRAMES_PER_SECOND = 30;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private final String RESOURCES_PACKAGE = this.getClass().getPackageName() + ".resources.";
     private Timeline animation;
     private AnimationTimer animationTimer;
     private BorderPane mainFrame = new BorderPane();
@@ -48,20 +49,11 @@ public class Driver {
 //        scene.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         scene.getStylesheets().add("ooga/view/styling/default.css");
     }
-//    public void handleAltScrollInput(KeyCode code) {
-//        System.out.println(code);
-//        if (code == KeyCode.RIGHT) {
-//            library.scrollRight();
-//        }
-//        else if (code == KeyCode.LEFT) {
-//            library.scrollLeft();
-//        }
-//    }
 
     private void initBootupScreen(){ //FIXME: filepath declared as variable
-       // mainFrame.setCenter(welcomeScreen);
         stageManager.createAndSwitchScenes(welcomeScreen);
-        welcomeMusic = new MediaPlayer (new Media(new File("src/resources/sample_menu_music.wav").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
+        mainFrame.setCenter(welcomeScreen);
+        welcomeMusic = new MediaPlayer (new Media(new File("src/ooga/view/gui/resources/menu.mp3").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
         playSound(welcomeMusic);
     }
 
@@ -83,17 +75,19 @@ public class Driver {
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
             stageManager.createAndSwitchScenes(library);
-//            mainFrame.setCenter(library);
             mainFrame.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         }
-//        if(!myStage.getTitle().equals("BOOGA")){
-    //        welcomeMusic.stop();
-  //      }
         library.updateCurrentGame(stageManager);
+
+        if(!stageManager.getCurrentTitle().equals("BOOGA")){
+
+            welcomeMusic.stop();
+        }
     }
 
     private void playSound(MediaPlayer sound){
         sound.seek(Duration.ZERO);
+        sound.setCycleCount(MediaPlayer.INDEFINITE);
         sound.play();
     }
 

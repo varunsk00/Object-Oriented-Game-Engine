@@ -14,8 +14,8 @@ public class StageManager {
     public StageManager(Stage primaryStage) {
         this.stage = primaryStage;
         stage.setTitle("BOOGA");
-//        stage.setWidth(1280);
-//        stage.setHeight(720);
+        stage.setWidth(1280);
+       stage.setHeight(720);
         stage.show();
         stage.setFullScreen(true);
     }
@@ -43,10 +43,17 @@ public class StageManager {
         return pastScene;
     }
     public void createAndSwitchScenes(Parent parentNode) {
+        createAndSwitchScenes(parentNode, stage.getTitle());
+    }
+    public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
         currentScene = new Scene(parentNode);
         stage.setScene(currentScene);
+        stage.setTitle(title);
         stage.setFullScreen(true);
+    }
+    public String getCurrentTitle() {
+        return stage.getTitle();
     }
 
 }

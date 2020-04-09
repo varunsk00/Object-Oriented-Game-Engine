@@ -11,15 +11,15 @@ import java.util.List;
 public class GameCabinet extends Pane {
     private GameSelectionMenu gameSelectionMenu;
     private List<GamePreview> myGames;
-    private GameLauncher gl;
+    private AVManager av;
 
     public GameCabinet(StageManager stageManager) throws Exception { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
-        this.gl = new GameLauncher();
+        this.av = new AVManager();
         initGameSelect();
         gameSelectionMenu = new GameSelectionMenu(myGames);
         this.getChildren().add(gameSelectionMenu);
-
+        this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         updateCurrentGame(stageManager);
     }
 //    public void scrollLeft() {
@@ -28,7 +28,6 @@ public class GameCabinet extends Pane {
 //    public void scrollRight() {
 //        gameSelectionMenu.scrollRight();
 //    }
-
 
     public GameSelectionMenu getLibrary(){
         return gameSelectionMenu;
@@ -63,7 +62,6 @@ public class GameCabinet extends Pane {
         else if (code == KeyCode.LEFT) {
             this.gameSelectionMenu.scrollLeft();
         }
-
     }
 
     public void updateCurrentGame(StageManager stageManager) throws Exception {
@@ -71,7 +69,8 @@ public class GameCabinet extends Pane {
             if(game.getGamePressed()) {
                 game.resetGameName();
                 String gameName = game.getGameName();
-                gl.switchStage(stageManager, gameName);
+                av.switchStage(stageManager, gameName);
+                av.switchMusic(gameName);
             }
         }
     }

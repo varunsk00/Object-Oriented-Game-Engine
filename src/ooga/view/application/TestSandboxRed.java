@@ -26,7 +26,7 @@ public class TestSandboxRed extends Game{
 
     @Override
     public void initModel() {
-
+        gameName = this.getClass().getSimpleName();
     }
 
     @Override

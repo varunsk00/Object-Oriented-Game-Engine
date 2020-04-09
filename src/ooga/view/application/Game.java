@@ -13,12 +13,10 @@ import ooga.controller.TestController;
 import ooga.view.gui.StageManager;
 
 public abstract class Game {
-    private static final int SCENE_WIDTH = 1280;
-    private static final int SCENE_HEIGHT = 720;
-    protected Scene myScene;
     protected Pane myBackgroundPane;
     protected StageManager stageManager;
     protected Scene oldScene;
+    protected String gameName;
 
 
     public Game(StageManager stageManager) {
@@ -42,6 +40,6 @@ public abstract class Game {
     protected abstract void initController();
 
     private void initStage() {
-        stageManager.createAndSwitchScenes(myBackgroundPane);
+        stageManager.createAndSwitchScenes(myBackgroundPane, gameName);
     }
 }
