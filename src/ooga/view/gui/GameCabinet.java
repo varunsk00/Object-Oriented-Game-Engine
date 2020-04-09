@@ -1,6 +1,5 @@
 package ooga.view.gui;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -17,17 +16,28 @@ public class GameCabinet extends Pane {
     private GameSelectionMenu gameSelectionMenu;
     private List<GamePreview> myGames;
 
-    public GameCabinet(Stage primaryStage) { //FIXME ADD ERROR HANDLING
+    public GameCabinet(StageManager stageManager) { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
         initGameSelect();
         gameSelectionMenu = new GameSelectionMenu(myGames);
-        this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         this.getChildren().add(gameSelectionMenu);
-        updateCurrentGame(primaryStage);
+
+        updateCurrentGame(stageManager);
     }
+//    public void scrollLeft() {
+//        gameSelectionMenu.scrollLeft();
+//    }
+//    public void scrollRight() {
+//        gameSelectionMenu.scrollRight();
+//    }
+
 
     public GameSelectionMenu getLibrary(){
         return gameSelectionMenu;
+    }
+
+    public void addNewGamePreview(GamePreview newGamePreview) {
+        this.myGames.add(newGamePreview);
     }
 
     private void initGameSelect(){ //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
@@ -48,36 +58,25 @@ public class GameCabinet extends Pane {
         myGames.add(g5);
 
     }
-    public void handleAltScrollInput(KeyCode code) {
-        System.out.println(code);
-        if (code == KeyCode.RIGHT) {
-            this.gameSelectionMenu.scrollRight();
-        }
-        else if (code == KeyCode.LEFT) {
-            this.gameSelectionMenu.scrollLeft();
-        }
 
-    }
-
-
-
-    public void updateCurrentGame(Stage myStage) { //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
+    public void updateCurrentGame(StageManager stageManager) { //FIXME: STREAMLINE GAME CHECKING FROM FILE OR REFLECTIONS ONCE COLORS REPLACED WITH GAME NAME
         for(GamePreview game: myGames){
             if(game.getGamePressed()) {
                 if(game.getGameName().equals("green")) {
-                    game.resetGameName();
-                    new TestSandboxGreen(myStage);
-                    myStage.setTitle("TestSandboxGreen");
-                }
-                else if(game.getGameName().equals("blue")) {
-                    game.resetGameName();
-                    new TestSandboxBlue(myStage);
-                    myStage.setTitle("TestSandboxBlue");
-                }
-                else if(game.getGameName().equals("red")) {
-                    game.resetGameName();
-                    new TestSandboxRed(myStage);
-                    myStage.setTitle("TestSandboxRed");
+//                    game.resetGameName();
+//                    stageManager.switchScenes();
+//                    new TestSandboxGreen(myStage);
+//                    myStage.setTitle("TestSandboxGreen");
+//                }
+//                else if(game.getGameName().equals("blue")) {
+//                    game.resetGameName();
+//                    new TestSandboxBlue(myStage);
+//                    myStage.setTitle("TestSandboxBlue");
+//                }
+//                else if(game.getGameName().equals("red")) {
+//                    game.resetGameName();
+//                    new TestSandboxRed(myStage);
+//                    myStage.setTitle("TestSandboxRed");
                 }
             }
         }
