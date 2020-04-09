@@ -43,11 +43,12 @@ public class CollisionEngine {
       System.out.println(targetEntityCollisionSide);
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID, targetEntityCollisionSide);
 
-      //Action collisionAction = subjectEntityCollisionMap.get(targetEntityCollisionKey);
-      //System.out.println(collisionAction);
-      if(subjectEntity.getX()%2 == 0) {
+      Action collisionAction = subjectEntityCollisionMap.get(targetEntityCollisionKey);
+      System.out.println(collisionAction);
+      //subjectEntity.getActionStack().push(collisionAction);
+      /*if(subjectEntity.getX()%2 == 0) {
         subjectEntity.getActionStack().push(new MoveX("-100"));
-      }
+      }*/
 
     }
   }

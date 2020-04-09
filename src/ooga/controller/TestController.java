@@ -127,9 +127,6 @@ public class TestController implements Controller {
       physicsEngine.applyForces(entityWrapper.getModel());
       subjectEntity.update(elapsedTime);
     }
-
-    //for(EntityWrapper subjectEntity : entityList){
-    //}
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
   }
