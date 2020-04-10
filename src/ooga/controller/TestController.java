@@ -133,6 +133,8 @@ public class TestController implements Controller {
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
       }
+      entityList.addAll(entityBuffer);
+      entityBuffer = new ArrayList<>();
     }
 
   }
