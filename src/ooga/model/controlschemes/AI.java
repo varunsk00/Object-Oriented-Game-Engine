@@ -2,6 +2,7 @@ package ooga.model.controlschemes;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.input.KeyEvent;
@@ -9,25 +10,31 @@ import ooga.model.actions.Action;
 import ooga.util.ActionBundle;
 
 public class AI extends ControlScheme {
-  private List<Action> possibleActions;
+  private Map<Double, List<Action>> possibleActions;
 
   public AI(List<ActionBundle> actions){
     super(actions);
-    possibleActions = new ArrayList<>();
-    for(ActionBundle bundle : actionMap){
-//      for(String s : map.keySet()){
-//        for(int i = 0; i < Integer.parseInt(s); i++){
-//          possibleActions.add(map.get(s));
-//        }
-//      }
+    possibleActions = new HashMap<>();
+    double total = 0;
+    for(ActionBundle bundle : actionMap) {
+      total += Integer.parseInt(bundle.getId());
+    }
+    for(ActionBundle bundle : actionMap) {
+      double probability = Double.parseDouble(bundle.getId())/total;
+      possibleActions.put(probability, bundle.getActions());
     }
   }
   @Override
   public List<Action> getCurrentAction() {
-    int index = (int)Math.floor(Math.random()*possibleActions.size());
-    List<Action> currentActions = new ArrayList<>();
-    currentActions.add(possibleActions.get(index));
-    return currentActions;
+    double index = Math.random();
+    double probSum = 0.0;
+    for(Double prob : possibleActions.keySet()){
+      probSum += prob;
+      if(index < probSum){
+        return(possibleActions.get(prob));
+      }
+    }
+    return new ArrayList<>();
   }
 
   @Override

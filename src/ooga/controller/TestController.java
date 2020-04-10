@@ -1,39 +1,30 @@
 package ooga.controller;
 
-import java.nio.file.attribute.AclEntryType;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import ooga.view.application.Camera;
+import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.CollisionEngine;
-import ooga.view.application.menu.InGameMenu;
-import ooga.view.application.menu.MenuButtons;
 
-import javax.swing.text.html.parser.Entity;
+import ooga.view.application.menu.InGameMenu;
+
 import ooga.model.PhysicsEngine;
-import ooga.view.gui.GameCabinet;
-import ooga.view.gui.StageManager;
+import ooga.view.gui.managers.StageManager;
 
 
 public class TestController implements Controller {
 
-  /**
-   * TODO: delegated within classes
-   * application:
-   */
   private Scene myCurrentScene;
   private Pane testPane;
   private Group EntityGroup;
@@ -63,44 +54,54 @@ public class TestController implements Controller {
   private boolean keyPressed;
   private Timeline animation;
   private StageManager currentStage;
+  private Scene oldScene;
+  private InfiniteLevelBuilder builder;
+  private Camera camera;
+  private Pane level;
+
   private Scene testScene;
-  private ViewController myViewController;
 
 
-
-
-  public TestController (Pane pane, StageManager stageManager) { //FIXME add exception stuff
-    myViewController = new ViewController(pane, stageManager);
+  public TestController (StageManager stageManager) { //FIXME add exception stuff
 
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
-    testPane = pane;
+    builder = new InfiniteLevelBuilder(this);
+
+    level = builder.generateLevel();
+
+    testPane = level;
+    for(int i = 0; i < 20; i++){
+      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
+    }
+
+    testScene = currentStage.getCurrentScene();
+    testScene.setRoot(testPane);
+
     EntityGroup = new Group();
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    testPane.getChildren().add(EntityGroup);
+    level.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
-
     entityList.add(new EntityWrapper("Mario_Fire", this));
+
+
+    camera = new Camera(currentStage.getStage(), level, entityList.get(0).getRender());
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
-
-    entityList.add(new EntityWrapper("Brick", this));
-    entityBrick = entityList.get(1);
-    EntityGroup.getChildren().add(entityBrick.getRender());
+//    entityList.add(new EntityWrapper("Brick", this));
+//    entityBrick = entityList.get(1);
+//    EntityGroup.getChildren().add(entityBrick.getRender());
     this.testScene = stageManager.getCurrentScene();
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
 
     testScene.setOnKeyPressed(e -> {
-//<<<<<<< HEAD
-//        //handlePressInput(e.getCode());
-//      entityWrapper.handleKeyInput(e); //FIXME i would like to
-//=======
-      myViewController.handlePressInput(e.getCode());
+
+      handlePressInput(e.getCode());
       for(EntityWrapper entity : entityList){
         entity.handleKeyInput(e);//FIXME i would like to
       }
@@ -109,9 +110,7 @@ public class TestController implements Controller {
       for(EntityWrapper entity : entityList){
         entity.handleKeyReleased(e);//FIXME i would like to
       }
-      //handleReleaseInput(e.getCode());
     });
-    testScene.setOnMouseMoved(e -> myViewController.handleMouseInput(e.getX(), e.getY()));
 
 
     setUpTimeline();
@@ -127,7 +126,10 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-    myViewController.handleMouseInput(0.0, 0.0);
+    camera.update();
+
+    builder.updateLevel(camera.getViewPort(), level);
+
     for(EntityWrapper subjectEntity : entityList){
       for(EntityWrapper targetEntity : entityList){
         collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
@@ -135,66 +137,53 @@ public class TestController implements Controller {
       physicsEngine.applyForces(entityWrapper.getModel());
       subjectEntity.update(elapsedTime);
     }
+
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
   }
 
-//  private void handlePressInput (KeyCode code) {
-//    if (code == KeyCode.D) {
-//      xAcceleration = 75;
-//      keyPressed = true;
-//    } else if (code == KeyCode.A) {
-//      xAcceleration = -75;
-//      keyPressed = true;
-//    }
-//    else if (code == KeyCode.ESCAPE && escCounter < 1) {
-//      pauseGame();
-//    }
-//    else if (code == KeyCode.Q && escCounter == 1) {
-//      unPauseGame();
-//    }
-//    else if (code == KeyCode.H) {
-//      System.out.println("HOME");
-//      currentStage.switchScenes(currentStage.getPastScene());
-//    }
-//    if (code == KeyCode.SPACE && isGrounded) {
-//      yVelocity = -200;
-//      isGrounded = false;
-//    }
-//  }
-//
-//  private void handleReleaseInput (KeyCode code) {
-//    if (code == KeyCode.D || code == KeyCode.A) {
-//      xAcceleration = 0;
-//    }
-//  }
-//
-//  private void handleMouseInput(double x, double y) {
-//    if (menu.getButtons().getResumePressed()) {
-//      System.out.println("PRESSED");
-//      unPauseGame();
-//    }
-//  }
-//
-//  private void pauseGame(){
-//    BoxBlur bb = new BoxBlur();
-//    EntityGroup.setEffect(bb);
-//    animation.pause();
-//    testPane.getChildren().add(menu);
-//    escCounter++;
-//  }
-//
-//  private void unPauseGame(){
-//    testPane.getChildren().remove(testPane.getChildren().size()-1);
-//    EntityGroup.setEffect(null);
-//    animation.play();
-//    escCounter--;
-//  }
+  private void handlePressInput (KeyCode code) {
+    if (code == KeyCode.ESCAPE && escCounter < 1) {
+      pauseGame();
+    }
+    else if (code == KeyCode.Q && escCounter == 1) {
+      unPauseGame();
+    }
+    else if (code == KeyCode.H) {
+      currentStage.switchScenes(currentStage.getPastScene());
+    }
+  }
+
+  private void handleMouseInput(double x, double y) {
+    if (menu.getButtons().getResumePressed()) {
+      unPauseGame();
+    }
+  }
+
+  private void pauseGame(){
+    BoxBlur bb = new BoxBlur();
+    EntityGroup.setEffect(bb);
+    animation.pause();
+    testPane.getChildren().add(menu);
+    escCounter++;
+  }
+
+  private void unPauseGame(){
+    testPane.getChildren().remove(testPane.getChildren().size()-1);
+    EntityGroup.setEffect(null);
+    animation.play();
+    escCounter--;
+  }
 
   @Override
   public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
     EntityGroup.getChildren().add(newEntity.getRender());
+  }
+
+  @Override
+  public List<EntityWrapper> getEntityList() {
+    return entityList;
   }
 
 //  @Override
@@ -204,4 +193,3 @@ public class TestController implements Controller {
 //    EntityGroup.getChildren().add(newEntity.getRender());
 //  }
 }
-

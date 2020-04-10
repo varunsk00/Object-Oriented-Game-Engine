@@ -66,8 +66,8 @@ public class ActionFactory {
       return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(classTypes).newInstance(param);
     }
     catch
-      (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-        throw new InvalidActionException("Action could not be found.");
+    (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      throw new InvalidActionException("Action could not be found.");
     }
   }
 
