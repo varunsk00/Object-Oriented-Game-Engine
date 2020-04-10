@@ -20,7 +20,9 @@ public class CollisionEngine {
   private static final String RIGHT = "E";
   private static final String TOP = "N";
   private static final String BOTTOM = "S";
-  private static final double COLLISION_THRESHOLD = 0.00001;
+  private static final String DEFAULT = "DEFAULT";
+  private static final double COLLISION_THRESHOLD = 0.0001;
+
 
   private static final Map<Integer, String> targetEntitySideMap = Map.ofEntries(
       Map.entry(ZERO, RIGHT),
@@ -34,22 +36,31 @@ public class CollisionEngine {
   }
 
   public void produceCollisionActions(EntityModel subjectEntity, EntityModel targetEntity) {
-    if(!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)){
-      Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
+    Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
+    if (!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)) {
 
       String targetEntityID = targetEntity.getEntityID();
-      String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity, targetEntity);
-      
-      CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID, targetEntityCollisionSide);
+      String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity,
+          targetEntity);
+
+      CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID,
+          targetEntityCollisionSide);
       //System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
-      for(CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()){
-        if(targetEntityCollisionKey.equals(collisionMapKey)){
+      for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
+        if (targetEntityCollisionKey.equals(collisionMapKey)) {
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
           collisionAction.execute(subjectEntity);
         }
       }
-      //System.out.println("");
-
+    } else {
+      //TODO: Add a try catch in case something doesn't have a Default noncollision
+      CollisionKey noCollisionKey = new CollisionKey(DEFAULT, DEFAULT);
+      for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
+        if (noCollisionKey.equals(collisionMapKey)) {
+          Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
+          subjectEntity.getActionStack().push(collisionAction);//.execute(subjectEntity);
+        }
+      }
     }
   }
 

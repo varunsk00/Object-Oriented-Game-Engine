@@ -30,7 +30,7 @@ public class AudioVideoManager {
         playSong(currentSong);
     }
 
-    public void switchStage(StageManager sm, String gameName) throws Exception {
+    public void switchGame(StageManager sm, String gameName) throws Exception {
         Class<?> c = Class.forName(GAME_PACKAGE + "." + gameName);
         Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
         Object launchGame = cons.newInstance(sm);
@@ -40,7 +40,7 @@ public class AudioVideoManager {
         this.currentSoundEffect = new MediaPlayer
                 (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
         currentSoundEffect.seek(Duration.ZERO);
-        currentSoundEffect.setVolume(0.0);
+        //currentSoundEffect.setVolume(0.0);
         currentSoundEffect.play();
         currentSoundEffect.setVolume(0.0);
     }
@@ -48,7 +48,7 @@ public class AudioVideoManager {
     private void playSong(MediaPlayer song){
         song.seek(Duration.ZERO);
         song.setCycleCount(MediaPlayer.INDEFINITE);
-        song.setVolume(0.0);
+        //song.setVolume(0.0);
         song.play();
     }
 }

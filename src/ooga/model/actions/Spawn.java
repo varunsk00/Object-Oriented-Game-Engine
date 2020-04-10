@@ -21,6 +21,7 @@ public class Spawn extends Action {
     @Override
     public void execute(EntityModel entityModel) {
         if(System.currentTimeMillis() - pasttime >= cooldown) {
+            soundBoard.playSoundEffect(entityModel.getEntityID());
             entityModel.spawnEntity(param);
             pasttime = System.currentTimeMillis();
         }

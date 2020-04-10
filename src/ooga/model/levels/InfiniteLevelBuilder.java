@@ -24,13 +24,12 @@ public class InfiniteLevelBuilder extends LevelBuilder {
     Iterator<EntityWrapper> iterator = myController.getEntityList().iterator();
     while(iterator.hasNext()){
       EntityWrapper entity = iterator.next();
-      if(entity.getRender().getBoundsInParent().getMaxX() < camera.getBoundsInParent().getMinX()-(camera.getWidth()*2)){
-//          || entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()*2+(camera.getWidth()*2)
-//          || entity.getRender().getBoundsInParent().getMinY() > camera.getBoundsInParent().getMaxY()*2+(camera.getHeight()*2)
-//          || entity.getRender().getBoundsInParent().getMaxY() < camera.getBoundsInParent().getMinY()*2-(camera.getHeight()*2)){
+      if(entity.getRender().getBoundsInParent().getMaxX() < camera.getBoundsInParent().getMinX()-(camera.getWidth()*2)
+          || entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()*2+(camera.getWidth()*2)
+          || entity.getRender().getBoundsInParent().getMinY() > camera.getBoundsInParent().getMaxY()*2+(camera.getHeight()*2)
+          || entity.getRender().getBoundsInParent().getMaxY() < camera.getBoundsInParent().getMinY()*2-(camera.getHeight()*2)){
 //        level.getChildren().remove(entity);
 //        iterator.remove();
-//        System.out.println(entity);
       }
       if(entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()){
         pipespawned = true;

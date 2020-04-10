@@ -53,7 +53,7 @@ public class ViewManager implements ViewExternalAPI {
   private InfiniteLevelBuilder builder;
   private Pane level;
   private Camera camera;
-  private boolean isGamePaused;
+  private boolean isGamePaused = false;
 
 
   private Scene testScene;

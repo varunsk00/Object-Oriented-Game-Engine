@@ -13,8 +13,8 @@ import ooga.model.controlschemes.ControlScheme;
 public class EntityModel {
   private EntityWrapper myEntity;
   private boolean forwards;
-  private double entityWidth = 100;
-  private double entityHeight = 100;
+  private double entityWidth;
+  private double entityHeight;
   private double xPos;
   private double yPos;
   private double health;
@@ -47,6 +47,8 @@ public class EntityModel {
     entityHeight = myEntity.getParser().readHeight();
     xPos = myEntity.getParser().readXPosition();
     yPos = myEntity.getParser().readYPosition();
+    xVelMax = myEntity.getParser().readMaxXVelocity();
+    yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
@@ -55,7 +57,6 @@ public class EntityModel {
 
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
-    //checkGroundStatus();
 
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
@@ -79,15 +80,6 @@ public class EntityModel {
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
-    }
-  }
-
-  private void checkGroundStatus(){
-    if(getY() < 225/* 300 - this.getHeight()*/){
-      onGround = false;
-    }
-    else{
-      onGround = true;
     }
   }
 
