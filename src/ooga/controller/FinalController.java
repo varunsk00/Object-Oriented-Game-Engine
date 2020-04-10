@@ -1,11 +1,10 @@
 package ooga.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class FinalController implements Controller {
-  private ViewController myViewAPI;
+  private ViewManager myViewAPI;
   private List<EntityWrapper> entityList;
 
   public FinalController(){

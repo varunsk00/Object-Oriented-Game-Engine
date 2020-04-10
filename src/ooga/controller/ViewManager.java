@@ -16,10 +16,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.model.PhysicsEngine;
+import ooga.model.levels.InfiniteLevelBuilder;
+import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
-import ooga.view.gui.StageManager;
+import ooga.view.gui.managers.StageManager;
 
-public class ViewController implements ViewExternalAPI {
+public class ViewManager implements ViewExternalAPI {
   private Controller myController;
 
   private Scene myCurrentScene;
@@ -30,8 +32,6 @@ public class ViewController implements ViewExternalAPI {
   private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
   private EntityWrapper entityWrapper;
-  private List<EntityWrapper> entityList;
-  private List<EntityWrapper> entityBuffer;
   private EntityWrapper entityBrick;
   private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
@@ -50,36 +50,87 @@ public class ViewController implements ViewExternalAPI {
   private Timeline animation;
   private StageManager currentStage;
   private Scene oldScene;
+  private InfiniteLevelBuilder builder;
+  private Pane level;
+  private Camera camera;
 
 
 
-  public ViewController(Pane pane, StageManager stageManager){
 
+  private Scene testScene;
+
+  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
     this.menu = new InGameMenu("TestSandBox");
-
+    //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
-    testPane = pane;
+    this.builder = builder;
+
+    level = builder.generateLevel();
+
+    testPane = level;
+    for(int i = 0; i < 20; i++){
+      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
+    }
+
+    testScene = currentStage.getCurrentScene();
+    testScene.setRoot(testPane);
+
     EntityGroup = new Group();
-    entityList = new ArrayList<>();
-    entityBuffer = new ArrayList<>();
-    testPane.getChildren().add(EntityGroup);
+    level.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
 
-    setUpAnimation();
+    this.testScene = stageManager.getCurrentScene();
+
+//    testScene.setOnKeyPressed(e -> {
+//
+//      handlePressInput(e.getCode());
+//      for(EntityWrapper entity : entityList){
+//        entity.handleKeyInput(e);//FIXME i would like to
+//      }
+//    });
+//    testScene.setOnKeyReleased(e-> {
+//      for(EntityWrapper entity : entityList){
+//        entity.handleKeyReleased(e);//FIXME i would like to
+//      }
+//    });
 
   }
 
-  private void setUpAnimation() {
-    entityList.add(new EntityWrapper("Mario_Fire", null));
-    entityWrapper = entityList.get(0);
-    EntityGroup.getChildren().add(entityWrapper.getRender());
-
-    entityList.add(new EntityWrapper("Brick", null));
-    entityBrick = entityList.get(1);
-    EntityGroup.getChildren().add(entityBrick.getRender());
+  public void setUpCamera(Node node) {
+    camera = new Camera(currentStage.getStage(), level, node);
 
   }
+  public void updateEntityGroup(Node node) {
+    EntityGroup.getChildren().add(node);
+
+  }
+
+  public Scene getTestScene() {
+    return testScene;
+  }
+
+  public void setLevel(Pane levelBuilt) {
+    this.level = levelBuilt;
+  }
+
+  public void updateValues() {
+    camera.update();
+
+    builder.updateLevel(camera.getViewPort(), level);
+  }
+
+
+//  private void setUpAnimation() {
+//    entityList.add(new EntityWrapper("Mario_Fire", null));
+//    entityWrapper = entityList.get(0);
+//    EntityGroup.getChildren().add(entityWrapper.getRender());
+//
+//    entityList.add(new EntityWrapper("Brick", null));
+//    entityBrick = entityList.get(1);
+//    EntityGroup.getChildren().add(entityBrick.getRender());
+//
+//  }
   @Override
   public void updateEntityPosition(int id, double newx, double newy) {
 
@@ -91,7 +142,8 @@ public class ViewController implements ViewExternalAPI {
   }
 
   @Override
-  public void addEntity() {
+  public void addEntity(Node node) {
+    EntityGroup.getChildren().add(node);
 
   }
 

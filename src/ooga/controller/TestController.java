@@ -6,8 +6,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -58,55 +56,61 @@ public class TestController implements Controller {
   private InfiniteLevelBuilder builder;
   private Camera camera;
   private Pane level;
+  private ViewManager myViewManager;
 
-  private Scene testScene;
+//  private Scene testScene;
 
 
   public TestController (StageManager stageManager) { //FIXME add exception stuff
 
-    this.menu = new InGameMenu("TestSandBox");
+
+//    this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
-    currentStage = stageManager;
+//    currentStage = stageManager;
     builder = new InfiniteLevelBuilder(this);
+    myViewManager = new ViewManager(stageManager, builder);
 
-    level = builder.generateLevel();
+//    level = builder.generateLevel();
 
-    testPane = level;
-    for(int i = 0; i < 20; i++){
-      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
-    }
+//    testPane = level;
+//    for(int i = 0; i < 20; i++){
+//      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
+//    }
+//
+//    testScene = currentStage.getCurrentScene();
+//    testScene.setRoot(testPane);
 
-    testScene = currentStage.getCurrentScene();
-    testScene.setRoot(testPane);
-
-    EntityGroup = new Group();
+//    EntityGroup = new Group();
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    level.getChildren().add(EntityGroup);
-    EntityGroup.getChildren().add(testRectangle);
-    EntityGroup.getChildren().add(testGround);
+//    level.getChildren().add(EntityGroup);
+//    EntityGroup.getChildren().add(testRectangle);
+//    EntityGroup.getChildren().add(testGround);
     entityList.add(new EntityWrapper("Mario_Fire", this));
 
 
-    camera = new Camera(currentStage.getStage(), level, entityList.get(0).getRender());
+//    camera = new Camera(currentStage.getStage(), level, entityList.get(0).getRender());
+    myViewManager.setUpCamera(entityList.get(0).getRender());
+
     entityWrapper = entityList.get(0);
-    EntityGroup.getChildren().add(entityWrapper.getRender());
+    myViewManager.updateEntityGroup(entityWrapper.getRender());
+//    EntityGroup.getChildren().add(entityWrapper.getRender());
 //    entityList.add(new EntityWrapper("Brick", this));
 //    entityBrick = entityList.get(1);
 //    EntityGroup.getChildren().add(entityBrick.getRender());
-    this.testScene = stageManager.getCurrentScene();
+//    this.testScene = stageManager.getCurrentScene();
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
 
-    testScene.setOnKeyPressed(e -> {
+    myViewManager.getTestScene().setOnKeyPressed(e -> {
 
-      handlePressInput(e.getCode());
+      myViewManager.handlePressInput(e.getCode());
       for(EntityWrapper entity : entityList){
         entity.handleKeyInput(e);//FIXME i would like to
       }
     });
-    testScene.setOnKeyReleased(e-> {
+    myViewManager.getTestScene().setOnKeyReleased(e-> {
       for(EntityWrapper entity : entityList){
         entity.handleKeyReleased(e);//FIXME i would like to
       }
@@ -126,9 +130,11 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-    camera.update();
 
-    builder.updateLevel(camera.getViewPort(), level);
+//    camera.update();
+//
+//    builder.updateLevel(camera.getViewPort(), level);
+    myViewManager.updateValues();
 
     for(EntityWrapper subjectEntity : entityList){
       for(EntityWrapper targetEntity : entityList){
@@ -142,43 +148,11 @@ public class TestController implements Controller {
     entityBuffer = new ArrayList<>();
   }
 
-  private void handlePressInput (KeyCode code) {
-    if (code == KeyCode.ESCAPE && escCounter < 1) {
-      pauseGame();
-    }
-    else if (code == KeyCode.Q && escCounter == 1) {
-      unPauseGame();
-    }
-    else if (code == KeyCode.H) {
-      currentStage.switchScenes(currentStage.getPastScene());
-    }
-  }
-
-  private void handleMouseInput(double x, double y) {
-    if (menu.getButtons().getResumePressed()) {
-      unPauseGame();
-    }
-  }
-
-  private void pauseGame(){
-    BoxBlur bb = new BoxBlur();
-    EntityGroup.setEffect(bb);
-    animation.pause();
-    testPane.getChildren().add(menu);
-    escCounter++;
-  }
-
-  private void unPauseGame(){
-    testPane.getChildren().remove(testPane.getChildren().size()-1);
-    EntityGroup.setEffect(null);
-    animation.play();
-    escCounter--;
-  }
-
   @Override
   public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
-    EntityGroup.getChildren().add(newEntity.getRender());
+    myViewManager.addEntity(newEntity.getRender());
+    //EntityGroup.getChildren().add(newEntity.getRender());
   }
 
   @Override
@@ -186,10 +160,4 @@ public class TestController implements Controller {
     return entityList;
   }
 
-//  @Override
-//  public void spawnEntity(String name) {
-//    EntityWrapper newEntity = new EntityWrapper(name, this);
-//    entityBuffer.add(newEntity);
-//    EntityGroup.getChildren().add(newEntity.getRender());
-//  }
 }
