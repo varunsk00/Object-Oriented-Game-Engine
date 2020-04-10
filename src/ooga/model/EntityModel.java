@@ -13,8 +13,8 @@ import ooga.model.controlschemes.ControlScheme;
 public class EntityModel {
   private EntityWrapper myEntity;
   private boolean forwards;
-  private double entityWidth = 100;
-  private double entityHeight = 100;
+  private double entityWidth;
+  private double entityHeight;
   private double xPos;
   private double yPos;
   private double health;

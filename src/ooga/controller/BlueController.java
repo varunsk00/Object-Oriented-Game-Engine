@@ -91,6 +91,8 @@ public class BlueController implements Controller {
                 physicsEngine.applyForces(subjectEntity.getModel());
             }
         }
+        entityList.addAll(entityBuffer);
+        entityBuffer = new ArrayList<>();
     }
 
     @Override
