@@ -64,7 +64,7 @@ public class GameCabinet extends Pane {
                 game.resetGameName();
                 String gameName = game.getGameName();
                 av.switchStage(stageManager, gameName);
-                av.switchMusic(gameName);
+                av.switchMusic(stageManager, gameName);
             }
         }
     }

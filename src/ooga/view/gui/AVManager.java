@@ -21,9 +21,9 @@ public class AVManager {
     public AVManager(){
     }
 
-    public void switchMusic(String currentGame){
+    public void switchMusic(StageManager sm, String currentGame){
         this.currentSong = new MediaPlayer
-                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(currentGame) + ".mp3").toURI().toString()));
+                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sm.getCurrentTitle()) + ".mp3").toURI().toString()));
         playSong(currentSong);
     }
 
