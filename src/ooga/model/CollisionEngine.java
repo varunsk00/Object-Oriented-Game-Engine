@@ -21,7 +21,7 @@ public class CollisionEngine {
   private static final String TOP = "N";
   private static final String BOTTOM = "S";
   private static final String DEFAULT = "DEFAULT";
-  private static final double COLLISION_THRESHOLD = 0;
+  private static final double COLLISION_THRESHOLD = 0.0001;
 
 
   private static final Map<Integer, String> targetEntitySideMap = Map.ofEntries(
