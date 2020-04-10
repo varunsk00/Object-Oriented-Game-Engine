@@ -100,12 +100,6 @@ public class TestController implements Controller {
         entity.handleKeyInput(e);//FIXME i would like to
       }
     });
-    testScene.setOnKeyReleased(e-> {
-      for(EntityWrapper entity : entityList){
-        entity.handleKeyReleased(e);//FIXME i would like to
-      }
-      handleReleaseInput(e.getCode());
-    });
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
 
@@ -135,53 +129,33 @@ public class TestController implements Controller {
   }
 
   private void handlePressInput (KeyCode code) {
-    if (code == KeyCode.D) {
-      xAcceleration = 75;
-      keyPressed = true;
-    } else if (code == KeyCode.A) {
-      xAcceleration = -75;
-      keyPressed = true;
-    }
-    else if (code == KeyCode.ESCAPE && escCounter < 1) {
-      BoxBlur bb = new BoxBlur();
-      EntityGroup.setEffect(bb);
-      animation.pause();
-      testPane.getChildren().add(menu);
-      escCounter++;
-    }
+    if (code == KeyCode.ESCAPE && escCounter < 1) {
+      pause(); }
     else if (code == KeyCode.Q && escCounter == 1) {
-      testPane.getChildren().remove(testPane.getChildren().size()-1);
-      EntityGroup.setEffect(null);
-      animation.play();
-      escCounter--;
-    }
+      unPause(); }
     else if (code == KeyCode.H) {
-      System.out.println("HOME");
-      currentStage.switchScenes(currentStage.getPastScene());
-    }
-    if (code == KeyCode.SPACE && isGrounded) {
-      yVelocity = -200;
-      isGrounded = false;
-    }
+      currentStage.switchScenes(currentStage.getPastScene()); }
   }
-  private void handleReleaseInput (KeyCode code) {
-    if (code == KeyCode.D || code == KeyCode.A) {
-      xAcceleration = 0;
-    }
-  }
+
   private void handleMouseInput(double x, double y) {
     if (menu.getButtons().getResumePressed()) {
-      System.out.println("PRESSED");
       menu.getButtons().setResumeOff();
-      testPane.getChildren().remove(testPane.getChildren().size()-1);
-      EntityGroup.setEffect(null);
-      animation.play();
-      escCounter--;
-    }
+      unPause(); }
+  }
+
+  private void pause(){
+    BoxBlur bb = new BoxBlur();
+    EntityGroup.setEffect(bb);
+    animation.pause();
+    testPane.getChildren().add(menu);
+    escCounter++;
   }
 
   private void unPause(){
-
+    testPane.getChildren().remove(testPane.getChildren().size()-1);
+    EntityGroup.setEffect(null);
+    animation.play();
+    escCounter--;
   }
 
   @Override
