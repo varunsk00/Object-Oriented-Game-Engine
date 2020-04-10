@@ -20,7 +20,7 @@ public class CollisionEngine {
   private static final String RIGHT = "E";
   private static final String TOP = "N";
   private static final String BOTTOM = "S";
-  private static final double COLLISION_THRESHOLD = 0.01;
+  private static final double COLLISION_THRESHOLD = 0.00001;
 
   private static final Map<Integer, String> targetEntitySideMap = Map.ofEntries(
       Map.entry(ZERO, RIGHT),
@@ -37,17 +37,18 @@ public class CollisionEngine {
     if(!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)){
       Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
 
-      String targetEntityID = "Brick";//targetEntity.getID(); //FIXME: Change to the method to get a targetEntity ID
+      String targetEntityID = targetEntity.getEntityID();
       String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity, targetEntity);
       
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID, targetEntityCollisionSide);
+      System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
       for(CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()){
         if(targetEntityCollisionKey.equals(collisionMapKey)){
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
-          subjectEntity.getActionStack().push(collisionAction);
-          break;
+          collisionAction.execute(subjectEntity);
         }
       }
+      System.out.println("");
 
     }
   }
@@ -55,8 +56,8 @@ public class CollisionEngine {
   private String determineTargetEntityCollisionSide(EntityModel subjectEntity, EntityModel targetEntity){
     double[] subjectLeftRightTopBottom = new double[]{subjectEntity.getX(), subjectEntity.getX() + subjectEntity.getWidth(), subjectEntity.getY(), subjectEntity.getY() + subjectEntity.getHeight()};
     double[] targetRightLeftBottomTop = new double[]{targetEntity.getX() + targetEntity.getWidth(), targetEntity.getX(), targetEntity.getY() + targetEntity.getHeight(), targetEntity.getY()};
-    System.out.println("subject " + subjectLeftRightTopBottom[0] + " " + subjectLeftRightTopBottom[1] + " " + subjectLeftRightTopBottom[2] + " " + subjectLeftRightTopBottom[3]);
-    System.out.println("target " + targetRightLeftBottomTop[0] + " " + targetRightLeftBottomTop[1] + " " + targetRightLeftBottomTop[2] + " " + targetRightLeftBottomTop[3]);
+//    System.out.println("subject " + subjectLeftRightTopBottom[0] + " " + subjectLeftRightTopBottom[1] + " " + subjectLeftRightTopBottom[2] + " " + subjectLeftRightTopBottom[3]);
+//    System.out.println("target " + targetRightLeftBottomTop[0] + " " + targetRightLeftBottomTop[1] + " " + targetRightLeftBottomTop[2] + " " + targetRightLeftBottomTop[3]);
 
     int sideIndex = determineSideIndex(subjectLeftRightTopBottom, targetRightLeftBottomTop);
 
@@ -74,7 +75,7 @@ public class CollisionEngine {
           sideIndex = i;
       }
     }
-    System.out.println(minimumDistance + " " + sideIndex);
+    //System.out.println("minimumDistance " + minimumDistance + " " + targetEntitySideMap.get(sideIndex));
     return sideIndex;
   }
 

@@ -19,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
+import ooga.model.actions.SetGroundStatus;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.application.menu.MenuButtons;
 
@@ -42,6 +43,7 @@ public class TestController implements Controller {
   private EntityWrapper entityWrapper;
   private EntityWrapper entityBrick;
   private List<EntityWrapper> entityList;
+  private List<EntityWrapper> entityBrickList;
   private List<EntityWrapper> entityBuffer;
   private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
@@ -50,19 +52,9 @@ public class TestController implements Controller {
 
   private InGameMenu menu;
   private int escCounter = 0;
-  private double xVelocity = 0;
-  private double yVelocity = 0;
-  private double gravity = 100;
-  private double friction = 40;
-  private double xAcceleration = 0;
-  private boolean isGrounded;
-  private boolean keyPressed;
   private Timeline animation;
   private StageManager currentStage;
   private Scene testScene;
-
-
-
 
   public TestController (Pane pane, StageManager stageManager) { //FIXME add exception stuff
     this.menu = new InGameMenu("TestSandBox");
@@ -71,6 +63,7 @@ public class TestController implements Controller {
     testPane = pane;
     EntityGroup = new Group();
     entityList = new ArrayList<>();
+    entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
     testPane.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
@@ -79,9 +72,14 @@ public class TestController implements Controller {
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
 
-    entityList.add(new EntityWrapper("Brick", this));
-    entityBrick = entityList.get(1);
-    EntityGroup.getChildren().add(entityBrick.getRender());
+    for (int i = 0; i < 10; i++) {
+      EntityWrapper local = new EntityWrapper("Brick", this);
+      local.getModel().setX(i*100);
+      local.getModel().setY(400);
+      entityBrickList.add(local);
+      entityList.add(local);
+      EntityGroup.getChildren().add(local.getRender());
+    }
     this.testScene = stageManager.getCurrentScene();
 
     physicsEngine = new PhysicsEngine("dummyString");
@@ -117,25 +115,21 @@ public class TestController implements Controller {
   private void step (double elapsedTime) {
     handleMouseInput(0.0, 0.0);
     for(EntityWrapper subjectEntity : entityList){
+      for(EntityWrapper brick : entityBrickList) {
+        brick.getModel().getActionStack().push(new SetGroundStatus("true"));
+      }
       for(EntityWrapper targetEntity : entityList){
         collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
       }
-      physicsEngine.applyForces(entityWrapper.getModel());
       subjectEntity.update(elapsedTime);
+      physicsEngine.applyForces(subjectEntity.getModel());
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
   }
 
   private void handlePressInput (KeyCode code) {
-    if (code == KeyCode.D) {
-      xAcceleration = 75;
-      keyPressed = true;
-    } else if (code == KeyCode.A) {
-      xAcceleration = -75;
-      keyPressed = true;
-    }
-    else if (code == KeyCode.ESCAPE && escCounter < 1) {
+    if (code == KeyCode.ESCAPE && escCounter < 1) {
       pauseGame();
     }
     else if (code == KeyCode.Q && escCounter == 1) {
@@ -145,16 +139,9 @@ public class TestController implements Controller {
       System.out.println("HOME");
       currentStage.switchScenes(currentStage.getPastScene());
     }
-    if (code == KeyCode.SPACE && isGrounded) {
-      yVelocity = -200;
-      isGrounded = false;
-    }
   }
 
   private void handleReleaseInput (KeyCode code) {
-    if (code == KeyCode.D || code == KeyCode.A) {
-      xAcceleration = 0;
-    }
   }
 
   private void handleMouseInput(double x, double y) {

@@ -2,7 +2,7 @@
   "entityName": "Brick",
   "image": "mario_fireball",
   "xPos": 300,
-  "yPos": 200,
+  "yPos": 275,
   "xVel": 0,
   "yVel": 0,
   "maxXVel": 0,

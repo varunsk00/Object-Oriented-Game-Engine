@@ -14,11 +14,12 @@ public class EntityWrapper {
   private EntityJSONParser myParser;
 
   private Controller myController;
-  private int id;
+  private String EntityID;
 
 
   public EntityWrapper(String entityName, Controller controller) {
     myController = controller;
+    EntityID = entityName;
     //myParser = new EntityParser(entityName);
     myParser = new EntityJSONParser(entityName);
 
@@ -45,6 +46,10 @@ public EntityJSONParser getParser(){return myParser;}
     EntityWrapper newEntity = new EntityWrapper(param, myController);
     myController.addEntity(newEntity);
     return newEntity;
+  }
+
+  public String getEntityID(){
+    return this.EntityID;
   }
 
   public void setX(double newX){myModel.setX(newX);}

@@ -30,6 +30,15 @@
       ]
     },
     {
+      "ID": "W",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "-25"
+        }
+      ]
+    },
+    {
       "ID": "SPACE",
       "Control": [
         {
@@ -54,8 +63,13 @@
       "ID": "Brick",
       "Control": [
         {
-          "action": "MoveX",
-          "param": "-10.0",
+          "action": "VelocityY",
+          "param": "0",
+          "orientation": "N"
+        },
+        {
+          "action": "SetGroundStatus",
+          "param": "true",
           "orientation": "N"
         }
       ]
@@ -64,7 +78,7 @@
       "ID": "Brick",
       "Control": [
         {
-          "action": "VelocityX",
+          "action": "MoveX",
           "param": "-1",
           "orientation": "W"
         }
