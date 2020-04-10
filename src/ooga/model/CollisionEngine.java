@@ -20,6 +20,7 @@ public class CollisionEngine {
   private static final String RIGHT = "E";
   private static final String TOP = "N";
   private static final String BOTTOM = "S";
+  private static final double COLLISION_THRESHOLD = 0.01;
 
   private static final Map<Integer, String> targetEntitySideMap = Map.ofEntries(
       Map.entry(ZERO, RIGHT),
@@ -78,9 +79,9 @@ public class CollisionEngine {
   }
 
   private boolean detectCollision(EntityModel subjectEntity, EntityModel targetEntity){
-    return subjectEntity.getX() < targetEntity.getX() + targetEntity.getWidth() &&
-        subjectEntity.getX() + subjectEntity.getWidth() > targetEntity.getX() &&
-        subjectEntity.getY() < targetEntity.getY() + targetEntity.getHeight() &&
-        subjectEntity.getY() + subjectEntity.getHeight() > targetEntity.getY();
+    return subjectEntity.getX() - (targetEntity.getX() + targetEntity.getWidth()) < COLLISION_THRESHOLD  &&
+        targetEntity.getX() - (subjectEntity.getX() + subjectEntity.getWidth()) < COLLISION_THRESHOLD &&
+        subjectEntity.getY() - (targetEntity.getY() + targetEntity.getHeight()) < COLLISION_THRESHOLD &&
+        targetEntity.getY() - (subjectEntity.getY() + subjectEntity.getHeight()) < COLLISION_THRESHOLD;
   }
 }

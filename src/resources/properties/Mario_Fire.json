@@ -64,8 +64,8 @@
       "ID": "Brick",
       "Control": [
         {
-          "action": "MoveX",
-          "param": "-100",
+          "action": "VelocityX",
+          "param": "-1",
           "orientation": "W"
         }
       ]
