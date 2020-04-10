@@ -1,19 +1,24 @@
 package ooga;
+import javafx.application.Application;
 import javafx.embed.swing.JFXPanel;
-import ooga.view.gui.startup.Boot;
-
-import java.io.FileNotFoundException;
+import javafx.stage.Stage;
+import ooga.view.gui.startup.Driver;
 
 /**
  * Feel free to completely change this code or delete it entirely. 
  */
-public class Main {
+public class Main extends Application {
     /**
      * Start of the program.
      */
 
-  public static void main (String[] args) throws FileNotFoundException {
-      JFXPanel fxPanel = new JFXPanel();
-      Boot arcade = new Boot(args);
-  }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        JFXPanel fxPanel = new JFXPanel();
+        Driver programDriver = new Driver(primaryStage);
+        programDriver.start();
+    }
+    public static void main (String[] args) {
+        launch(args);
+    }
 }

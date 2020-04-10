@@ -25,6 +25,7 @@ import ooga.view.application.menu.MenuButtons;
 import javax.swing.text.html.parser.Entity;
 import ooga.model.PhysicsEngine;
 import ooga.view.gui.GameCabinet;
+import ooga.view.gui.StageManager;
 
 
 public class TestController implements Controller {
@@ -57,17 +58,16 @@ public class TestController implements Controller {
   private boolean isGrounded;
   private boolean keyPressed;
   private Timeline animation;
-  private Stage currentStage;
-  private Scene oldScene;
+  private StageManager currentStage;
+  private Scene testScene;
 
 
 
 
-  public TestController (Pane pane, Scene testScene, Stage stage, Scene oldScene) { //FIXME add exception stuff
-
+  public TestController (Pane pane, StageManager stageManager) { //FIXME add exception stuff
+    this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
-    currentStage = stage;
-    this.oldScene = oldScene;
+    currentStage = stageManager;
     testPane = pane;
     EntityGroup = new Group();
     entityList = new ArrayList<>();
@@ -82,8 +82,7 @@ public class TestController implements Controller {
     entityList.add(new EntityWrapper("Brick", this));
     entityBrick = entityList.get(1);
     EntityGroup.getChildren().add(entityBrick.getRender());
-
-
+    this.testScene = stageManager.getCurrentScene();
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
@@ -116,6 +115,7 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
+    handleMouseInput(0.0, 0.0);
     for(EntityWrapper subjectEntity : entityList){
       for(EntityWrapper targetEntity : entityList){
         collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
@@ -136,28 +136,21 @@ public class TestController implements Controller {
       keyPressed = true;
     }
     else if (code == KeyCode.ESCAPE && escCounter < 1) {
-      BoxBlur bb = new BoxBlur();
-      menu = new InGameMenu("TestSandBox");
-      EntityGroup.setEffect(bb);
-      animation.pause();
-      testPane.getChildren().add(menu);
-      escCounter++;
+      pauseGame();
     }
     else if (code == KeyCode.Q && escCounter == 1) {
-      testPane.getChildren().remove(testPane.getChildren().size()-1);
-      EntityGroup.setEffect(null);
-      animation.play();
-      escCounter--;
+      unPauseGame();
     }
     else if (code == KeyCode.H) {
       System.out.println("HOME");
-      currentStage.setScene(oldScene);
+      currentStage.switchScenes(currentStage.getPastScene());
     }
     if (code == KeyCode.SPACE && isGrounded) {
       yVelocity = -200;
       isGrounded = false;
     }
   }
+
   private void handleReleaseInput (KeyCode code) {
     if (code == KeyCode.D || code == KeyCode.A) {
       xAcceleration = 0;
@@ -165,6 +158,25 @@ public class TestController implements Controller {
   }
 
   private void handleMouseInput(double x, double y) {
+    if (menu.getButtons().getResumePressed()) {
+      System.out.println("PRESSED");
+      unPauseGame();
+    }
+  }
+
+  private void pauseGame(){
+    BoxBlur bb = new BoxBlur();
+    EntityGroup.setEffect(bb);
+    animation.pause();
+    testPane.getChildren().add(menu);
+    escCounter++;
+  }
+
+  private void unPauseGame(){
+    testPane.getChildren().remove(testPane.getChildren().size()-1);
+    EntityGroup.setEffect(null);
+    animation.play();
+    escCounter--;
   }
 
   @Override

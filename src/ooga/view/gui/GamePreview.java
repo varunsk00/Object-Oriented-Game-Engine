@@ -1,22 +1,24 @@
 package ooga.view.gui;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 public class GamePreview extends Rectangle {
     private String gameName;
+    private Image gameImage;
     private double xPos;
     private boolean isPressed;
+    private Paint gamePreviewColor;
 
     public GamePreview(Paint color) {
         this.setHeight(100);
         this.setWidth(100);
         this.setY(275);
         this.setFill(color);
-        //this.gameName = color.toString();
         this.setOnMouseClicked(e -> isPressed=true);
-        //this.setOnMouseClicked(e -> System.out.println(color));
+        this.gamePreviewColor = color;
     }
     public void setXPos(double xPos) {
         this.xPos = xPos;
@@ -38,5 +40,8 @@ public class GamePreview extends Rectangle {
     }
     public void chooseGame() {
         this.isPressed = true;
+    }
+    public Paint getColor() {
+        return this.gamePreviewColor;
     }
 }
