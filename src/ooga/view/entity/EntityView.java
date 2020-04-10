@@ -1,8 +1,6 @@
-package ooga.view;
+package ooga.view.entity;
 
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import ooga.controller.EntityWrapper;
 

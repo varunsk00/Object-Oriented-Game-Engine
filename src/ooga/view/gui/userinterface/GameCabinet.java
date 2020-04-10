@@ -1,27 +1,28 @@
-package ooga.view.gui;
+package ooga.view.gui.userinterface;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import ooga.view.gui.managers.AudioVideoManager;
+import ooga.view.gui.managers.StageManager;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameCabinet extends Pane {
-    private GameSelectionMenu gameSelectionMenu;
+    private GameSelector gameSelector;
     private List<GamePreview> myGames;
-    private AVManager audioVideoManager;
+    private AudioVideoManager avManager;
     private StageManager stageManager;
 
-    public GameCabinet(StageManager stageManager, AVManager av) throws Exception { //FIXME ADD ERROR HANDLING
+    public GameCabinet(StageManager stageManager, AudioVideoManager av) throws Exception { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
-        this.audioVideoManager = av;
+        this.avManager = av;
         this.stageManager = stageManager;
         initGameSelect();
-        gameSelectionMenu = new GameSelectionMenu(myGames);
-        this.getChildren().add(gameSelectionMenu);
+        gameSelector = new GameSelector(myGames);
+        this.getChildren().add(gameSelector);
         this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         updateCurrentGame();
     }
@@ -50,10 +51,10 @@ public class GameCabinet extends Pane {
 
     public void handleAltScrollInput(KeyCode code) {
         if (code == KeyCode.D) {
-            this.gameSelectionMenu.scrollRight();
+            this.gameSelector.scrollRight();
         }
         else if (code == KeyCode.A) {
-            this.gameSelectionMenu.scrollLeft();
+            this.gameSelector.scrollLeft();
         }
     }
 
@@ -62,10 +63,8 @@ public class GameCabinet extends Pane {
             if(game.getGamePressed()) {
                 game.resetGameName();
                 String gameName = game.getGameName();
-
-                audioVideoManager.switchStage(stageManager, gameName);
-                audioVideoManager.switchMusic(stageManager);
-
+                avManager.switchStage(stageManager, gameName);
+                avManager.switchMusic(stageManager);
             }
         }
     }

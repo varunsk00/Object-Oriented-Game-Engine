@@ -1,4 +1,4 @@
-package ooga.view.gui.startup;
+package ooga.view.gui.userinterface;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,7 +20,6 @@ public class Welcome extends VBox {
     private Background bg;
     private TextFlow welcome;
     private Text message;
-    private Text play;
     private VBox myButton;
     private Boolean playPressed;
 
@@ -33,7 +32,6 @@ public class Welcome extends VBox {
         this.bg = new Background(bgFill);
         this.welcome = new TextFlow();
         this.message = new Text("Welcome to \uD83C\uDD71ob's Object Oriented Arcade!");
-        this.play = new Text("Play");
         createWelcomeScreen();
     }
 

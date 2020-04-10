@@ -1,10 +1,7 @@
 package ooga.model.actions;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Stack;
 import ooga.model.EntityModel;
-import ooga.view.gui.AVManager;
+import ooga.view.gui.managers.AudioVideoManager;
 
 //<<<<<<< HEAD
 //public  interface Action {
@@ -47,10 +44,10 @@ import ooga.view.gui.AVManager;
 
 public abstract class Action {
   protected String param;
-  protected AVManager soundBoard;
+  protected AudioVideoManager soundBoard;
   public Action(String parameter){
     param = parameter;
-    soundBoard = new AVManager();
+    soundBoard = new AudioVideoManager();
   }
   public abstract void execute(EntityModel entity);
 //>>>>>>> e1a9359e1a4a1fadc8768d38522e7462b301377b

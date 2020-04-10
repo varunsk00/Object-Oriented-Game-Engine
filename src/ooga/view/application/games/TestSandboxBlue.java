@@ -5,8 +5,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import ooga.controller.TestController;
-import ooga.view.application.games.Game;
-import ooga.view.gui.StageManager;
+import ooga.view.gui.managers.StageManager;
 
 public class TestSandboxBlue extends Game {
     private TestController testController;

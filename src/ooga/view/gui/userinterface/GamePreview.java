@@ -1,4 +1,4 @@
-package ooga.view.gui;
+package ooga.view.gui.userinterface;
 
 import javafx.scene.Node;
 import javafx.scene.image.Image;
