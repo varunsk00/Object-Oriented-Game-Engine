@@ -77,6 +77,12 @@ public class MainController implements Controller {
       entityList.add(local);
       myViewManager.updateEntityGroup(local.getRender());
     }
+    EntityWrapper local = new EntityWrapper("Brick", this);
+    local.getModel().setX(400);
+    local.getModel().setY(300);
+    entityBrickList.add(local);
+    entityList.add(local);
+    myViewManager.updateEntityGroup(local.getRender());
 
 
 
