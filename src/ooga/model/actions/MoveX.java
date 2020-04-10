@@ -3,16 +3,16 @@ package ooga.model.actions;
 import ooga.model.EntityModel;
 
 public class MoveX extends Action {
-  private double xdistance;
+  private double xPosition;
 
   public MoveX(String parameter){
     super(parameter);
-    xdistance = Double.parseDouble(param);
-
+    xPosition = Double.parseDouble(param);
   }
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setX(entity.getX() + xdistance);
+    entity.setX(entity.getX()+xPosition);
+//    entity.setXVelocity(xPosition*(entity.getForwards() ? 1 : -1));
   }
 }

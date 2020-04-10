@@ -1,6 +1,7 @@
 {
   "entityName": "Brick",
-  "image": "mario_fireball",
+  "image": "brick",
+  "health": 1,
   "xPos": 300,
   "yPos": 275,
   "xVel": 0,

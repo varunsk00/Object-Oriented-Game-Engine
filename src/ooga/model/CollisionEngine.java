@@ -41,14 +41,14 @@ public class CollisionEngine {
       String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity, targetEntity);
       
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID, targetEntityCollisionSide);
-      System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
+      //System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
       for(CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()){
         if(targetEntityCollisionKey.equals(collisionMapKey)){
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
           collisionAction.execute(subjectEntity);
         }
       }
-      System.out.println("");
+      //System.out.println("");
 
     }
   }
@@ -56,8 +56,7 @@ public class CollisionEngine {
   private String determineTargetEntityCollisionSide(EntityModel subjectEntity, EntityModel targetEntity){
     double[] subjectLeftRightTopBottom = new double[]{subjectEntity.getX(), subjectEntity.getX() + subjectEntity.getWidth(), subjectEntity.getY(), subjectEntity.getY() + subjectEntity.getHeight()};
     double[] targetRightLeftBottomTop = new double[]{targetEntity.getX() + targetEntity.getWidth(), targetEntity.getX(), targetEntity.getY() + targetEntity.getHeight(), targetEntity.getY()};
-//    System.out.println("subject " + subjectLeftRightTopBottom[0] + " " + subjectLeftRightTopBottom[1] + " " + subjectLeftRightTopBottom[2] + " " + subjectLeftRightTopBottom[3]);
-//    System.out.println("target " + targetRightLeftBottomTop[0] + " " + targetRightLeftBottomTop[1] + " " + targetRightLeftBottomTop[2] + " " + targetRightLeftBottomTop[3]);
+
 
     int sideIndex = determineSideIndex(subjectLeftRightTopBottom, targetRightLeftBottomTop);
 
@@ -75,7 +74,6 @@ public class CollisionEngine {
           sideIndex = i;
       }
     }
-    //System.out.println("minimumDistance " + minimumDistance + " " + targetEntitySideMap.get(sideIndex));
     return sideIndex;
   }
 

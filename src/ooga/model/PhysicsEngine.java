@@ -46,17 +46,17 @@ public class PhysicsEngine {
   }
 
   private void applyGravity(){
-    System.out.print(entityModel.getEntityID() + ": ");
+    //System.out.print(entityModel.getEntityID() + ": ");
     if(entityModel.isOnGround()){
-      System.out.print("Gravity Negated");
+      //System.out.print("Gravity Negated");
       entityModel.setYVelocity(0);
     }
     else{
-      System.out.print("Gravity On");
+      //System.out.print("Gravity On");
       String gravityParameter = String.valueOf(gravityForce);
       entityModel.getActionStack().push(new AccelerateY(gravityParameter));
     }
 
-    System.out.println("--------------Distance: " + entityModel.getY());
+    //System.out.println("--------------Distance: " + entityModel.getY());
   }
 }

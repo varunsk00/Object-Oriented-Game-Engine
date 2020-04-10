@@ -13,6 +13,6 @@ public class SetGroundStatus extends Action {
   @Override
   public void execute(EntityModel entity) {
     entity.setOnGround(groundStatus);
-    System.out.println("help" + groundStatus);
+    //System.out.println("help" + groundStatus);
   }
 }

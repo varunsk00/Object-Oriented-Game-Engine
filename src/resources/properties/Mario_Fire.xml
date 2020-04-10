@@ -16,10 +16,12 @@
     <Bundle>
       <ID>D</ID>
       <Control action="AccelerateX" param="15.0"></Control>
+      <Control action="SetXDirection" param="forwards"></Control>
     </Bundle>
     <Bundle>
       <ID>A</ID>
       <Control action="AccelerateX" param="-15.0"></Control>
+      <Control action="SetXDirection" param="backwards"></Control>
     </Bundle>
     <Bundle>
       <ID>SPACE</ID>
@@ -27,7 +29,7 @@
     </Bundle>
     <Bundle>
       <ID>F</ID>
-      <Control action="SpawnRelative" param="Mario_Fireball"></Control>
+      <Control action="SpawnRelative" param="Mario_Fireball" cooldown="1000"></Control>
     </Bundle>
   </Controls>
   <Collisions>

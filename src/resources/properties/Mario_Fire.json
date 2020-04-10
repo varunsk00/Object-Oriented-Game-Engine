@@ -1,6 +1,7 @@
 {
   "entityName": "Fire Mario",
   "image": "mario_fire",
+  "health": 1,
   "xPos": 100,
   "yPos": 100,
   "xVel": 10,
@@ -17,6 +18,10 @@
         {
           "action": "AccelerateX",
           "param": "15.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "forwards"
         }
       ]
     },
@@ -26,6 +31,10 @@
         {
           "action": "AccelerateX",
           "param": "-15.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "backwards"
         }
       ]
     },
@@ -35,6 +44,15 @@
         {
           "action": "AccelerateY",
           "param": "-25"
+        }
+      ]
+    },
+    {
+      "ID": "S",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "+15.0"
         }
       ]
     },
@@ -79,7 +97,7 @@
       "Control": [
         {
           "action": "MoveX",
-          "param": "-1",
+          "param": "0",
           "orientation": "W"
         }
       ]

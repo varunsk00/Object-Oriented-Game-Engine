@@ -23,4 +23,9 @@ public class FinalController implements Controller {
   public void addEntity(EntityWrapper newEntity) {
     entityList.add(newEntity);
   }
+
+  @Override
+  public List<EntityWrapper> getEntityList() {
+    return null;
+  }
 }
