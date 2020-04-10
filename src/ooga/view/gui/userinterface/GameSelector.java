@@ -24,7 +24,7 @@ import javax.imageio.ImageIO;
 import java.util.List;
 //TODO: REMOVE ALL MAGIC NUMBERS, REFACTOR MORE - SPECIFICALLY SCROLLLEFT AND RIGHT,
 // FIGURE OUT HOW TO HANDLE ONLY 3 GAMES, FIX BUTTON NOT GETTING GAME NAME, FACTOR OUT FUNCTIONS INTO A FACTORY FOR ALL UI
-// FIGURE OUT HOW TO STOP SPAMMING ARROWS, MOVE ALL STYLING TO CSS, MAKE ARROWS INTO STACKPANES AND ADD TEXT
+// FIGURE OUT HOW TO STOP SPAMMING ARROWS, MOVE ALL STYLING TO CSS, MAKE ARROWS INTO STACKPANES AND ADD TEXT, REFACTOR SPAM?
 public class GameSelector extends BorderPane {
     Polygon leftScrollArrow;
     Polygon rightScrollArrow;
@@ -56,6 +56,7 @@ public class GameSelector extends BorderPane {
         initializePreviewPos();
         gameSelectionBox.getChildren().add(gameSwitchGroup);
         gameSelectionBox.setMinHeight(300);
+        gameSelectionBox.setTranslateX(-75);
         gameSelectionBox.setAlignment(Pos.CENTER);
     }
     private void initSelectionUI() {
@@ -139,7 +140,7 @@ public class GameSelector extends BorderPane {
         leftScrollArrow.setFill(Color.WHITE);
         leftScrollArrow.setStroke(Color.RED);
         leftScrollArrow.setTranslateX(60);
-        leftScrollArrow.setTranslateY(300);
+        leftScrollArrow.setTranslateY(275);
         leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.LIGHTGRAY));
         leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.WHITE));
         leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
@@ -253,8 +254,9 @@ public class GameSelector extends BorderPane {
         gameNameBackground = new HBox();
         gameNameBackground.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         gameNameBackground.setPadding(new Insets(25, 25, 25, 25));
-        gameNameBackground.setMaxSize(200, 100);
-        gameNameBackground.setTranslateX(-175);
+        gameNameBackground.setPrefWidth(600);
+        gameNameBackground.setMaxSize(600, 100);
+        gameNameBackground.setTranslateX(-260);
         gameNameBackground.setAlignment(Pos.CENTER);
         gameNameBackground.getChildren().add(gameName);
     }
