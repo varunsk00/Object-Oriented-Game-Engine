@@ -13,18 +13,22 @@ public class GameCabinet extends Pane {
     private List<GamePreview> myGames;
     private AVManager av;
 
-    public GameCabinet(Stage primaryStage) throws Exception { //FIXME ADD ERROR HANDLING
+    public GameCabinet(StageManager stageManager) throws Exception { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
         this.av = new AVManager();
         initGameSelect();
         gameSelectionMenu = new GameSelectionMenu(myGames);
-        this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         this.getChildren().add(gameSelectionMenu);
-        updateCurrentGame(primaryStage);
+        this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
+        updateCurrentGame(stageManager);
     }
 
     public GameSelectionMenu getLibrary(){
         return gameSelectionMenu;
+    }
+
+    public void addNewGamePreview(GamePreview newGamePreview) {
+        this.myGames.add(newGamePreview);
     }
 
     private void initGameSelect(){ //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
@@ -43,25 +47,23 @@ public class GameCabinet extends Pane {
         myGames.add(g3);
         myGames.add(g4);
         myGames.add(g5);
-
     }
+
     public void handleAltScrollInput(KeyCode code) {
-        if (code == KeyCode.RIGHT) {
+        if (code == KeyCode.D) {
             this.gameSelectionMenu.scrollRight();
         }
-        else if (code == KeyCode.LEFT) {
+        else if (code == KeyCode.A) {
             this.gameSelectionMenu.scrollLeft();
         }
-
     }
 
-    public void updateCurrentGame(Stage myStage) throws Exception {
+    public void updateCurrentGame(StageManager stageManager) throws Exception {
         for(GamePreview game: myGames){
             if(game.getGamePressed()) {
                 game.resetGameName();
                 String gameName = game.getGameName();
-                myStage.setTitle(game.getGameName().toUpperCase());
-                av.switchStage(myStage, gameName);
+                av.switchStage(stageManager, gameName);
                 av.switchMusic(gameName);
             }
         }

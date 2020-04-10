@@ -13,19 +13,20 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.controller.TestController;
+import ooga.view.gui.StageManager;
 
 import java.io.File;
 
 public class TestSandboxGreen extends Game{
   private TestController testController;
 
-  public TestSandboxGreen(Stage stage) {
-    super(stage);
+  public TestSandboxGreen(StageManager sm) {
+    super(sm);
   }
 
   @Override
   protected void initModel() {
-
+    gameName = this.getClass().getSimpleName();
   }
 
   @Override
@@ -36,7 +37,7 @@ public class TestSandboxGreen extends Game{
 
   @Override
   protected void initController(){
-    this.testController = new TestController(myBackgroundPane, myScene, currentStage, oldScene);
+    this.testController = new TestController(myBackgroundPane, stageManager, oldScene);
   }
 
 }

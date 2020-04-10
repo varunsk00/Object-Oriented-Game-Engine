@@ -10,23 +10,22 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ooga.controller.TestController;
+import ooga.view.gui.StageManager;
 
 public abstract class Game {
-    private static final int SCENE_WIDTH = 1280;
-    private static final int SCENE_HEIGHT = 720;
-    protected Scene myScene;
     protected Pane myBackgroundPane;
-    protected Stage currentStage;
+    protected StageManager stageManager;
     protected Scene oldScene;
+    protected String gameName;
 
 
-    public Game(Stage stage) {
-        this.currentStage = stage;
+    public Game(StageManager stageManager) {
+        this.stageManager = stageManager;
+        this.oldScene = stageManager.getPastScene();
         this.myBackgroundPane = new Pane();
-        oldScene = currentStage.getScene();
         initModel();
         initView();
-        initStage(stage);
+        initStage();
         initController();
     }
 
@@ -40,8 +39,7 @@ public abstract class Game {
 
     protected abstract void initController();
 
-    private void initStage(Stage primaryStage) {
-        myScene = new Scene(myBackgroundPane, SCENE_WIDTH, SCENE_HEIGHT);
-        primaryStage.setScene(myScene);
+    private void initStage() {
+        stageManager.createAndSwitchScenes(myBackgroundPane, gameName);
     }
 }
