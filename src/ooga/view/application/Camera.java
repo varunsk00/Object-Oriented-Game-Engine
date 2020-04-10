@@ -43,6 +43,5 @@ public class Camera {
 
   public void update(){
     viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, 999999));
-    System.out.println(myLevel.getMaxWidth());
   }
 }
