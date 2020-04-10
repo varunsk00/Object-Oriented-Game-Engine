@@ -131,9 +131,6 @@ public class TestController implements Controller {
     if (!isGamePaused) {
       //camera.update();
       //builder.updateLevel(camera.getViewPort(), level);
-      for (EntityWrapper brick : entityBrickList) {
-        brick.getModel().getActionStack().push(new SetGroundStatus("true"));
-      }
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());

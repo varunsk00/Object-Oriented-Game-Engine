@@ -24,9 +24,8 @@ public class EntityModel {
 
   private double xVel;
   private double yVel;
-  //?
 
-  private boolean onGround = false;
+  private boolean onGround = true;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
   private Map<String, Action> myActions;
