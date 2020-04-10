@@ -59,6 +59,7 @@ public class TestController implements Controller {
   private boolean keyPressed;
   private Timeline animation;
   private StageManager currentStage;
+  private Scene oldScene;
   private Scene testScene;
 
 
@@ -68,6 +69,7 @@ public class TestController implements Controller {
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
+    this.oldScene = oldScene;
     testPane = pane;
     EntityGroup = new Group();
     entityList = new ArrayList<>();
@@ -100,6 +102,12 @@ public class TestController implements Controller {
         entity.handleKeyInput(e);//FIXME i would like to
       }
     });
+    testScene.setOnKeyReleased(e-> {
+      for(EntityWrapper entity : entityList){
+        entity.handleKeyReleased(e);//FIXME i would like to
+      }
+      handleReleaseInput(e.getCode());
+    });
     testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
 
@@ -129,33 +137,53 @@ public class TestController implements Controller {
   }
 
   private void handlePressInput (KeyCode code) {
-    if (code == KeyCode.ESCAPE && escCounter < 1) {
-      pause(); }
+    if (code == KeyCode.D) {
+      xAcceleration = 75;
+      keyPressed = true;
+    } else if (code == KeyCode.A) {
+      xAcceleration = -75;
+      keyPressed = true;
+    }
+    else if (code == KeyCode.ESCAPE && escCounter < 1) {
+      BoxBlur bb = new BoxBlur();
+      EntityGroup.setEffect(bb);
+      animation.pause();
+      testPane.getChildren().add(menu);
+      escCounter++;
+    }
     else if (code == KeyCode.Q && escCounter == 1) {
-      unPause(); }
+      testPane.getChildren().remove(testPane.getChildren().size()-1);
+      EntityGroup.setEffect(null);
+      animation.play();
+      escCounter--;
+    }
     else if (code == KeyCode.H) {
-      currentStage.switchScenes(currentStage.getPastScene()); }
+      System.out.println("HOME");
+      currentStage.switchScenes(oldScene);
+    }
+    if (code == KeyCode.SPACE && isGrounded) {
+      yVelocity = -200;
+      isGrounded = false;
+    }
   }
-
+  private void handleReleaseInput (KeyCode code) {
+    if (code == KeyCode.D || code == KeyCode.A) {
+      xAcceleration = 0;
+    }
+  }
   private void handleMouseInput(double x, double y) {
     if (menu.getButtons().getResumePressed()) {
+      System.out.println("PRESSED");
       menu.getButtons().setResumeOff();
-      unPause(); }
-  }
-
-  private void pause(){
-    BoxBlur bb = new BoxBlur();
-    EntityGroup.setEffect(bb);
-    animation.pause();
-    testPane.getChildren().add(menu);
-    escCounter++;
+      testPane.getChildren().remove(testPane.getChildren().size()-1);
+      EntityGroup.setEffect(null);
+      animation.play();
+      escCounter--;
+    }
   }
 
   private void unPause(){
-    testPane.getChildren().remove(testPane.getChildren().size()-1);
-    EntityGroup.setEffect(null);
-    animation.play();
-    escCounter--;
+
   }
 
   @Override
