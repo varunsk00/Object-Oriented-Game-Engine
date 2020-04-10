@@ -24,38 +24,21 @@ import ooga.view.gui.managers.StageManager;
 public class ViewManager implements ViewExternalAPI {
   private Controller myController;
 
-  private Scene myCurrentScene;
   private Pane testPane;
   private Group EntityGroup;
-  private PhysicsEngine physicsEngine;
 
   private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
-  private EntityWrapper entityWrapper;
-  private EntityWrapper entityBrick;
-  private Line testGround = new Line(0, groundY, 1000, groundY);
-  private static final int FRAMES_PER_SECOND = 60;
-  private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-  private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
+  private Line testGround = new Line(0, groundY, 1000, groundY);
   private InGameMenu menu;
   private int escCounter = 0;
-  private double xVelocity = 0;
-  private double yVelocity = 0;
-  private double gravity = 100;
-  private double friction = 40;
-  private double xAcceleration = 0;
-  private boolean isGrounded;
-  private boolean keyPressed;
-  private Timeline animation;
+
   private StageManager currentStage;
-  private Scene oldScene;
   private InfiniteLevelBuilder builder;
   private Pane level;
   private Camera camera;
   private boolean isGamePaused;
-
-
   private Scene testScene;
 
   public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
@@ -80,8 +63,6 @@ public class ViewManager implements ViewExternalAPI {
     EntityGroup.getChildren().add(testGround);
 
     this.testScene = stageManager.getCurrentScene();
-
-
   }
 
   public void setUpCamera(Node node) {
@@ -102,22 +83,11 @@ public class ViewManager implements ViewExternalAPI {
   }
 
   public void updateValues() {
+    handleMouseInput();
     camera.update();
-
     builder.updateLevel(camera.getViewPort(), level);
   }
 
-
-//  private void setUpAnimation() {
-//    entityList.add(new EntityWrapper("Mario_Fire", null));
-//    entityWrapper = entityList.get(0);
-//    EntityGroup.getChildren().add(entityWrapper.getRender());
-//
-//    entityList.add(new EntityWrapper("Brick", null));
-//    entityBrick = entityList.get(1);
-//    EntityGroup.getChildren().add(entityBrick.getRender());
-//
-//  }
   @Override
   public void updateEntityPosition(int id, double newx, double newy) {
 

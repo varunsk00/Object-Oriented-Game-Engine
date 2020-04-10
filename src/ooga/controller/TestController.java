@@ -43,13 +43,8 @@ public class TestController implements Controller {
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-  private InGameMenu menu;
-  private int escCounter = 0;
   private Timeline animation;
-  private StageManager currentStage;
   private InfiniteLevelBuilder builder;
-  private Camera camera;
-  private Pane level;
   private ViewManager myViewManager;
 
 
@@ -110,7 +105,7 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-   // myViewManager.updateValues();
+   myViewManager.updateValues();
 
     if (!myViewManager.getIsGamePaused()) {
       //camera.update();
