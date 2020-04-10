@@ -1,4 +1,4 @@
-package ooga.view;
+package ooga.view.entity;
 
 import ooga.apis.view.ViewExternalAPI;
 

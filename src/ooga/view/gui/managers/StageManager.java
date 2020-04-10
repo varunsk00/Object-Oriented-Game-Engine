@@ -1,4 +1,4 @@
-package ooga.view.gui;
+package ooga.view.gui.managers;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;

@@ -1,4 +1,4 @@
-package ooga.view.gui;
+package ooga.view.gui.userinterface;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
@@ -10,22 +10,22 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import ooga.view.gui.userinterface.GamePreview;
+
 import javax.imageio.ImageIO;
 import java.util.List;
 //TODO: REMOVE ALL MAGIC NUMBERS, REFACTOR MORE - SPECIFICALLY SCROLLLEFT AND RIGHT,
 // FIGURE OUT HOW TO HANDLE ONLY 3 GAMES, FIX BUTTON NOT GETTING GAME NAME, FACTOR OUT FUNCTIONS INTO A FACTORY FOR ALL UI
 // FIGURE OUT HOW TO STOP SPAMMING ARROWS, MOVE ALL STYLING TO CSS, MAKE ARROWS INTO STACKPANES AND ADD TEXT
-public class GameSelectionMenu extends BorderPane {
+public class GameSelector extends BorderPane {
     Polygon leftScrollArrow;
     Polygon rightScrollArrow;
     List<GamePreview> playableGamesList;
@@ -36,8 +36,9 @@ public class GameSelectionMenu extends BorderPane {
     private HBox gameNameBackground;
     private Text gameName;
     private Group gameSwitchGroup;
+    private double pastTime = -10000000;
 
-    public GameSelectionMenu(List<GamePreview> playableGames) {
+    public GameSelector(List<GamePreview> playableGames) {
         this.playableGamesList = playableGames;
         this.menuFrame = new VBox();
         this.gameSelectionBox = new HBox();
@@ -74,6 +75,7 @@ public class GameSelectionMenu extends BorderPane {
         this.setCenter(menuFrame);
     }
     public void scrollRight() {
+        if(System.currentTimeMillis() - pastTime >= )
         GamePreview temp = playableGamesList.get(0);
         for (int i = 0; i < playableGamesList.size()-1; i ++) {
             playableGamesList.set(i, playableGamesList.get(i+1));

@@ -1,4 +1,4 @@
-package ooga.view.gui;
+package ooga.view.gui.managers;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -9,17 +9,16 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
 
-public class AVManager {
+public class AudioVideoManager {
     private static final String GAME_PACKAGE = Game.class.getPackageName();
     private final String RESOURCES_PACKAGE = "src/ooga/view/gui/resources/";
     private final String RESOURCES_PACKAGE1 = this.getClass().getPackageName() + ".resources.";
     private final String MUSIC_PACKAGE = RESOURCES_PACKAGE1 + "soundtrack";
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private MediaPlayer currentSong;
-    private MediaPlayer oldSong;
     private MediaPlayer currentSoundEffect;
 
-    public AVManager(){
+    public AudioVideoManager(){
     }
 
     public void switchMusic(StageManager sm){

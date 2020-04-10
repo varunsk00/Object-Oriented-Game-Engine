@@ -1,29 +1,18 @@
-package ooga.view.gui.startup;
+package ooga.view.gui;
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import ooga.view.gui.AVManager;
-import ooga.view.gui.GameCabinet;
-import ooga.view.gui.StageManager;
+import ooga.view.gui.managers.AudioVideoManager;
+import ooga.view.gui.managers.StageManager;
+import ooga.view.gui.userinterface.GameCabinet;
+import ooga.view.gui.userinterface.Welcome;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
-public class Driver {
+public class ProgramLauncher {
+
     private static final double FRAMES_PER_SECOND = 60;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private final String RESOURCES_PACKAGE = this.getClass().getPackageName() + ".resources.";
@@ -31,11 +20,11 @@ public class Driver {
     private Welcome welcomeScreen = new Welcome();
     private GameCabinet library;
     private StageManager stageManager;
-    private AVManager audioVideoManager;
+    private AudioVideoManager audioVideoManager;
 
-    public Driver(Stage primaryStage) throws FileNotFoundException {
+    public ProgramLauncher(Stage primaryStage) throws FileNotFoundException {
         this.stageManager = new StageManager(primaryStage);
-        this.audioVideoManager = new AVManager();
+        this.audioVideoManager = new AudioVideoManager();
     }
     //TODO: make better css
     public void start() throws Exception {
