@@ -72,8 +72,8 @@ public class TestController implements Controller {
     level = builder.generateLevel();
 
     testPane = level;
-    for(int i = 0; i < 20; i++){
-      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
+    for(int i = 0; i < 100; i++){
+//      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
     }
 
     testScene = currentStage.getCurrentScene();

@@ -6,8 +6,8 @@
   "yPos": 100,
   "xVel": 10,
   "yVel": 10,
-  "maxXVel": 100,
-  "maxYVel": 100,
+  "maxXVel": 1000,
+  "maxYVel": 1000,
   "height": 100,
   "width": 100,
   "scheme": "Keybindings",
@@ -16,8 +16,8 @@
       "ID": "D",
       "Control": [
         {
-          "action": "AccelerateX",
-          "param": "15.0"
+          "action": "VelocityX",
+          "param": "720.0"
         },
         {
           "action": "SetXDirection",
@@ -29,8 +29,8 @@
       "ID": "A",
       "Control": [
         {
-          "action": "AccelerateX",
-          "param": "-15.0"
+          "action": "VelocityX",
+          "param": "-720.0"
         },
         {
           "action": "SetXDirection",
@@ -42,8 +42,8 @@
       "ID": "W",
       "Control": [
         {
-          "action": "AccelerateY",
-          "param": "-15.0"
+          "action": "VelocityY",
+          "param": "-720.0"
         },
       ]
     },
@@ -51,8 +51,8 @@
       "ID": "S",
       "Control": [
         {
-          "action": "AccelerateY",
-          "param": "+15.0"
+          "action": "VelocityY",
+          "param": "+720.0"
         },
       ]
     },

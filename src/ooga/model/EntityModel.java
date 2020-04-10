@@ -18,8 +18,8 @@ public class EntityModel {
   private double xPos;
   private double yPos;
   private double health;
-  private double xVelMax = 100;
-  private double yVelMax = 100;
+  private double xVelMax = 1000;
+  private double yVelMax = 1000;
 
   private double xVel;
   private double yVel;

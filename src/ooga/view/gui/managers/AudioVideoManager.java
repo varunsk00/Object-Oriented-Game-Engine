@@ -41,11 +41,13 @@ public class AudioVideoManager {
                 (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
         currentSoundEffect.seek(Duration.ZERO);
         currentSoundEffect.play();
+        currentSoundEffect.setVolume(0.0);
     }
 
     private void playSong(MediaPlayer song){
         song.seek(Duration.ZERO);
         song.setCycleCount(MediaPlayer.INDEFINITE);
+        song.setVolume(0.0);
         song.play();
     }
 }

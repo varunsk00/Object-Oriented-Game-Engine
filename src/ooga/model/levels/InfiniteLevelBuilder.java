@@ -24,13 +24,13 @@ public class InfiniteLevelBuilder extends LevelBuilder {
     Iterator<EntityWrapper> iterator = myController.getEntityList().iterator();
     while(iterator.hasNext()){
       EntityWrapper entity = iterator.next();
-      if(entity.getRender().getBoundsInParent().getMaxX() < camera.getBoundsInParent().getMinX()-(camera.getWidth()*2)
-          || entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()*2+(camera.getWidth()*2)
-          || entity.getRender().getBoundsInParent().getMinY() > camera.getBoundsInParent().getMaxY()*2+(camera.getHeight()*2)
-          || entity.getRender().getBoundsInParent().getMaxY() < camera.getBoundsInParent().getMinY()*2-(camera.getHeight()*2)){
+      if(entity.getRender().getBoundsInParent().getMaxX() < camera.getBoundsInParent().getMinX()-(camera.getWidth()*2)){
+//          || entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()*2+(camera.getWidth()*2)
+//          || entity.getRender().getBoundsInParent().getMinY() > camera.getBoundsInParent().getMaxY()*2+(camera.getHeight()*2)
+//          || entity.getRender().getBoundsInParent().getMaxY() < camera.getBoundsInParent().getMinY()*2-(camera.getHeight()*2)){
         level.getChildren().remove(entity);
         iterator.remove();
-        System.out.println("removed entity");
+//        System.out.println(entity);
       }
       if(entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()){
         pipespawned = true;
@@ -56,6 +56,8 @@ public class InfiniteLevelBuilder extends LevelBuilder {
     double newPipeY = Math.random()*(camera.getHeight()-pipeLip1.getRender().getBoundsInParent().getHeight()*2)+pipeLip1.getRender().getBoundsInParent().getHeight();
     double gapWidth = Math.random()*(camera.getHeight()-newPipeY-pipeLip1.getRender().getBoundsInParent().getHeight())+newPipeY;
     double pipeBodyOffset = newPipeX+(pipeLip1.getRender().getBoundsInParent().getWidth()-pipeBody1.getRender().getBoundsInParent().getWidth())/2;
+
+//    System.out.println(newPipeX + "\t" + newPipeY);
 
     pipeLip1.getModel().getActionStack().push(new SetX("" + newPipeX));
     pipeLip1.getModel().getActionStack().push(new SetY("" + (newPipeY-pipeLip1.getRender().getBoundsInParent().getHeight())));

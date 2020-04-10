@@ -42,7 +42,7 @@ public class Camera {
   public Rectangle getViewPort(){return viewPort;}
 
   public void update(){
-
-    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, myLevel.getWidth()));
+    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, 999999));
+    System.out.println(myLevel.getMaxWidth());
   }
 }
