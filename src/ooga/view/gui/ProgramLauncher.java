@@ -12,6 +12,7 @@ import ooga.view.gui.userinterface.Welcome;
 import java.io.FileNotFoundException;
 
 public class ProgramLauncher {
+
     private static final double FRAMES_PER_SECOND = 60;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private final String RESOURCES_PACKAGE = this.getClass().getPackageName() + ".resources.";

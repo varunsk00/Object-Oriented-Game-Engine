@@ -1,5 +1,6 @@
 package ooga.view.entity;
 
+import javafx.scene.Node;
 import ooga.apis.view.ViewExternalAPI;
 
 public class ViewExternal implements ViewExternalAPI {
@@ -15,6 +16,10 @@ public class ViewExternal implements ViewExternalAPI {
   }
 
   @Override
+  public void addEntity(Node node) {
+
+  }
+
   public void addEntity() {
 
   }

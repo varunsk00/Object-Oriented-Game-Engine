@@ -1,5 +1,6 @@
 package ooga.apis.view;
 
+import javafx.scene.Node;
 import javax.swing.text.html.parser.Entity;
 
 /**
@@ -33,7 +34,7 @@ public interface ViewExternalAPI {
    * when a new entity is added to the game
    * (called in parallel to the model)
    */
-  void addEntity();
+  void addEntity(Node node);
 
   /**
    * Updates the status of a specific entity

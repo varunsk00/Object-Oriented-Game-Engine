@@ -27,6 +27,6 @@ public class TestSandboxRed extends Game {
 
     @Override
     protected void initController(){
-        this.testController = new TestController(myBackgroundPane, stageManager);
+        this.testController = new TestController(stageManager);
     }
 }
