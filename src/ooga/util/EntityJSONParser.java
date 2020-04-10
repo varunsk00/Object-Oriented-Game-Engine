@@ -171,6 +171,14 @@ public class EntityJSONParser {
     return Double.parseDouble(jsonObject.get("yPos").toString());
   }
 
+  public double readMaxXVelocity(){
+    return Double.parseDouble(jsonObject.get("maxXVel").toString());
+  }
+
+  public double readMaxYVelocity(){
+    return Double.parseDouble(jsonObject.get("maxYVel").toString());
+  }
+
   public double readHealth() {
     return Double.parseDouble(jsonObject.get("health").toString());
   }

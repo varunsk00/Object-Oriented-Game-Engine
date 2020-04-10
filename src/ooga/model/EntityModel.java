@@ -18,8 +18,8 @@ public class EntityModel {
   private double xPos;
   private double yPos;
   private double health;
-  private double xVelMax = 100;
-  private double yVelMax = 100;
+  private double xVelMax;
+  private double yVelMax;
   private String entityID;
 
   private double xVel;
@@ -47,12 +47,13 @@ public class EntityModel {
     entityHeight = myEntity.getParser().readHeight();
     xPos = myEntity.getParser().readXPosition();
     yPos = myEntity.getParser().readYPosition();
+    xVelMax = myEntity.getParser().readMaxXVelocity();
+    yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
   }
 
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
-    //checkGroundStatus();
 
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
@@ -77,14 +78,8 @@ public class EntityModel {
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
     }
-  }
-
-  private void checkGroundStatus(){
-    if(getY() < 225/* 300 - this.getHeight()*/){
-      onGround = false;
-    }
-    else{
-      onGround = true;
+    if(Math.abs(yVel) > xVelMax){
+      setXVelocity(Math.signum(yVel) * yVelMax);
     }
   }
 
