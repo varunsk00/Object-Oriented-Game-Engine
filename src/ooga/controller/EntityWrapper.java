@@ -4,8 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import ooga.model.EntityModel;
 import ooga.util.EntityJSONParser;
-import ooga.util.EntityParser;
-import ooga.view.EntityView;
+import ooga.view.entity.EntityView;
 
 public class EntityWrapper {
   private EntityModel myModel;
