@@ -62,6 +62,10 @@
         {
           "action": "InfiniteJump",
           "param": "-500.0"
+        },
+        {
+          "action": "VelocityX",
+          "param": "80.0"
         }
       ]
     },
