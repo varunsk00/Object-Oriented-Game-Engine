@@ -10,14 +10,21 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import java.util.List;
 //TODO: REMOVE ALL MAGIC NUMBERS, REFACTOR MORE - SPECIFICALLY SCROLLLEFT AND RIGHT,
 // FIGURE OUT HOW TO HANDLE ONLY 3 GAMES, FIX BUTTON NOT GETTING GAME NAME, FACTOR OUT FUNCTIONS INTO A FACTORY FOR ALL UI
+// FIGURE OUT HOW TO STOP SPAMMING ARROWS, MOVE ALL STYLING TO CSS, MAKE ARROWS INTO STACKPANES AND ADD TEXT
 public class GameSelectionMenu extends BorderPane {
     Polygon leftScrollArrow;
     Polygon rightScrollArrow;
@@ -26,6 +33,8 @@ public class GameSelectionMenu extends BorderPane {
     private VBox menuFrame;
     private HBox gameSelectionBox;
     private VBox selectButtonAndNameBox;
+    private HBox gameNameBackground;
+    private Text gameName;
     private Group gameSwitchGroup;
 
     public GameSelectionMenu(List<GamePreview> playableGames) {
@@ -34,14 +43,12 @@ public class GameSelectionMenu extends BorderPane {
         this.gameSelectionBox = new HBox();
         this.selectButtonAndNameBox = new VBox();
         this.gameSwitchGroup = new Group();
+        this.gameName = new Text();
         initGameSwitchGroup();
         initSelectionUI();
         initCompleteView();
     }
-    public void addNewGamePreview(GamePreview newGamePreview) {
-        gameSwitchGroup.getChildren().add(newGamePreview);
-        this.playableGamesList.add(newGamePreview);
-    }
+
     private void initGameSwitchGroup() {
         initLeftArrow();
         initRightArrow();
@@ -53,15 +60,17 @@ public class GameSelectionMenu extends BorderPane {
     private void initSelectionUI() {
         createGameSelectButton();
         selectButtonAndNameBox.getChildren().add(selectGameButton);
-        selectButtonAndNameBox.setPadding(new Insets(50, 50, 50, 425));
+        selectButtonAndNameBox.setPadding(new Insets(0, 50, 0, 415));
+        selectButtonAndNameBox.setSpacing(15);
+        selectButtonAndNameBox.getChildren().add(gameNameBackground);
     }
     private void initCompleteView() {
         menuFrame.getChildren().add(gameSelectionBox);
         menuFrame.getChildren().add(selectButtonAndNameBox);
         menuFrame.setAlignment(Pos.CENTER);
-        menuFrame.setSpacing(50);
+        menuFrame.setSpacing(40);
         this.setLayoutX(175);
-        this.setLayoutY(200);
+        this.setLayoutY(100);
         this.setCenter(menuFrame);
     }
     public void scrollLeft() {
@@ -122,8 +131,8 @@ public class GameSelectionMenu extends BorderPane {
         leftScrollArrow.getPoints().addAll(50.0, 0.0,  50.0, 100.0,0.0, 50.0);
         leftScrollArrow.setFill(Color.WHITE);
         leftScrollArrow.setStroke(Color.RED);
-        leftScrollArrow.setTranslateX(50);
-        leftScrollArrow.setTranslateY(275);
+        leftScrollArrow.setTranslateX(60);
+        leftScrollArrow.setTranslateY(300);
         leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.LIGHTGRAY));
         leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.WHITE));
         leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
@@ -148,6 +157,8 @@ public class GameSelectionMenu extends BorderPane {
                 playableGamesList.get(i).setVisible(true);
             }
         }
+        gameName.setText(playableGamesList.get(1).getGameName());
+        gameName.setFill(playableGamesList.get(1).getColor());
     }
     private void initializePreviewPos() {
         for (int i = 0; i < playableGamesList.size(); i ++) {
@@ -159,8 +170,10 @@ public class GameSelectionMenu extends BorderPane {
             }
             else {
                 if (playableGamesList.get(i).getXPos() == 450) {
-                   playableGamesList.get(i).setScaleX(2.2);
-                   playableGamesList.get(i).setScaleY(2.2);
+                   playableGamesList.get(i).setScaleX(2.1);
+                   playableGamesList.get(i).setScaleY(2.1);
+                   gameName.setText(playableGamesList.get(i).getGameName());
+                   gameName.setFill(playableGamesList.get(1).getColor());
                 }
                 playableGamesList.get(i).setVisible(true);
             }
@@ -202,9 +215,11 @@ public class GameSelectionMenu extends BorderPane {
             @Override
             protected void interpolate(double frac) {
                 if (direction) {
+
                     playableGamesList.get(2).setScaleX(playableGamesList.get(2).getScaleX() - .022);
                     playableGamesList.get(2).setScaleY(playableGamesList.get(2).getScaleY() - .022);
                 } else {
+
                     playableGamesList.get(0).setScaleX(playableGamesList.get(0).getScaleX() - .022);
                     playableGamesList.get(0).setScaleY(playableGamesList.get(0).getScaleY() - .022);
                 }
@@ -227,7 +242,16 @@ public class GameSelectionMenu extends BorderPane {
     }
     public void createGameSelectButton() {
         selectGameButton = makeButton("Select", e -> playableGamesList.get(1).chooseGame());
+        gameName.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 50));
+        gameNameBackground = new HBox();
+        gameNameBackground.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        gameNameBackground.setPadding(new Insets(25, 25, 25, 25));
+        gameNameBackground.setMaxSize(200, 100);
+        gameNameBackground.setTranslateX(-70);
+        gameNameBackground.setAlignment(Pos.CENTER);
+        gameNameBackground.getChildren().add(gameName);
     }
+
     private Button makeButton(String property, EventHandler<ActionEvent> handler) {
         // represent all supported image suffixes
         final String IMAGEFILE_SUFFIXES = String

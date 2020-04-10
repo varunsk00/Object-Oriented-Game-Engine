@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 public class MenuButtons  {
     private boolean rightPressed;
     private boolean leftPressed;
-    private boolean upPressed;
+    private boolean resumePressed;
     private boolean downPressed;
     private VBox myButtons;
 
@@ -23,7 +23,7 @@ public class MenuButtons  {
         this.rightPressed = false;
         this.leftPressed = false;
         this.downPressed = false;
-        this.upPressed = false;
+        this.resumePressed = false;
         renderButtons();
     }
 
@@ -34,12 +34,12 @@ public class MenuButtons  {
         return myButtons;
     }
 
-    public boolean getUpPressed() {
-        return upPressed;
+    public boolean getResumePressed() {
+        return resumePressed;
     }
 
-    public void setUpOff() {
-        upPressed = false;
+    public void setResumeOff() {
+        resumePressed = false;
     }
 
 
@@ -72,16 +72,16 @@ public class MenuButtons  {
      */
     private void renderButtons() {
         myButtons = new VBox();
-        Button UpButton = makeButton("Setting 1", event -> upPressed = true);
+        Button ResumeButton = makeButton("Resume", event -> resumePressed = true);
         Button DownButton = makeButton("Setting 2", event -> downPressed = true);
         Button LeftButton = makeButton("Setting 3", event -> leftPressed = true);
         Button RightButton = makeButton("Setting 4", event -> rightPressed = true);
         Text instructions = new Text("Press Q to Quit");
-        myButtons.setSpacing(100); //FIXME: MAGIC NUMBER
+        myButtons.setSpacing(70); //FIXME: MAGIC NUMBER
         myButtons.setTranslateX(640); //FIXME: MAGIC NUMBER
         myButtons.setTranslateY(180); //FIXME: MAGIC NUMBER
-        myButtons.getChildren().addAll(UpButton, DownButton, RightButton, LeftButton, instructions);
-        formatButton(UpButton);
+        myButtons.getChildren().addAll(ResumeButton, DownButton, RightButton, LeftButton, instructions);
+        formatButton(ResumeButton);
         formatButton(DownButton);
         formatButton(RightButton);
         formatButton(LeftButton);

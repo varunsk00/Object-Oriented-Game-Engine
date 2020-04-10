@@ -27,10 +27,10 @@ public class AVManager {
         playSong(currentSong);
     }
 
-    public void switchStage(Stage st, String gameName) throws Exception {
+    public void switchStage(StageManager sm, String gameName) throws Exception {
         Class<?> c = Class.forName(GAME_PACKAGE + "." + gameName);
-        Constructor<?> cons = c.getDeclaredConstructor(Stage.class);
-        Object launchGame = cons.newInstance(st);
+        Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
+        Object launchGame = cons.newInstance(sm);
     }
 
     public void playSoundEffect(String sound){
