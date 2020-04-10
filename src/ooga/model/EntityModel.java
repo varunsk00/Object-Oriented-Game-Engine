@@ -20,6 +20,7 @@ public class EntityModel {
   private double health;
   private double xVelMax = 100;
   private double yVelMax = 100;
+  private String entityID;
 
   private double xVel;
   private double yVel;
@@ -33,6 +34,7 @@ public class EntityModel {
 
   public EntityModel(EntityWrapper entityWrapper) {
     myEntity = entityWrapper;
+    entityID = entityWrapper.getEntityID();
     controlScheme = myEntity.getParser().parseControls();
     myCollisions = myEntity.getParser().parseCollisions();
     loadStats();
@@ -51,7 +53,7 @@ public class EntityModel {
 
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
-    checkGroundStatus();
+    //checkGroundStatus();
 
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
@@ -79,7 +81,7 @@ public class EntityModel {
   }
 
   private void checkGroundStatus(){
-    if(getY() < 200 /* 300 - this.getHeight()*/){
+    if(getY() < 225/* 300 - this.getHeight()*/){
       onGround = false;
     }
     else{
@@ -111,9 +113,12 @@ public class EntityModel {
   public boolean isOnGround(){
     return onGround;
   }
+  public String getEntityID(){
+    return this.entityID;
+  }
 
   public void setOnGround(boolean groundStatus){
-    onGround = groundStatus;
+    this.onGround = groundStatus;
   }
 
   public Stack<Action> getActionStack() {

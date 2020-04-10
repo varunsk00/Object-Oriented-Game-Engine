@@ -12,6 +12,7 @@ public class MoveX extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setXVelocity(xPosition*(entity.getForwards() ? 1 : -1));
+    entity.setX(entity.getX()+xPosition);
+//    entity.setXVelocity(xPosition*(entity.getForwards() ? 1 : -1));
   }
 }

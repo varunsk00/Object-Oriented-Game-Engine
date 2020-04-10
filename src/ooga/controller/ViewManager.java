@@ -53,8 +53,7 @@ public class ViewManager implements ViewExternalAPI {
   private InfiniteLevelBuilder builder;
   private Pane level;
   private Camera camera;
-
-
+  private boolean isGamePaused;
 
 
   private Scene testScene;
@@ -82,18 +81,6 @@ public class ViewManager implements ViewExternalAPI {
 
     this.testScene = stageManager.getCurrentScene();
 
-//    testScene.setOnKeyPressed(e -> {
-//
-//      handlePressInput(e.getCode());
-//      for(EntityWrapper entity : entityList){
-//        entity.handleKeyInput(e);//FIXME i would like to
-//      }
-//    });
-//    testScene.setOnKeyReleased(e-> {
-//      for(EntityWrapper entity : entityList){
-//        entity.handleKeyReleased(e);//FIXME i would like to
-//      }
-//    });
 
   }
 
@@ -172,54 +159,45 @@ public class ViewManager implements ViewExternalAPI {
   }
 
   public void handlePressInput (KeyCode code) {
-    if (code == KeyCode.D) {
-      xAcceleration = 75;
-      keyPressed = true;
-    } else if (code == KeyCode.A) {
-      xAcceleration = -75;
-      keyPressed = true;
-    }
-    else if (code == KeyCode.ESCAPE && escCounter < 1) {
+    if (code == KeyCode.ESCAPE && escCounter < 1) {
       pauseGame();
-    }
-    else if (code == KeyCode.Q && escCounter == 1) {
+    } else if (code == KeyCode.Q && escCounter == 1) {
       unPauseGame();
-    }
-    else if (code == KeyCode.H) {
-      System.out.println("HOME");
+    } else if (code == KeyCode.H) {
       currentStage.switchScenes(currentStage.getPastScene());
     }
-    if (code == KeyCode.SPACE && isGrounded) {
-      yVelocity = -200;
-      isGrounded = false;
-    }
+
   }
 
   public void handleReleaseInput (KeyCode code) {
-    if (code == KeyCode.D || code == KeyCode.A) {
-      xAcceleration = 0;
-    }
   }
 
-  public void handleMouseInput(double x, double y) {
+  public void handleMouseInput() {
     if (menu.getButtons().getResumePressed()) {
-      System.out.println("PRESSED");
       unPauseGame();
+      menu.getButtons().setResumeOff();
     }
+
   }
 
   public void pauseGame(){
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
-    animation.pause();
+    isGamePaused = true;
     testPane.getChildren().add(menu);
     escCounter++;
+
   }
 
   public void unPauseGame(){
-    testPane.getChildren().remove(testPane.getChildren().size()-1);
+    testPane.getChildren().remove(menu);
     EntityGroup.setEffect(null);
-    animation.play();
+    isGamePaused = false;
     escCounter--;
+
+  }
+
+  public boolean getIsGamePaused() {
+    return isGamePaused;
   }
 }

@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import ooga.view.application.Camera;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.CollisionEngine;
+import ooga.model.actions.SetGroundStatus;
 
 import ooga.view.application.menu.InGameMenu;
 
@@ -35,6 +36,7 @@ public class TestController implements Controller {
   private EntityWrapper entityWrapper;
   private EntityWrapper entityBrick;
   private List<EntityWrapper> entityList;
+  private List<EntityWrapper> entityBrickList;
   private List<EntityWrapper> entityBuffer;
   private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
@@ -43,16 +45,8 @@ public class TestController implements Controller {
 
   private InGameMenu menu;
   private int escCounter = 0;
-  private double xVelocity = 0;
-  private double yVelocity = 0;
-  private double gravity = 100;
-  private double friction = 40;
-  private double xAcceleration = 0;
-  private boolean isGrounded;
-  private boolean keyPressed;
   private Timeline animation;
   private StageManager currentStage;
-  private Scene oldScene;
   private InfiniteLevelBuilder builder;
   private Camera camera;
   private Pane level;
@@ -61,12 +55,12 @@ public class TestController implements Controller {
 
   public TestController (StageManager stageManager) { //FIXME add exception stuff
 
-
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);
     myViewManager = new ViewManager(stageManager, builder);
 
     entityList = new ArrayList<>();
+    entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
     entityList.add(new EntityWrapper("Mario_Fire", this));
 
@@ -74,6 +68,17 @@ public class TestController implements Controller {
 
     entityWrapper = entityList.get(0);
     myViewManager.updateEntityGroup(entityWrapper.getRender());
+
+    for (int i = 0; i < 10; i++) {
+      EntityWrapper local = new EntityWrapper("Brick", this);
+      local.getModel().setX(i*100);
+      local.getModel().setY(400);
+      entityBrickList.add(local);
+      entityList.add(local);
+      myViewManager.updateEntityGroup(local.getRender());
+    }
+
+
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
@@ -95,7 +100,7 @@ public class TestController implements Controller {
     setUpTimeline();
   }
 
-  private void setUpTimeline(){
+  private void setUpTimeline() {
     //TODO: Timeline Code -- don't remove
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
     animation = new Timeline();
@@ -105,18 +110,23 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-    myViewManager.updateValues();
+   // myViewManager.updateValues();
 
-    for(EntityWrapper subjectEntity : entityList){
-      for(EntityWrapper targetEntity : entityList){
-        collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+    if (!myViewManager.getIsGamePaused()) {
+      //camera.update();
+      //builder.updateLevel(camera.getViewPort(), level);
+      for (EntityWrapper brick : entityBrickList) {
+        brick.getModel().getActionStack().push(new SetGroundStatus("true"));
       }
-      physicsEngine.applyForces(entityWrapper.getModel());
-      subjectEntity.update(elapsedTime);
+      for (EntityWrapper subjectEntity : entityList) {
+        for (EntityWrapper targetEntity : entityList) {
+          collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+        }
+        subjectEntity.update(elapsedTime);
+        physicsEngine.applyForces(subjectEntity.getModel());
+      }
     }
 
-    entityList.addAll(entityBuffer);
-    entityBuffer = new ArrayList<>();
   }
 
   @Override
@@ -131,3 +141,4 @@ public class TestController implements Controller {
   }
 
 }
+

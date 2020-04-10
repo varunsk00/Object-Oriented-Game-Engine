@@ -30,6 +30,7 @@ public class InfiniteLevelBuilder extends LevelBuilder {
           || entity.getRender().getBoundsInParent().getMaxY() < camera.getBoundsInParent().getMinY()*2-(camera.getHeight()*2)){
         level.getChildren().remove(entity);
         iterator.remove();
+        System.out.println("removed entity");
       }
       if(entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()){
         pipespawned = true;
