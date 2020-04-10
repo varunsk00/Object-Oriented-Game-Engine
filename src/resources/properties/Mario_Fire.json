@@ -1,5 +1,5 @@
 {
-  "entityName": "Fire Mario",
+  "entityName": "Fire_Mario",
   "image": "mario_fire",
   "health": 1,
   "xPos": 100,
@@ -61,7 +61,7 @@
       "Control": [
         {
           "action": "Jump",
-          "param": "-500.0"
+          "param": "-750.0"
         }
       ]
     },
@@ -81,13 +81,18 @@
       "ID": "Brick",
       "Control": [
         {
+          "action": "SetGroundStatus",
+          "param": "true",
+          "orientation": "N"
+        },
+        {
           "action": "VelocityY",
           "param": "0",
           "orientation": "N"
         },
         {
-          "action": "SetGroundStatus",
-          "param": "true",
+          "action": "MoveY",
+          "param": "-0.5",
           "orientation": "N"
         }
       ]
@@ -96,9 +101,24 @@
       "ID": "Brick",
       "Control": [
         {
-          "action": "MoveX",
+          "action": "VelocityX",
           "param": "0",
           "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "-1",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "1",
+          "orientation": "E"
+        },
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "E"
         }
       ]
     },
@@ -109,6 +129,16 @@
           "action": "MoveY",
           "param": "-100.0",
           "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "DEFAULT",
+      "Control": [
+        {
+          "action": "SetGroundStatus",
+          "param": "false",
+          "orientation": "DEFAULT"
         }
       ]
     }
