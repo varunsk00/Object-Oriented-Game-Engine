@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 public class AudioVideoManager {
     private static final String GAME_PACKAGE = Game.class.getPackageName();
     private final String RESOURCES_PACKAGE = "src/ooga/view/gui/resources/";
-    private final String RESOURCES_PACKAGE1 = this.getClass().getPackageName() + ".resources.";
+    private final String RESOURCES_PACKAGE1 = "ooga.view.gui.resources.";
     private final String MUSIC_PACKAGE = RESOURCES_PACKAGE1 + "soundtrack";
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private MediaPlayer currentSong;
