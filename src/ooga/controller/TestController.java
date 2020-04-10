@@ -66,7 +66,7 @@ public class TestController implements Controller {
 
 
   public TestController (Pane pane, StageManager stageManager, Scene oldScene) { //FIXME add exception stuff
-
+    this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
     this.oldScene = oldScene;
@@ -124,6 +124,7 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
+    handleMouseInput(0.0, 0.0);
     for(EntityWrapper subjectEntity : entityList){
       for(EntityWrapper targetEntity : entityList){
         collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
@@ -145,7 +146,6 @@ public class TestController implements Controller {
     }
     else if (code == KeyCode.ESCAPE && escCounter < 1) {
       BoxBlur bb = new BoxBlur();
-      menu = new InGameMenu("TestSandBox");
       EntityGroup.setEffect(bb);
       animation.pause();
       testPane.getChildren().add(menu);
@@ -173,6 +173,18 @@ public class TestController implements Controller {
   }
 
   private void handleMouseInput(double x, double y) {
+    if (menu.getButtons().getResumePressed()) {
+      System.out.println("PRESSED");
+      menu.getButtons().setResumeOff();
+      testPane.getChildren().remove(testPane.getChildren().size()-1);
+      EntityGroup.setEffect(null);
+      animation.play();
+      escCounter--;
+    }
+  }
+
+  private void unPause(){
+
   }
 
   @Override
