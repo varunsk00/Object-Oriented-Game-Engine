@@ -93,13 +93,13 @@ public class TestController implements Controller {
     entityList.add(new EntityWrapper("Mario_Fire", this));
 
 
-    camera = new Camera(oldScene, level, entityList.get(0).getRender());
+    camera = new Camera(stage, level, entityList.get(0).getRender());
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
 
-    entityList.add(new EntityWrapper("Brick", this));
-    entityBrick = entityList.get(1);
-    EntityGroup.getChildren().add(entityBrick.getRender());
+//    entityList.add(new EntityWrapper("Brick", this));
+//    entityBrick = entityList.get(1);
+//    EntityGroup.getChildren().add(entityBrick.getRender());
 
 
 

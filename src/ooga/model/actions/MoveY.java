@@ -3,15 +3,15 @@ package ooga.model.actions;
 import ooga.model.EntityModel;
 
 public class MoveY extends Action {
-  private double yVelocity;
+  private double yPosition;
 
   public MoveY(String parameter){
     super(parameter);
-    yVelocity = Double.parseDouble(param);
+    yPosition = Double.parseDouble(param);
   }
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setY(entity.getY() + yVelocity);
+    entity.setY(entity.getY() + yPosition);
   }
 }

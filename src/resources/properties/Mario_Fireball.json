@@ -1,6 +1,7 @@
 {
   "entityName": "Fireball",
   "image": "mario_fireball",
+  "health": 1,
   "xPos": -1000,
   "yPos": -100,
   "xVel": 10,

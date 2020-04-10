@@ -1,6 +1,7 @@
 {
   "entityName": "Fire Mario",
   "image": "mario_fire",
+  "health": 1,
   "xPos": 100,
   "yPos": 100,
   "xVel": 10,
@@ -35,6 +36,24 @@
           "action": "SetXDirection",
           "param": "backwards"
         }
+      ]
+    },
+    {
+      "ID": "W",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "-15.0"
+        },
+      ]
+    },
+    {
+      "ID": "S",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "+15.0"
+        },
       ]
     },
     {

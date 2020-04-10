@@ -3,15 +3,15 @@ package ooga.model.actions;
 import ooga.model.EntityModel;
 
 public class MoveX extends Action {
-  private double xVelocity;
+  private double xPosition;
 
   public MoveX(String parameter){
     super(parameter);
-    xVelocity = Double.parseDouble(param);
+    xPosition = Double.parseDouble(param);
   }
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setXVelocity(xVelocity*(entity.getForwards() ? 1 : -1));
+    entity.setXVelocity(xPosition*(entity.getForwards() ? 1 : -1));
   }
 }

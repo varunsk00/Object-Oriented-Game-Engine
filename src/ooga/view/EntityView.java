@@ -26,4 +26,12 @@ public class EntityView {
   public Node getRender(){
     return myImage;
   }
+
+  public void setWidth(double newWidth) {
+    myImage.setFitWidth(newWidth);
+  }
+
+  public void setHeight(double newHeight) {
+    myImage.setFitHeight(newHeight);
+  }
 }
