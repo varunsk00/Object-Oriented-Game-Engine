@@ -76,7 +76,7 @@ public class GameSelector extends BorderPane {
         this.setCenter(menuFrame);
     }
     public void scrollRight() {
-        if (System.currentTimeMillis() - pastTime > 1100) {
+        if (System.currentTimeMillis() - pastTime > 1500) {
             GamePreview temp = playableGamesList.get(0);
             for (int i = 0; i < playableGamesList.size() - 1; i++) {
                 playableGamesList.set(i, playableGamesList.get(i + 1));
@@ -105,7 +105,7 @@ public class GameSelector extends BorderPane {
         }
     }
     public void scrollLeft() {
-        if (System.currentTimeMillis() - pastTime > 1100) {
+        if (System.currentTimeMillis() - pastTime > 1500) {
         GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
         for (int i = playableGamesList.size()-1; i > 0; i --) {
             playableGamesList.set(i, playableGamesList.get(i - 1));
