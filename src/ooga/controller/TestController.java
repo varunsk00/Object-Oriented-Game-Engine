@@ -22,7 +22,6 @@ import ooga.view.gui.managers.StageManager;
 
 public class TestController implements Controller {
 
-  private Scene myCurrentScene;
   private Pane testPane;
   private Group EntityGroup;
   private PhysicsEngine physicsEngine;
@@ -52,10 +51,10 @@ public class TestController implements Controller {
   private Timeline animation;
   private StageManager currentStage;
   private Scene testScene;
+  private boolean isGamePaused;
 
 
   public TestController (Pane pane, StageManager stageManager) { //FIXME add exception stuff
-
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
@@ -108,16 +107,18 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-    handleMouseInput(elapsedTime, elapsedTime);
-    for(EntityWrapper subjectEntity : entityList){
-      for(EntityWrapper targetEntity : entityList){
-        collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+    handleMouseInput();
+    if (!isGamePaused) {
+      for (EntityWrapper subjectEntity : entityList) {
+        for (EntityWrapper targetEntity : entityList) {
+          collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+        }
+        physicsEngine.applyForces(entityWrapper.getModel());
+        subjectEntity.update(elapsedTime);
       }
-      physicsEngine.applyForces(entityWrapper.getModel());
-      subjectEntity.update(elapsedTime);
+      entityList.addAll(entityBuffer);
+      entityBuffer = new ArrayList<>();
     }
-    entityList.addAll(entityBuffer);
-    entityBuffer = new ArrayList<>();
   }
 
   private void handlePressInput (KeyCode code) {
@@ -132,7 +133,7 @@ public class TestController implements Controller {
     }
   }
 
-  private void handleMouseInput(double x, double y) {
+  private void handleMouseInput() {
     if (menu.getButtons().getResumePressed()) {
       unPauseGame();
     }
@@ -141,15 +142,15 @@ public class TestController implements Controller {
   private void pauseGame(){
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
-    animation.pause();
+    isGamePaused=true;
     testPane.getChildren().add(menu);
     escCounter++;
   }
 
   private void unPauseGame(){
-    testPane.getChildren().remove(testPane.getChildren().size()-1);
+    testPane.getChildren().remove(menu);
     EntityGroup.setEffect(null);
-    animation.play();
+    isGamePaused=false;
     escCounter--;
   }
 
