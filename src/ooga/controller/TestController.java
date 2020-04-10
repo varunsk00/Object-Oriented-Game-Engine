@@ -92,9 +92,7 @@ public class TestController implements Controller {
       for(EntityWrapper entity : entityList){
         entity.handleKeyReleased(e);//FIXME i would like to
       }
-      handleReleaseInput(e.getCode());
     });
-   // testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
 
     setUpTimeline();
@@ -123,38 +121,19 @@ public class TestController implements Controller {
   }
 
   private void handlePressInput (KeyCode code) {
-    if (code == KeyCode.D) {
-      xAcceleration = 75;
-      keyPressed = true;
-    } else if (code == KeyCode.A) {
-      xAcceleration = -75;
-      keyPressed = true;
-    }
-    else if (code == KeyCode.ESCAPE && escCounter < 1) {
+    if (code == KeyCode.ESCAPE && escCounter < 1) {
       pauseGame();
     }
     else if (code == KeyCode.Q && escCounter == 1) {
       unPauseGame();
     }
     else if (code == KeyCode.H) {
-      System.out.println("HOME");
       currentStage.switchScenes(currentStage.getPastScene());
-    }
-    if (code == KeyCode.SPACE && isGrounded) {
-      yVelocity = -200;
-      isGrounded = false;
-    }
-  }
-
-  private void handleReleaseInput (KeyCode code) {
-    if (code == KeyCode.D || code == KeyCode.A) {
-      xAcceleration = 0;
     }
   }
 
   private void handleMouseInput(double x, double y) {
     if (menu.getButtons().getResumePressed()) {
-      System.out.println("PRESSED");
       unPauseGame();
     }
   }
