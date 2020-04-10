@@ -6,8 +6,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -52,41 +50,24 @@ public class TestController implements Controller {
   private InfiniteLevelBuilder builder;
   private Camera camera;
   private Pane level;
-
-  private Scene testScene;
-  private boolean isGamePaused;
+  private ViewManager myViewManager;
 
 
   public TestController (StageManager stageManager) { //FIXME add exception stuff
 
-    this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
-    currentStage = stageManager;
     builder = new InfiniteLevelBuilder(this);
+    myViewManager = new ViewManager(stageManager, builder);
 
-    level = builder.generateLevel();
-
-    testPane = level;
-    for(int i = 0; i < 20; i++){
-      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
-    }
-
-    testScene = currentStage.getCurrentScene();
-    testScene.setRoot(testPane);
-
-    EntityGroup = new Group();
     entityList = new ArrayList<>();
     entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    level.getChildren().add(EntityGroup);
-    EntityGroup.getChildren().add(testRectangle);
-    EntityGroup.getChildren().add(testGround);
     entityList.add(new EntityWrapper("Mario_Fire", this));
 
+    myViewManager.setUpCamera(entityList.get(0).getRender());
 
-    camera = new Camera(currentStage.getStage(), level, entityList.get(0).getRender());
     entityWrapper = entityList.get(0);
-    EntityGroup.getChildren().add(entityWrapper.getRender());
+    myViewManager.updateEntityGroup(entityWrapper.getRender());
 
     for (int i = 0; i < 10; i++) {
       EntityWrapper local = new EntityWrapper("Brick", this);
@@ -94,21 +75,23 @@ public class TestController implements Controller {
       local.getModel().setY(400);
       entityBrickList.add(local);
       entityList.add(local);
-      EntityGroup.getChildren().add(local.getRender());
+      myViewManager.updateEntityGroup(local.getRender());
     }
 
-    this.testScene = stageManager.getCurrentScene();
+
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
 
-    testScene.setOnKeyPressed(e -> {
-      for (EntityWrapper entity : entityList) {
+    myViewManager.getTestScene().setOnKeyPressed(e -> {
+
+      myViewManager.handlePressInput(e.getCode());
+      for(EntityWrapper entity : entityList){
         entity.handleKeyInput(e);//FIXME i would like to
       }
     });
-    testScene.setOnKeyReleased(e -> {
-      for (EntityWrapper entity : entityList) {
+    myViewManager.getTestScene().setOnKeyReleased(e-> {
+      for(EntityWrapper entity : entityList){
         entity.handleKeyReleased(e);//FIXME i would like to
       }
     });
@@ -127,8 +110,9 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-    handleMouseInput();
-    if (!isGamePaused) {
+   // myViewManager.updateValues();
+
+    if (!myViewManager.getIsGamePaused()) {
       //camera.update();
       //builder.updateLevel(camera.getViewPort(), level);
       for (EntityWrapper subjectEntity : entityList) {
@@ -139,52 +123,19 @@ public class TestController implements Controller {
         physicsEngine.applyForces(subjectEntity.getModel());
       }
     }
-  }
 
-  private void handlePressInput(KeyCode code) {
-    if (code == KeyCode.ESCAPE && escCounter < 1) {
-      pauseGame();
-    } else if (code == KeyCode.Q && escCounter == 1) {
-      unPauseGame();
-    } else if (code == KeyCode.H) {
-      currentStage.switchScenes(currentStage.getPastScene());
-    }
-  }
-
-  private void handleReleaseInput (KeyCode code) {
-  }
-
-  private void handleMouseInput() {
-
-    if (menu.getButtons().getResumePressed()) {
-      unPauseGame();
-      menu.getButtons().setResumeOff();
-    }
-  }
-
-  private void pauseGame() {
-    BoxBlur bb = new BoxBlur();
-    EntityGroup.setEffect(bb);
-    isGamePaused = true;
-    testPane.getChildren().add(menu);
-    escCounter++;
-  }
-
-  private void unPauseGame() {
-    testPane.getChildren().remove(menu);
-    EntityGroup.setEffect(null);
-    isGamePaused = false;
-    escCounter--;
   }
 
   @Override
   public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
-    EntityGroup.getChildren().add(newEntity.getRender());
+    myViewManager.addEntity(newEntity.getRender());
   }
 
   @Override
   public List<EntityWrapper> getEntityList() {
     return entityList;
   }
+
 }
+
