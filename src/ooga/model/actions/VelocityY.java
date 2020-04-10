@@ -12,6 +12,6 @@ public class VelocityY extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setXVelocity(yVelocity);
+    entity.setYVelocity(yVelocity);
   }
 }
