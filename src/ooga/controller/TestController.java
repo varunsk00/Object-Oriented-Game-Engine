@@ -52,6 +52,7 @@ public class TestController implements Controller {
   private Pane level;
 
   private Scene testScene;
+  private boolean isGamePaused;
 
 
   public TestController (StageManager stageManager) { //FIXME add exception stuff
@@ -91,12 +92,12 @@ public class TestController implements Controller {
     testScene.setOnKeyPressed(e -> {
 
       handlePressInput(e.getCode());
-      for(EntityWrapper entity : entityList){
+      for (EntityWrapper entity : entityList) {
         entity.handleKeyInput(e);//FIXME i would like to
       }
     });
-    testScene.setOnKeyReleased(e-> {
-      for(EntityWrapper entity : entityList){
+    testScene.setOnKeyReleased(e -> {
+      for (EntityWrapper entity : entityList) {
         entity.handleKeyReleased(e);//FIXME i would like to
       }
     });
@@ -105,7 +106,7 @@ public class TestController implements Controller {
     setUpTimeline();
   }
 
-  private void setUpTimeline(){
+  private void setUpTimeline() {
     //TODO: Timeline Code -- don't remove
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
     animation = new Timeline();
@@ -114,53 +115,54 @@ public class TestController implements Controller {
     animation.play();
   }
 
-  private void step (double elapsedTime) {
-    camera.update();
+  private void step(double elapsedTime) {
+    handleMouseInput();
+    if (!isGamePaused) {
+      camera.update();
 
-    builder.updateLevel(camera.getViewPort(), level);
+      builder.updateLevel(camera.getViewPort(), level);
 
-    for(EntityWrapper subjectEntity : entityList){
-      for(EntityWrapper targetEntity : entityList){
-        collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+      for (EntityWrapper subjectEntity : entityList) {
+        for (EntityWrapper targetEntity : entityList) {
+          collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+        }
+        physicsEngine.applyForces(entityWrapper.getModel());
+        subjectEntity.update(elapsedTime);
       }
-      physicsEngine.applyForces(entityWrapper.getModel());
-      subjectEntity.update(elapsedTime);
+      entityList.addAll(entityBuffer);
+      entityBuffer = new ArrayList<>();
     }
-
-    entityList.addAll(entityBuffer);
-    entityBuffer = new ArrayList<>();
   }
 
-  private void handlePressInput (KeyCode code) {
+  private void handlePressInput(KeyCode code) {
     if (code == KeyCode.ESCAPE && escCounter < 1) {
       pauseGame();
-    }
-    else if (code == KeyCode.Q && escCounter == 1) {
+    } else if (code == KeyCode.Q && escCounter == 1) {
       unPauseGame();
-    }
-    else if (code == KeyCode.H) {
+    } else if (code == KeyCode.H) {
       currentStage.switchScenes(currentStage.getPastScene());
     }
   }
 
-  private void handleMouseInput(double x, double y) {
+  private void handleMouseInput() {
     if (menu.getButtons().getResumePressed()) {
       unPauseGame();
+      menu.getButtons().setResumeOff();
     }
   }
 
-  private void pauseGame(){
+  private void pauseGame() {
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
-    animation.pause();
+    isGamePaused = true;
     testPane.getChildren().add(menu);
     escCounter++;
   }
 
-  private void unPauseGame(){
-    testPane.getChildren().remove(testPane.getChildren().size()-1);
+  private void unPauseGame() {
+    testPane.getChildren().remove(menu);
     EntityGroup.setEffect(null);
-    animation.play();
+    isGamePaused = false;
     escCounter--;
   }
 
@@ -174,6 +176,4 @@ public class TestController implements Controller {
   public List<EntityWrapper> getEntityList() {
     return entityList;
   }
-
 }
-

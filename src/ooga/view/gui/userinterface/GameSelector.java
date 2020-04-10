@@ -36,6 +36,7 @@ public class GameSelector extends BorderPane {
     private HBox gameNameBackground;
     private Text gameName;
     private Group gameSwitchGroup;
+    private double pastTime = -10000000;
 
     public GameSelector(List<GamePreview> playableGames) {
         this.playableGamesList = playableGames;
@@ -73,33 +74,37 @@ public class GameSelector extends BorderPane {
         this.setLayoutY(100);
         this.setCenter(menuFrame);
     }
-    public void scrollLeft() {
-        GamePreview temp = playableGamesList.get(0);
-        for (int i = 0; i < playableGamesList.size()-1; i ++) {
-            playableGamesList.set(i, playableGamesList.get(i+1));
-            double oldXPos = playableGamesList.get(i).getXPos();
-            if (oldXPos > 100 && oldXPos <= 1050) {
-                if (oldXPos > 900 && oldXPos <= 1050) {
-                    playFadeTransition(playableGamesList.get(i), true, 2000);
-                    MoveTo m = new MoveTo(850, 325);
-                    LineTo l = new LineTo(oldXPos - 250, 325);
-                    playPathTransition(playableGamesList.get(i), m, l);
-                } else {
-                    MoveTo m = new MoveTo(oldXPos + 50, 325);
-                    LineTo l = new LineTo(oldXPos - 250, 325);
-                    playPathTransition(playableGamesList.get(i), m, l);
+    public void scrollRight() {
+        if (System.currentTimeMillis() - pastTime > 1100) {
+            GamePreview temp = playableGamesList.get(0);
+            for (int i = 0; i < playableGamesList.size() - 1; i++) {
+                playableGamesList.set(i, playableGamesList.get(i + 1));
+                double oldXPos = playableGamesList.get(i).getXPos();
+                if (oldXPos > 100 && oldXPos <= 1050) {
+                    if (oldXPos > 900 && oldXPos <= 1050) {
+                        playFadeTransition(playableGamesList.get(i), true, 2000);
+                        MoveTo m = new MoveTo(850, 325);
+                        LineTo l = new LineTo(oldXPos - 250, 325);
+                        playPathTransition(playableGamesList.get(i), m, l);
+                    } else {
+                        MoveTo m = new MoveTo(oldXPos + 50, 325);
+                        LineTo l = new LineTo(oldXPos - 250, 325);
+                        playPathTransition(playableGamesList.get(i), m, l);
+                    }
                 }
             }
+            playableGamesList.set(playableGamesList.size() - 1, temp);
+            playFadeTransition(playableGamesList.get(playableGamesList.size() - 1), false, 500);
+            MoveTo m = new MoveTo(playableGamesList.get(playableGamesList.size() - 1).getXPos() + 50, 325);
+            LineTo l = new LineTo(150, 325);
+            playPathTransition(playableGamesList.get(playableGamesList.size() - 1), m, l);
+            reinitializePreviewPos();
+            playGrowOrShrinkTransition(false);
+            pastTime = System.currentTimeMillis();
         }
-        playableGamesList.set(playableGamesList.size()-1, temp);
-        playFadeTransition(playableGamesList.get(playableGamesList.size()-1), false, 500);
-        MoveTo m = new MoveTo(playableGamesList.get(playableGamesList.size()-1).getXPos() + 50, 325);
-        LineTo l = new LineTo(150, 325);
-        playPathTransition(playableGamesList.get(playableGamesList.size()-1), m, l);
-        reinitializePreviewPos();
-        playGrowOrShrinkTransition(false);
     }
-    public void scrollRight() {
+    public void scrollLeft() {
+        if (System.currentTimeMillis() - pastTime > 1100) {
         GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
         for (int i = playableGamesList.size()-1; i > 0; i --) {
             playableGamesList.set(i, playableGamesList.get(i - 1));
@@ -125,6 +130,8 @@ public class GameSelector extends BorderPane {
         playPathTransition(playableGamesList.get(0), m, l);
         reinitializePreviewPos();
         playGrowOrShrinkTransition(true);
+        pastTime = System.currentTimeMillis();
+        }
     }
     private void initLeftArrow() {
         leftScrollArrow = new Polygon();
@@ -247,7 +254,7 @@ public class GameSelector extends BorderPane {
         gameNameBackground.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         gameNameBackground.setPadding(new Insets(25, 25, 25, 25));
         gameNameBackground.setMaxSize(200, 100);
-        gameNameBackground.setTranslateX(-70);
+        gameNameBackground.setTranslateX(-175);
         gameNameBackground.setAlignment(Pos.CENTER);
         gameNameBackground.getChildren().add(gameName);
     }
