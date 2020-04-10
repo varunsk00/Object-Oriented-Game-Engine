@@ -31,7 +31,7 @@ public class GameCabinet extends Pane {
     }
 
     private void initGameSelect() throws FileNotFoundException { //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
-        GamePreview g1 = new GamePreview(Color.BLUE, "metriod");
+        GamePreview g1 = new GamePreview(Color.BLUE, "metroid");
         GamePreview g2 = new GamePreview(Color.RED, "mario1-1");
         GamePreview g3 = new GamePreview(Color.GREEN, "zelda2");
         GamePreview g4 = new GamePreview(Color.YELLOW, "flappybird");

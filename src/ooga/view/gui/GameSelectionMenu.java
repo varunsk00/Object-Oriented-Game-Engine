@@ -73,7 +73,7 @@ public class GameSelectionMenu extends BorderPane {
         this.setLayoutY(100);
         this.setCenter(menuFrame);
     }
-    public void scrollLeft() {
+    public void scrollRight() {
         GamePreview temp = playableGamesList.get(0);
         for (int i = 0; i < playableGamesList.size()-1; i ++) {
             playableGamesList.set(i, playableGamesList.get(i+1));
@@ -99,7 +99,7 @@ public class GameSelectionMenu extends BorderPane {
         reinitializePreviewPos();
         playGrowOrShrinkTransition(false);
     }
-    public void scrollRight() {
+    public void scrollLeft() {
         GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
         for (int i = playableGamesList.size()-1; i > 0; i --) {
             playableGamesList.set(i, playableGamesList.get(i - 1));
@@ -247,7 +247,7 @@ public class GameSelectionMenu extends BorderPane {
         gameNameBackground.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         gameNameBackground.setPadding(new Insets(25, 25, 25, 25));
         gameNameBackground.setMaxSize(200, 100);
-        gameNameBackground.setTranslateX(-70);
+        gameNameBackground.setTranslateX(-175);
         gameNameBackground.setAlignment(Pos.CENTER);
         gameNameBackground.getChildren().add(gameName);
     }
