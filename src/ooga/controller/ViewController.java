@@ -63,11 +63,11 @@ public class ViewController implements ViewExternalAPI {
   }
 
   private void setUpAnimation() {
-    entityList.add(new EntityWrapper("Mario_Fire", this));
+    entityList.add(new EntityWrapper("Mario_Fire", null));
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
 
-    entityList.add(new EntityWrapper("Brick", this));
+    entityList.add(new EntityWrapper("Brick", null));
     entityBrick = entityList.get(1);
     EntityGroup.getChildren().add(entityBrick.getRender());
 

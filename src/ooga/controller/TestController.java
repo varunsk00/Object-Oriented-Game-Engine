@@ -92,8 +92,6 @@ public class TestController implements Controller {
     this.testScene = stageManager.getCurrentScene();
 
 
-
-
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
 
@@ -129,11 +127,7 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-<<<<<<< HEAD
-
-=======
     handleMouseInput(0.0, 0.0);
->>>>>>> c0b8c812dd8363c65cab8bbf9608b730ce3acc04
     for(EntityWrapper subjectEntity : entityList){
       for(EntityWrapper targetEntity : entityList){
         collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
@@ -145,45 +139,6 @@ public class TestController implements Controller {
     entityBuffer = new ArrayList<>();
   }
 
-<<<<<<< HEAD
-//  private void handlePressInput (KeyCode code) {
-//    if (code == KeyCode.D) {
-//      xAcceleration = 75;
-//      keyPressed = true;
-//    } else if (code == KeyCode.A) {
-//      xAcceleration = -75;
-//      keyPressed = true;
-//    }
-//    else if (code == KeyCode.ESCAPE && escCounter < 1) {
-//      BoxBlur bb = new BoxBlur();
-//      menu = new InGameMenu("TestSandBox");
-//      EntityGroup.setEffect(bb);
-//      animation.pause();
-//      testPane.getChildren().add(menu);
-//      escCounter++;
-//    }
-//    else if (code == KeyCode.Q && escCounter == 1) {
-//      testPane.getChildren().remove(testPane.getChildren().size()-1);
-//      EntityGroup.setEffect(null);
-//      animation.play();
-//      escCounter--;
-//    }
-//    else if (code == KeyCode.H) {
-//      System.out.println("HOME");
-//      currentStage.setScene(oldScene);
-//    }
-//    if (code == KeyCode.SPACE && isGrounded) {
-//      yVelocity = -200;
-//      isGrounded = false;
-//    }
-//  }
-//  private void handleReleaseInput (KeyCode code) {
-//    if (code == KeyCode.D || code == KeyCode.A) {
-//      xAcceleration = 0;
-//    }
-//  }
-//
-=======
   private void handlePressInput (KeyCode code) {
     if (code == KeyCode.D) {
       xAcceleration = 75;
@@ -194,6 +149,7 @@ public class TestController implements Controller {
     }
     else if (code == KeyCode.ESCAPE && escCounter < 1) {
       BoxBlur bb = new BoxBlur();
+      menu = new InGameMenu("TestSandBox");
       EntityGroup.setEffect(bb);
       animation.pause();
       testPane.getChildren().add(menu);
@@ -214,12 +170,13 @@ public class TestController implements Controller {
       isGrounded = false;
     }
   }
+
   private void handleReleaseInput (KeyCode code) {
     if (code == KeyCode.D || code == KeyCode.A) {
       xAcceleration = 0;
     }
   }
->>>>>>> c0b8c812dd8363c65cab8bbf9608b730ce3acc04
+
   private void handleMouseInput(double x, double y) {
     if (menu.getButtons().getResumePressed()) {
       System.out.println("PRESSED");
