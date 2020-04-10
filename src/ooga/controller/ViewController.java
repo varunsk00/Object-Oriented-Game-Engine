@@ -28,6 +28,7 @@ public class ViewController implements ViewExternalAPI {
   private EntityWrapper entityWrapper;
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entityBuffer;
+  private EntityWrapper entityBrick;
   private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -58,9 +59,17 @@ public class ViewController implements ViewExternalAPI {
     EntityGroup.getChildren().add(testGround);
 
     setUpAnimation();
+
   }
 
   private void setUpAnimation() {
+    entityList.add(new EntityWrapper("Mario_Fire", this));
+    entityWrapper = entityList.get(0);
+    EntityGroup.getChildren().add(entityWrapper.getRender());
+
+    entityList.add(new EntityWrapper("Brick", this));
+    entityBrick = entityList.get(1);
+    EntityGroup.getChildren().add(entityBrick.getRender());
 
   }
   @Override

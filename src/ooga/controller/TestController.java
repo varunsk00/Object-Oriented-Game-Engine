@@ -29,6 +29,10 @@ import ooga.view.gui.GameCabinet;
 
 public class TestController implements Controller {
 
+  /**
+   * TODO: delegated within classes
+   * application:
+   */
   private Scene myCurrentScene;
   private Pane testPane;
   private Group EntityGroup;
@@ -75,6 +79,7 @@ public class TestController implements Controller {
     testPane.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
+
     entityList.add(new EntityWrapper("Mario_Fire", this));
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
