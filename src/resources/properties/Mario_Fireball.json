@@ -1,6 +1,7 @@
 {
   "entityName": "Fireball",
   "image": "mario_fireball",
+  "health": 1,
   "xPos": -1000,
   "yPos": -100,
   "xVel": 10,
@@ -16,7 +17,7 @@
       "Control": [
         {
           "action": "MoveX",
-          "param": "10.0"
+          "param": "100.0"
         },
         {
           "action": "MoveY",
@@ -29,7 +30,7 @@
       "Control": [
         {
           "action": "MoveX",
-          "param": "10.0"
+          "param": "100.0"
         },
         {
           "action": "MoveY",

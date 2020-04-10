@@ -60,4 +60,5 @@ public class StageManager {
         return stage.getTitle();
     }
 
+    public Stage getStage(){return stage;}
 }

@@ -9,16 +9,13 @@ import ooga.view.entity.EntityView;
 public class EntityWrapper {
   private EntityModel myModel;
   private EntityView myView;
-  //private EntityParser myParser;
   private EntityJSONParser myParser;
 
   private Controller myController;
-  private int id;
 
 
   public EntityWrapper(String entityName, Controller controller) {
     myController = controller;
-    //myParser = new EntityParser(entityName);
     myParser = new EntityJSONParser(entityName);
 
     myModel = new EntityModel(this);
@@ -27,13 +24,13 @@ public class EntityWrapper {
 
   public void update(double elapsedTime){
     myModel.update(elapsedTime);
-    myView.update(myModel.getX(), myModel.getY());
+    myView.update(myModel.getX(), myModel.getY(), myModel.getForwards());
   }
 
   public void handleKeyInput(KeyEvent event) {myModel.handleKeyInput(event); }
 
-//  public EntityParser getParser(){return myParser;}
-public EntityJSONParser getParser(){return myParser;}
+  public EntityJSONParser getParser(){return myParser;}
+
   public EntityModel getModel(){return myModel;}
 
   public Node getRender(){return myView.getRender();}
@@ -46,7 +43,11 @@ public EntityJSONParser getParser(){return myParser;}
     return newEntity;
   }
 
-  public void setX(double newX){myModel.setX(newX);}
+  public void setWidth(double newWidth) {
+    myView.setWidth(newWidth);
+  }
 
-  public void setY(double newY){myModel.setY(newY);}
+  public void setHeight(double newHeight) {
+    myView.setHeight(newHeight);
+  }
 }

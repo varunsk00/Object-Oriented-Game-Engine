@@ -12,14 +12,19 @@ import ooga.model.controlschemes.ControlScheme;
 
 public class EntityModel {
   private EntityWrapper myEntity;
+  private boolean forwards;
   private double entityWidth = 100;
   private double entityHeight = 100;
   private double xPos;
   private double yPos;
-  private double xVel;
-  private double yVel;
+  private double health;
   private double xVelMax = 100;
   private double yVelMax = 100;
+
+  private double xVel;
+  private double yVel;
+  //?
+
   private boolean onGround = false;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
@@ -30,8 +35,18 @@ public class EntityModel {
     myEntity = entityWrapper;
     controlScheme = myEntity.getParser().parseControls();
     myCollisions = myEntity.getParser().parseCollisions();
+    loadStats();
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
+    forwards = true;
+  }
+
+  private void loadStats() {
+    entityWidth = myEntity.getParser().readWidth();
+    entityHeight = myEntity.getParser().readHeight();
+    xPos = myEntity.getParser().readXPosition();
+    yPos = myEntity.getParser().readYPosition();
+    health = myEntity.getParser().readHealth();
   }
 
   public void update(double elapsedTime){
@@ -47,14 +62,11 @@ public class EntityModel {
     limitSpeed();
     setX(xPos + xVel * elapsedTime);
     setY(yPos + yVel * elapsedTime);
-//    System.out.println(getY());
-
   }
 
   public void handleKeyInput(KeyEvent event) {
     controlScheme.handleKeyInput(event);
   }
-
 
   public void handleKeyReleased(KeyEvent event) {
     controlScheme.handleKeyReleased(event);
@@ -64,9 +76,6 @@ public class EntityModel {
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
     }
-//    if(yVel > yVelMax){
-//      setYVelocity(yVelMax);
-//    }
   }
 
   private void checkGroundStatus(){
@@ -82,7 +91,6 @@ public class EntityModel {
 
   public double getY(){return yPos;}
 
-
   public void setX(double newX){xPos = newX;}
 
   public void setY(double newY){yPos = newY;}
@@ -96,9 +104,9 @@ public class EntityModel {
 
   public double getYVelocity(){return yVel;}
 
-  public void setXVelocity(double newXVelocity){xVel = newXVelocity;}
+  public void setXVelocity(double newXVelocity){xVel = newXVelocity; }
 
-  public void setYVelocity(double newYVelocity){yVel = newYVelocity;}
+  public void setYVelocity(double newYVelocity){yVel = newYVelocity; }
 
   public boolean isOnGround(){
     return onGround;
@@ -118,12 +126,29 @@ public class EntityModel {
 
   public void spawnRelative(String param){
     EntityWrapper newEntity = spawnEntity(param);
-    newEntity.setX(this.getX());
-    newEntity.setY(this.getY());
+    newEntity.getModel().setX(this.getX());
+    newEntity.getModel().setY(this.getY());
+    newEntity.getModel().setForwards(this.getForwards());
   }
 
   public EntityWrapper spawnEntity(String param) {
     EntityWrapper newEntity = myEntity.spawnEntity(param);
     return newEntity;
+  }
+
+  public boolean getForwards() {return forwards;}
+
+  public void setForwards(boolean direction) {
+    forwards = direction;
+  }
+
+  public void setWidth(double newWidth){
+    entityWidth = newWidth;
+    myEntity.setWidth(newWidth);
+  }
+
+  public void setHeight(double newHeight){
+    entityHeight = newHeight;
+    myEntity.setHeight(newHeight);
   }
 }
