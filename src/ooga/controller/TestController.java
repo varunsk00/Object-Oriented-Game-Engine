@@ -58,47 +58,22 @@ public class TestController implements Controller {
   private Pane level;
   private ViewManager myViewManager;
 
-//  private Scene testScene;
-
 
   public TestController (StageManager stageManager) { //FIXME add exception stuff
 
 
-//    this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
-//    currentStage = stageManager;
     builder = new InfiniteLevelBuilder(this);
     myViewManager = new ViewManager(stageManager, builder);
 
-//    level = builder.generateLevel();
-
-//    testPane = level;
-//    for(int i = 0; i < 20; i++){
-//      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
-//    }
-//
-//    testScene = currentStage.getCurrentScene();
-//    testScene.setRoot(testPane);
-
-//    EntityGroup = new Group();
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-//    level.getChildren().add(EntityGroup);
-//    EntityGroup.getChildren().add(testRectangle);
-//    EntityGroup.getChildren().add(testGround);
     entityList.add(new EntityWrapper("Mario_Fire", this));
 
-
-//    camera = new Camera(currentStage.getStage(), level, entityList.get(0).getRender());
     myViewManager.setUpCamera(entityList.get(0).getRender());
 
     entityWrapper = entityList.get(0);
     myViewManager.updateEntityGroup(entityWrapper.getRender());
-//    EntityGroup.getChildren().add(entityWrapper.getRender());
-//    entityList.add(new EntityWrapper("Brick", this));
-//    entityBrick = entityList.get(1);
-//    EntityGroup.getChildren().add(entityBrick.getRender());
-//    this.testScene = stageManager.getCurrentScene();
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
@@ -130,10 +105,6 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-
-//    camera.update();
-//
-//    builder.updateLevel(camera.getViewPort(), level);
     myViewManager.updateValues();
 
     for(EntityWrapper subjectEntity : entityList){
@@ -152,7 +123,6 @@ public class TestController implements Controller {
   public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
     myViewManager.addEntity(newEntity.getRender());
-    //EntityGroup.getChildren().add(newEntity.getRender());
   }
 
   @Override
