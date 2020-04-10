@@ -16,26 +16,21 @@ import javafx.util.Duration;
 import ooga.view.application.Camera;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.CollisionEngine;
+import ooga.model.PhysicsEngine;
 
 import ooga.view.application.menu.InGameMenu;
-
-import ooga.model.PhysicsEngine;
 import ooga.view.gui.managers.StageManager;
 
 
 public class TestController implements Controller {
-
-  private Scene myCurrentScene;
   private Pane testPane;
   private Group EntityGroup;
   private PhysicsEngine physicsEngine;
   private CollisionEngine collisionEngine;
 
-
   private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
   private EntityWrapper entityWrapper;
-  private EntityWrapper entityBrick;
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entityBuffer;
   private Line testGround = new Line(0, groundY, 1000, groundY);
@@ -80,7 +75,6 @@ public class TestController implements Controller {
     EntityGroup.getChildren().add(testGround);
     entityList.add(new EntityWrapper("Mario_Fire", this));
 
-
     camera = new Camera(currentStage.getStage(), level, entityList.get(0).getRender());
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
@@ -90,7 +84,6 @@ public class TestController implements Controller {
     collisionEngine = new CollisionEngine();
 
     testScene.setOnKeyPressed(e -> {
-
       handlePressInput(e.getCode());
       for (EntityWrapper entity : entityList) {
         entity.handleKeyInput(e);//FIXME i would like to
@@ -101,7 +94,6 @@ public class TestController implements Controller {
         entity.handleKeyReleased(e);//FIXME i would like to
       }
     });
-
 
     setUpTimeline();
   }
@@ -119,7 +111,6 @@ public class TestController implements Controller {
     handleMouseInput();
     if (!isGamePaused) {
       camera.update();
-
       builder.updateLevel(camera.getViewPort(), level);
 
       for (EntityWrapper subjectEntity : entityList) {
