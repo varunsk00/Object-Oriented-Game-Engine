@@ -25,7 +25,7 @@ public class EntityModel {
   private double yVel;
   //?
 
-  private boolean onGround = false;
+  private boolean onGround;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
   private Map<String, Action> myActions;
@@ -47,6 +47,9 @@ public class EntityModel {
     xPos = myEntity.getParser().readXPosition();
     yPos = myEntity.getParser().readYPosition();
     health = myEntity.getParser().readHealth();
+    xVelMax = myEntity.getParser().readXVelMax();
+    yVelMax = myEntity.getParser().readYVelMax();
+    onGround = myEntity.getParser().readGrounded();
   }
 
   public void update(double elapsedTime){
