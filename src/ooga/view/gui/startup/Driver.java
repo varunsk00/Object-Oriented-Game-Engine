@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import ooga.view.gui.AVManager;
 import ooga.view.gui.GameCabinet;
 import ooga.view.gui.StageManager;
 
@@ -23,8 +24,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Driver {
-    private static final int SCENE_WIDTH = 1280;
-    private static final int SCENE_HEIGHT = 720;
     private static final double FRAMES_PER_SECOND = 30;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private final String RESOURCES_PACKAGE = this.getClass().getPackageName() + ".resources.";
@@ -34,6 +33,8 @@ public class Driver {
     private GameCabinet library;
     private MediaPlayer welcomeMusic;
     private StageManager stageManager;
+    private AVManager audioVideoManager;
+    
     public Driver(Stage primaryStage) throws FileNotFoundException {
         this.stageManager = new StageManager(primaryStage);
     }

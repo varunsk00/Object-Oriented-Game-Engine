@@ -50,10 +50,10 @@ public class GameCabinet extends Pane {
     }
 
     public void handleAltScrollInput(KeyCode code) {
-        if (code == KeyCode.RIGHT) {
+        if (code == KeyCode.D) {
             this.gameSelectionMenu.scrollRight();
         }
-        else if (code == KeyCode.LEFT) {
+        else if (code == KeyCode.A) {
             this.gameSelectionMenu.scrollLeft();
         }
     }

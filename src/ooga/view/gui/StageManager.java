@@ -7,6 +7,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class StageManager {
+    private static final int SCENE_WIDTH = 1280;
+    private static final int SCENE_HEIGHT = 720;
     private Stage stage;
     private Scene currentScene;
     private Scene pastScene;
@@ -14,11 +16,11 @@ public class StageManager {
     public StageManager(Stage primaryStage) {
         this.stage = primaryStage;
         stage.setTitle("BOOGA");
-        stage.setWidth(1280);
-        stage.setHeight(720);
+        //stage.setWidth(1280);
+        //stage.setHeight(720);
         stage.show();
         stage.setFullScreen(true);
-        stage.setResizable(false);
+        //stage.setResizable(false);
     }
 
     /**
@@ -49,7 +51,7 @@ public class StageManager {
     }
     public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
-        currentScene = new Scene(parentNode);
+        currentScene = new Scene(parentNode, SCENE_WIDTH, SCENE_HEIGHT);
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);

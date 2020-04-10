@@ -171,7 +171,6 @@ public class TestController implements Controller {
       xAcceleration = 0;
     }
   }
-
   private void handleMouseInput(double x, double y) {
   }
 

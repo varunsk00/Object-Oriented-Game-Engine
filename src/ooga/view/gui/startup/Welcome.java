@@ -45,8 +45,6 @@ public class Welcome extends VBox {
         welcome.setTextAlignment(TextAlignment.CENTER);
         setSpacing(100); //FIXME: MAGIC NUMBER
         getChildren().addAll(welcome, welcomeImage, myButton);
-        this.setLayoutX(-650);
-        this.setLayoutY(-350);
         setAlignment(Pos.CENTER);
     }
 
