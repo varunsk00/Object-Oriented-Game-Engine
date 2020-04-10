@@ -45,16 +45,8 @@ public class TestController implements Controller {
 
   private InGameMenu menu;
   private int escCounter = 0;
-  private double xVelocity = 0;
-  private double yVelocity = 0;
-  private double gravity = 100;
-  private double friction = 40;
-  private double xAcceleration = 0;
-  private boolean isGrounded;
-  private boolean keyPressed;
   private Timeline animation;
   private StageManager currentStage;
-  private Scene oldScene;
   private InfiniteLevelBuilder builder;
   private Camera camera;
   private Pane level;
@@ -62,7 +54,7 @@ public class TestController implements Controller {
   private Scene testScene;
 
 
-  public TestController (Pane pane, StageManager stageManager) { //FIXME add exception stuff
+  public TestController (StageManager stageManager) { //FIXME add exception stuff
 
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
@@ -91,9 +83,6 @@ public class TestController implements Controller {
     camera = new Camera(currentStage.getStage(), level, entityList.get(0).getRender());
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
-//    entityList.add(new EntityWrapper("Brick", this));
-//    entityBrick = entityList.get(1);
-//    EntityGroup.getChildren().add(entityBrick.getRender());
     this.testScene = stageManager.getCurrentScene();
 
     physicsEngine = new PhysicsEngine("dummyString");
@@ -186,11 +175,5 @@ public class TestController implements Controller {
     return entityList;
   }
 
-//  @Override
-//  public void spawnEntity(String name) {
-//    EntityWrapper newEntity = new EntityWrapper(name, this);
-//    entityBuffer.add(newEntity);
-//    EntityGroup.getChildren().add(newEntity.getRender());
-//  }
 }
 
