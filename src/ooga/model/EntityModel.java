@@ -78,9 +78,6 @@ public class EntityModel {
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
     }
-    if(Math.abs(yVel) > xVelMax){
-      setXVelocity(Math.signum(yVel) * yVelMax);
-    }
   }
 
   public double getX(){return xPos;}
