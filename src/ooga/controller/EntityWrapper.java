@@ -13,9 +13,13 @@ public class EntityWrapper {
 
   private Controller myController;
 
+  private String EntityID;
+
 
   public EntityWrapper(String entityName, Controller controller) {
     myController = controller;
+    EntityID = entityName;
+    //myParser = new EntityParser(entityName);
     myParser = new EntityJSONParser(entityName);
 
     myModel = new EntityModel(this);
@@ -43,6 +47,11 @@ public class EntityWrapper {
     return newEntity;
   }
 
+  public String getEntityID(){
+    return this.EntityID;
+  }
+
+  public void setX(double newX){myModel.setX(newX);}
   public void setWidth(double newWidth) {
     myView.setWidth(newWidth);
   }

@@ -43,8 +43,8 @@
       "Control": [
         {
           "action": "AccelerateY",
-          "param": "-15.0"
-        },
+          "param": "-25"
+        }
       ]
     },
     {
@@ -53,7 +53,7 @@
         {
           "action": "AccelerateY",
           "param": "+15.0"
-        },
+        }
       ]
     },
     {
@@ -81,8 +81,13 @@
       "ID": "Brick",
       "Control": [
         {
-          "action": "MoveX",
-          "param": "-10.0",
+          "action": "VelocityY",
+          "param": "0",
+          "orientation": "N"
+        },
+        {
+          "action": "SetGroundStatus",
+          "param": "true",
           "orientation": "N"
         }
       ]
@@ -92,7 +97,7 @@
       "Control": [
         {
           "action": "MoveX",
-          "param": "-100",
+          "param": "0",
           "orientation": "W"
         }
       ]

@@ -16,22 +16,29 @@ import javafx.util.Duration;
 import ooga.view.application.Camera;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.CollisionEngine;
-import ooga.model.PhysicsEngine;
+import ooga.model.actions.SetGroundStatus;
 
 import ooga.view.application.menu.InGameMenu;
+
+import ooga.model.PhysicsEngine;
 import ooga.view.gui.managers.StageManager;
 
 
 public class TestController implements Controller {
+
+  private Scene myCurrentScene;
   private Pane testPane;
   private Group EntityGroup;
   private PhysicsEngine physicsEngine;
   private CollisionEngine collisionEngine;
 
+
   private static final int groundY = 300;
   private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
   private EntityWrapper entityWrapper;
+  private EntityWrapper entityBrick;
   private List<EntityWrapper> entityList;
+  private List<EntityWrapper> entityBrickList;
   private List<EntityWrapper> entityBuffer;
   private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
@@ -69,22 +76,33 @@ public class TestController implements Controller {
 
     EntityGroup = new Group();
     entityList = new ArrayList<>();
+    entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
     level.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
     entityList.add(new EntityWrapper("Mario_Fire", this));
 
+
     camera = new Camera(currentStage.getStage(), level, entityList.get(0).getRender());
     entityWrapper = entityList.get(0);
     EntityGroup.getChildren().add(entityWrapper.getRender());
+
+    for (int i = 0; i < 10; i++) {
+      EntityWrapper local = new EntityWrapper("Brick", this);
+      local.getModel().setX(i*100);
+      local.getModel().setY(400);
+      entityBrickList.add(local);
+      entityList.add(local);
+      EntityGroup.getChildren().add(local.getRender());
+    }
+
     this.testScene = stageManager.getCurrentScene();
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
 
     testScene.setOnKeyPressed(e -> {
-      handlePressInput(e.getCode());
       for (EntityWrapper entity : entityList) {
         entity.handleKeyInput(e);//FIXME i would like to
       }
@@ -94,6 +112,7 @@ public class TestController implements Controller {
         entity.handleKeyReleased(e);//FIXME i would like to
       }
     });
+
 
     setUpTimeline();
   }
@@ -107,21 +126,21 @@ public class TestController implements Controller {
     animation.play();
   }
 
-  private void step(double elapsedTime) {
+  private void step (double elapsedTime) {
     handleMouseInput();
     if (!isGamePaused) {
-      camera.update();
-      builder.updateLevel(camera.getViewPort(), level);
-
+      //camera.update();
+      //builder.updateLevel(camera.getViewPort(), level);
+      for (EntityWrapper brick : entityBrickList) {
+        brick.getModel().getActionStack().push(new SetGroundStatus("true"));
+      }
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
         }
-        physicsEngine.applyForces(entityWrapper.getModel());
         subjectEntity.update(elapsedTime);
+        physicsEngine.applyForces(subjectEntity.getModel());
       }
-      entityList.addAll(entityBuffer);
-      entityBuffer = new ArrayList<>();
     }
   }
 
@@ -135,7 +154,11 @@ public class TestController implements Controller {
     }
   }
 
+  private void handleReleaseInput (KeyCode code) {
+  }
+
   private void handleMouseInput() {
+
     if (menu.getButtons().getResumePressed()) {
       unPauseGame();
       menu.getButtons().setResumeOff();
