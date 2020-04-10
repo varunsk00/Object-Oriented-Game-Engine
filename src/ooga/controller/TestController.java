@@ -64,11 +64,14 @@ public class TestController implements Controller {
   private Timeline animation;
   private StageManager currentStage;
   private Scene testScene;
+  private ViewController myViewController;
 
 
 
 
   public TestController (Pane pane, StageManager stageManager) { //FIXME add exception stuff
+    myViewController = new ViewController(pane, stageManager);
+
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
@@ -97,7 +100,7 @@ public class TestController implements Controller {
 //        //handlePressInput(e.getCode());
 //      entityWrapper.handleKeyInput(e); //FIXME i would like to
 //=======
-//  /    handlePressInput(e.getCode());
+      myViewController.handlePressInput(e.getCode());
       for(EntityWrapper entity : entityList){
         entity.handleKeyInput(e);//FIXME i would like to
       }
@@ -108,7 +111,7 @@ public class TestController implements Controller {
       }
       //handleReleaseInput(e.getCode());
     });
-    testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
+    testScene.setOnMouseMoved(e -> myViewController.handleMouseInput(e.getX(), e.getY()));
 
 
     setUpTimeline();
@@ -124,7 +127,7 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-    handleMouseInput(0.0, 0.0);
+    myViewController.handleMouseInput(0.0, 0.0);
     for(EntityWrapper subjectEntity : entityList){
       for(EntityWrapper targetEntity : entityList){
         collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
@@ -136,57 +139,57 @@ public class TestController implements Controller {
     entityBuffer = new ArrayList<>();
   }
 
-  private void handlePressInput (KeyCode code) {
-    if (code == KeyCode.D) {
-      xAcceleration = 75;
-      keyPressed = true;
-    } else if (code == KeyCode.A) {
-      xAcceleration = -75;
-      keyPressed = true;
-    }
-    else if (code == KeyCode.ESCAPE && escCounter < 1) {
-      pauseGame();
-    }
-    else if (code == KeyCode.Q && escCounter == 1) {
-      unPauseGame();
-    }
-    else if (code == KeyCode.H) {
-      System.out.println("HOME");
-      currentStage.switchScenes(currentStage.getPastScene());
-    }
-    if (code == KeyCode.SPACE && isGrounded) {
-      yVelocity = -200;
-      isGrounded = false;
-    }
-  }
-
-  private void handleReleaseInput (KeyCode code) {
-    if (code == KeyCode.D || code == KeyCode.A) {
-      xAcceleration = 0;
-    }
-  }
-
-  private void handleMouseInput(double x, double y) {
-    if (menu.getButtons().getResumePressed()) {
-      System.out.println("PRESSED");
-      unPauseGame();
-    }
-  }
-
-  private void pauseGame(){
-    BoxBlur bb = new BoxBlur();
-    EntityGroup.setEffect(bb);
-    animation.pause();
-    testPane.getChildren().add(menu);
-    escCounter++;
-  }
-
-  private void unPauseGame(){
-    testPane.getChildren().remove(testPane.getChildren().size()-1);
-    EntityGroup.setEffect(null);
-    animation.play();
-    escCounter--;
-  }
+//  private void handlePressInput (KeyCode code) {
+//    if (code == KeyCode.D) {
+//      xAcceleration = 75;
+//      keyPressed = true;
+//    } else if (code == KeyCode.A) {
+//      xAcceleration = -75;
+//      keyPressed = true;
+//    }
+//    else if (code == KeyCode.ESCAPE && escCounter < 1) {
+//      pauseGame();
+//    }
+//    else if (code == KeyCode.Q && escCounter == 1) {
+//      unPauseGame();
+//    }
+//    else if (code == KeyCode.H) {
+//      System.out.println("HOME");
+//      currentStage.switchScenes(currentStage.getPastScene());
+//    }
+//    if (code == KeyCode.SPACE && isGrounded) {
+//      yVelocity = -200;
+//      isGrounded = false;
+//    }
+//  }
+//
+//  private void handleReleaseInput (KeyCode code) {
+//    if (code == KeyCode.D || code == KeyCode.A) {
+//      xAcceleration = 0;
+//    }
+//  }
+//
+//  private void handleMouseInput(double x, double y) {
+//    if (menu.getButtons().getResumePressed()) {
+//      System.out.println("PRESSED");
+//      unPauseGame();
+//    }
+//  }
+//
+//  private void pauseGame(){
+//    BoxBlur bb = new BoxBlur();
+//    EntityGroup.setEffect(bb);
+//    animation.pause();
+//    testPane.getChildren().add(menu);
+//    escCounter++;
+//  }
+//
+//  private void unPauseGame(){
+//    testPane.getChildren().remove(testPane.getChildren().size()-1);
+//    EntityGroup.setEffect(null);
+//    animation.play();
+//    escCounter--;
+//  }
 
   @Override
   public void addEntity(EntityWrapper newEntity) {

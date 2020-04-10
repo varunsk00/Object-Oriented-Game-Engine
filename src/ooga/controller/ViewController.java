@@ -1,11 +1,14 @@
 package ooga.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -14,6 +17,7 @@ import javafx.stage.Stage;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.model.PhysicsEngine;
 import ooga.view.application.menu.InGameMenu;
+import ooga.view.gui.StageManager;
 
 public class ViewController implements ViewExternalAPI {
   private Controller myController;
@@ -44,16 +48,20 @@ public class ViewController implements ViewExternalAPI {
   private boolean isGrounded;
   private boolean keyPressed;
   private Timeline animation;
-  private Stage currentStage;
+  private StageManager currentStage;
   private Scene oldScene;
 
 
-  public ViewController(Controller controller, Pane pane, Scene testScene, Stage stage, Scene oldScene){
-    myController = controller;
-    currentStage = stage;
-    this.oldScene = oldScene;
+
+  public ViewController(Pane pane, StageManager stageManager){
+
+    this.menu = new InGameMenu("TestSandBox");
+
+    currentStage = stageManager;
     testPane = pane;
     EntityGroup = new Group();
+    entityList = new ArrayList<>();
+    entityBuffer = new ArrayList<>();
     testPane.getChildren().add(EntityGroup);
     EntityGroup.getChildren().add(testRectangle);
     EntityGroup.getChildren().add(testGround);
@@ -111,4 +119,55 @@ public class ViewController implements ViewExternalAPI {
 
   }
 
+  public void handlePressInput (KeyCode code) {
+    if (code == KeyCode.D) {
+      xAcceleration = 75;
+      keyPressed = true;
+    } else if (code == KeyCode.A) {
+      xAcceleration = -75;
+      keyPressed = true;
+    }
+    else if (code == KeyCode.ESCAPE && escCounter < 1) {
+      pauseGame();
+    }
+    else if (code == KeyCode.Q && escCounter == 1) {
+      unPauseGame();
+    }
+    else if (code == KeyCode.H) {
+      System.out.println("HOME");
+      currentStage.switchScenes(currentStage.getPastScene());
+    }
+    if (code == KeyCode.SPACE && isGrounded) {
+      yVelocity = -200;
+      isGrounded = false;
+    }
+  }
+
+  public void handleReleaseInput (KeyCode code) {
+    if (code == KeyCode.D || code == KeyCode.A) {
+      xAcceleration = 0;
+    }
+  }
+
+  public void handleMouseInput(double x, double y) {
+    if (menu.getButtons().getResumePressed()) {
+      System.out.println("PRESSED");
+      unPauseGame();
+    }
+  }
+
+  public void pauseGame(){
+    BoxBlur bb = new BoxBlur();
+    EntityGroup.setEffect(bb);
+    animation.pause();
+    testPane.getChildren().add(menu);
+    escCounter++;
+  }
+
+  public void unPauseGame(){
+    testPane.getChildren().remove(testPane.getChildren().size()-1);
+    EntityGroup.setEffect(null);
+    animation.play();
+    escCounter--;
+  }
 }
