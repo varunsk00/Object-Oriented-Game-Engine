@@ -1,8 +1,6 @@
 package ooga.view;
 
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import ooga.controller.EntityWrapper;
 
@@ -25,5 +23,13 @@ public class EntityView {
 
   public Node getRender(){
     return myImage;
+  }
+
+  public void setWidth(double newWidth) {
+    myImage.setFitWidth(newWidth);
+  }
+
+  public void setHeight(double newHeight) {
+    myImage.setFitHeight(newHeight);
   }
 }

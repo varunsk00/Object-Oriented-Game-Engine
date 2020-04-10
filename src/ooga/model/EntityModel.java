@@ -17,11 +17,13 @@ public class EntityModel {
   private double entityHeight = 100;
   private double xPos;
   private double yPos;
+  private double health;
+  //?
   private double xVel;
   private double yVel;
   private double xVelMax = 100;
   private double yVelMax = 100;
-  private int health;
+
   private boolean onGround = false;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
@@ -32,9 +34,18 @@ public class EntityModel {
     myEntity = entityWrapper;
     controlScheme = myEntity.getParser().parseControls();
     myCollisions = myEntity.getParser().parseCollisions();
+    loadStats();
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
     forwards = true;
+  }
+
+  private void loadStats() {
+    entityWidth = myEntity.getParser().readWidth();
+    entityHeight = myEntity.getParser().readHeight();
+    xPos = myEntity.getParser().readXPosition();
+    yPos = myEntity.getParser().readYPosition();
+    health = myEntity.getParser().readHealth();
   }
 
   public void update(double elapsedTime){
@@ -56,7 +67,6 @@ public class EntityModel {
     controlScheme.handleKeyInput(event);
   }
 
-
   public void handleKeyReleased(KeyEvent event) {
     controlScheme.handleKeyReleased(event);
   }
@@ -65,9 +75,6 @@ public class EntityModel {
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
     }
-//    if(yVel > yVelMax){
-//      setYVelocity(yVelMax);
-//    }
   }
 
   private void checkGroundStatus(){
@@ -132,5 +139,15 @@ public class EntityModel {
 
   public void setForwards(boolean direction) {
     forwards = direction;
+  }
+
+  public void setWidth(double newWidth){
+    entityWidth = newWidth;
+    myEntity.setWidth(newWidth);
+  }
+
+  public void setHeight(double newHeight){
+    entityHeight = newHeight;
+    myEntity.setHeight(newHeight);
   }
 }

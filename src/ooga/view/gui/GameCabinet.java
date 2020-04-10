@@ -46,7 +46,6 @@ public class GameCabinet extends Pane {
 
     }
     public void handleAltScrollInput(KeyCode code) {
-        System.out.println(code);
         if (code == KeyCode.RIGHT) {
             this.gameSelectionMenu.scrollRight();
         }

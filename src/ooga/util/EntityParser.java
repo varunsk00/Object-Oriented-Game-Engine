@@ -167,7 +167,6 @@ public class EntityParser {
         String actionName = crlElement.getAttribute("action");
         String paramName = crlElement.getAttribute("param");
         Action testAction;
-        System.out.println(crlElement.getAttribute("cooldown"));
         if(crlElement.getAttribute("cooldown").equals("")){
           testAction = actionFactory.makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
         } else {
