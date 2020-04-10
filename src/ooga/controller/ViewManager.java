@@ -38,10 +38,12 @@ public class ViewManager implements ViewExternalAPI {
   private InfiniteLevelBuilder builder;
   private Pane level;
   private Camera camera;
-  private boolean isGamePaused;
+
+  private boolean isGamePaused = false;
+
   private Scene testScene;
 
-  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
+  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, Node cameraNode){
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
@@ -63,11 +65,21 @@ public class ViewManager implements ViewExternalAPI {
     EntityGroup.getChildren().add(testGround);
 
     this.testScene = stageManager.getCurrentScene();
+
+    this.camera = new Camera(currentStage.getStage(), level, cameraNode);
+
+  }
+
+  public Pane getLevel() {
+    return level;
   }
 
   public void setUpCamera(Node node) {
     camera = new Camera(currentStage.getStage(), level, node);
+  }
 
+  public StageManager getCurrentStage() {
+    return currentStage;
   }
   public void updateEntityGroup(Node node) {
     EntityGroup.getChildren().add(node);

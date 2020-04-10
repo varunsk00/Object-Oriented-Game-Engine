@@ -34,7 +34,7 @@ public class GamePreview extends Rectangle {
     public double getXPos() {
         return this.xPos;
     }
-    public boolean getGamePressed(){
+    public boolean isGamePressed(){
         return this.isPressed;
     }
     public void resetGameName(){

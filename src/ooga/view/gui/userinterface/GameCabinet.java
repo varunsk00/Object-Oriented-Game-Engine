@@ -60,10 +60,10 @@ public class GameCabinet extends Pane {
 
     public void updateCurrentGame() throws Exception {
         for(GamePreview game: myGames){
-            if(game.getGamePressed()) {
+            if(game.isGamePressed()) {
                 game.resetGameName();
                 String gameName = game.getGameName();
-                avManager.switchStage(stageManager, gameName);
+                avManager.switchGame(stageManager, gameName);
                 avManager.switchMusic(stageManager);
             }
         }

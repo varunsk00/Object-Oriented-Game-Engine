@@ -30,7 +30,7 @@ public class AudioVideoManager {
         playSong(currentSong);
     }
 
-    public void switchStage(StageManager sm, String gameName) throws Exception {
+    public void switchGame(StageManager sm, String gameName) throws Exception {
         Class<?> c = Class.forName(GAME_PACKAGE + "." + gameName);
         Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
         Object launchGame = cons.newInstance(sm);

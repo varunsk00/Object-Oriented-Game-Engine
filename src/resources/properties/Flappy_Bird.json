@@ -1,0 +1,117 @@
+{
+  "entityName": "Flappy Bird",
+  "image": "flappy_bird",
+  "health": 1,
+  "xPos": 100,
+  "yPos": 100,
+  "xVel": 10,
+  "yVel": 10,
+  "maxXVel": 100,
+  "maxYVel": 100,
+  "height": 100,
+  "width": 100,
+  "scheme": "Keybindings",
+  "actionBundles": [
+    {
+      "ID": "D",
+      "Control": [
+        {
+          "action": "AccelerateX",
+          "param": "15.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "forwards"
+        }
+      ]
+    },
+    {
+      "ID": "A",
+      "Control": [
+        {
+          "action": "AccelerateX",
+          "param": "-15.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "backwards"
+        }
+      ]
+    },
+    {
+      "ID": "W",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "-25"
+        }
+      ]
+    },
+    {
+      "ID": "S",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "+15.0"
+        }
+      ]
+    },
+    {
+      "ID": "SPACE",
+      "Control": [
+        {
+          "action": "InfiniteJump",
+          "param": "-500.0"
+        }
+      ]
+    },
+    {
+      "ID": "F",
+      "Control": [
+        {
+          "action": "SpawnRelative",
+          "param": "Mario_Fireball",
+          "coolDown": "1000"
+        }
+      ]
+    }
+  ],
+  "collisionBundles": [
+    {
+      "ID": "Brick",
+      "Control": [
+        {
+          "action": "VelocityY",
+          "param": "0",
+          "orientation": "N"
+        },
+        {
+          "action": "SetGroundStatus",
+          "param": "true",
+          "orientation": "N"
+        }
+      ]
+    },
+    {
+      "ID": "Brick",
+      "Control": [
+        {
+          "action": "MoveX",
+          "param": "0",
+          "orientation": "W"
+        }
+      ]
+    },
+    {
+      "ID": "Brick",
+      "Control": [
+        {
+          "action": "MoveY",
+          "param": "-100.0",
+          "orientation": "S"
+        }
+      ]
+    }
+  ]
+
+}

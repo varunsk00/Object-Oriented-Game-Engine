@@ -22,7 +22,7 @@ import ooga.model.PhysicsEngine;
 import ooga.view.gui.managers.StageManager;
 
 
-public class TestController implements Controller {
+public class MainController implements Controller {
 
   private Scene myCurrentScene;
   private Pane testPane;
@@ -48,11 +48,11 @@ public class TestController implements Controller {
   private ViewManager myViewManager;
 
 
-  public TestController (StageManager stageManager) { //FIXME add exception stuff
+  public MainController(StageManager stageManager) { //FIXME add exception stuff
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);
-    myViewManager = new ViewManager(stageManager, builder);
+    myViewManager = new ViewManager(stageManager, builder, null);
 
     entityList = new ArrayList<>();
     entityBrickList = new ArrayList<>();
