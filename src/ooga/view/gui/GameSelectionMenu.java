@@ -24,7 +24,7 @@ import javax.imageio.ImageIO;
 import java.util.List;
 //TODO: REMOVE ALL MAGIC NUMBERS, REFACTOR MORE - SPECIFICALLY SCROLLLEFT AND RIGHT,
 // FIGURE OUT HOW TO HANDLE ONLY 3 GAMES, FIX BUTTON NOT GETTING GAME NAME, FACTOR OUT FUNCTIONS INTO A FACTORY FOR ALL UI
-// FIGURE OUT HOW TO STOP SPAMMING ARROWS, MOVE ALL STYLING TO CSS
+// FIGURE OUT HOW TO STOP SPAMMING ARROWS, MOVE ALL STYLING TO CSS, MAKE ARROWS INTO STACKPANES AND ADD TEXT
 public class GameSelectionMenu extends BorderPane {
     Polygon leftScrollArrow;
     Polygon rightScrollArrow;
@@ -131,8 +131,8 @@ public class GameSelectionMenu extends BorderPane {
         leftScrollArrow.getPoints().addAll(50.0, 0.0,  50.0, 100.0,0.0, 50.0);
         leftScrollArrow.setFill(Color.WHITE);
         leftScrollArrow.setStroke(Color.RED);
-        leftScrollArrow.setTranslateX(50);
-        leftScrollArrow.setTranslateY(275);
+        leftScrollArrow.setTranslateX(60);
+        leftScrollArrow.setTranslateY(300);
         leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.LIGHTGRAY));
         leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.WHITE));
         leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
