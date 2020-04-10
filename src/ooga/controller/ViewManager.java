@@ -53,7 +53,7 @@ public class ViewManager implements ViewExternalAPI {
   private InfiniteLevelBuilder builder;
   private Pane level;
   private Camera camera;
-  private boolean isGamePaused;
+  private boolean isGamePaused = false;
 
 
   private Scene testScene;
@@ -103,7 +103,6 @@ public class ViewManager implements ViewExternalAPI {
 
   public void updateValues() {
     camera.update();
-
     builder.updateLevel(camera.getViewPort(), level);
   }
 
