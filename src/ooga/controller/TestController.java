@@ -59,17 +59,15 @@ public class TestController implements Controller {
   private boolean keyPressed;
   private Timeline animation;
   private StageManager currentStage;
-  private Scene oldScene;
   private Scene testScene;
 
 
 
 
-  public TestController (Pane pane, StageManager stageManager, Scene oldScene) { //FIXME add exception stuff
+  public TestController (Pane pane, StageManager stageManager) { //FIXME add exception stuff
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
-    this.oldScene = oldScene;
     testPane = pane;
     EntityGroup = new Group();
     entityList = new ArrayList<>();
@@ -159,7 +157,7 @@ public class TestController implements Controller {
     }
     else if (code == KeyCode.H) {
       System.out.println("HOME");
-      currentStage.switchScenes(oldScene);
+      currentStage.switchScenes(currentStage.getPastScene());
     }
     if (code == KeyCode.SPACE && isGrounded) {
       yVelocity = -200;
