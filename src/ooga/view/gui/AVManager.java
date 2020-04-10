@@ -2,9 +2,8 @@ package ooga.view.gui;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import ooga.view.application.Game;
+import ooga.view.application.games.Game;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -18,10 +17,14 @@ public class AVManager {
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private MediaPlayer currentSong;
     private MediaPlayer currentSoundEffect;
+
     public AVManager(){
     }
 
     public void switchMusic(String currentGame){
+        if (currentSong != null) {
+            currentSong.stop();
+        }
         this.currentSong = new MediaPlayer
                 (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(currentGame) + ".mp3").toURI().toString()));
         playSong(currentSong);

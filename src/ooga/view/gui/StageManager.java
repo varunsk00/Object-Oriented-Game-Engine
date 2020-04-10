@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
+//TODO: REFACTOR, CLEAN UP MAGIC, REMOVE UNNECESSARY METHODS
 public class StageManager {
     private static final int SCENE_WIDTH = 1280;
     private static final int SCENE_HEIGHT = 720;

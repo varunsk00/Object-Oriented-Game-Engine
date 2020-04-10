@@ -31,24 +31,23 @@ public class Driver {
     private AnimationTimer animationTimer;
     private Welcome welcomeScreen = new Welcome();
     private GameCabinet library;
-    private MediaPlayer welcomeMusic;
     private StageManager stageManager;
     private AVManager audioVideoManager;
-    
+
     public Driver(Stage primaryStage) throws FileNotFoundException {
         this.stageManager = new StageManager(primaryStage);
+        this.audioVideoManager = new AVManager();
     }
     //TODO: make better css
     public void start() throws Exception {
-        library = new GameCabinet(stageManager);
+        library = new GameCabinet(stageManager, audioVideoManager);
         initBootupScreen();
         startAnimationLoop();
     }
 
     private void initBootupScreen(){ //FIXME: filepath declared as variable
         stageManager.createAndSwitchScenes(welcomeScreen);
-        welcomeMusic = new MediaPlayer (new Media(new File("src/ooga/view/gui/resources/menu.mp3").toURI().toString())); //FIXME: CHANGE TO NON-COPYRIGHTED MUSIC
-        playSound(welcomeMusic);
+        audioVideoManager.switchMusic("Menu");
     }
 
     private void startAnimationLoop() {
@@ -70,17 +69,6 @@ public class Driver {
             welcomeScreen.setPlayPressedOff();
             stageManager.createAndSwitchScenes(library);
         }
-        library.updateCurrentGame(stageManager);
-
-        if(!stageManager.getCurrentTitle().equals("BOOGA")){
-            welcomeMusic.stop();
-        }
+        library.updateCurrentGame();
     }
-
-    private void playSound(MediaPlayer sound){
-        sound.seek(Duration.ZERO);
-        sound.setCycleCount(MediaPlayer.INDEFINITE);
-        sound.play();
-    }
-
 }

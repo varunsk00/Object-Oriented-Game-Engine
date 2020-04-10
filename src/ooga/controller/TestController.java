@@ -63,8 +63,6 @@ public class TestController implements Controller {
   private Scene testScene;
 
 
-
-
   public TestController (Pane pane, StageManager stageManager, Scene oldScene) { //FIXME add exception stuff
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
@@ -87,8 +85,6 @@ public class TestController implements Controller {
     this.testScene = stageManager.getCurrentScene();
 
 
-
-
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
 
@@ -108,7 +104,7 @@ public class TestController implements Controller {
       }
       handleReleaseInput(e.getCode());
     });
-    testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
+   // testScene.setOnMouseMoved(e -> handleMouseInput(e.getX(), e.getY()));
 
 
     setUpTimeline();
@@ -124,7 +120,7 @@ public class TestController implements Controller {
   }
 
   private void step (double elapsedTime) {
-    handleMouseInput(0.0, 0.0);
+    handleMouseInput(elapsedTime, elapsedTime);
     for(EntityWrapper subjectEntity : entityList){
       for(EntityWrapper targetEntity : entityList){
         collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
