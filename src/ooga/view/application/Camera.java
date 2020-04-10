@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import jdk.swing.interop.SwingInterOpUtils;
 
 public class Camera {
   private double xPosition;
@@ -42,7 +43,6 @@ public class Camera {
   public Rectangle getViewPort(){return viewPort;}
 
   public void update(){
-
-    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, myLevel.getWidth()));
+    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+1));
   }
 }

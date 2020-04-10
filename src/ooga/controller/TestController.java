@@ -129,8 +129,8 @@ public class TestController implements Controller {
   private void step (double elapsedTime) {
     handleMouseInput();
     if (!isGamePaused) {
-      //camera.update();
-      //builder.updateLevel(camera.getViewPort(), level);
+      camera.update();
+//      builder.updateLevel(camera.getViewPort(), level);
       for (EntityWrapper brick : entityBrickList) {
         brick.getModel().getActionStack().push(new SetGroundStatus("true"));
       }
