@@ -16,17 +16,18 @@ public class AVManager {
     private final String MUSIC_PACKAGE = RESOURCES_PACKAGE1 + "soundtrack";
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private MediaPlayer currentSong;
+    private MediaPlayer oldSong;
     private MediaPlayer currentSoundEffect;
 
     public AVManager(){
     }
 
-    public void switchMusic(String currentGame){
+    public void switchMusic(StageManager sm){
         if (currentSong != null) {
             currentSong.stop();
         }
         this.currentSong = new MediaPlayer
-                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(currentGame) + ".mp3").toURI().toString()));
+                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sm.getCurrentTitle()) + ".mp3").toURI().toString()));
         playSong(currentSong);
     }
 

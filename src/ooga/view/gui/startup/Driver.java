@@ -47,7 +47,7 @@ public class Driver {
 
     private void initBootupScreen(){ //FIXME: filepath declared as variable
         stageManager.createAndSwitchScenes(welcomeScreen);
-        audioVideoManager.switchMusic("Menu");
+        audioVideoManager.switchMusic(stageManager);
     }
 
     private void startAnimationLoop() {
