@@ -58,12 +58,12 @@ public class BlueController implements Controller {
 
             myViewManager.handlePressInput(e.getCode());
             for(EntityWrapper entity : entityList){
-                entity.handleKeyInput(e);//FIXME i would like to
+                entity.handleKeyInput(e.getCode().toString());//FIXME i would like to
             }
         });
         myViewManager.getTestScene().setOnKeyReleased(e-> {
             for(EntityWrapper entity : entityList){
-                entity.handleKeyReleased(e);//FIXME i would like to
+                entity.handleKeyReleased(e.getCode().toString());//FIXME i would like to
             }
         });
 

@@ -38,8 +38,8 @@ public class AI extends ControlScheme {
   }
 
   @Override
-  public void handleKeyInput(KeyEvent keyEvent) {return;}
+  public void handleKeyInput(String key) {return;}
 
   @Override
-  public void handleKeyReleased(KeyEvent keyEvent) {return;}
+  public void handleKeyReleased(String key) {return;}
 }

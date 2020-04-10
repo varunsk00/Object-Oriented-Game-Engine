@@ -69,12 +69,12 @@ public class EntityModel {
     setY(yPos + yVel * elapsedTime);
   }
 
-  public void handleKeyInput(KeyEvent event) {
-    controlScheme.handleKeyInput(event);
+  public void handleKeyInput(String key) {
+    controlScheme.handleKeyInput(key);
   }
 
-  public void handleKeyReleased(KeyEvent event) {
-    controlScheme.handleKeyReleased(event);
+  public void handleKeyReleased(String key) {
+    controlScheme.handleKeyReleased(key);
   }
 
   private void limitSpeed(){

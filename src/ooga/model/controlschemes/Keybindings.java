@@ -26,18 +26,18 @@ public class Keybindings extends ControlScheme {
   }
 
   @Override
-  public void handleKeyInput(KeyEvent keyEvent) {
-    if(keyBindings.containsKey(keyEvent.getCode().toString()) && !currentAction.containsAll(keyBindings.get(keyEvent.getCode().toString()))) {
-      currentAction.addAll(keyBindings.get(keyEvent.getCode().toString()));
-      System.out.println(keyEvent.getCode().toString());
+  public void handleKeyInput(String key) {
+    if(keyBindings.containsKey(key) && !currentAction.containsAll(keyBindings.get(key))) {
+      currentAction.addAll(keyBindings.get(key));
+//      System.out.println(key);
     }
   }
 
   @Override
-  public void handleKeyReleased(KeyEvent keyEvent) {
-    if (keyBindings.containsKey(keyEvent.getCode().toString()) && currentAction
-        .containsAll(keyBindings.get(keyEvent.getCode().toString()))) {
-      currentAction.removeAll(keyBindings.get(keyEvent.getCode().toString()));
+  public void handleKeyReleased(String key) {
+    if (keyBindings.containsKey(key) && currentAction
+        .containsAll(keyBindings.get(key))) {
+      currentAction.removeAll(keyBindings.get(key));
       //System.out.println(keyEvent.getCode().toString());
     }
   }
