@@ -1,33 +1,26 @@
 package ooga.controller;
 
-import java.nio.file.attribute.AclEntryType;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ooga.model.levels.Camera;
+import ooga.view.application.Camera;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.CollisionEngine;
 
 import ooga.view.application.menu.InGameMenu;
-import ooga.view.application.menu.MenuButtons;
 
-import javax.swing.text.html.parser.Entity;
 import ooga.model.PhysicsEngine;
-import ooga.view.gui.GameCabinet;
 
 
 public class TestController implements Controller {
@@ -174,7 +167,6 @@ public class TestController implements Controller {
       escCounter--;
     }
     else if (code == KeyCode.H) {
-      System.out.println("HOME");
       currentStage.setScene(oldScene);
     }
     if (code == KeyCode.SPACE && isGrounded) {

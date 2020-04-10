@@ -157,9 +157,7 @@ public class EntityJSONParser {
     return outputBundle;
   }
 
-  public double readWidth() {
-    return Double.parseDouble(jsonObject.get("width").toString());
-  }
+  public double readWidth() { return Double.parseDouble(jsonObject.get("width").toString()); }
 
   public double readHeight() {
     return Double.parseDouble(jsonObject.get("height").toString());
@@ -176,5 +174,4 @@ public class EntityJSONParser {
   public double readHealth() {
     return Double.parseDouble(jsonObject.get("health").toString());
   }
-
 }

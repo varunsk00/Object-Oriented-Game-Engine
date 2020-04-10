@@ -1,4 +1,4 @@
-package ooga.model.levels;
+package ooga.view.application;
 
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
@@ -22,6 +22,7 @@ public class Camera {
     viewPort = new Rectangle();
     viewPort.widthProperty().bind(stage.widthProperty());
     viewPort.heightProperty().bind(stage.heightProperty());
+
 //    viewPort.xProperty().bind(focus.layoutXProperty());
 //    viewPort.yProperty().bind(focus.layoutYProperty());
     target = focus;
@@ -30,6 +31,7 @@ public class Camera {
 //    viewPort.xProperty().bind(Bindings.createDoubleBinding(() -> boundPosition(focus.getBoundsInParent().getMinX(), 0, level.getWidth()-scene.getWidth()), scene.widthProperty()));
 //    viewPort.yProperty().bind(Bindings.createDoubleBinding(() -> boundPosition(focus.getBoundsInParent().getMinY(), 0, level.getHeight()-scene.getHeight()), scene.heightProperty()));
     level.setClip(viewPort);
+
     level.translateXProperty().bind(viewPort.xProperty().multiply(-1));
     level.translateYProperty().bind(viewPort.yProperty().multiply(-1));
   }

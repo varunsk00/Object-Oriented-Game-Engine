@@ -30,7 +30,8 @@ public class EntityWrapper {
 
   public void handleKeyInput(KeyEvent event) {myModel.handleKeyInput(event); }
 
-public EntityJSONParser getParser(){return myParser;}
+  public EntityJSONParser getParser(){return myParser;}
+
   public EntityModel getModel(){return myModel;}
 
   public Node getRender(){return myView.getRender();}
@@ -42,6 +43,7 @@ public EntityJSONParser getParser(){return myParser;}
     myController.addEntity(newEntity);
     return newEntity;
   }
+
   public void setWidth(double newWidth) {
     myView.setWidth(newWidth);
   }
@@ -49,5 +51,4 @@ public EntityJSONParser getParser(){return myParser;}
   public void setHeight(double newHeight) {
     myView.setHeight(newHeight);
   }
-
 }

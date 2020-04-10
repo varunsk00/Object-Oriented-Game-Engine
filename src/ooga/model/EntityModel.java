@@ -23,6 +23,7 @@ public class EntityModel {
 
   private double xVel;
   private double yVel;
+  //?
 
   private boolean onGround = false;
   private ControlScheme controlScheme;
@@ -48,7 +49,6 @@ public class EntityModel {
     health = myEntity.getParser().readHealth();
   }
 
-
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
     checkGroundStatus();
@@ -68,7 +68,6 @@ public class EntityModel {
     controlScheme.handleKeyInput(event);
   }
 
-
   public void handleKeyReleased(KeyEvent event) {
     controlScheme.handleKeyReleased(event);
   }
@@ -77,9 +76,6 @@ public class EntityModel {
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
     }
-//    if(yVel > yVelMax){
-//      setYVelocity(yVelMax);
-//    }
   }
 
   private void checkGroundStatus(){
