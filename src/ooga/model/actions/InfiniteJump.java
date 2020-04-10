@@ -3,6 +3,8 @@ package ooga.model.actions;
 import ooga.model.EntityModel;
 
 public class InfiniteJump extends Jump{
+    protected long pasttime;
+    protected long cooldown;
     private double yVelocity;
 
     public InfiniteJump(String parameter){
@@ -10,11 +12,18 @@ public class InfiniteJump extends Jump{
         yVelocity = Double.parseDouble(param);
     }
 
+    public InfiniteJump(String parameter, String cdown) {
+        super(parameter);
+        cooldown = Long.parseLong(cdown);
+        pasttime = System.currentTimeMillis();
+    }
+
     @Override
     public void execute(EntityModel entity) {
-        entity.setYVelocity(yVelocity);
-        soundBoard.playSoundEffect(param);
-        entity.setOnGround(false);
-
+        if(System.currentTimeMillis() - pasttime >= cooldown) {
+            soundBoard.playSoundEffect(entity.getEntityID() + "_Jump");
+            entity.setYVelocity(yVelocity);
+            entity.setOnGround(false);
+        }
     }
 }
