@@ -10,28 +10,32 @@ import ooga.model.actions.Action;
 import ooga.util.ActionBundle;
 
 public class AI extends ControlScheme {
-  private Map<Double, List<Action>> possibleActions;
+  private List<List<Action>> possibleActions;
+  private List<Double> probabilities;
+  double total;
 
   public AI(List<ActionBundle> actions){
     super(actions);
-    possibleActions = new HashMap<>();
-    double total = 0;
+    possibleActions = new ArrayList<>();
+    probabilities = new ArrayList<>();
+    total = 0;
     for(ActionBundle bundle : actionMap) {
       total += Integer.parseInt(bundle.getId());
     }
     for(ActionBundle bundle : actionMap) {
       double probability = Double.parseDouble(bundle.getId())/total;
-      possibleActions.put(probability, bundle.getActions());
+      probabilities.add(probability);
+      possibleActions.add(bundle.getActions());
     }
   }
   @Override
   public List<Action> getCurrentAction() {
     double index = Math.random();
     double probSum = 0.0;
-    for(Double prob : possibleActions.keySet()){
-      probSum += prob;
+    for(int i = 0; i < probabilities.size(); i++){
+      probSum += probabilities.get(i);
       if(index < probSum){
-        return(possibleActions.get(prob));
+        return(possibleActions.get(i));
       }
     }
     return new ArrayList<>();

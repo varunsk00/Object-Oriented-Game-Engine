@@ -5,13 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 import ooga.model.actions.Action;
+import ooga.model.actions.NoAction;
 import ooga.model.actions.VelocityX;
 import ooga.model.actions.VelocityY;
 import ooga.util.ActionBundle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PatternTest {
+class NoControlsTest {
   private List<ActionBundle> actionBundleList;
   private ControlScheme scheme;
 
@@ -36,18 +37,11 @@ class PatternTest {
     actionBundleList.add(b);
     actionBundleList.add(c);
     actionBundleList.add(d);
-    scheme = new Pattern(actionBundleList);
+    scheme = new NoControls(actionBundleList);
   }
 
   @Test
-  void testCurrentAction() {
-    for(int i = 0; i < 4 ; i++) {
-      for(int j = 0; j < 10; j++){
-        List<Action> currentAction = scheme.getCurrentAction();
-        for(int k = 0; k < currentAction.size(); k++){
-          assertTrue(currentAction.get(k).equals(actionBundleList.get(i).getActions().get(k)));
-        }
-      }
-    }
+  void getCurrentAction() {
+    assertTrue(scheme.getCurrentAction().size()==0);
   }
 }

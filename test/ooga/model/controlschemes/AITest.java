@@ -11,7 +11,7 @@ import ooga.util.ActionBundle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PatternTest {
+class AITest {
   private List<ActionBundle> actionBundleList;
   private ControlScheme scheme;
 
@@ -36,18 +36,21 @@ class PatternTest {
     actionBundleList.add(b);
     actionBundleList.add(c);
     actionBundleList.add(d);
-    scheme = new Pattern(actionBundleList);
+    scheme = new AI(actionBundleList);
   }
 
   @Test
-  void testCurrentAction() {
-    for(int i = 0; i < 4 ; i++) {
-      for(int j = 0; j < 10; j++){
-        List<Action> currentAction = scheme.getCurrentAction();
-        for(int k = 0; k < currentAction.size(); k++){
-          assertTrue(currentAction.get(k).equals(actionBundleList.get(i).getActions().get(k)));
-        }
+  void getCurrentAction() {
+    List<Action> randomActions = scheme.getCurrentAction();
+    boolean out = false;
+    for(int i = 0; i < actionBundleList.size(); i++){
+      if(actionBundleList.get(i).getActions().equals(randomActions)){
+        out = true;
       }
+      System.out.println(actionBundleList.get(i).getActions());
+      System.out.println(randomActions);
     }
+
+    assertTrue(out);
   }
 }
