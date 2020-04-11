@@ -13,8 +13,8 @@ public class Jump extends Action {
   @Override
   public void execute(EntityModel entity) {
     if(entity.isOnGround()) {
+      soundBoard.playSoundEffect(entity.getEntityID() + "_Jump");
       entity.setYVelocity(yVelocity);
-      soundBoard.playSoundEffect(param);
       entity.setOnGround(false);
     }
   }

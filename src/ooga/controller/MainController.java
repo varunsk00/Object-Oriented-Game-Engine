@@ -1,44 +1,24 @@
 package ooga.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import ooga.view.application.Camera;
-import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.CollisionEngine;
-import ooga.model.actions.SetGroundStatus;
-
-import ooga.view.application.menu.InGameMenu;
-
 import ooga.model.PhysicsEngine;
+import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.view.gui.managers.StageManager;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainController implements Controller {
 
-  private Scene myCurrentScene;
-  private Pane testPane;
-  private Group EntityGroup;
   private PhysicsEngine physicsEngine;
   private CollisionEngine collisionEngine;
-
-
-  private static final int groundY = 300;
-  private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
   private EntityWrapper entityWrapper;
-  private EntityWrapper entityBrick;
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entityBrickList;
   private List<EntityWrapper> entityBuffer;
-  private Line testGround = new Line(0, groundY, 1000, groundY);
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -64,7 +44,7 @@ public class MainController implements Controller {
     entityWrapper = entityList.get(0);
     myViewManager.updateEntityGroup(entityWrapper.getRender());
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 100; i++) {
       EntityWrapper local = new EntityWrapper("Brick", this);
       local.getModel().setX(i*100);
       local.getModel().setY(400);
@@ -72,8 +52,12 @@ public class MainController implements Controller {
       entityList.add(local);
       myViewManager.updateEntityGroup(local.getRender());
     }
-
-
+    EntityWrapper local = new EntityWrapper("Brick", this);
+    local.getModel().setX(400);
+    local.getModel().setY(300);
+    entityBrickList.add(local);
+    entityList.add(local);
+    myViewManager.updateEntityGroup(local.getRender());
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
@@ -91,7 +75,6 @@ public class MainController implements Controller {
       }
     });
 
-
     setUpTimeline();
   }
 
@@ -105,11 +88,9 @@ public class MainController implements Controller {
   }
 
   private void step (double elapsedTime) {
-   myViewManager.updateValues();
 
     if (!myViewManager.getIsGamePaused()) {
-      //camera.update();
-      //builder.updateLevel(camera.getViewPort(), level);
+      myViewManager.updateValues();
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
@@ -118,7 +99,8 @@ public class MainController implements Controller {
         physicsEngine.applyForces(subjectEntity.getModel());
       }
     }
-
+    entityList.addAll(entityBuffer);
+    entityBuffer = new ArrayList<>();
   }
 
   @Override
@@ -131,6 +113,5 @@ public class MainController implements Controller {
   public List<EntityWrapper> getEntityList() {
     return entityList;
   }
-
 }
 

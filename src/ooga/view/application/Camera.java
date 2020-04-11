@@ -43,6 +43,6 @@ public class Camera {
   public Rectangle getViewPort(){return viewPort;}
 
   public void update(){
-    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+1));
+    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+2));
   }
 }

@@ -61,11 +61,12 @@
       "Control": [
         {
           "action": "InfiniteJump",
-          "param": "-500.0"
+          "param": "-500.0",
+          "cooldown": "1000.0"
         },
         {
           "action": "VelocityX",
-          "param": "80.0"
+          "param": "100.0"
         }
       ]
     },
