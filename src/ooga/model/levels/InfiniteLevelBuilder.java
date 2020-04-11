@@ -28,8 +28,8 @@ public class InfiniteLevelBuilder extends LevelBuilder {
           || entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()*2+(camera.getWidth()*2)
           || entity.getRender().getBoundsInParent().getMinY() > camera.getBoundsInParent().getMaxY()*2+(camera.getHeight()*2)
           || entity.getRender().getBoundsInParent().getMaxY() < camera.getBoundsInParent().getMinY()*2-(camera.getHeight()*2)){
-//        level.getChildren().remove(entity);
-//        iterator.remove();
+        //level.getChildren().remove(entity);
+        //iterator.remove();
       }
       if(entity.getRender().getBoundsInParent().getMinX() > camera.getBoundsInParent().getMaxX()){
         pipespawned = true;
@@ -48,20 +48,20 @@ public class InfiniteLevelBuilder extends LevelBuilder {
     //Spawn actions
     EntityWrapper pipeLip1 = new EntityWrapper("Pipelip", myController);
     EntityWrapper pipeLip2 = new EntityWrapper("Pipelip", myController);
-//    EntityWrapper pipeBody1 = new EntityWrapper("Pipebody", myController);
-//    EntityWrapper pipeBody2 = new EntityWrapper("Pipebody", myController);
+
+    //EntityWrapper pipeBody1 = new EntityWrapper("Pipebody", myController);
+    //EntityWrapper pipeBody2 = new EntityWrapper("Pipebody", myController);
 
     double newPipeX = Math.random()*camera.getWidth()+camera.getBoundsInParent().getMaxX();
     double newPipeY = Math.random()*(camera.getHeight()-pipeLip1.getRender().getBoundsInParent().getHeight()*2)+pipeLip1.getRender().getBoundsInParent().getHeight();
     double gapWidth = Math.random()*(camera.getHeight()-newPipeY-pipeLip1.getRender().getBoundsInParent().getHeight())+newPipeY;
-//    double pipeBodyOffset = newPipeX+(pipeLip1.getRender().getBoundsInParent().getWidth()-pipeBody1.getRender().getBoundsInParent().getWidth())/2;
 
-//    System.out.println(newPipeX + "\t" + newPipeY);
+    //double pipeBodyOffset = newPipeX+(pipeLip1.getRender().getBoundsInParent().getWidth()-pipeBody1.getRender().getBoundsInParent().getWidth())/2;
 
     pipeLip1.getModel().getActionStack().push(new SetX("" + newPipeX));
     pipeLip1.getModel().getActionStack().push(new SetY("" + (newPipeY-pipeLip1.getRender().getBoundsInParent().getHeight())));
 
-//    pipeBody1.getModel().getActionStack().push(new SetX("" + pipeBodyOffset));
+    //    pipeBody1.getModel().getActionStack().push(new SetX("" + pipeBodyOffset));
 //    pipeBody1.getModel().getActionStack().push(new SetY("" + (pipeLip1.getRender().getBoundsInParent().getMinX()-pipeBody1.getRender().getBoundsInParent().getHeight())));
 
     pipeLip2.getModel().getActionStack().push(new SetX("" + newPipeX));
