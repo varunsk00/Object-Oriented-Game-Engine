@@ -106,6 +106,11 @@
           "orientation": "W"
         },
         {
+          "action": "AccelerateX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
           "action": "MoveX",
           "param": "-1",
           "orientation": "W"

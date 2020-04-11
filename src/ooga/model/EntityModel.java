@@ -132,6 +132,7 @@ public class EntityModel {
     return newEntity;
   }
 
+
   public boolean getForwards() {return forwards;}
 
   public void setForwards(boolean direction) {
