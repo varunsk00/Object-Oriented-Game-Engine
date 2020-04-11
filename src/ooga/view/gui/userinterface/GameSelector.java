@@ -106,32 +106,32 @@ public class GameSelector extends BorderPane {
     }
     public void scrollLeft() {
         if (System.currentTimeMillis() - pastTime > 1500) {
-        GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
-        for (int i = playableGamesList.size()-1; i > 0; i --) {
-            playableGamesList.set(i, playableGamesList.get(i - 1));
-            double oldXPos = playableGamesList.get(i).getXPos();
-            if (oldXPos > 100 && oldXPos < 850) {
-                if (oldXPos == 750) {
-                    playFadeTransition(playableGamesList.get(i),false, 500);
-                    MoveTo m = new MoveTo(oldXPos + 50, 325);
-                    LineTo l = new LineTo(850, 325);
-                    playPathTransition(playableGamesList.get(i), m, l);
-                }
-                else {
-                    MoveTo m = new MoveTo(oldXPos + 50, 325);
-                    LineTo l = new LineTo(oldXPos + 350, 325);
-                    playPathTransition(playableGamesList.get(i), m, l);
+            GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
+            for (int i = playableGamesList.size()-1; i > 0; i --) {
+                playableGamesList.set(i, playableGamesList.get(i - 1));
+                double oldXPos = playableGamesList.get(i).getXPos();
+                if (oldXPos > 100 && oldXPos < 850) {
+                    if (oldXPos == 750) {
+                        playFadeTransition(playableGamesList.get(i),false, 500);
+                        MoveTo m = new MoveTo(oldXPos + 50, 325);
+                        LineTo l = new LineTo(850, 325);
+                        playPathTransition(playableGamesList.get(i), m, l);
+                    }
+                    else {
+                        MoveTo m = new MoveTo(oldXPos + 50, 325);
+                        LineTo l = new LineTo(oldXPos + 350, 325);
+                        playPathTransition(playableGamesList.get(i), m, l);
+                    }
                 }
             }
-        }
-        playableGamesList.set(0, temp);
-        playFadeTransition(playableGamesList.get(0),true,2000);
-        MoveTo m = new MoveTo(150, 325);
-        LineTo l = new LineTo(200, 325);
-        playPathTransition(playableGamesList.get(0), m, l);
-        reinitializePreviewPos();
-        playGrowOrShrinkTransition(true);
-        pastTime = System.currentTimeMillis();
+            playableGamesList.set(0, temp);
+            playFadeTransition(playableGamesList.get(0),true,2000);
+            MoveTo m = new MoveTo(150, 325);
+            LineTo l = new LineTo(200, 325);
+            playPathTransition(playableGamesList.get(0), m, l);
+            reinitializePreviewPos();
+            playGrowOrShrinkTransition(true);
+            pastTime = System.currentTimeMillis();
         }
     }
     private void initLeftArrow() {
@@ -178,10 +178,10 @@ public class GameSelector extends BorderPane {
             }
             else {
                 if (playableGamesList.get(i).getXPos() == 450) {
-                   playableGamesList.get(i).setScaleX(2.1);
-                   playableGamesList.get(i).setScaleY(2.1);
-                   gameName.setText(playableGamesList.get(i).getGameName());
-                   gameName.setFill(playableGamesList.get(1).getColor());
+                    playableGamesList.get(i).setScaleX(2.1);
+                    playableGamesList.get(i).setScaleY(2.1);
+                    gameName.setText(playableGamesList.get(i).getGameName());
+                    gameName.setFill(playableGamesList.get(1).getColor());
                 }
                 playableGamesList.get(i).setVisible(true);
             }
@@ -266,18 +266,17 @@ public class GameSelector extends BorderPane {
         final String IMAGEFILE_SUFFIXES = String
                 .format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
         Button result = new Button();
-     //   String label = resources.getString(property);
+        //   String label = resources.getString(property);
         String label = property;
-      //  if (label.matches(IMAGEFILE_SUFFIXES)) {
-       //     result.setGraphic(new ImageView(
-       //             new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_FOLDER + label))));
-       // } else {
-            result.setText(label);
-      //  }
+        //  if (label.matches(IMAGEFILE_SUFFIXES)) {
+        //     result.setGraphic(new ImageView(
+        //             new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_FOLDER + label))));
+        // } else {
+        result.setText(label);
+        //  }
         result.setOnAction(handler);
         return result;
     }
 
 
 }
-

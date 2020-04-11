@@ -4,11 +4,11 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import ooga.controller.TestController;
+import ooga.controller.MainController;
 import ooga.view.gui.managers.StageManager;
 
 public class TestSandboxRed extends Game {
-    private TestController testController;
+    private MainController mainController;
 
     public TestSandboxRed(StageManager sm) {
         super(sm);
@@ -27,6 +27,6 @@ public class TestSandboxRed extends Game {
 
     @Override
     protected void initController(){
-        this.testController = new TestController(myBackgroundPane, stageManager);
+        this.mainController = new MainController(stageManager);
     }
 }

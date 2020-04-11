@@ -1,5 +1,4 @@
 {
-  "game": {
     "name": "Flappy Bird",
     "scrollType": "Infinite",
     "numLevels": 3,
@@ -15,5 +14,4 @@
         "yLocation": 0
       }
     ]
-  }
 }

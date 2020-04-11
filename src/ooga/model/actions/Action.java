@@ -11,4 +11,14 @@ public abstract class Action {
     soundBoard = new AudioVideoManager();
   }
   public abstract void execute(EntityModel entity);
+
+  @Override
+  public boolean equals(Object o){
+    if(o instanceof Action){
+      return(o.getClass().toString().equals(this.getClass().toString()) && ((Action)o).getParam().equals(this.param));
+    }
+    return false;
+  }
+
+  public String getParam(){return param;}
 }

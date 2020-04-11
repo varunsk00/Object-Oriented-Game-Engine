@@ -16,7 +16,7 @@ public abstract class ControlScheme {
 
   public abstract List<Action> getCurrentAction();
 
-  public abstract void handleKeyInput(KeyEvent keyEvent);
+  public abstract void handleKeyInput(String key);
 
-  public abstract void handleKeyReleased(KeyEvent keyEvent);
+  public abstract void handleKeyReleased(String key);
 }

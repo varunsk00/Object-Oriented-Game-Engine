@@ -13,19 +13,19 @@ import ooga.model.controlschemes.ControlScheme;
 public class EntityModel {
   private EntityWrapper myEntity;
   private boolean forwards;
-  private double entityWidth = 100;
-  private double entityHeight = 100;
+  private double entityWidth;
+  private double entityHeight;
   private double xPos;
   private double yPos;
   private double health;
-  private double xVelMax = 100;
-  private double yVelMax = 100;
+  private double xVelMax;
+  private double yVelMax;
+  private String entityID;
+  private boolean onGround;
 
   private double xVel;
   private double yVel;
-  //?
 
-  private boolean onGround = false;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
   private Map<String, Action> myActions;
@@ -33,6 +33,7 @@ public class EntityModel {
 
   public EntityModel(EntityWrapper entityWrapper) {
     myEntity = entityWrapper;
+    entityID = entityWrapper.getEntityID();
     controlScheme = myEntity.getParser().parseControls();
     myCollisions = myEntity.getParser().parseCollisions();
     loadStats();
@@ -46,12 +47,16 @@ public class EntityModel {
     entityHeight = myEntity.getParser().readHeight();
     xPos = myEntity.getParser().readXPosition();
     yPos = myEntity.getParser().readYPosition();
+    xVelMax = myEntity.getParser().readMaxXVelocity();
+    yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
+    xVelMax = myEntity.getParser().readXVelMax();
+    yVelMax = myEntity.getParser().readYVelMax();
+    onGround = myEntity.getParser().readGrounded();
   }
 
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
-    checkGroundStatus();
 
     for(Action action : controlScheme.getCurrentAction()){
       actionStack.push(action);
@@ -64,26 +69,17 @@ public class EntityModel {
     setY(yPos + yVel * elapsedTime);
   }
 
-  public void handleKeyInput(KeyEvent event) {
-    controlScheme.handleKeyInput(event);
+  public void handleKeyInput(String key) {
+    controlScheme.handleKeyInput(key);
   }
 
-  public void handleKeyReleased(KeyEvent event) {
-    controlScheme.handleKeyReleased(event);
+  public void handleKeyReleased(String key) {
+    controlScheme.handleKeyReleased(key);
   }
 
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
-    }
-  }
-
-  private void checkGroundStatus(){
-    if(getY() < 200 /* 300 - this.getHeight()*/){
-      onGround = false;
-    }
-    else{
-      onGround = true;
     }
   }
 
@@ -111,9 +107,12 @@ public class EntityModel {
   public boolean isOnGround(){
     return onGround;
   }
+  public String getEntityID(){
+    return this.entityID;
+  }
 
   public void setOnGround(boolean groundStatus){
-    onGround = groundStatus;
+    this.onGround = groundStatus;
   }
 
   public Stack<Action> getActionStack() {
@@ -126,7 +125,7 @@ public class EntityModel {
 
   public void spawnRelative(String param){
     EntityWrapper newEntity = spawnEntity(param);
-    newEntity.getModel().setX(this.getX());
+    newEntity.getModel().setX(this.getX() + this.getWidth()/2);
     newEntity.getModel().setY(this.getY());
     newEntity.getModel().setForwards(this.getForwards());
   }

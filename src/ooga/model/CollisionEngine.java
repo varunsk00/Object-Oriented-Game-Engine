@@ -20,6 +20,9 @@ public class CollisionEngine {
   private static final String RIGHT = "E";
   private static final String TOP = "N";
   private static final String BOTTOM = "S";
+  private static final String DEFAULT = "DEFAULT";
+  private static final double COLLISION_THRESHOLD = 0.0001;
+
 
   private static final Map<Integer, String> targetEntitySideMap = Map.ofEntries(
       Map.entry(ZERO, RIGHT),
@@ -33,27 +36,38 @@ public class CollisionEngine {
   }
 
   public void produceCollisionActions(EntityModel subjectEntity, EntityModel targetEntity) {
-    if(!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)){
-      Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
+    Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
+    if (!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)) {
 
-      String targetEntityID = "Brick";//targetEntity.getID(); //FIXME: Change to the method to get a targetEntity ID
-      String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity, targetEntity);
-      
-      CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID, targetEntityCollisionSide);
-      for(CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()){
-        if(targetEntityCollisionKey.equals(collisionMapKey)){
+      String targetEntityID = targetEntity.getEntityID();
+      String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity,
+          targetEntity);
+
+      CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID,
+          targetEntityCollisionSide);
+      //System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
+      for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
+        if (targetEntityCollisionKey.equals(collisionMapKey)) {
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
-          subjectEntity.getActionStack().push(collisionAction);
-          break;
+          collisionAction.execute(subjectEntity);
         }
       }
-
+    } else {
+      //TODO: Add a try catch in case something doesn't have a Default noncollision
+      CollisionKey noCollisionKey = new CollisionKey(DEFAULT, DEFAULT);
+      for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
+        if (noCollisionKey.equals(collisionMapKey)) {
+          Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
+          subjectEntity.getActionStack().push(collisionAction);//.execute(subjectEntity);
+        }
+      }
     }
   }
 
   private String determineTargetEntityCollisionSide(EntityModel subjectEntity, EntityModel targetEntity){
     double[] subjectLeftRightTopBottom = new double[]{subjectEntity.getX(), subjectEntity.getX() + subjectEntity.getWidth(), subjectEntity.getY(), subjectEntity.getY() + subjectEntity.getHeight()};
     double[] targetRightLeftBottomTop = new double[]{targetEntity.getX() + targetEntity.getWidth(), targetEntity.getX(), targetEntity.getY() + targetEntity.getHeight(), targetEntity.getY()};
+
 
     int sideIndex = determineSideIndex(subjectLeftRightTopBottom, targetRightLeftBottomTop);
 
@@ -75,9 +89,9 @@ public class CollisionEngine {
   }
 
   private boolean detectCollision(EntityModel subjectEntity, EntityModel targetEntity){
-    return subjectEntity.getX() < targetEntity.getX() + targetEntity.getWidth() &&
-        subjectEntity.getX() + subjectEntity.getWidth() > targetEntity.getX() &&
-        subjectEntity.getY() < targetEntity.getY() + targetEntity.getHeight() &&
-        subjectEntity.getY() + subjectEntity.getHeight() > targetEntity.getY();
+    return subjectEntity.getX() - (targetEntity.getX() + targetEntity.getWidth()) < COLLISION_THRESHOLD  &&
+        targetEntity.getX() - (subjectEntity.getX() + subjectEntity.getWidth()) < COLLISION_THRESHOLD &&
+        subjectEntity.getY() - (targetEntity.getY() + targetEntity.getHeight()) < COLLISION_THRESHOLD &&
+        targetEntity.getY() - (subjectEntity.getY() + subjectEntity.getHeight()) < COLLISION_THRESHOLD;
   }
 }

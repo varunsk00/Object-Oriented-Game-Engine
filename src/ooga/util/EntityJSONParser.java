@@ -30,7 +30,7 @@ public class EntityJSONParser {
   private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
   private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
 
-  JSONObject jsonObject;
+  private JSONObject jsonObject;
 
   public EntityJSONParser(String fileName) {
     myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
@@ -45,9 +45,7 @@ public class EntityJSONParser {
       return jsonParser.parse(reader);
     } catch (IOException | ParseException e){
       throw new InvalidControlSchemeException(e);
-
     }
-
   }
 
   public ControlScheme parseControls() {
@@ -171,7 +169,27 @@ public class EntityJSONParser {
     return Double.parseDouble(jsonObject.get("yPos").toString());
   }
 
+  public double readMaxXVelocity(){
+    return Double.parseDouble(jsonObject.get("maxXVel").toString());
+  }
+
+  public double readMaxYVelocity(){
+    return Double.parseDouble(jsonObject.get("maxYVel").toString());
+  }
+
   public double readHealth() {
     return Double.parseDouble(jsonObject.get("health").toString());
+  }
+
+  public double readXVelMax() {
+    return Double.parseDouble(jsonObject.get("maxXVel").toString());
+  }
+
+  public double readYVelMax() {
+    return Double.parseDouble(jsonObject.get("maxYVel").toString());
+  }
+
+  public boolean readGrounded() {
+    return Boolean.parseBoolean(jsonObject.get("grounded").toString());
   }
 }

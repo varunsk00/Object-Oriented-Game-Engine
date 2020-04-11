@@ -13,9 +13,13 @@ public class EntityWrapper {
 
   private Controller myController;
 
+  private String EntityID;
+
 
   public EntityWrapper(String entityName, Controller controller) {
     myController = controller;
+    EntityID = entityName;
+    //myParser = new EntityParser(entityName);
     myParser = new EntityJSONParser(entityName);
 
     myModel = new EntityModel(this);
@@ -27,7 +31,7 @@ public class EntityWrapper {
     myView.update(myModel.getX(), myModel.getY(), myModel.getForwards());
   }
 
-  public void handleKeyInput(KeyEvent event) {myModel.handleKeyInput(event); }
+  public void handleKeyInput(String key) {myModel.handleKeyInput(key); }
 
   public EntityJSONParser getParser(){return myParser;}
 
@@ -35,7 +39,7 @@ public class EntityWrapper {
 
   public Node getRender(){return myView.getRender();}
 
-  public void handleKeyReleased(KeyEvent keyEvent) {myModel.handleKeyReleased(keyEvent);}
+  public void handleKeyReleased(String key) {myModel.handleKeyReleased(key);}
 
   public EntityWrapper spawnEntity(String param) {
     EntityWrapper newEntity = new EntityWrapper(param, myController);
@@ -43,6 +47,11 @@ public class EntityWrapper {
     return newEntity;
   }
 
+  public String getEntityID(){
+    return this.EntityID;
+  }
+
+  public void setX(double newX){myModel.setX(newX);}
   public void setWidth(double newWidth) {
     myView.setWidth(newWidth);
   }
