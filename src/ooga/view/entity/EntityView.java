@@ -15,7 +15,7 @@ public class EntityView {
     myEntity.getModel().setY(myImage.getY());
   }
 
-  public void update(double newX, double newY, boolean forwards){
+  public void update(double newX, double newY, boolean forwards){ //FIXME: SAY WE SWITCH FOR JUMP, REFACTOR
     myImage.setX(newX);
     myImage.setY(newY);
     myImage.setScaleX(forwards ? 1 : -1);

@@ -31,7 +31,7 @@ public class EntityWrapper {
     myView.update(myModel.getX(), myModel.getY(), myModel.getForwards());
   }
 
-  public void handleKeyInput(KeyEvent event) {myModel.handleKeyInput(event); }
+  public void handleKeyInput(String key) {myModel.handleKeyInput(key); }
 
   public EntityJSONParser getParser(){return myParser;}
 
@@ -39,7 +39,7 @@ public class EntityWrapper {
 
   public Node getRender(){return myView.getRender();}
 
-  public void handleKeyReleased(KeyEvent keyEvent) {myModel.handleKeyReleased(keyEvent);}
+  public void handleKeyReleased(String key) {myModel.handleKeyReleased(key);}
 
   public EntityWrapper spawnEntity(String param) {
     EntityWrapper newEntity = new EntityWrapper(param, myController);

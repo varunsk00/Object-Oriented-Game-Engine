@@ -21,11 +21,11 @@ public class EntityModel {
   private double xVelMax;
   private double yVelMax;
   private String entityID;
+  private boolean onGround;
 
   private double xVel;
   private double yVel;
 
-  private boolean onGround = true;
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
   private Map<String, Action> myActions;
@@ -50,6 +50,9 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readMaxXVelocity();
     yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
+    xVelMax = myEntity.getParser().readXVelMax();
+    yVelMax = myEntity.getParser().readYVelMax();
+    onGround = myEntity.getParser().readGrounded();
   }
 
   public void update(double elapsedTime){
@@ -66,12 +69,12 @@ public class EntityModel {
     setY(yPos + yVel * elapsedTime);
   }
 
-  public void handleKeyInput(KeyEvent event) {
-    controlScheme.handleKeyInput(event);
+  public void handleKeyInput(String key) {
+    controlScheme.handleKeyInput(key);
   }
 
-  public void handleKeyReleased(KeyEvent event) {
-    controlScheme.handleKeyReleased(event);
+  public void handleKeyReleased(String key) {
+    controlScheme.handleKeyReleased(key);
   }
 
   private void limitSpeed(){
@@ -122,7 +125,7 @@ public class EntityModel {
 
   public void spawnRelative(String param){
     EntityWrapper newEntity = spawnEntity(param);
-    newEntity.getModel().setX(this.getX());
+    newEntity.getModel().setX(this.getX() + this.getWidth()/2);
     newEntity.getModel().setY(this.getY());
     newEntity.getModel().setForwards(this.getForwards());
   }

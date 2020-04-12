@@ -103,7 +103,7 @@ public class ViewManager implements ViewExternalAPI {
 
   public void updateValues() {
     camera.update();
-    //builder.updateLevel(camera.getViewPort(), level);
+    builder.updateLevel(camera.getViewPort(), level);
   }
 
 
@@ -130,7 +130,6 @@ public class ViewManager implements ViewExternalAPI {
   @Override
   public void addEntity(Node node) {
     EntityGroup.getChildren().add(node);
-
   }
 
   @Override
