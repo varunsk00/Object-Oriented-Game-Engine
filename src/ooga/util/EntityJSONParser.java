@@ -70,7 +70,7 @@ public class EntityJSONParser {
       myScheme = (ControlScheme) (controlClass.getConstructor(List.class)
           .newInstance(controlMap));
     } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace();
+      e.printStackTrace(); //FIXME to not fail the class
     }
     return myScheme;
   }
