@@ -45,7 +45,7 @@ public class MainController implements Controller {
     entityWrapper = entityList.get(0);
     myViewManager.updateEntityGroup(entityWrapper.getRender());
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 5; i++) {
       EntityWrapper local = new EntityWrapper("Brick", this);
       local.getModel().setX(i*100);
       local.getModel().setY(400);
