@@ -5,10 +5,15 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Array;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ooga.controller.EntityWrapper;
@@ -32,6 +37,8 @@ import org.w3c.dom.Entity;
 public class GameParser {
 
   private String myFileName;
+  private static final String REGEX_SYNTAX = "Syntax";
+  private List<Entry<String, Pattern>> mySymbols;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
@@ -52,6 +59,7 @@ public class GameParser {
     jsonObject = (JSONObject) readJsonFile();
     tileHeight = Double.parseDouble(jsonObject.get("tileHeight").toString());
     tileWidth = Double.parseDouble(jsonObject.get("tileWidth").toString());
+    setUpGameParser();
   }
 
   //FIXME add error handling
@@ -68,7 +76,6 @@ public class GameParser {
   private List<EntityWrapper> readEntities(JSONArray entitiesArray) {
     List<EntityWrapper> entitiesParsed = new ArrayList<EntityWrapper>();
 
-
     for (int i = 0; i < entitiesArray.size(); i++) {
       JSONObject entityEntry = (JSONObject) entitiesArray.get(i);
       String entityName = (String) entityEntry.get("EntityName");
@@ -83,17 +90,37 @@ public class GameParser {
           JSONArray columnCoordinateArray = (JSONArray) entityCoordinates.get(key);
           for (int k = 0; k < columnCoordinateArray.size(); k++) {
             String columnCoordinate = (String) columnCoordinateArray.get(k);
-            EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
+            String symbolName = this.getSymbol(columnCoordinate);
+            System.out.println(symbolName);
+            System.out.println(columnCoordinate);
 
-            levelEntity.getModel().setX(Double.parseDouble(columnCoordinate) * tileWidth);
-            levelEntity.getModel().setY(Double.parseDouble(rowCoordinate) * tileHeight);
+            if(symbolName.equals("Single")){
+              EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
+              levelEntity.getModel().setX(Integer.parseInt(columnCoordinate) * tileWidth);
+              levelEntity.getModel().setY(Integer.parseInt(rowCoordinate) * tileHeight);
 
-            entitiesParsed.add(levelEntity);
+              entitiesParsed.add(levelEntity);
+            }
+            else if(symbolName.equals("Group")){
+
+              String[] splitArray = columnCoordinate.split("-");
+              System.out.println(splitArray[0]);
+              System.out.println(splitArray[1]);
+
+              for(int start = Integer.parseInt(splitArray[0]); start < Integer.parseInt(splitArray[1]); start++){
+                EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
+                levelEntity.getModel().setX(start * tileWidth);
+                levelEntity.getModel().setY(Integer.parseInt(rowCoordinate) * tileHeight);
+
+                entitiesParsed.add(levelEntity);
+              }
+
+            }
+            }
           }
 
         }
       }
-    }
     return entitiesParsed;
   }
 
@@ -129,6 +156,43 @@ public class GameParser {
     enemyEntityArray = readEntities(enemyArrangement);
 
     return enemyEntityArray;
+  }
+
+  /**
+   * Adds the given resource file to this language's recognized types
+   */
+  private void addPatterns (String syntax) {
+    ResourceBundle resources = ResourceBundle.getBundle(syntax);
+    for (String key : Collections.list(resources.getKeys())) {
+      String regex = resources.getString(key);
+      mySymbols.add(new SimpleEntry<>(key,
+          Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
+    }
+  }
+
+  /**
+   * Returns language's type associated with the given text if one exists
+   */
+  private String getSymbol (String text) {
+    final String ERROR = "NO MATCH";
+    for (Entry<String, Pattern> e : mySymbols) {
+      if (match(text, e.getValue())) {
+        return e.getKey();
+      }
+    }
+    return ERROR;
+  }
+
+  /**
+   * Returns a boolean if the text matches a regular expression found in the pattern
+   */
+  private boolean match (String text, Pattern regex) {
+    return regex.matcher(text).matches();
+  }
+
+  private void setUpGameParser(){
+    mySymbols = new ArrayList<>();
+    addPatterns(GameParser.class.getPackageName() + ".resources." + "GameParsingRegex");
   }
 }
 

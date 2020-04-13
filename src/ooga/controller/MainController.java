@@ -45,30 +45,7 @@ public class MainController implements Controller {
     entityList = new ArrayList<>();
     entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    //entityList.add(new EntityWrapper("Mario_Fire", this));
-
     //myViewManager.setUpCamera(entityList.get(0).getRender());
-
-//    entityWrapper = entityList.get(0);
-//    for(EntityWrapper test : je) {
-//      entityList.add(test);
-//      myViewManager.updateEntityGroup(test.getRender());
-//    }
-
-//    for (int i = 0; i < 100; i++) {
-//      EntityWrapper local = new EntityWrapper("Brick", this);
-//      local.getModel().setX(i*100);
-//      local.getModel().setY(400);
-//      entityBrickList.add(local);
-//      entityList.add(local);
-//      myViewManager.updateEntityGroup(local.getRender());
-//    }
-//    EntityWrapper local = new EntityWrapper("Brick", this);
-//    local.getModel().setX(400);
-//    local.getModel().setY(300);
-//    entityBrickList.add(local);
-//    entityList.add(local);
-//    myViewManager.updateEntityGroup(local.getRender());
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
@@ -93,6 +70,7 @@ public class MainController implements Controller {
       entityList.add(k);
       myViewManager.updateEntityGroup(k.getRender());
     }
+    myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
     testLevel = new Level(je, player, enemy);
   }
 
@@ -107,9 +85,10 @@ public class MainController implements Controller {
 
   private void step (double elapsedTime) {
     if (!myViewManager.getIsGamePaused()) {
-      //myViewManager.updateValues();
-      testLevel.spawnEntities(entityList, myViewManager);
       testLevel.despawnEntities(entityList, myViewManager);
+      testLevel.spawnEntities(entityList, myViewManager);
+      myViewManager.updateValues();
+      //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
