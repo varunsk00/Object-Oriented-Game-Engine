@@ -6,23 +6,24 @@ import ooga.controller.EntityWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AccelerateXTest {
+class SetGroundStatusTest {
   private String param;
   private Action myAction;
   private EntityWrapper myEntity;
 
   @BeforeEach
   void setUp() {
-    param = "10";
-    myAction = new AccelerateX(param);
+    param = "false";
+    myAction = new SetGroundStatus(param);
     myEntity = new EntityWrapper("UnitTestEntity", null);
   }
 
   @Test
   void testExecute() {
-    double xVelinit = myEntity.getModel().getXVelocity();
-    double xVelFinal = xVelinit + Double.parseDouble(param);
+    myEntity.getModel().setOnGround(true);
+    assertTrue(myEntity.getModel().isOnGround());
+
     myAction.execute(myEntity.getModel());
-    assertTrue(xVelFinal == myEntity.getModel().getXVelocity());
+    assertTrue(!myEntity.getModel().isOnGround());
   }
 }

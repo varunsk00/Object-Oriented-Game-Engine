@@ -6,7 +6,7 @@ import ooga.controller.EntityWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AccelerateXTest {
+class SetXTest {
   private String param;
   private Action myAction;
   private EntityWrapper myEntity;
@@ -14,15 +14,13 @@ class AccelerateXTest {
   @BeforeEach
   void setUp() {
     param = "10";
-    myAction = new AccelerateX(param);
+    myAction = new SetX(param);
     myEntity = new EntityWrapper("UnitTestEntity", null);
   }
 
   @Test
   void testExecute() {
-    double xVelinit = myEntity.getModel().getXVelocity();
-    double xVelFinal = xVelinit + Double.parseDouble(param);
     myAction.execute(myEntity.getModel());
-    assertTrue(xVelFinal == myEntity.getModel().getXVelocity());
+    assertEquals(Double.parseDouble(param), myEntity.getModel().getX());
   }
 }

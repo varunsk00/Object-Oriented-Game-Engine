@@ -6,23 +6,23 @@ import ooga.controller.EntityWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AccelerateXTest {
+class SetXDirectionTest {
   private String param;
   private Action myAction;
   private EntityWrapper myEntity;
 
   @BeforeEach
   void setUp() {
-    param = "10";
-    myAction = new AccelerateX(param);
+    param = "forwards";
+    myAction = new SetXDirection(param);
     myEntity = new EntityWrapper("UnitTestEntity", null);
   }
 
   @Test
   void testExecute() {
-    double xVelinit = myEntity.getModel().getXVelocity();
-    double xVelFinal = xVelinit + Double.parseDouble(param);
+    myEntity.getModel().setForwards(false);
+    boolean forwards = myEntity.getModel().getForwards();
     myAction.execute(myEntity.getModel());
-    assertTrue(xVelFinal == myEntity.getModel().getXVelocity());
+    assertEquals(!forwards, myEntity.getModel().getForwards());
   }
 }
