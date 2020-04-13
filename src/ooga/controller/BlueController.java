@@ -47,7 +47,7 @@ public class BlueController implements Controller {
         entityBuffer = new ArrayList<>();
         entityList.add(new EntityWrapper("Flappy_Bird", this));
 
-        myViewManager.setUpCamera(entityList.get(0).getRender());
+      myViewManager.setUpCamera(entityList.get(0).getRender());
 
         entityWrapper = entityList.get(0);
         myViewManager.updateEntityGroup(entityWrapper.getRender());

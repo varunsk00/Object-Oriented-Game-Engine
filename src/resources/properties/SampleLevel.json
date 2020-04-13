@@ -1,0 +1,36 @@
+{
+  "levelName": "SampleLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "Brick",
+      "Arrangement": [
+        {
+         "5": ["1-1000"],
+         "6": ["3"]
+        }
+      ]
+    }
+  ],
+  "enemyArrangement": [
+    {
+      "EntityName": "Brick",
+      "Arrangement": [
+        {
+          "8": ["1"]
+        }
+      ]
+    }
+  ],
+  "playerArrangement": [
+    {
+      "EntityName": "Mario_Fire",
+      "Arrangement": [
+        {
+          "4": ["2"]
+        }
+      ]
+    }
+  ]
+}
