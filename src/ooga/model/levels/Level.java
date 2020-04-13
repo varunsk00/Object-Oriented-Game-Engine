@@ -1,5 +1,6 @@
 package ooga.model.levels;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
@@ -18,24 +19,23 @@ public class Level {
     enemyEntities = enemyList;
   }
 
-  public void updateLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
-    spawnEntities(currentEntityList, viewManager);
-    despawnEntities(currentEntityList, viewManager);
-  }
-
-  private void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
+  public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
     for (EntityWrapper player : playerEntities) {
+      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
       for (EntityWrapper targetEntity : currentEntityList) {
         if (!playerEntities.contains(targetEntity) && !isInRange(player.getModel(), targetEntity.getModel())) {
-          currentEntityList.remove(targetEntity);
-          viewManager.removeEntityGroup(targetEntity.getRender());
+          entitiesToDespawn.add(targetEntity);
         }
+      }
+      for(EntityWrapper despawnedEntity : entitiesToDespawn){
+        currentEntityList.remove(despawnedEntity);
+        viewManager.removeEntityGroup(despawnedEntity.getRender());
       }
     }
   }
 
 
-  private void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
+  public void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
     for (EntityWrapper player : playerEntities) {
       for (EntityWrapper tileEntity : tileEntities) {
         if (!playerEntities.contains(tileEntity) && isInRange(player.getModel(), tileEntity.getModel()) && !currentEntityList.contains(tileEntity)) {

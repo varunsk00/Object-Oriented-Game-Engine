@@ -108,7 +108,8 @@ public class MainController implements Controller {
   private void step (double elapsedTime) {
     if (!myViewManager.getIsGamePaused()) {
       //myViewManager.updateValues();
-      testLevel.updateLevel(entityList, myViewManager);
+      testLevel.spawnEntities(entityList, myViewManager);
+      testLevel.despawnEntities(entityList, myViewManager);
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
