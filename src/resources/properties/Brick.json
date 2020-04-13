@@ -2,6 +2,7 @@
   "entityName": "Brick",
   "image": "brick",
   "health": 1,
+  "grounded": true,
   "xPos": 300,
   "yPos": 275,
   "xVel": 0,

@@ -2,6 +2,7 @@
   "entityName": "Pipebody",
   "image": "sampleSprite",
   "health": 1,
+  "grounded": true,
   "xPos": -1000,
   "yPos": -100,
   "xVel": 10,

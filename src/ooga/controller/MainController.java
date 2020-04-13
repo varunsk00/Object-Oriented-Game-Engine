@@ -2,10 +2,13 @@ package ooga.controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import javax.swing.text.html.parser.Entity;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
 import ooga.model.levels.InfiniteLevelBuilder;
+import ooga.util.GameParser;
 import ooga.view.gui.managers.StageManager;
 
 import java.util.ArrayList;
@@ -32,8 +35,10 @@ public class MainController implements Controller {
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);
-    myViewManager = new ViewManager(stageManager, builder, null);
 
+    myViewManager = new ViewManager(stageManager, builder, null);
+    GameParser hee = new GameParser("SampleLevel", this);
+    List<EntityWrapper> je = hee.parseTileEntities();
     entityList = new ArrayList<>();
     entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
@@ -42,6 +47,10 @@ public class MainController implements Controller {
     myViewManager.setUpCamera(entityList.get(0).getRender());
 
     entityWrapper = entityList.get(0);
+    for(EntityWrapper test : je) {
+      entityList.add(test);
+      myViewManager.updateEntityGroup(test.getRender());
+    }
     myViewManager.updateEntityGroup(entityWrapper.getRender());
 
     for (int i = 0; i < 100; i++) {
@@ -66,12 +75,12 @@ public class MainController implements Controller {
 
       myViewManager.handlePressInput(e.getCode());
       for(EntityWrapper entity : entityList){
-        entity.handleKeyInput(e);//FIXME i would like to
+        entity.handleKeyInput(e.getCode().toString());//FIXME i would like to
       }
     });
     myViewManager.getTestScene().setOnKeyReleased(e-> {
       for(EntityWrapper entity : entityList){
-        entity.handleKeyReleased(e);//FIXME i would like to
+        entity.handleKeyReleased(e.getCode().toString());//FIXME i would like to
       }
     });
 
@@ -98,6 +107,8 @@ public class MainController implements Controller {
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
       }
+      entityList.addAll(entityBuffer);
+      entityBuffer = new ArrayList<>();
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();

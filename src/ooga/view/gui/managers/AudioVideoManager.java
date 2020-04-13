@@ -42,6 +42,7 @@ public class AudioVideoManager {
         currentSoundEffect.seek(Duration.ZERO);
         //currentSoundEffect.setVolume(0.0);
         currentSoundEffect.play();
+        currentSoundEffect.setVolume(0.0);
     }
 
     private void playSong(MediaPlayer song){

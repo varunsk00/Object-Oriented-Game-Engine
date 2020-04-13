@@ -113,7 +113,6 @@ public class ViewManager implements ViewExternalAPI {
   @Override
   public void addEntity(Node node) {
     EntityGroup.getChildren().add(node);
-
   }
 
   @Override
