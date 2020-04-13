@@ -90,7 +90,9 @@ public class ViewManager implements ViewExternalAPI {
   }
   public void updateEntityGroup(Node node) {
     EntityGroup.getChildren().add(node);
-
+  }
+  public void removeEntityGroup(Node node) {
+    EntityGroup.getChildren().remove(node);
   }
 
   public Scene getTestScene() {

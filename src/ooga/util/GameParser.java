@@ -85,16 +85,14 @@ public class GameParser {
             String columnCoordinate = (String) columnCoordinateArray.get(k);
             EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
 
-            levelEntity.getModel().setX(Double.parseDouble(rowCoordinate) * tileWidth);
-            levelEntity.getModel().setY(Double.parseDouble(columnCoordinate) * tileHeight);
+            levelEntity.getModel().setX(Double.parseDouble(columnCoordinate) * tileWidth);
+            levelEntity.getModel().setY(Double.parseDouble(rowCoordinate) * tileHeight);
 
             entitiesParsed.add(levelEntity);
           }
 
         }
-
       }
-
     }
     return entitiesParsed;
   }
@@ -106,11 +104,31 @@ public class GameParser {
     tileEntityArray = readEntities(tileArrangement);
     for(EntityWrapper entity : tileEntityArray){
       System.out.println(entity);
+
       entity.getModel().setHeight(tileHeight);
       entity.getModel().setWidth(tileWidth);
     }
 
     return tileEntityArray;
+  }
+
+  public List<EntityWrapper> parsePlayerEntities() {
+    JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
+    List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
+
+    playerEntityArray = readEntities(playerArrangement);
+    System.out.println(playerEntityArray.get(0).getEntityID());
+
+    return playerEntityArray;
+  }
+
+  public List<EntityWrapper> parseEnemyEntities() {
+    JSONArray enemyArrangement = (JSONArray) jsonObject.get("enemyArrangement");
+    List<EntityWrapper> enemyEntityArray = new ArrayList<EntityWrapper>();
+
+    enemyEntityArray = readEntities(enemyArrangement);
+
+    return enemyEntityArray;
   }
 }
 

@@ -8,6 +8,7 @@ import javax.swing.text.html.parser.Entity;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
 import ooga.model.levels.InfiniteLevelBuilder;
+import ooga.model.levels.Level;
 import ooga.util.GameParser;
 import ooga.view.gui.managers.StageManager;
 
@@ -29,6 +30,8 @@ public class MainController implements Controller {
   private Timeline animation;
   private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
+  private Level testLevel;
+
 
 
   public MainController(StageManager stageManager) { //FIXME add exception stuff
@@ -38,34 +41,34 @@ public class MainController implements Controller {
     myViewManager = new ViewManager(stageManager, builder);
     GameParser hee = new GameParser("SampleLevel", this);
     List<EntityWrapper> je = hee.parseTileEntities();
+
     entityList = new ArrayList<>();
     entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    entityList.add(new EntityWrapper("Mario_Fire", this));
+    //entityList.add(new EntityWrapper("Mario_Fire", this));
 
-    myViewManager.setUpCamera(entityList.get(0).getRender());
+    //myViewManager.setUpCamera(entityList.get(0).getRender());
 
-    entityWrapper = entityList.get(0);
-    for(EntityWrapper test : je) {
-      entityList.add(test);
-      myViewManager.updateEntityGroup(test.getRender());
-    }
-    myViewManager.updateEntityGroup(entityWrapper.getRender());
+//    entityWrapper = entityList.get(0);
+//    for(EntityWrapper test : je) {
+//      entityList.add(test);
+//      myViewManager.updateEntityGroup(test.getRender());
+//    }
 
-    for (int i = 0; i < 100; i++) {
-      EntityWrapper local = new EntityWrapper("Brick", this);
-      local.getModel().setX(i*100);
-      local.getModel().setY(400);
-      entityBrickList.add(local);
-      entityList.add(local);
-      myViewManager.updateEntityGroup(local.getRender());
-    }
-    EntityWrapper local = new EntityWrapper("Brick", this);
-    local.getModel().setX(400);
-    local.getModel().setY(300);
-    entityBrickList.add(local);
-    entityList.add(local);
-    myViewManager.updateEntityGroup(local.getRender());
+//    for (int i = 0; i < 100; i++) {
+//      EntityWrapper local = new EntityWrapper("Brick", this);
+//      local.getModel().setX(i*100);
+//      local.getModel().setY(400);
+//      entityBrickList.add(local);
+//      entityList.add(local);
+//      myViewManager.updateEntityGroup(local.getRender());
+//    }
+//    EntityWrapper local = new EntityWrapper("Brick", this);
+//    local.getModel().setX(400);
+//    local.getModel().setY(300);
+//    entityBrickList.add(local);
+//    entityList.add(local);
+//    myViewManager.updateEntityGroup(local.getRender());
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
@@ -84,6 +87,13 @@ public class MainController implements Controller {
     });
 
     setUpTimeline();
+    List<EntityWrapper> player = hee.parsePlayerEntities();
+    List<EntityWrapper> enemy = hee.parseEnemyEntities();
+    for(EntityWrapper k : player){
+      entityList.add(k);
+      myViewManager.updateEntityGroup(k.getRender());
+    }
+    testLevel = new Level(je, player, enemy);
   }
 
   private void setUpTimeline() {
@@ -97,7 +107,8 @@ public class MainController implements Controller {
 
   private void step (double elapsedTime) {
     if (!myViewManager.getIsGamePaused()) {
-      myViewManager.updateValues();
+      //myViewManager.updateValues();
+      testLevel.updateLevel(entityList, myViewManager);
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
