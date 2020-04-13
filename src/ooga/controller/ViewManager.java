@@ -123,8 +123,8 @@ public class ViewManager implements ViewExternalAPI {
   }
 
   @Override
-  public void removeEntity(int id) {
-
+  public void removeEntity(Node node) {
+      EntityGroup.getChildren().remove(node);
   }
 
   @Override

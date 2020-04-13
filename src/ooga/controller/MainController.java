@@ -2,6 +2,7 @@ package ooga.controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
@@ -45,7 +46,7 @@ public class MainController implements Controller {
     entityWrapper = entityList.get(0);
     myViewManager.updateEntityGroup(entityWrapper.getRender());
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 100; i++) {
       EntityWrapper local = new EntityWrapper("Brick", this);
       local.getModel().setX(i*100);
       local.getModel().setY(400);
@@ -105,11 +106,16 @@ public class MainController implements Controller {
     entityBuffer = new ArrayList<>();
   }
 
+  public void removeEntity(EntityWrapper node) {
+    myViewManager.removeEntity(node.getRender());
+  }
+
   @Override
   public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
     myViewManager.addEntity(newEntity.getRender());
   }
+
 
   @Override
   public List<EntityWrapper> getEntityList() {

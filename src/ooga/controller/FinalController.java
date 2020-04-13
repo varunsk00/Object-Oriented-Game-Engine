@@ -27,4 +27,9 @@ public class FinalController implements Controller {
   public List<EntityWrapper> getEntityList() {
     return null;
   }
+
+  @Override
+  public void removeEntity(EntityWrapper node) {
+
+  }
 }

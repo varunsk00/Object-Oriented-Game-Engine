@@ -2,6 +2,7 @@ package ooga.controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
@@ -95,6 +96,7 @@ public class BlueController implements Controller {
         entityBuffer = new ArrayList<>();
     }
 
+
     @Override
     public void addEntity(EntityWrapper newEntity) {
         entityBuffer.add(newEntity);
@@ -104,6 +106,11 @@ public class BlueController implements Controller {
     @Override
     public List<EntityWrapper> getEntityList() {
         return entityList;
+    }
+
+    @Override
+    public void removeEntity(EntityWrapper node) {
+
     }
 
 }
