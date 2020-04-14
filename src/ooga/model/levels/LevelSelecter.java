@@ -8,25 +8,35 @@ import ooga.model.EntityModel;
 
 public class LevelSelecter {
 
-  private List<Level> parsedLevels;
-  private List<Level> activeLevels;
+  private List<InfiniteLevel> parsedLevels;
+  private List<InfiniteLevel> activeLevels;
 
-  public LevelSelecter(List<Level> levelList){
+  private static final int spawningInterval = 500;
+  private int currentPlayerInterval = -1;
+
+
+  public LevelSelecter(List<InfiniteLevel> levelList){
     parsedLevels = levelList;
     activeLevels = new ArrayList<>();
   }
 
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-    for(Level level : activeLevels){
-      level.despawnEntities(currentEntityList, viewManager);
-      level.spawnEntities(currentEntityList, viewManager);
+    if(calculatePlayerInterval(currentEntityList.get(0)) > currentPlayerInterval) {
+      currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
+      infiniteLevelSwitch(currentEntityList, viewManager);
+      for (InfiniteLevel level : activeLevels) {
+        level.despawnEntities(currentEntityList, viewManager);
+      }
     }
   }
 
-  public void infiniteLevelSwitch(){
+  private void infiniteLevelSwitch(List<EntityWrapper> currentEntityList, ViewManager viewManager){
     double randomSeed = Math.random();
-    int randomIndex = (int) randomSeed * parsedLevels.size();
-    activeLevels.add(parsedLevels.get(randomIndex));
+    int randomIndex = (int) Math.floor(randomSeed * parsedLevels.size());
+    InfiniteLevel level = parsedLevels.get(randomIndex);
+    level.spawnEntities(currentEntityList, viewManager);
+    activeLevels.add(level);
+
   }
 
   public void specificLevelSwitch(int levelIndex){
@@ -34,4 +44,9 @@ public class LevelSelecter {
     activeLevels.add(parsedLevels.get(levelIndex));
   }
 
+  private int calculatePlayerInterval(EntityWrapper player) {
+    return (int) player.getModel().getX()
+        / spawningInterval; //TODO: generalize for X and Y scrollers
+
+  }
 }

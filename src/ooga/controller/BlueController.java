@@ -9,6 +9,7 @@ import ooga.model.PhysicsEngine;
 import ooga.model.levels.InfiniteLevel;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.levels.Level;
+import ooga.model.levels.LevelSelecter;
 import ooga.util.GameParser;
 import ooga.util.InfiniteGameParser;
 import ooga.view.application.Camera;
@@ -35,7 +36,10 @@ public class BlueController implements Controller {
   private Camera camera;
   private Pane level;
   private ViewManager myViewManager;
-  private InfiniteLevel testLevel;
+  private InfiniteLevel level1;
+  private InfiniteLevel level2;
+  private InfiniteLevel level3;
+  private LevelSelecter levelSelecter;
 
 
   public BlueController(StageManager stageManager) { //FIXME add exception stuff
@@ -69,18 +73,32 @@ public class BlueController implements Controller {
     });
 
     setUpTimeline();
-    GameParser parser = new GameParser("Pipe1", this);
-    List<EntityWrapper> tiles = parser.parseTileEntities();
+    GameParser parser1 = new GameParser("Pipe1", this);
+    GameParser parser2 = new GameParser("Pipe2", this);
+    GameParser parser3 = new GameParser("Pipe3", this);
+    GameParser parser4 = new GameParser("Pipe4", this);
+    GameParser parser5 = new GameParser("Pipe5", this);
+
     List<EntityWrapper> player = new ArrayList<>();
     player.add(entityWrapper);
-    List<EntityWrapper> enemy = parser.parseEnemyEntities();
-//    for (EntityWrapper k : player) {
-//      entityList.add(k);
-//      myViewManager.updateEntityGroup(k.getRender());
-//    }
+    level1 = new InfiniteLevel(parser1.parseTileEntities(), player, parser1.parseEnemyEntities());
+    level2 = new InfiniteLevel(parser2.parseTileEntities(), player, parser2.parseEnemyEntities());
+    level3 = new InfiniteLevel(parser3.parseTileEntities(), player, parser3.parseEnemyEntities());
+    InfiniteLevel level4 = new InfiniteLevel(parser4.parseTileEntities(), player, parser4.parseEnemyEntities());
+    InfiniteLevel level5 = new InfiniteLevel(parser5.parseTileEntities(), player, parser5.parseEnemyEntities());
+
+    List<InfiniteLevel> levels = new ArrayList<>();
+    levels.add(level1);
+    levels.add(level2);
+    levels.add(level3);
+    levels.add(level4);
+    levels.add(level5);
+
+
+
+    levelSelecter = new LevelSelecter(levels);
+
     myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
-    testLevel = new InfiniteLevel(tiles, player, enemy);
-//    myViewManager.setUpCamera(entityList.get(0).getRender());
 
   }
 
@@ -95,8 +113,7 @@ public class BlueController implements Controller {
 
   private void step(double elapsedTime) {
     if (!myViewManager.getIsGamePaused()) {
-      testLevel.despawnEntities(entityList, myViewManager);
-      testLevel.spawnEntities(entityList, myViewManager);
+      levelSelecter.updateCurrentLevel(entityList, myViewManager);
       myViewManager.updateValues();
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {

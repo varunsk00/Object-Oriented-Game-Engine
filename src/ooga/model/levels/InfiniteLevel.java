@@ -41,17 +41,12 @@ public class InfiniteLevel {
 
   public void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
     for (EntityWrapper player : playerEntities) {
-//      System.out.print("Current: " + calculatePlayerInterval(player));
-//      System.out.println("     " + "old: " + currentPlayerInterval);
       if (calculatePlayerInterval(player) > currentPlayerInterval) {
         currentPlayerInterval = calculatePlayerInterval(player);
-        int tileInterval = currentPlayerInterval + 1;
+        int tileInterval = currentPlayerInterval + 2; //TODO: find a better way to spawn pipes outwards
 
         for (EntityWrapper tileEntity : tileEntities) {
-//            System.out.println("old: " + tileEntity);
-            EntityWrapper newSpawn = new EntityWrapper(tileEntity.getEntityID(), tileEntity.getController());
-            System.out.println("new spawn");
-//            System.out.println("new: " + newSpawn);
+            EntityWrapper newSpawn = new EntityWrapper(tileEntity.getEntityID(), tileEntity.getController()); //FIXME: Need a better way to make the new entity
             setEntityPositions(newSpawn, tileInterval, tileEntity.getModel().getY());
             currentEntityList.add(newSpawn);
             viewManager.updateEntityGroup(newSpawn.getRender());
@@ -59,7 +54,7 @@ public class InfiniteLevel {
 
         for (EntityWrapper enemyEntity : enemyEntities) {
           if (!playerEntities.contains(enemyEntity) && isInRange(player.getModel(), enemyEntity.getModel())) {
-            EntityWrapper newSpawn = new EntityWrapper(enemyEntity);
+            EntityWrapper newSpawn = new EntityWrapper(enemyEntity.getEntityID(), enemyEntity.getController());
             setEntityPositions(newSpawn, tileInterval, enemyEntity.getModel().getY());
             currentEntityList.add(newSpawn);
             viewManager.updateEntityGroup(newSpawn.getRender());
@@ -74,9 +69,6 @@ public class InfiniteLevel {
         .setX(tileInterval * spawningInterval); //TODO: generalize for X and Y scrollers
     targetEntity.getModel()
         .setY(yPosition); //TODO: generalize for X and Y scrollers
-//    System.out.println("newSpawnX: " + targetEntity.getModel().getX());
-//    System.out.println("newSpawnY: " + targetEntity.getModel().getY());
-
   }
 
   private boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity) {

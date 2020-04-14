@@ -4,14 +4,30 @@
   "tileHeight": 100,
   "tileArrangement": [
     {
-      "EntityName": "Brick",
+      "EntityName": "Pipebody",
       "Arrangement": [
         {
 
-         "3": ["1"],
          "4": ["1"],
-         "5": ["1"],
-         "6": ["1"]
+          "5": ["1"],
+          "6": ["1"],
+         "7": ["1"]
+        }
+      ]
+    },
+    {
+      "EntityName": "Pipebottom",
+      "Arrangement": [
+        {
+          "0": ["1"]
+        }
+      ]
+    },
+    {
+      "EntityName": "Pipetop",
+      "Arrangement": [
+        {
+          "3": ["1"]
         }
       ]
     }
