@@ -78,7 +78,9 @@ public class ViewManager implements ViewExternalAPI {
   }
   public void updateEntityGroup(Node node) {
     EntityGroup.getChildren().add(node);
-
+  }
+  public void removeEntityGroup(Node node) {
+    EntityGroup.getChildren().remove(node);
   }
 
   public Scene getTestScene() {
@@ -92,7 +94,7 @@ public class ViewManager implements ViewExternalAPI {
   public void updateValues() {
     handleMouseInput();
     camera.update();
-    builder.updateLevel(camera.getViewPort(), level);
+    //builder.updateLevel(camera.getViewPort(), level);
   }
 
   @Override
