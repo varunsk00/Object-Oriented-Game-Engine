@@ -43,14 +43,6 @@
     }
   ],
   "enemyArrangement": [
-    {
-      "EntityName": "Brick",
-      "Arrangement": [
-        {
-          "8": ["1"]
-        }
-      ]
-    }
   ],
   "playerArrangement": [
     {

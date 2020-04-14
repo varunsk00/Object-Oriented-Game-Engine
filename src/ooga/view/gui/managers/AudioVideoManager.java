@@ -1,5 +1,7 @@
 package ooga.view.gui.managers;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -15,10 +17,13 @@ public class AudioVideoManager {
     private final String RESOURCES_PACKAGE1 = "ooga.view.gui.resources.";
     private final String MUSIC_PACKAGE = RESOURCES_PACKAGE1 + "soundtrack";
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
+    private Game currentGame;
     private MediaPlayer currentSong;
     private MediaPlayer currentSoundEffect;
+    private Map<String, Object> myInPlayGames;
 
     public AudioVideoManager(){
+        myInPlayGames = new HashMap<String, Object>();
     }
 
     public void switchMusic(StageManager sm){
@@ -31,24 +36,30 @@ public class AudioVideoManager {
     }
 
     public void switchGame(StageManager sm, String gameName) throws Exception {
-        Class<?> c = Class.forName(GAME_PACKAGE + "." + gameName);
-        Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
-        Object launchGame = cons.newInstance(sm);
+        if(!myInPlayGames.containsKey(gameName)) {
+//            Class<?> c = Class.forName(GAME_PACKAGE + "." + gameName);
+//            Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
+//            Object launchGame = cons.newInstance(sm);
+            currentGame = new Game(sm);
+            currentGame.loadGame(gameName);
+            myInPlayGames.put(gameName, currentGame);
+        } else {
+//            Object launchGame = myInPlayGames.get(gameName);
+            sm.switchScenes(gameName);
+        }
+
     }
 
     public void playSoundEffect(String sound){
         this.currentSoundEffect = new MediaPlayer
                 (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
         currentSoundEffect.seek(Duration.ZERO);
-        currentSoundEffect.setVolume(0.0);
         currentSoundEffect.play();
-        currentSoundEffect.setVolume(0.0);
     }
 
     private void playSong(MediaPlayer song){
         song.seek(Duration.ZERO);
         song.setCycleCount(MediaPlayer.INDEFINITE);
-        song.setVolume(0.0);
         song.play();
     }
 }

@@ -32,13 +32,13 @@ public class GameCabinet extends Pane {
     }
 
     private void initGameSelect() throws FileNotFoundException { //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
-        GamePreview g1 = new GamePreview(Color.BLUE, "metroid");
+        GamePreview g1 = new GamePreview(Color.BLUE, "flappybird");
         GamePreview g2 = new GamePreview(Color.RED, "mario1-1");
         GamePreview g3 = new GamePreview(Color.GREEN, "zelda2");
-        GamePreview g4 = new GamePreview(Color.YELLOW, "flappybird");
+        GamePreview g4 = new GamePreview(Color.YELLOW, "metroid");
         GamePreview g5 = new GamePreview(Color.ORANGE, "varun");
-        g1.setGameName("TestSandboxBlue");
-        g2.setGameName("TestSandboxRed");
+        g1.setGameName("FlappyBird");
+        g2.setGameName("Mario");
         g3.setGameName("TestSandboxGreen");
         g4.setGameName("TestSandboxYellow");
         g5.setGameName("TestSandboxOrange");
@@ -61,6 +61,7 @@ public class GameCabinet extends Pane {
     public void updateCurrentGame() throws Exception {
         for(GamePreview game: myGames){
             if(game.isGamePressed()) {
+                System.out.println("here");
                 game.resetGameName();
                 String gameName = game.getGameName();
                 avManager.switchGame(stageManager, gameName);

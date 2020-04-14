@@ -53,7 +53,7 @@ public class Level {
   }
 
   private boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity){
-    if(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), 2) + Math.pow(subjectEntity.getY() - targetEntity.getY(), 2)) < 1000){
+    if(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), 2) + Math.pow(subjectEntity.getY() - targetEntity.getY(), 2)) < 2000){
       return true;
     }
     return false;
