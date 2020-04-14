@@ -1,6 +1,6 @@
 {
   "entityName": "Fireball",
-  "image": "mario_fireball.png",
+  "image": "mario_fireball.gif",
   "health": 1,
   "grounded": false,
   "xPos": -1000,
