@@ -86,7 +86,7 @@ public class InfiniteLevelBuilder extends LevelBuilder {
 
     pipeBody2.getModel().getActionStack().push(new SetX("" + pipeBodyOffset));
 //    pipeBody2.getModel().getActionStack().push(new SetY("" + (pipeLip2.getRender().getBoundsInParent().getMaxX())));
-    pipeBody2.getModel().getActionStack().push(new SetY("" + (newPipeY-300)));
+  //  pipeBody2.getModel().getActionStack().push(new SetY("" + (newPipeY-300)));
     List<EntityWrapper> output = new ArrayList<EntityWrapper>();
     pipeLip1.getModel().setX(newPipeX);
     pipeLip1.getModel().setY(newPipeY-pipeLip1.getRender().getBoundsInParent().getHeight());
@@ -96,6 +96,9 @@ public class InfiniteLevelBuilder extends LevelBuilder {
  //   pipeBody1.getModel().setY(newPipeY);
     pipeBody2.getModel().setX(pipeBodyOffset);
     pipeBody2.getModel().setY(newPipeY-300);
+    pipeBody2.getModel().setY(0);
+    pipeBody2.setHeight(newPipeY-200);
+
     output.add(pipeLip1);
     output.add(pipeLip2);
     output.add(pipeBody1);

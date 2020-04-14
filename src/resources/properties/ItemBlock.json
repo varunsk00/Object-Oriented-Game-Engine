@@ -1,6 +1,6 @@
 {
-  "entityName": "Brick",
-  "image": "mariobrick_base",
+  "entityName": "ItemBlock",
+  "image": "mariobrick_item",
   "health": 1,
   "grounded": true,
   "xPos": 300,
@@ -17,6 +17,6 @@
   ],
   "collisionBundles": [
 
-      ]
+  ]
 
 }

@@ -105,7 +105,7 @@ public class ViewManager implements ViewExternalAPI {
 
   public void updateValues() {
     camera.update();
-    //builder.updateLevel(camera.getViewPort(), level);
+    builder.updateLevel(camera.getViewPort(), level);
   }
 
 
