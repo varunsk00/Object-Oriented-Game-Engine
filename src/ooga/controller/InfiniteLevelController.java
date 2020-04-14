@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BlueController implements Controller {
+public class InfiniteLevelController implements Controller {
 
 
   private PhysicsEngine physicsEngine;
@@ -37,13 +37,13 @@ public class BlueController implements Controller {
   private Camera camera;
   private Pane level;
   private ViewManager myViewManager;
-  private InfiniteLevel level1;
-  private InfiniteLevel level2;
-  private InfiniteLevel level3;
+  private ooga.model.levels.InfiniteLevel level1;
+  private ooga.model.levels.InfiniteLevel level2;
+  private ooga.model.levels.InfiniteLevel level3;
   private LevelSelecter levelSelecter;
 
 
-  public BlueController(StageManager stageManager) { //FIXME add exception stuff
+  public InfiniteLevelController(StageManager stageManager) { //FIXME add exception stuff
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);
@@ -84,13 +84,13 @@ public class BlueController implements Controller {
 
     List<EntityWrapper> player = new ArrayList<>();
     player.add(entityWrapper);
-    level1 = new InfiniteLevel(parser1.parseTileEntities(), player, parser1.parseEnemyEntities());
-    level2 = new InfiniteLevel(parser2.parseTileEntities(), player, parser2.parseEnemyEntities());
-    level3 = new InfiniteLevel(parser3.parseTileEntities(), player, parser3.parseEnemyEntities());
-    InfiniteLevel level4 = new InfiniteLevel(parser4.parseTileEntities(), player, parser4.parseEnemyEntities());
-    InfiniteLevel level5 = new InfiniteLevel(parser5.parseTileEntities(), player, parser5.parseEnemyEntities());
+    level1 = new ooga.model.levels.InfiniteLevel(parser1.parseTileEntities(), player, parser1.parseEnemyEntities());
+    level2 = new ooga.model.levels.InfiniteLevel(parser2.parseTileEntities(), player, parser2.parseEnemyEntities());
+    level3 = new ooga.model.levels.InfiniteLevel(parser3.parseTileEntities(), player, parser3.parseEnemyEntities());
+    ooga.model.levels.InfiniteLevel level4 = new ooga.model.levels.InfiniteLevel(parser4.parseTileEntities(), player, parser4.parseEnemyEntities());
+    ooga.model.levels.InfiniteLevel level5 = new ooga.model.levels.InfiniteLevel(parser5.parseTileEntities(), player, parser5.parseEnemyEntities());
 
-    List<InfiniteLevel> levels = new ArrayList<>();
+    List<ooga.model.levels.InfiniteLevel> levels = new ArrayList<>();
     levels.add(level1);
     levels.add(level2);
     levels.add(level3);

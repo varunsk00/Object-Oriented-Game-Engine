@@ -64,6 +64,9 @@ public class StageManager {
     public String getCurrentTitle() {
         return stage.getTitle();
     }
+    public void setCurrentTitle(String gameName) {
+        stage.setTitle(gameName);
+    }
 
     public Stage getStage(){return stage;}
 

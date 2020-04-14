@@ -1,39 +1,23 @@
 package ooga.util;
 
-import java.io.File;
-
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Array;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
-import ooga.controller.MainController;
-import ooga.model.actions.Action;
-import ooga.model.actions.ActionFactory;
-import ooga.model.actions.CollisionKey;
-import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
-import ooga.model.levels.Level;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.w3c.dom.Document;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.FileReader;
-import java.util.Iterator;
-import org.w3c.dom.Entity;
 
 public class GameParser {
 

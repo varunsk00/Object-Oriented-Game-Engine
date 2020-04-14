@@ -15,7 +15,7 @@ import ooga.view.gui.managers.StageManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainController implements Controller {
+public class FiniteLevelController implements Controller {
 
   private PhysicsEngine physicsEngine;
   private CollisionEngine collisionEngine;
@@ -34,7 +34,7 @@ public class MainController implements Controller {
 
 
 
-  public MainController(StageManager stageManager) { //FIXME add exception stuff
+  public FiniteLevelController(StageManager stageManager) { //FIXME add exception stuff
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);

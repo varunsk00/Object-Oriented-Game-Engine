@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-import ooga.controller.BlueController;
+import ooga.controller.InfiniteLevelController;
 import ooga.controller.EntityWrapper;
-import ooga.controller.MainController;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -32,13 +31,13 @@ public class InfiniteGameParser {
   public static final String CORRUPTED_FILE = "Error with file input. Check game file or choose another game.";
   public static final String CORRUPTED_FIELD = "XML file has corrupted/missing fields";
   public final String CLASS_NOT_FOUND = "Game not valid";
-  private BlueController mainController;
+  private InfiniteLevelController mainController;
   private double tileHeight;
   private double tileWidth;
 
   private JSONObject jsonObject;
 
-  public InfiniteGameParser(String fileName, BlueController controller) {
+  public InfiniteGameParser(String fileName, InfiniteLevelController controller) {
     mainController = controller;
     myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
