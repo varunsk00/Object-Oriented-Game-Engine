@@ -7,8 +7,7 @@
       "EntityName": "Brick",
       "Arrangement": [
         {
-         "1": ["1"],
-         "2": ["1"],
+
          "3": ["1"],
          "4": ["1"],
          "5": ["1"],
@@ -20,13 +19,5 @@
   "enemyArrangement": [
   ],
   "playerArrangement": [
-    {
-      "EntityName": "Flappy_Bird",
-      "Arrangement": [
-        {
-          "4": ["2"]
-        }
-      ]
-    }
       ]
 }

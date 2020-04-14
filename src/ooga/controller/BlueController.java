@@ -47,10 +47,10 @@ public class BlueController implements Controller {
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-//    entityList.add(new EntityWrapper("Flappy_Bird", this));
-//
-//    entityWrapper = entityList.get(0);
-//    myViewManager.updateEntityGroup(entityWrapper.getRender());
+    entityList.add(new EntityWrapper("Flappy_Bird", this));
+
+    entityWrapper = entityList.get(0);
+    myViewManager.updateEntityGroup(entityWrapper.getRender());
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
@@ -71,12 +71,13 @@ public class BlueController implements Controller {
     setUpTimeline();
     GameParser parser = new GameParser("Pipe1", this);
     List<EntityWrapper> tiles = parser.parseTileEntities();
-    List<EntityWrapper> player = parser.parsePlayerEntities();
+    List<EntityWrapper> player = new ArrayList<>();
+    player.add(entityWrapper);
     List<EntityWrapper> enemy = parser.parseEnemyEntities();
-    for (EntityWrapper k : player) {
-      entityList.add(k);
-      myViewManager.updateEntityGroup(k.getRender());
-    }
+//    for (EntityWrapper k : player) {
+//      entityList.add(k);
+//      myViewManager.updateEntityGroup(k.getRender());
+//    }
     myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
     testLevel = new InfiniteLevel(tiles, player, enemy);
 //    myViewManager.setUpCamera(entityList.get(0).getRender());

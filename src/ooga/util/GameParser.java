@@ -84,7 +84,6 @@ public class GameParser {
 
       for (int j = 0; j < entityArrangement.size(); j++) {
         JSONObject entityCoordinates = (JSONObject) entityArrangement.get(j);
-        System.out.println("hoopla " + entityCoordinates.entrySet());
 
         for (Object key : entityCoordinates.keySet()) {
           String rowCoordinate = key.toString();
@@ -93,22 +92,18 @@ public class GameParser {
           for (int k = 0; k < columnCoordinateArray.size(); k++) {
             String columnCoordinate = (String) columnCoordinateArray.get(k);
             String symbolName = this.getSymbol(columnCoordinate);
-            System.out.println(symbolName);
-            System.out.println(columnCoordinate);
 
             if(symbolName.equals("Single")){
               EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
               levelEntity.getModel().setX(Integer.parseInt(columnCoordinate) * tileWidth);
               levelEntity.getModel().setY(Integer.parseInt(rowCoordinate) * tileHeight);
-
+              System.out.print("X: " + levelEntity.getModel().getX());
+              System.out.println(" Y: " + levelEntity.getModel().getY());
               entitiesParsed.add(levelEntity);
             }
             else if(symbolName.equals("Group")){
 
               String[] splitArray = columnCoordinate.split("-");
-              System.out.println(splitArray[0]);
-              System.out.println(splitArray[1]);
-
 
               for(int start = Integer.parseInt(splitArray[0]); start < Integer.parseInt(splitArray[1]); start++){
                 EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
