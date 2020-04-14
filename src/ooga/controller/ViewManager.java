@@ -94,7 +94,7 @@ public class ViewManager implements ViewExternalAPI {
   public void updateValues() {
     handleMouseInput();
     camera.update();
-    //builder.updateLevel(camera.getViewPort(), level);
+    builder.updateLevel(camera.getViewPort(), level);
   }
 
   @Override
@@ -103,8 +103,8 @@ public class ViewManager implements ViewExternalAPI {
   }
 
   @Override
-  public void removeEntity(int id) {
-
+  public void removeEntity(Node node) {
+      EntityGroup.getChildren().remove(node);
   }
 
   @Override

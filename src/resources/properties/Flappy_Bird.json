@@ -112,7 +112,16 @@
           "orientation": "S"
         }
       ]
+    },
+    {
+      "ID": "Pipebody",
+      "Control": [
+        {
+          "action": "MoveX",
+          "param": "-50",
+          "orientation": "W"
+        }
+      ]
     }
   ]
-
 }

@@ -32,4 +32,5 @@ public class EntityView {
   public void setHeight(double newHeight) {
     myImage.setFitHeight(newHeight);
   }
+  
 }

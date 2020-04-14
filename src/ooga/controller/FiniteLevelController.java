@@ -2,6 +2,7 @@ package ooga.controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javax.swing.text.html.parser.Entity;
@@ -109,11 +110,16 @@ public class FiniteLevelController implements Controller {
     entityBuffer = new ArrayList<>();
   }
 
+  public void removeEntity(EntityWrapper node) {
+    myViewManager.removeEntity(node.getRender());
+  }
+
   @Override
   public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
     myViewManager.addEntity(newEntity.getRender());
   }
+
 
   @Override
   public List<EntityWrapper> getEntityList() {
