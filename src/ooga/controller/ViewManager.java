@@ -1,9 +1,6 @@
 package ooga.controller;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,9 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import ooga.apis.view.ViewExternalAPI;
-import ooga.model.PhysicsEngine;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
@@ -145,13 +140,20 @@ public class ViewManager implements ViewExternalAPI {
     } else if (code == KeyCode.Q && escCounter == 1) {
       unPauseGame();
     } else if (code == KeyCode.H) {
-      currentStage.switchScenes(currentStage.getPastScene());
+      currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
+      currentStage.updateCurrentScene(code.getChar(), currentStage.getPastScene());
+      //TODO: pause game when on home screen //pauseGame();
+      currentStage.switchScenes(code.getChar());
     }
 
   }
 
+  public void addScene(String title) {
+
+  }
   public void handleReleaseInput (KeyCode code) {
   }
+
 
   public void handleMouseInput() {
     if (menu.getButtons().getResumePressed()) {

@@ -97,7 +97,6 @@ public class MainController implements Controller {
   }
 
   private void step (double elapsedTime) {
-
     if (!myViewManager.getIsGamePaused()) {
       myViewManager.updateValues();
       for (EntityWrapper subjectEntity : entityList) {
