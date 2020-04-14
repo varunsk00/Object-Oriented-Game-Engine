@@ -32,4 +32,8 @@ public class TestSandboxBlue extends Game {
         this.mainController = new BlueController(stageManager);
     }
 
+    private void setController() {
+        this.mainController = new BlueController(stageManager);
+
+    }
 }

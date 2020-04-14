@@ -34,19 +34,24 @@ public class BlueController implements Controller {
 
 
     public BlueController(StageManager stageManager) { //FIXME add exception stuff
-
-
-
         //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
         builder = new InfiniteLevelBuilder(this);
-        level = builder.generateLevel();
-        myViewManager = new ViewManager(stageManager, builder);
+        //level = builder.generateLevel();
+
+//        myViewManager = new ViewManager(stageManager, builder);
 
         entityList = new ArrayList<>();
         entityBuffer = new ArrayList<>();
         entityList.add(new EntityWrapper("Flappy_Bird", this));
 
-      myViewManager.setUpCamera(entityList.get(0).getRender());
+//<<<<<<< HEAD
+        myViewManager = new ViewManager(stageManager, builder, entityList.get(0).getRender());
+        //this.camera = new Camera(myViewManager.getCurrentStage().getStage(), myViewManager.getLevel(), entityList.get(0).getRender());
+
+        myViewManager.setUpCamera(entityList.get(0).getRender());
+//=======
+//      myViewManager.setUpCamera(entityList.get(0).getRender());
+//>>>>>>> 3b9f1bffd6ad13bae1963a7f6040cb7f9cd3e4d5
 
         entityWrapper = entityList.get(0);
         myViewManager.updateEntityGroup(entityWrapper.getRender());
@@ -81,6 +86,7 @@ public class BlueController implements Controller {
     }
 
     private void step (double elapsedTime) {
+
         if (!myViewManager.getIsGamePaused()) {
             myViewManager.updateValues();
             for (EntityWrapper subjectEntity : entityList) {

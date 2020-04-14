@@ -38,7 +38,8 @@ public class MainController implements Controller {
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);
-    myViewManager = new ViewManager(stageManager, builder);
+
+    myViewManager = new ViewManager(stageManager, builder, null);
     GameParser hee = new GameParser("SampleLevel", this);
     List<EntityWrapper> je = hee.parseTileEntities();
 

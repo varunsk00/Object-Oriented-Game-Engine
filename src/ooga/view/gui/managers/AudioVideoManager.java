@@ -1,5 +1,7 @@
 package ooga.view.gui.managers;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -17,8 +19,10 @@ public class AudioVideoManager {
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private MediaPlayer currentSong;
     private MediaPlayer currentSoundEffect;
+    private Map<String, Object> myInPlayGames;
 
     public AudioVideoManager(){
+        myInPlayGames = new HashMap<String, Object>();
     }
 
     public void switchMusic(StageManager sm){
@@ -31,9 +35,16 @@ public class AudioVideoManager {
     }
 
     public void switchGame(StageManager sm, String gameName) throws Exception {
-        Class<?> c = Class.forName(GAME_PACKAGE + "." + gameName);
-        Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
-        Object launchGame = cons.newInstance(sm);
+        if(!myInPlayGames.containsKey(gameName)) {
+            Class<?> c = Class.forName(GAME_PACKAGE + "." + gameName);
+            Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
+            Object launchGame = cons.newInstance(sm);
+            myInPlayGames.put(gameName, launchGame);
+        } else {
+            Object launchGame = myInPlayGames.get(gameName);
+            sm.switchScenes(gameName);
+        }
+
     }
 
     public void playSoundEffect(String sound){

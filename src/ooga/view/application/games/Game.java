@@ -11,11 +11,13 @@ public abstract class Game {
     protected StageManager stageManager;
     protected Scene oldScene;
     protected String gameName;
+    protected Scene currentScene;
 
 
     public Game(StageManager stageManager) {
         this.stageManager = stageManager;
         this.oldScene = stageManager.getPastScene();
+        this.currentScene = stageManager.getCurrentScene();
         this.myBackgroundPane = new Pane();
         initModel();
         initView();
@@ -35,5 +37,13 @@ public abstract class Game {
 
     private void initStage() {
         stageManager.createAndSwitchScenes(myBackgroundPane, gameName);
+    }
+
+    public Scene getCurrentScene() {
+        return currentScene;
+    }
+
+    public void setCurrentScene(StageManager sm) {
+        this.currentScene = sm.getCurrentScene();
     }
 }

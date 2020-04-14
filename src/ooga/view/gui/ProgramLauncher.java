@@ -58,5 +58,6 @@ public class ProgramLauncher {
             stageManager.createAndSwitchScenes(library);
         }
         library.updateCurrentGame();
+
     }
 }
