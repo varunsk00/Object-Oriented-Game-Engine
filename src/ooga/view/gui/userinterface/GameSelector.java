@@ -55,15 +55,17 @@ public class GameSelector extends BorderPane {
         initRightArrow();
         initializePreviewPos();
         gameSelectionBox.getChildren().add(gameSwitchGroup);
-        gameSelectionBox.setMinHeight(300);
-        gameSelectionBox.setTranslateX(-75);
-        gameSelectionBox.setAlignment(Pos.CENTER);
+        //gameSelectionBox.setMinHeight(300);
+        //gameSelectionBox.setTranslateX(-75);
+        //gameSelectionBox.setAlignment(Pos.CENTER);
+        gameSelectionBox.setId("gameselectionbox");
     }
     private void initSelectionUI() {
         createGameSelectButton();
         selectButtonAndNameBox.getChildren().add(selectGameButton);
-        selectButtonAndNameBox.setPadding(new Insets(0, 50, 0, 415));
-        selectButtonAndNameBox.setSpacing(15);
+        //selectButtonAndNameBox.setPadding(new Insets(0, 50, 0, 415));
+        //selectButtonAndNameBox.setSpacing(15);
+        selectButtonAndNameBox.setId("buttonandnamebox");
         selectButtonAndNameBox.getChildren().add(gameNameBackground);
     }
     private void initCompleteView() {
@@ -251,6 +253,7 @@ public class GameSelector extends BorderPane {
     public void createGameSelectButton() {
         selectGameButton = makeButton("Select", e -> playableGamesList.get(1).chooseGame());
         gameName.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 50));
+        gameName.setId("gamename");
         gameNameBackground = new HBox();
         gameNameBackground.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         gameNameBackground.setPadding(new Insets(25, 25, 25, 25));

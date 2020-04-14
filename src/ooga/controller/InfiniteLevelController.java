@@ -141,4 +141,9 @@ public class InfiniteLevelController implements Controller {
     return entityList;
   }
 
+  @Override
+  public void removeEntity(EntityWrapper node) {
+
+  }
+
 }
