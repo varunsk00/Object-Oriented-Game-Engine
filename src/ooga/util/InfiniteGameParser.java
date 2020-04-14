@@ -1,43 +1,27 @@
 package ooga.util;
 
-import java.io.File;
-
+import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Array;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import ooga.controller.Controller;
+import ooga.controller.BlueController;
 import ooga.controller.EntityWrapper;
 import ooga.controller.MainController;
-import ooga.model.actions.Action;
-import ooga.model.actions.ActionFactory;
-import ooga.model.actions.CollisionKey;
-import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
-import ooga.model.levels.Level;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.w3c.dom.Document;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import java.io.FileReader;
-import java.util.Iterator;
-import org.w3c.dom.Entity;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-public class GameParser {
+public class InfiniteGameParser {
 
   private String myFileName;
+  private static final int tileInterval = 1000;
   private static final String REGEX_SYNTAX = "Syntax";
   private List<Entry<String, Pattern>> mySymbols;
   private static final String TXT_FILEPATH = "src/resources/";
@@ -48,13 +32,13 @@ public class GameParser {
   public static final String CORRUPTED_FILE = "Error with file input. Check game file or choose another game.";
   public static final String CORRUPTED_FIELD = "XML file has corrupted/missing fields";
   public final String CLASS_NOT_FOUND = "Game not valid";
-  private Controller mainController;
+  private BlueController mainController;
   private double tileHeight;
   private double tileWidth;
 
   private JSONObject jsonObject;
 
-  public GameParser(String fileName, Controller controller) {
+  public InfiniteGameParser(String fileName, BlueController controller) {
     mainController = controller;
     myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
@@ -84,7 +68,6 @@ public class GameParser {
 
       for (int j = 0; j < entityArrangement.size(); j++) {
         JSONObject entityCoordinates = (JSONObject) entityArrangement.get(j);
-        System.out.println("hoopla " + entityCoordinates.entrySet());
 
         for (Object key : entityCoordinates.keySet()) {
           String rowCoordinate = key.toString();
@@ -93,8 +76,6 @@ public class GameParser {
           for (int k = 0; k < columnCoordinateArray.size(); k++) {
             String columnCoordinate = (String) columnCoordinateArray.get(k);
             String symbolName = this.getSymbol(columnCoordinate);
-            System.out.println(symbolName);
-            System.out.println(columnCoordinate);
 
             if(symbolName.equals("Single")){
               EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
@@ -108,7 +89,6 @@ public class GameParser {
               String[] splitArray = columnCoordinate.split("-");
               System.out.println(splitArray[0]);
               System.out.println(splitArray[1]);
-
 
               for(int start = Integer.parseInt(splitArray[0]); start < Integer.parseInt(splitArray[1]); start++){
                 EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
@@ -147,6 +127,7 @@ public class GameParser {
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
 
     playerEntityArray = readEntities(playerArrangement);
+    System.out.println(playerEntityArray.get(0).getEntityID());
 
     return playerEntityArray;
   }
@@ -194,7 +175,12 @@ public class GameParser {
 
   private void setUpGameParser(){
     mySymbols = new ArrayList<>();
-    addPatterns(GameParser.class.getPackageName() + ".resources." + "GameParsingRegex");
+    addPatterns(InfiniteGameParser.class.getPackageName() + ".resources." + "GameParsingRegex");
+  }
+
+  private int calculateSpawnInterval(EntityWrapper player){
+    int playerInterval = (int) player.getModel().getX()/tileInterval; //TODO: find a better way in case there are two players; probably use camera instead
+    return playerInterval + 1;
   }
 }
 

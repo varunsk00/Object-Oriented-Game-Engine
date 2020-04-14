@@ -1,0 +1,22 @@
+{
+  "levelName": "Pipe1",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "Brick",
+      "Arrangement": [
+        {
+         "1": ["1"],
+         "2": ["1"],
+         "5": ["1"],
+         "6": ["1"]
+        }
+      ]
+    }
+  ],
+  "enemyArrangement": [
+  ],
+  "playerArrangement": [
+      ]
+}
