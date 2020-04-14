@@ -1,6 +1,6 @@
 {
   "entityName": "Flappy Bird",
-  "image": "flappy_bird",
+  "image": "flappy_bird.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,

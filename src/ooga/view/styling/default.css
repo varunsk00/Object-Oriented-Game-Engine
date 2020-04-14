@@ -5,6 +5,7 @@
 }
 #gamename {
     -fx-font-family: 'Pixeboy';
+    -fx-font-size: 75px;
 }
 .button {
     -fx-background-color:

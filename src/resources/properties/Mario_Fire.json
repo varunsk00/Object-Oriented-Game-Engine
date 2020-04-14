@@ -1,6 +1,6 @@
 {
   "entityName": "Fire_Mario",
-  "image": "mario_fire",
+  "image": "mario_fire.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
