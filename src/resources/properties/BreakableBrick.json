@@ -1,6 +1,6 @@
 {
   "entityName": "BreakableBrick",
-  "image": "mariobrick_breakable",
+  "image": "mariobrick_breakable.png",
   "health": 1,
   "grounded": true,
   "xPos": 300,

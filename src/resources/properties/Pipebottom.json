@@ -1,6 +1,6 @@
 {
   "entityName": "Pipebottom",
-  "image": "flappy_bottom",
+  "image": "flappy_bottom.png",
   "health": 1,
   "grounded": true,
   "xPos": -1000,

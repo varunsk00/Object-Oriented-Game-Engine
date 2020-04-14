@@ -1,6 +1,6 @@
 {
   "entityName": "ItemBlock",
-  "image": "mariobrick_item",
+  "image": "mariobrick_item.png",
   "health": 1,
   "grounded": true,
   "xPos": 300,
