@@ -33,6 +33,7 @@ public class CollisionEngine {
 
   public CollisionEngine() {
     //TODO: do I need a parameter to the constructor?
+    //if this doesnt need to construct anything, consider making it static? -- alex
   }
 
   public void produceCollisionActions(EntityModel subjectEntity, EntityModel targetEntity) {

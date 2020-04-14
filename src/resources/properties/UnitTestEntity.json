@@ -74,22 +74,12 @@
   ],
   "collisionBundles": [
     {
-      "ID": "Brick",
+      "ID": "UnitTestEntity",
       "Control": [
         {
-          "action": "SetGroundStatus",
-          "param": "true",
-          "orientation": "N"
-        },
-        {
-          "action": "VelocityY",
-          "param": "0",
-          "orientation": "N"
-        },
-        {
           "action": "MoveY",
-          "param": "-0.5",
-          "orientation": "N"
+          "param": "-10",
+          "orientation": "A"
         }
       ]
     },
