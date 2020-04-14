@@ -39,9 +39,11 @@ public class MainController implements Controller {
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);
 
+
     myViewManager = new ViewManager(stageManager, builder, null);
     GameParser hee = new GameParser("SampleLevel", this);
     List<EntityWrapper> je = hee.parseTileEntities();
+
 
     entityList = new ArrayList<>();
     entityBrickList = new ArrayList<>();
@@ -65,14 +67,17 @@ public class MainController implements Controller {
     });
 
     setUpTimeline();
-    List<EntityWrapper> player = hee.parsePlayerEntities();
-    List<EntityWrapper> enemy = hee.parseEnemyEntities();
+
+    GameParser parser = new GameParser("SampleLevel", this);
+    List<EntityWrapper> tiles = parser.parseTileEntities();
+    List<EntityWrapper> player = parser.parsePlayerEntities();
+    List<EntityWrapper> enemy = parser.parseEnemyEntities();
     for(EntityWrapper k : player){
       entityList.add(k);
       myViewManager.updateEntityGroup(k.getRender());
     }
     myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
-    testLevel = new Level(je, player, enemy);
+    testLevel = new Level(tiles, player, enemy);
   }
 
   private void setUpTimeline() {

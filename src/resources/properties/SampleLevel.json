@@ -7,21 +7,14 @@
       "EntityName": "Brick",
       "Arrangement": [
         {
-         "5": ["1-1000"],
-         "6": ["3"]
+          "6": ["17"],
+          "5": ["1-100"],
+          "7": ["1","2","3","4","5","6","7","8","9","10","12","13"]
         }
       ]
     }
   ],
   "enemyArrangement": [
-    {
-      "EntityName": "Brick",
-      "Arrangement": [
-        {
-          "8": ["1"]
-        }
-      ]
-    }
   ],
   "playerArrangement": [
     {
