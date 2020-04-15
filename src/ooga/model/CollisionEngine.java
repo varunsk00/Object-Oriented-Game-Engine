@@ -45,7 +45,7 @@ public class CollisionEngine {
 
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID,
           targetEntityCollisionSide);
-      //System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
+//      System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
       for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
         if (targetEntityCollisionKey.equals(collisionMapKey)) {
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);

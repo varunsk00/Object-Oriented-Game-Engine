@@ -145,5 +145,4 @@ public class InfiniteLevelController implements Controller {
   public void removeEntity(EntityWrapper node) {
 
   }
-
 }

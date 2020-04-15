@@ -20,12 +20,10 @@ class CollisionEngineTest {
 
   @Test
   void testProduceCollisionActions() {
-    double e1Y = myEntity1.getModel().getY();
+    myEntity1.getModel().setY(myEntity1.getModel().getY()+20);
     double e2Y = myEntity2.getModel().getY();
-    myEngine.produceCollisionActions(myEntity1.getModel(), myEntity2.getModel());
-    System.out.println(e1Y);
-    System.out.println(myEntity1.getModel().getY());
-    assertTrue(e1Y == myEntity1.getModel().getY()-10);
-    assertTrue(e2Y == myEntity2.getModel().getY()-10);
+    myEngine.produceCollisionActions(myEntity2.getModel(), myEntity1.getModel());
+
+    assertTrue(e2Y == myEntity2.getModel().getY()+10);
   }
 }

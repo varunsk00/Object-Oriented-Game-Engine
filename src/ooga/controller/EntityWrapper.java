@@ -20,7 +20,6 @@ public class EntityWrapper {
   public EntityWrapper(String entityName, Controller controller) {
     myController = controller;
     EntityID = entityName;
-    //myParser = new EntityParser(entityName);
     myParser = new EntityJSONParser(entityName);
 
     myModel = new EntityModel(this);
@@ -71,4 +70,6 @@ public class EntityWrapper {
   public void setHeight(double newHeight) {
     myView.setHeight(newHeight);
   }
+
+
 }

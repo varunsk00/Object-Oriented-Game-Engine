@@ -1,6 +1,6 @@
 {
   "entityName": "UnitTestEntity",
-  "image": "mario_fire",
+  "image": "mario_fire.png",
   "health": 1,
   "xPos": 0,
   "yPos": 0,
@@ -79,7 +79,7 @@
         {
           "action": "MoveY",
           "param": "-10",
-          "orientation": "A"
+          "orientation": "N"
         }
       ]
     },
