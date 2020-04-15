@@ -24,7 +24,7 @@ import javax.imageio.ImageIO;
 import java.util.List;
 //TODO: REMOVE ALL MAGIC NUMBERS, REFACTOR MORE - SPECIFICALLY SCROLLLEFT AND RIGHT,
 // FIGURE OUT HOW TO HANDLE ONLY 3 GAMES, FIX BUTTON NOT GETTING GAME NAME, FACTOR OUT FUNCTIONS INTO A FACTORY FOR ALL UI
-// FIGURE OUT HOW TO STOP SPAMMING ARROWS, MOVE ALL STYLING TO CSS, MAKE ARROWS INTO STACKPANES AND ADD TEXT
+// FIGURE OUT HOW TO STOP SPAMMING ARROWS, MOVE ALL STYLING TO CSS, MAKE ARROWS INTO STACKPANES AND ADD TEXT, REFACTOR SPAM?
 public class GameSelector extends BorderPane {
     Polygon leftScrollArrow;
     Polygon rightScrollArrow;
@@ -55,14 +55,17 @@ public class GameSelector extends BorderPane {
         initRightArrow();
         initializePreviewPos();
         gameSelectionBox.getChildren().add(gameSwitchGroup);
-        gameSelectionBox.setMinHeight(300);
-        gameSelectionBox.setAlignment(Pos.CENTER);
+        //gameSelectionBox.setMinHeight(300);
+        //gameSelectionBox.setTranslateX(-75);
+        //gameSelectionBox.setAlignment(Pos.CENTER);
+        gameSelectionBox.setId("gameselectionbox");
     }
     private void initSelectionUI() {
         createGameSelectButton();
         selectButtonAndNameBox.getChildren().add(selectGameButton);
-        selectButtonAndNameBox.setPadding(new Insets(0, 50, 0, 415));
-        selectButtonAndNameBox.setSpacing(15);
+        //selectButtonAndNameBox.setPadding(new Insets(0, 50, 0, 415));
+        //selectButtonAndNameBox.setSpacing(15);
+        selectButtonAndNameBox.setId("buttonandnamebox");
         selectButtonAndNameBox.getChildren().add(gameNameBackground);
     }
     private void initCompleteView() {
@@ -75,7 +78,7 @@ public class GameSelector extends BorderPane {
         this.setCenter(menuFrame);
     }
     public void scrollRight() {
-        if (System.currentTimeMillis() - pastTime > 1100) {
+        if (System.currentTimeMillis() - pastTime > 1500) {
             GamePreview temp = playableGamesList.get(0);
             for (int i = 0; i < playableGamesList.size() - 1; i++) {
                 playableGamesList.set(i, playableGamesList.get(i + 1));
@@ -104,33 +107,33 @@ public class GameSelector extends BorderPane {
         }
     }
     public void scrollLeft() {
-        if (System.currentTimeMillis() - pastTime > 1100) {
-        GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
-        for (int i = playableGamesList.size()-1; i > 0; i --) {
-            playableGamesList.set(i, playableGamesList.get(i - 1));
-            double oldXPos = playableGamesList.get(i).getXPos();
-            if (oldXPos > 100 && oldXPos < 850) {
-                if (oldXPos == 750) {
-                    playFadeTransition(playableGamesList.get(i),false, 500);
-                    MoveTo m = new MoveTo(oldXPos + 50, 325);
-                    LineTo l = new LineTo(850, 325);
-                    playPathTransition(playableGamesList.get(i), m, l);
-                }
-                else {
-                    MoveTo m = new MoveTo(oldXPos + 50, 325);
-                    LineTo l = new LineTo(oldXPos + 350, 325);
-                    playPathTransition(playableGamesList.get(i), m, l);
+        if (System.currentTimeMillis() - pastTime > 1500) {
+            GamePreview temp = playableGamesList.get(playableGamesList.size()-1);
+            for (int i = playableGamesList.size()-1; i > 0; i --) {
+                playableGamesList.set(i, playableGamesList.get(i - 1));
+                double oldXPos = playableGamesList.get(i).getXPos();
+                if (oldXPos > 100 && oldXPos < 850) {
+                    if (oldXPos == 750) {
+                        playFadeTransition(playableGamesList.get(i),false, 500);
+                        MoveTo m = new MoveTo(oldXPos + 50, 325);
+                        LineTo l = new LineTo(850, 325);
+                        playPathTransition(playableGamesList.get(i), m, l);
+                    }
+                    else {
+                        MoveTo m = new MoveTo(oldXPos + 50, 325);
+                        LineTo l = new LineTo(oldXPos + 350, 325);
+                        playPathTransition(playableGamesList.get(i), m, l);
+                    }
                 }
             }
-        }
-        playableGamesList.set(0, temp);
-        playFadeTransition(playableGamesList.get(0),true,2000);
-        MoveTo m = new MoveTo(150, 325);
-        LineTo l = new LineTo(200, 325);
-        playPathTransition(playableGamesList.get(0), m, l);
-        reinitializePreviewPos();
-        playGrowOrShrinkTransition(true);
-        pastTime = System.currentTimeMillis();
+            playableGamesList.set(0, temp);
+            playFadeTransition(playableGamesList.get(0),true,2000);
+            MoveTo m = new MoveTo(150, 325);
+            LineTo l = new LineTo(200, 325);
+            playPathTransition(playableGamesList.get(0), m, l);
+            reinitializePreviewPos();
+            playGrowOrShrinkTransition(true);
+            pastTime = System.currentTimeMillis();
         }
     }
     private void initLeftArrow() {
@@ -139,7 +142,7 @@ public class GameSelector extends BorderPane {
         leftScrollArrow.setFill(Color.WHITE);
         leftScrollArrow.setStroke(Color.RED);
         leftScrollArrow.setTranslateX(60);
-        leftScrollArrow.setTranslateY(300);
+        leftScrollArrow.setTranslateY(275);
         leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.LIGHTGRAY));
         leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.WHITE));
         leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
@@ -177,10 +180,10 @@ public class GameSelector extends BorderPane {
             }
             else {
                 if (playableGamesList.get(i).getXPos() == 450) {
-                   playableGamesList.get(i).setScaleX(2.1);
-                   playableGamesList.get(i).setScaleY(2.1);
-                   gameName.setText(playableGamesList.get(i).getGameName());
-                   gameName.setFill(playableGamesList.get(1).getColor());
+                    playableGamesList.get(i).setScaleX(2.1);
+                    playableGamesList.get(i).setScaleY(2.1);
+                    gameName.setText(playableGamesList.get(i).getGameName());
+                    gameName.setFill(playableGamesList.get(1).getColor());
                 }
                 playableGamesList.get(i).setVisible(true);
             }
@@ -250,11 +253,13 @@ public class GameSelector extends BorderPane {
     public void createGameSelectButton() {
         selectGameButton = makeButton("Select", e -> playableGamesList.get(1).chooseGame());
         gameName.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 50));
+        gameName.setId("gamename");
         gameNameBackground = new HBox();
         gameNameBackground.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         gameNameBackground.setPadding(new Insets(25, 25, 25, 25));
-        gameNameBackground.setMaxSize(200, 100);
-        gameNameBackground.setTranslateX(-175);
+        gameNameBackground.setPrefWidth(600);
+        gameNameBackground.setMaxSize(600, 100);
+        gameNameBackground.setTranslateX(-260);
         gameNameBackground.setAlignment(Pos.CENTER);
         gameNameBackground.getChildren().add(gameName);
     }
@@ -264,18 +269,17 @@ public class GameSelector extends BorderPane {
         final String IMAGEFILE_SUFFIXES = String
                 .format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
         Button result = new Button();
-     //   String label = resources.getString(property);
+        //   String label = resources.getString(property);
         String label = property;
-      //  if (label.matches(IMAGEFILE_SUFFIXES)) {
-       //     result.setGraphic(new ImageView(
-       //             new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_FOLDER + label))));
-       // } else {
-            result.setText(label);
-      //  }
+        //  if (label.matches(IMAGEFILE_SUFFIXES)) {
+        //     result.setGraphic(new ImageView(
+        //             new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_FOLDER + label))));
+        // } else {
+        result.setText(label);
+        //  }
         result.setOnAction(handler);
         return result;
     }
 
 
 }
-

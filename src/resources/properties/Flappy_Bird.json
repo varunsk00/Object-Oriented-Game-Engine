@@ -1,6 +1,6 @@
 {
   "entityName": "Flappy Bird",
-  "image": "flappy_bird",
+  "image": "flappy_bird.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
@@ -10,13 +10,14 @@
   "maxYVel": 100,
   "height": 100,
   "width": 100,
+  "grounded": true,
   "scheme": "Keybindings",
   "actionBundles": [
     {
       "ID": "D",
       "Control": [
         {
-          "action": "AccelerateX",
+          "action": "MoveX",
           "param": "15.0"
         },
         {
@@ -29,7 +30,7 @@
       "ID": "A",
       "Control": [
         {
-          "action": "AccelerateX",
+          "action": "MoveX",
           "param": "-15.0"
         },
         {
@@ -42,7 +43,7 @@
       "ID": "W",
       "Control": [
         {
-          "action": "AccelerateY",
+          "action": "MoveY",
           "param": "-25"
         }
       ]
@@ -51,7 +52,7 @@
       "ID": "S",
       "Control": [
         {
-          "action": "AccelerateY",
+          "action": "MoveY",
           "param": "+15.0"
         }
       ]
@@ -89,11 +90,6 @@
           "action": "VelocityY",
           "param": "0",
           "orientation": "N"
-        },
-        {
-          "action": "SetGroundStatus",
-          "param": "true",
-          "orientation": "N"
         }
       ]
     },
@@ -116,7 +112,16 @@
           "orientation": "S"
         }
       ]
+    },
+    {
+      "ID": "Pipebody",
+      "Control": [
+        {
+          "action": "MoveX",
+          "param": "-50",
+          "orientation": "W"
+        }
+      ]
     }
   ]
-
 }

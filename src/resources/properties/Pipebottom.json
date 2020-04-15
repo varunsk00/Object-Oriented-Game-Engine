@@ -1,6 +1,6 @@
 {
-  "entityName": "Pipebody",
-  "image": "flappy_body.png",
+  "entityName": "Pipebottom",
+  "image": "flappy_bottom.png",
   "health": 1,
   "grounded": true,
   "xPos": -1000,
@@ -11,7 +11,7 @@
   "maxYVel": 100,
   "height": 100,
   "width": 100,
-  "health":1,
+  "health": 1,
   "scheme": "NoControls",
   "actionBundles": [
   ]

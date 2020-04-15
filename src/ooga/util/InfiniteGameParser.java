@@ -1,5 +1,6 @@
 package ooga.util;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -8,20 +9,18 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import ooga.controller.Controller;
+import ooga.controller.InfiniteLevelController;
 import ooga.controller.EntityWrapper;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import java.io.FileReader;
-
-public class GameParser {
+public class InfiniteGameParser {
 
   private String myFileName;
+  private static final int tileInterval = 1000;
   private static final String REGEX_SYNTAX = "Syntax";
   private List<Entry<String, Pattern>> mySymbols;
   private static final String TXT_FILEPATH = "src/resources/";
@@ -32,13 +31,13 @@ public class GameParser {
   public static final String CORRUPTED_FILE = "Error with file input. Check game file or choose another game.";
   public static final String CORRUPTED_FIELD = "XML file has corrupted/missing fields";
   public final String CLASS_NOT_FOUND = "Game not valid";
-  private Controller mainController;
+  private InfiniteLevelController mainController;
   private double tileHeight;
   private double tileWidth;
 
   private JSONObject jsonObject;
 
-  public GameParser(String fileName, Controller controller) {
+  public InfiniteGameParser(String fileName, InfiniteLevelController controller) {
     mainController = controller;
     myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
@@ -81,13 +80,14 @@ public class GameParser {
               EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
               levelEntity.getModel().setX(Integer.parseInt(columnCoordinate) * tileWidth);
               levelEntity.getModel().setY(Integer.parseInt(rowCoordinate) * tileHeight);
-              System.out.print("X: " + levelEntity.getModel().getX());
-              System.out.println(" Y: " + levelEntity.getModel().getY());
+
               entitiesParsed.add(levelEntity);
             }
             else if(symbolName.equals("Group")){
 
               String[] splitArray = columnCoordinate.split("-");
+              System.out.println(splitArray[0]);
+              System.out.println(splitArray[1]);
 
               for(int start = Integer.parseInt(splitArray[0]); start < Integer.parseInt(splitArray[1]); start++){
                 EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
@@ -126,6 +126,7 @@ public class GameParser {
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
 
     playerEntityArray = readEntities(playerArrangement);
+    System.out.println(playerEntityArray.get(0).getEntityID());
 
     return playerEntityArray;
   }
@@ -173,7 +174,12 @@ public class GameParser {
 
   private void setUpGameParser(){
     mySymbols = new ArrayList<>();
-    addPatterns(GameParser.class.getPackageName() + ".resources." + "GameParsingRegex");
+    addPatterns(InfiniteGameParser.class.getPackageName() + ".resources." + "GameParsingRegex");
+  }
+
+  private int calculateSpawnInterval(EntityWrapper player){
+    int playerInterval = (int) player.getModel().getX()/tileInterval; //TODO: find a better way in case there are two players; probably use camera instead
+    return playerInterval + 1;
   }
 }
 

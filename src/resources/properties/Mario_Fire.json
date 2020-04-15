@@ -1,14 +1,14 @@
 {
   "entityName": "Fire_Mario",
-  "image": "mario_fire",
+  "image": "firemario_walk.gif",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
   "xVel": 10,
   "yVel": 10,
   "grounded": false,
-  "maxXVel": 1000,
-  "maxYVel": 1000,
+  "maxXVel": 500,
+  "maxYVel": 500,
   "height": 100,
   "width": 100,
   "scheme": "Keybindings",
@@ -104,10 +104,165 @@
       ]
     },
     {
+      "ID": "StairBlock",
+      "Control": [
+        {
+          "action": "SetGroundStatus",
+          "param": "true",
+          "orientation": "N"
+        },
+        {
+          "action": "VelocityY",
+          "param": "0",
+          "orientation": "N"
+        },
+        {
+          "action": "MoveY",
+          "param": "-0.5",
+          "orientation": "N"
+        }
+      ]
+    },
+    {
+      "ID": "BrickBreakable",
+      "Control": [
+        {
+          "action": "SetGroundStatus",
+          "param": "true",
+          "orientation": "N"
+        },
+        {
+          "action": "VelocityY",
+          "param": "0",
+          "orientation": "N"
+        },
+        {
+          "action": "MoveY",
+          "param": "-0.5",
+          "orientation": "N"
+        }
+      ]
+    },
+    {
+      "ID": "ItemBlock",
+      "Control": [
+        {
+          "action": "SetGroundStatus",
+          "param": "true",
+          "orientation": "N"
+        },
+        {
+          "action": "VelocityY",
+          "param": "0",
+          "orientation": "N"
+        },
+        {
+          "action": "MoveY",
+          "param": "-0.5",
+          "orientation": "N"
+        }
+      ]
+    },
+    {
       "ID": "Brick",
       "Control": [
         {
           "action": "VelocityX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "-1",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "1",
+          "orientation": "E"
+        },
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "E"
+        }
+      ]
+    },
+    {
+      "ID": "StairBlock",
+      "Control": [
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "-1",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "1",
+          "orientation": "E"
+        },
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "E"
+        }
+      ]
+    },
+    {
+      "ID": "BreakableBrick",
+      "Control": [
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "-1",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "1",
+          "orientation": "E"
+        },
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "E"
+        }
+      ]
+    },
+    {
+      "ID": "ItemBlock",
+      "Control": [
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
           "param": "0",
           "orientation": "W"
         },
@@ -130,6 +285,36 @@
     },
     {
       "ID": "Brick",
+      "Control": [
+        {
+          "action": "MoveY",
+          "param": "-100.0",
+          "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "BreakableBrick",
+      "Control": [
+        {
+          "action": "MoveY",
+          "param": "-100.0",
+          "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "StairBlock",
+      "Control": [
+        {
+          "action": "MoveY",
+          "param": "-100.0",
+          "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "ItemBlock",
       "Control": [
         {
           "action": "MoveY",

@@ -11,7 +11,7 @@ public class ViewExternal implements ViewExternalAPI {
   }
 
   @Override
-  public void removeEntity(int id) {
+  public void removeEntity(Node node) {
 
   }
 

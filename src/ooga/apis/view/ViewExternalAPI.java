@@ -25,9 +25,9 @@ public interface ViewExternalAPI {
    * Removes an entity from rendering.
    * Called by model in cases such as a character dying, block being destroyed,
    * etc
-   * @param id - the entity to be removed
+   * @param node - the entity to be removed
    */
-  void removeEntity(int id);
+  void removeEntity(Node node);
 
   /**
    * Adds an entity to rendering. Called

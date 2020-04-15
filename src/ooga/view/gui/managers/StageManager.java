@@ -1,10 +1,14 @@
 package ooga.view.gui.managers;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import ooga.view.application.games.Game;
+
 //TODO: REFACTOR, CLEAN UP MAGIC, REMOVE UNNECESSARY METHODS
 public class StageManager {
     private static final int SCENE_WIDTH = 1280;
@@ -12,6 +16,8 @@ public class StageManager {
     private Stage stage;
     private Scene currentScene;
     private Scene pastScene;
+    private Map<String, Scene> lastScene;
+
 
     public StageManager(Stage primaryStage) {
         this.stage = primaryStage;
@@ -20,23 +26,22 @@ public class StageManager {
         //stage.setHeight(720);
         stage.show();
         stage.setFullScreen(true);
+        lastScene = new HashMap<String, Scene>();
         //stage.setResizable(false);
     }
 
     /**
      * overloaded method
-     * @param newScene
+     * @param
      */
-    public void switchScenes(Scene newScene) {
-        this.switchScenes(newScene, stage.getTitle());
-    }
-    public void switchScenes(Scene newScene, String title) {
+    public void switchScenes(String title) {
         pastScene = stage.getScene();
-        stage.setScene(newScene);
+        stage.setScene(lastScene.get(title));
         stage.setTitle(title);
-        currentScene = newScene;
+        currentScene = lastScene.get(title);
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
     }
+
     public void switchRoot(Parent parent) {
         stage.getScene().setRoot(parent);
     }
@@ -59,6 +64,13 @@ public class StageManager {
     public String getCurrentTitle() {
         return stage.getTitle();
     }
+    public void setCurrentTitle(String gameName) {
+        stage.setTitle(gameName);
+    }
 
     public Stage getStage(){return stage;}
+
+    public void updateCurrentScene(String title, Scene saveScene) {
+        lastScene.put(title, saveScene);
+    }
 }

@@ -70,7 +70,7 @@ public class EntityJSONParser {
       myScheme = (ControlScheme) (controlClass.getConstructor(List.class)
           .newInstance(controlMap));
     } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace();
+      e.printStackTrace(); //FIXME to not fail the class
     }
     return myScheme;
   }
@@ -117,7 +117,7 @@ public class EntityJSONParser {
 
   private ImageView loadImage(String imageName) {
     Image entityImage = new Image(this.getClass().getClassLoader()
-        .getResourceAsStream(IMG_FILEPATH + imageName + ".png"));
+        .getResourceAsStream(IMG_FILEPATH + imageName));
     return new ImageView(entityImage);
   }
 

@@ -1,6 +1,6 @@
 {
-  "entityName": "Brick",
-  "image": "mariobrick_base.png",
+  "entityName": "StairBlock",
+  "image": "mariobrick_stair.png",
   "health": 1,
   "grounded": true,
   "xPos": 300,
@@ -17,6 +17,6 @@
   ],
   "collisionBundles": [
 
-      ]
+  ]
 
 }

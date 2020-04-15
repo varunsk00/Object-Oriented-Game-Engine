@@ -1,0 +1,39 @@
+{
+  "levelName": "Pipe4",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "Pipebody",
+      "Arrangement": [
+        {
+
+          "0": ["1"],
+          "1": ["1"],
+          "2": ["1"],
+          "7": ["1"]
+        }
+      ]
+    },
+        {
+          "EntityName": "Pipebottom",
+          "Arrangement": [
+            {
+              "3": ["1"]
+            }
+          ]
+        },
+        {
+          "EntityName": "Pipetop",
+          "Arrangement": [
+            {
+              "6": ["1"]
+            }
+          ]
+        }
+  ],
+  "enemyArrangement": [
+  ],
+  "playerArrangement": [
+      ]
+}

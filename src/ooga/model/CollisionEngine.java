@@ -23,7 +23,6 @@ public class CollisionEngine {
   private static final String DEFAULT = "DEFAULT";
   private static final double COLLISION_THRESHOLD = 0.0001;
 
-
   private static final Map<Integer, String> targetEntitySideMap = Map.ofEntries(
       Map.entry(ZERO, RIGHT),
       Map.entry(ONE, LEFT),
@@ -68,7 +67,6 @@ public class CollisionEngine {
   private String determineTargetEntityCollisionSide(EntityModel subjectEntity, EntityModel targetEntity){
     double[] subjectLeftRightTopBottom = new double[]{subjectEntity.getX(), subjectEntity.getX() + subjectEntity.getWidth(), subjectEntity.getY(), subjectEntity.getY() + subjectEntity.getHeight()};
     double[] targetRightLeftBottomTop = new double[]{targetEntity.getX() + targetEntity.getWidth(), targetEntity.getX(), targetEntity.getY() + targetEntity.getHeight(), targetEntity.getY()};
-
 
     int sideIndex = determineSideIndex(subjectLeftRightTopBottom, targetRightLeftBottomTop);
 

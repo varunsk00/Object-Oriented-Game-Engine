@@ -5,14 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import javafx.stage.Stage;
 import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
-import ooga.controller.MainController;
+import ooga.controller.FinalController;
 import ooga.view.gui.managers.StageManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 /**
- * @deprecated -- cant work with our current class structure.
+ * @Deprecated -- cant work with our current class structure.
  */
 class SpawnTest extends DukeApplicationTest {
   private String param;
