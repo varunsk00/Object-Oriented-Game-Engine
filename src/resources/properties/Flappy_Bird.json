@@ -6,7 +6,7 @@
   "yPos": 100,
   "xVel": 10,
   "yVel": 10,
-  "maxXVel": 100,
+  "maxXVel": 1000,
   "maxYVel": 100,
   "height": 100,
   "width": 100,
@@ -67,7 +67,7 @@
         },
         {
           "action": "VelocityX",
-          "param": "100.0"
+          "param": "200.0"
         }
       ]
     },
