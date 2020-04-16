@@ -12,6 +12,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.model.levels.InfiniteLevelBuilder;
+import ooga.model.levels.LevelBuilder;
 import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
@@ -30,7 +31,7 @@ public class ViewManager implements ViewExternalAPI {
   private int escCounter = 0;
 
   private StageManager currentStage;
-  private InfiniteLevelBuilder builder;
+  private LevelBuilder builder;
   private Pane level;
   private Camera camera;
 
@@ -38,7 +39,7 @@ public class ViewManager implements ViewExternalAPI {
 
   private Scene testScene;
 
-  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, Node cameraNode){
+  public ViewManager(StageManager stageManager, LevelBuilder builder, Node cameraNode){
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
