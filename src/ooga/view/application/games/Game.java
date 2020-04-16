@@ -1,5 +1,6 @@
 package ooga.view.application.games;
 
+import java.io.Serializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -12,7 +13,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-public class Game {
+public class Game implements Serializable {
     private final String RESOURCES_PACKAGE = "ooga.view.application.games.resources.";
     private final String CONTROLLER_PACKAGE = "ooga.controller.";
     private final String CONTROLLER = "Controller";
@@ -25,6 +26,8 @@ public class Game {
     private Scene currentScene;
     private Controller mainController;
     private Map<String, String> gameTypes;
+
+    private static final long serialVersionID = 1L;
 
 
     public Game(StageManager stageManager) {
