@@ -39,9 +39,9 @@ public class GameCabinet extends Pane {
         GamePreview g5 = new GamePreview(Color.ORANGE, "varun");
         g1.setGameName("FlappyBird");
         g2.setGameName("Mario");
-        g3.setGameName("TestSandboxGreen");
-        g4.setGameName("TestSandboxYellow");
-        g5.setGameName("TestSandboxOrange");
+        g3.setGameName("Zelda");
+        g4.setGameName("Metroid");
+        g5.setGameName("Varun");
         myGames.add(g1);
         myGames.add(g2);
         myGames.add(g3);
@@ -69,4 +69,5 @@ public class GameCabinet extends Pane {
             }
         }
     }
+
 }

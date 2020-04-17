@@ -10,6 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -36,7 +39,10 @@ public class GameSelector extends BorderPane {
     private HBox gameNameBackground;
     private Text gameName;
     private Group gameSwitchGroup;
+    private VBox menuBottom = new VBox();
+    private VBox menuTop = new VBox();
     private double pastTime = -10000000;
+    StackPane p = new StackPane();
 
     public GameSelector(List<GamePreview> playableGames) {
         this.playableGamesList = playableGames;
@@ -48,6 +54,112 @@ public class GameSelector extends BorderPane {
         initGameSwitchGroup();
         initSelectionUI();
         initCompleteView();
+        initMenuTop();
+        initMenuBottom();
+    }
+    private void initMenuBottom() {
+        HBox darkgray = new HBox();
+        HBox lightgray = new HBox();
+        for (int i = 0; i < 11; i++) {
+            Rectangle r = new Rectangle(10, 17.5, Color.BLACK);
+            darkgray.getChildren().add(r);
+        }
+        VBox textbox = new VBox();
+        textbox.setSpacing(5);
+        Text t1 = new Text("BOOGA");
+        Text t2 = new Text("Bob's Object Oriented Game Arcade");
+        t1.setFill(Color.RED);
+        t1.setId("t");
+        t2.setFill(Color.RED);
+        t2.setId("t");
+        t1.setFont(Font.font(35));
+        t2.setFont(Font.font(20));
+        textbox.getChildren().addAll(t1, t2);
+        lightgray.getChildren().add(selectGameButton);
+        lightgray.getChildren().add(textbox);
+        selectGameButton.setId("start");
+        textbox.setTranslateY(15);
+        selectGameButton.setTranslateY(15);
+        lightgray.setPadding(new Insets(0, 0, 0, 20));
+        lightgray.setSpacing(10);
+        darkgray.setSpacing(5);
+        darkgray.setPadding(new Insets(17.5, 0, 0, 100));
+        VBox rectangles = new VBox();
+        Rectangle r1 = new Rectangle(150, 15, Color.DARKGRAY);
+        Rectangle r2 = new Rectangle(150, 15, Color.DARKGRAY);
+        r1.setStroke(Color.BLACK);
+        r2.setStroke(Color.BLACK);
+        r2.setTranslateY(-2.5);
+        r1.setStrokeWidth(2.5);
+        r2.setStrokeWidth(2.5);
+        rectangles.getChildren().addAll(r1, r2);
+        darkgray.getChildren().add(rectangles);
+        rectangles.setTranslateX(700);
+        rectangles.setTranslateY(-18);
+        Rectangle r3 = new Rectangle(150, 63, Color.BLACK);
+        r3.setStroke(Color.BLACK);
+        r3.setStrokeWidth(2.5);
+        lightgray.getChildren().add(r3);
+        r3.setTranslateX(586);
+        r3.setTranslateY(2);
+        darkgray.setStyle("-fx-background-color: #a9a9a9");
+        darkgray.setMinHeight(35);
+        lightgray.setMinHeight(65);
+        darkgray.setMinWidth(1280);
+        lightgray.setMinWidth(1280);
+        lightgray.setStyle("-fx-background-color: #d3d3d3");
+        menuBottom.getChildren().add(lightgray);
+        menuBottom.getChildren().add(darkgray);
+        menuBottom.setTranslateX(-175);
+        menuBottom.setTranslateY(-100);
+//        darkgray.setLayoutX(0);
+//        lightgray.setLayoutY(690);
+//        darkgray.setLayoutY(720);
+//        lightgray.setLayoutX(0);
+        this.setBottom(menuBottom);
+    }
+    private void initMenuTop() {
+        HBox darkgray = new HBox();
+        HBox lightgray = new HBox();
+        for (int i = 0; i < 11; i++) {
+            Rectangle r = new Rectangle(10, 17.5, Color.BLACK);
+            darkgray.getChildren().add(r);
+        }
+        darkgray.setSpacing(5);
+        darkgray.setPadding(new Insets(0, 0, 0, 100));
+        VBox rectangles = new VBox();
+        Rectangle r1 = new Rectangle(150, 15, Color.DARKGRAY);
+        Rectangle r2 = new Rectangle(150, 15, Color.DARKGRAY);
+        r1.setStroke(Color.BLACK);
+        r2.setStroke(Color.BLACK);
+        r1.setStrokeWidth(2.5);
+        r2.setStrokeWidth(2.5);
+        r2.setTranslateY(-1.5);
+        rectangles.getChildren().addAll(r1, r2);
+        darkgray.getChildren().add(rectangles);
+        rectangles.setTranslateX(700);
+        Rectangle r3 = new Rectangle(150, 63, Color.BLACK);
+        r3.setStroke(Color.BLACK);
+        r3.setStrokeWidth(2.5);
+        lightgray.getChildren().add(r3);
+        r3.setTranslateX(965);
+        r3.setTranslateY(-2);
+        darkgray.setStyle("-fx-background-color: #a9a9a9");
+        darkgray.setMinHeight(35);
+        lightgray.setMinHeight(65);
+        darkgray.setMinWidth(1280);
+        lightgray.setMinWidth(1280);
+        lightgray.setStyle("-fx-background-color: #d3d3d3");
+        menuTop.getChildren().add(darkgray);
+        menuTop.getChildren().add(lightgray);
+        menuTop.setAlignment(Pos.CENTER);
+        menuTop.setTranslateX(-175);
+        menuTop.setTranslateY(-100);
+//        darkgray.setLayoutX(0);
+//        lightgray.setLayoutY(0);
+//        darkgray.setLayoutY(100);
+//        lightgray.setLayoutX(0);
+        this.setTop(menuTop);
     }
 
     private void initGameSwitchGroup() {
@@ -55,6 +167,7 @@ public class GameSelector extends BorderPane {
         initRightArrow();
         initializePreviewPos();
         gameSelectionBox.getChildren().add(gameSwitchGroup);
+        gameSelectionBox.setTranslateX(13);
         //gameSelectionBox.setMinHeight(300);
         //gameSelectionBox.setTranslateX(-75);
         //gameSelectionBox.setAlignment(Pos.CENTER);
@@ -62,17 +175,23 @@ public class GameSelector extends BorderPane {
     }
     private void initSelectionUI() {
         createGameSelectButton();
-        selectButtonAndNameBox.getChildren().add(selectGameButton);
+        //selectButtonAndNameBox.getChildren().add(selectGameButton);
         //selectButtonAndNameBox.setPadding(new Insets(0, 50, 0, 415));
         //selectButtonAndNameBox.setSpacing(15);
+        selectButtonAndNameBox.setTranslateY(-50);
+        selectButtonAndNameBox.setTranslateX(200);
         selectButtonAndNameBox.setId("buttonandnamebox");
-        selectButtonAndNameBox.getChildren().add(gameNameBackground);
+        selectButtonAndNameBox.getChildren().add(p);
     }
     private void initCompleteView() {
         menuFrame.getChildren().add(gameSelectionBox);
         menuFrame.getChildren().add(selectButtonAndNameBox);
-        menuFrame.setAlignment(Pos.CENTER);
         menuFrame.setSpacing(40);
+        menuFrame.setTranslateY(-100);
+        menuFrame.setTranslateX(-175);
+        menuFrame.setAlignment(Pos.CENTER_RIGHT);
+        menuFrame.setMinHeight(520);
+        menuFrame.setBackground(new Background(new BackgroundFill(Color.MIDNIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         this.setLayoutX(175);
         this.setLayoutY(100);
         this.setCenter(menuFrame);
@@ -139,32 +258,48 @@ public class GameSelector extends BorderPane {
     private void initLeftArrow() {
         leftScrollArrow = new Polygon();
         leftScrollArrow.getPoints().addAll(50.0, 0.0,  50.0, 100.0,0.0, 50.0);
-        leftScrollArrow.setFill(Color.WHITE);
-        leftScrollArrow.setStroke(Color.RED);
+        leftScrollArrow.setFill(Color.RED);
+        leftScrollArrow.setStroke(Color.DARKRED);
         leftScrollArrow.setTranslateX(60);
         leftScrollArrow.setTranslateY(275);
-        leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.LIGHTGRAY));
-        leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.WHITE));
+        leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.DARKRED));
+        leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.RED));
         leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
         gameSwitchGroup.getChildren().add(leftScrollArrow);
     }
     private void initRightArrow() {
         rightScrollArrow = new Polygon();
         rightScrollArrow.getPoints().addAll(50.0, 0.0,  50.0, 100.0,100.0, 50.0);
-        rightScrollArrow.setFill(Color.WHITE);
-        rightScrollArrow.setStroke(Color.RED);
+        rightScrollArrow.setFill(Color.RED);
+        rightScrollArrow.setStroke(Color.DARKRED);
         rightScrollArrow.setTranslateX(850);
         rightScrollArrow.setTranslateY(275);
-        rightScrollArrow.setOnMousePressed(e -> rightScrollArrow.setFill(Color.LIGHTGRAY));
-        rightScrollArrow.setOnMouseReleased(e -> rightScrollArrow.setFill(Color.WHITE));
+        rightScrollArrow.setOnMousePressed(e -> rightScrollArrow.setFill(Color.DARKRED));
+        rightScrollArrow.setOnMouseReleased(e -> rightScrollArrow.setFill(Color.RED));
         rightScrollArrow.setOnMouseClicked(e -> scrollRight());
         gameSwitchGroup.getChildren().add(rightScrollArrow);
     }
     private void reinitializePreviewPos() {
         for (int i = 0; i < playableGamesList.size(); i ++) {
             playableGamesList.get(i).setXPos(100 + playableGamesList.get(i).getWidth()/2 + 300*i);
+            playableGamesList.get(i).setLayoutX((0));
+            playableGamesList.get(i).setLayoutY(0);
             if (playableGamesList.get(i).getXPos() < 850) {
                 playableGamesList.get(i).setVisible(true);
+            }
+            if (i == 1) {
+                DropShadow d = new DropShadow();
+                d.setColor(Color.GOLD);
+                d.setOffsetX(0);
+                d.setOffsetY(0);
+                d.setHeight(10);
+                d.setWidth(10);
+                playableGamesList.get(i).setEffect(d);
+                playableGamesList.get(i).setClickable(true);
+            }
+            else {
+                playableGamesList.get(i).setEffect(null);
+                playableGamesList.get(i).setClickable(false);
             }
         }
         gameName.setText(playableGamesList.get(1).getGameName());
@@ -172,18 +307,27 @@ public class GameSelector extends BorderPane {
     }
     private void initializePreviewPos() {
         for (int i = 0; i < playableGamesList.size(); i ++) {
-            playableGamesList.get(i).setX((100+ playableGamesList.get(i).getWidth()/2)+300*i);
+            playableGamesList.get(i).setLayoutX((100+ playableGamesList.get(i).getWidth()/2)+300*i);
             playableGamesList.get(i).setXPos((100+ playableGamesList.get(i).getWidth()/2)+300*i);
             gameSwitchGroup.getChildren().add(playableGamesList.get(i));
             if (playableGamesList.get(i).getXPos() > 900 || playableGamesList.get(i).getXPos() < 100) {
                 playableGamesList.get(i).setVisible(false);
+                playableGamesList.get(i).setClickable(false);
             }
             else {
                 if (playableGamesList.get(i).getXPos() == 450) {
+                    DropShadow d = new DropShadow();
+                    d.setColor(Color.GOLD);
+                    d.setOffsetX(0);
+                    d.setOffsetY(0);
+                    d.setHeight(10);
+                    d.setWidth(10);
+                    playableGamesList.get(i).setEffect(d);
                     playableGamesList.get(i).setScaleX(2.1);
                     playableGamesList.get(i).setScaleY(2.1);
                     gameName.setText(playableGamesList.get(i).getGameName());
                     gameName.setFill(playableGamesList.get(1).getColor());
+                    playableGamesList.get(i).setClickable(true);
                 }
                 playableGamesList.get(i).setVisible(true);
             }
@@ -254,14 +398,27 @@ public class GameSelector extends BorderPane {
         selectGameButton = makeButton("Select", e -> playableGamesList.get(1).chooseGame());
         gameName.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 50));
         gameName.setId("gamename");
-        gameNameBackground = new HBox();
-        gameNameBackground.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        gameNameBackground.setPadding(new Insets(25, 25, 25, 25));
-        gameNameBackground.setPrefWidth(600);
-        gameNameBackground.setMaxSize(600, 100);
-        gameNameBackground.setTranslateX(-260);
-        gameNameBackground.setAlignment(Pos.CENTER);
-        gameNameBackground.getChildren().add(gameName);
+       // gameNameBackground = new HBox();
+
+        Rectangle r = new Rectangle(600, 100);
+        r.setFill(Color.BLACK);
+        r.setArcHeight(20);
+        r.setArcWidth(30);
+//        gameNameBackground.getChildren().add(r);
+//        gameNameBackground.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+//        gameNameBackground.setPadding(new Insets(25, 25, 25, 25));
+//        gameNameBackground.setPrefWidth(600);
+//        gameNameBackground.setMaxSize(600, 100);
+//        gameNameBackground.setTranslateX(-290);
+//        gameNameBackground.setAlignment(Pos.CENTER);
+//        gameNameBackground.getChildren().add(gameName);
+        p.getChildren().add(r);
+        p.setPadding(new Insets(25, 25, 25, 25));
+        p.setPrefWidth(600);
+        p.setMaxSize(600, 100);
+        p.setTranslateX(-290);
+        p.setAlignment(Pos.CENTER);
+        p.getChildren().add(gameName);
     }
 
     private Button makeButton(String property, EventHandler<ActionEvent> handler) {

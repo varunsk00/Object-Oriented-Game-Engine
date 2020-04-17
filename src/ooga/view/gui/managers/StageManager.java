@@ -25,7 +25,7 @@ public class StageManager {
         //stage.setWidth(1280);
         //stage.setHeight(720);
         stage.show();
-        stage.setFullScreen(true);
+        stage.setResizable(false);
         lastScene = new HashMap<String, Scene>();
         //stage.setResizable(false);
     }
