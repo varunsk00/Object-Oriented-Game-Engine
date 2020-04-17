@@ -40,15 +40,14 @@ public class LevelParser {
 
   private JSONObject jsonObject;
 
-  public LevelParser(String fileName, Controller controller) {
-  public GameParser(String fileName) {
+  public LevelParser(String fileName) {
     myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
     playerNumber = Integer.parseInt(jsonObject.get("players").toString());
     setUpGameParser();
   }
 
-  public GameParser(String fileName, Controller controller) {
+  public LevelParser(String fileName, Controller controller) {
     mainController = controller;
     myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
@@ -88,6 +87,7 @@ public class LevelParser {
     }
   }
 
+
   private List<EntityWrapper> readEntities(JSONArray entitiesArray) {
     List<EntityWrapper> entitiesParsed = new ArrayList<EntityWrapper>();
 
@@ -126,11 +126,11 @@ public class LevelParser {
               }
 
             }
-            }
           }
-
         }
+
       }
+    }
     return entitiesParsed;
   }
 
@@ -152,12 +152,11 @@ public class LevelParser {
   public List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
-
     playerEntityArray = readEntities(playerArrangement);
     if(playerNumber == 1){ //FIXME: MAGIC NUMBER
+      System.out.println("REMOVE");
       playerEntityArray.remove(playerEntityArray.size()-1);
     }
-
     return playerEntityArray;
   }
 
@@ -184,7 +183,7 @@ public class LevelParser {
     for (String key : Collections.list(resources.getKeys())) {
       String regex = resources.getString(key);
       mySymbols.add(new SimpleEntry<>(key,
-          Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
+              Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
     }
   }
 
@@ -213,4 +212,3 @@ public class LevelParser {
     addPatterns(LevelParser.class.getPackageName() + ".resources." + "GameParsingRegex");
   }
 }
-
