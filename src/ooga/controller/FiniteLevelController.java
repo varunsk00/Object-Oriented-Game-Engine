@@ -42,9 +42,6 @@ public class FiniteLevelController implements Controller {
 
 
     myViewManager = new ViewManager(stageManager, builder, null);
-    GameParser hee = new GameParser("SampleLevel", this);
-    List<EntityWrapper> je = hee.parseTileEntities();
-
 
     entityList = new ArrayList<>();
     entityBrickList = new ArrayList<>();
@@ -69,7 +66,7 @@ public class FiniteLevelController implements Controller {
 
     setUpTimeline();
 
-    GameParser parser = new GameParser("SampleLevel", this);
+    GameParser parser = new GameParser("MarioLevel", this);
     List<EntityWrapper> tiles = parser.parseTileEntities();
     List<EntityWrapper> player = parser.parsePlayerEntities();
     List<EntityWrapper> enemy = parser.parseEnemyEntities();

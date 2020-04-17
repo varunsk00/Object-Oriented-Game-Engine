@@ -15,11 +15,14 @@ public class GameCabinet extends Pane {
     private List<GamePreview> myGames;
     private AudioVideoManager avManager;
     private StageManager stageManager;
+    private PlayerSelect myPlayerSelect;
+    private String currentGame;
 
     public GameCabinet(StageManager stageManager, AudioVideoManager av) throws Exception { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
         this.avManager = av;
         this.stageManager = stageManager;
+        this.myPlayerSelect = new PlayerSelect("Mario");
         initGameSelect();
         gameSelector = new GameSelector(myGames);
         this.getChildren().add(gameSelector);
@@ -61,12 +64,24 @@ public class GameCabinet extends Pane {
     public void updateCurrentGame() throws Exception {
         for(GamePreview game: myGames){
             if(game.isGamePressed()) {
-                System.out.println("here");
+                currentGame = game.getGameName();
                 game.resetGameName();
-                String gameName = game.getGameName();
-                avManager.switchGame(stageManager, gameName);
+                launchPlayerSelect(stageManager, currentGame);
                 avManager.switchMusic(stageManager);
             }
+            if (myPlayerSelect.isPlayerSelected()){
+                myPlayerSelect.handleMultiplayer(currentGame);
+                myPlayerSelect.resetButtons();
+                avManager.switchGame(stageManager, currentGame);
+            }
         }
+
+    }
+
+
+
+    private void launchPlayerSelect(StageManager sm, String gameName) throws Exception {
+        myPlayerSelect = new PlayerSelect(gameName);
+        sm.createAndSwitchScenes(myPlayerSelect, gameName);
     }
 }
