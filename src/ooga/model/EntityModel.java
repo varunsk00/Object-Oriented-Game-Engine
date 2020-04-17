@@ -22,6 +22,8 @@ public class EntityModel {
   private double yVelMax;
   private String entityID;
   private boolean onGround;
+  private boolean boundedLeft;
+  private boolean boundedRight;
 
   private double xVel;
   private double yVel;
@@ -40,6 +42,8 @@ public class EntityModel {
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
     forwards = true;
+    boundedLeft = false;
+    boundedRight = false;
   }
 
   private void loadStats() {
@@ -57,16 +61,31 @@ public class EntityModel {
 
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
-
-    for(Action action : controlScheme.getCurrentAction()){
+    for (Action action : controlScheme.getCurrentAction()) {
       actionStack.push(action);
     }
     while(!actionStack.isEmpty()){
       actionStack.pop().execute(this);
     }
     limitSpeed();
+    limitBounds();
     setX(xPos + xVel * elapsedTime);
     setY(yPos + yVel * elapsedTime);
+    System.out.println(yVel);
+    boundedLeft = false;
+    boundedRight = false;
+  }
+
+  private void limitBounds() {
+    if(boundedRight){
+      if(xVel>0){xVel=0;}
+    }
+    if(boundedLeft){
+      if(xVel<0){xVel=0;}
+    }
+    if(isOnGround()){
+      if (yVel > 0) {yVel=0;}
+    }
   }
 
   public void handleKeyInput(String key) {
@@ -151,4 +170,8 @@ public class EntityModel {
     entityHeight = newHeight;
     myEntity.setHeight(newHeight);
   }
+
+  public void setBoundedLeft(boolean value){boundedLeft = value;}
+
+  public void setBoundedRight(boolean value){boundedRight = value;}
 }

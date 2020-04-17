@@ -143,6 +143,6 @@ public class InfiniteLevelController implements Controller {
 
   @Override
   public void removeEntity(EntityWrapper node) {
-
+    //FIXME why is this empty? are we combining controllers?
   }
 }

@@ -38,7 +38,6 @@ public class CollisionEngine {
   public void produceCollisionActions(EntityModel subjectEntity, EntityModel targetEntity) {
     Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
     if (!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)) {
-
       String targetEntityID = targetEntity.getEntityID();
       String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity,
           targetEntity);

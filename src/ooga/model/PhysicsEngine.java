@@ -48,7 +48,7 @@ public class PhysicsEngine {
   private void applyGravity(){
     //System.out.print(entityModel.getEntityID() + ": ");
     if(entityModel.isOnGround()){
-      //System.out.print("Gravity Negated");
+//      System.out.print("Gravity Negated");
       entityModel.setYVelocity(0);
     }
     else{

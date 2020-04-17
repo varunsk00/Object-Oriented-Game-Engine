@@ -146,6 +146,7 @@ public class GameSelector extends BorderPane {
         leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.LIGHTGRAY));
         leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.WHITE));
         leftScrollArrow.setOnMouseClicked(e -> scrollLeft());
+        leftScrollArrow.setId("LeftArrow");
         gameSwitchGroup.getChildren().add(leftScrollArrow);
     }
     private void initRightArrow() {
@@ -158,6 +159,7 @@ public class GameSelector extends BorderPane {
         rightScrollArrow.setOnMousePressed(e -> rightScrollArrow.setFill(Color.LIGHTGRAY));
         rightScrollArrow.setOnMouseReleased(e -> rightScrollArrow.setFill(Color.WHITE));
         rightScrollArrow.setOnMouseClicked(e -> scrollRight());
+        rightScrollArrow.setId("RightArrow");
         gameSwitchGroup.getChildren().add(rightScrollArrow);
     }
     private void reinitializePreviewPos() {
@@ -252,6 +254,7 @@ public class GameSelector extends BorderPane {
     }
     public void createGameSelectButton() {
         selectGameButton = makeButton("Select", e -> playableGamesList.get(1).chooseGame());
+        selectGameButton.setId("Select");
         gameName.setFont(Font.font("ariel", FontWeight.BOLD, FontPosture.REGULAR, 50));
         gameName.setId("gamename");
         gameNameBackground = new HBox();

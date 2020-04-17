@@ -17,7 +17,7 @@
       "ID": "10",
       "Control": [
         {
-          "action": "VelocityX",
+          "action": "AbsoluteVelocityX",
           "param": "200.0"
         },
         {
@@ -30,7 +30,7 @@
       "ID": "10",
       "Control": [
         {
-          "action": "VelocityX",
+          "action": "AbsoluteVelocityX",
           "param": "200.0"
         },
         {

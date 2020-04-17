@@ -110,6 +110,7 @@ public class FiniteLevelController implements Controller {
     entityBuffer = new ArrayList<>();
   }
 
+  @Override
   public void removeEntity(EntityWrapper node) {
     myViewManager.removeEntity(node.getRender());
   }

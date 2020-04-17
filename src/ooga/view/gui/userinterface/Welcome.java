@@ -49,6 +49,7 @@ public class Welcome extends VBox {
     private void renderButton() {
         myButton = new VBox();
         Button playButton = makeButton("Play", event -> playPressed = true);
+        playButton.setId("Play");
         myButton.getChildren().add(playButton);
         formatButton(playButton);
         myButton.setAlignment(Pos.CENTER);
