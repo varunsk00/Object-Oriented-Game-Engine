@@ -1,5 +1,6 @@
 package ooga.util;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -35,8 +36,16 @@ public class GameParser {
   private Controller mainController;
   private double tileHeight;
   private double tileWidth;
+  private int playerNumber;
 
   private JSONObject jsonObject;
+
+  public GameParser(String fileName) {
+    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    jsonObject = (JSONObject) readJsonFile();
+    playerNumber = Integer.parseInt(jsonObject.get("players").toString());
+    setUpGameParser();
+  }
 
   public GameParser(String fileName, Controller controller) {
     mainController = controller;
@@ -44,6 +53,7 @@ public class GameParser {
     jsonObject = (JSONObject) readJsonFile();
     tileHeight = Double.parseDouble(jsonObject.get("tileHeight").toString());
     tileWidth = Double.parseDouble(jsonObject.get("tileWidth").toString());
+    playerNumber = Integer.parseInt(jsonObject.get("players").toString());
     setUpGameParser();
   }
 
@@ -55,6 +65,25 @@ public class GameParser {
       return jsonParser.parse(reader);
     } catch (IOException | ParseException e) {
       throw new InvalidControlSchemeException(e);
+    }
+  }
+
+  public void updateJSONValue(String key, String newValue){
+    JSONObject root = jsonObject;
+    String new_val = newValue;
+    String old_val = root.get(key).toString();
+
+    if(!new_val.equals(old_val))
+    {
+      root.put(key,new_val);
+
+      try (FileWriter file = new FileWriter("src/resources/properties/MarioLevel.json", false)) //FIXME: MULT FILES
+      {
+        file.write(root.toString());
+        System.out.println("Successfully updated json object to file");
+      } catch (IOException e) {
+        e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+      }
     }
   }
 
@@ -126,6 +155,9 @@ public class GameParser {
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
 
     playerEntityArray = readEntities(playerArrangement);
+    if(playerNumber == 1){ //FIXME: MAGIC NUMBER
+      playerEntityArray.remove(playerEntityArray.size()-1);
+    }
 
     return playerEntityArray;
   }

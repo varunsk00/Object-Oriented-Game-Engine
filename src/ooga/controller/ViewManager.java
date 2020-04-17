@@ -18,6 +18,8 @@ import ooga.view.application.games.Game;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
+import java.io.FileNotFoundException;
+
 public class ViewManager implements ViewExternalAPI {
   private Controller myController;
 

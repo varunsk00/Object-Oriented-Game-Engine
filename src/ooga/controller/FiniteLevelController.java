@@ -41,7 +41,14 @@ public class FiniteLevelController implements Controller {
   public FiniteLevelController(StageManager stageManager, Game currGame) { //FIXME add exception stuff
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
-
+//<<<<<<< HEAD
+//
+//=======
+//    builder = new InfiniteLevelBuilder(this);
+//
+//
+//    myViewManager = new ViewManager(stageManager, builder, null);
+//>>>>>>> c8147b6db3bebc4253ceb470282bbe059ca37edc
 
     entityList = new ArrayList<>();
     entityBrickList = new ArrayList<>();
@@ -78,7 +85,8 @@ public class FiniteLevelController implements Controller {
     GameParser hee = new GameParser("SampleLevel", this);
     List<EntityWrapper> je = hee.parseTileEntities();
 
-    GameParser parser = new GameParser("SampleLevel", this);
+  //  GameParser parser = new GameParser("SampleLevel", this);
+    GameParser parser = new GameParser("MarioLevel", this);
     List<EntityWrapper> tiles = parser.parseTileEntities();
     List<EntityWrapper> player = parser.parsePlayerEntities();
     List<EntityWrapper> enemy = parser.parseEnemyEntities();
