@@ -2,15 +2,14 @@ package ooga.controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import javax.swing.text.html.parser.Entity;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
 import ooga.model.levels.InfiniteLevelBuilder;
+import ooga.model.levels.FiniteLevel;
 import ooga.model.levels.Level;
-import ooga.util.GameParser;
+import ooga.model.levels.LevelSelecter;
+import ooga.util.LevelParser;
 import ooga.view.gui.managers.StageManager;
 
 import java.util.ArrayList;
@@ -31,7 +30,8 @@ public class FiniteLevelController implements Controller {
   private Timeline animation;
   private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
-  private Level testLevel;
+  private LevelSelecter levelSelecter;
+
 
 
 
@@ -66,7 +66,9 @@ public class FiniteLevelController implements Controller {
 
     setUpTimeline();
 
-    GameParser parser = new GameParser("MarioLevel", this);
+    LevelParser parser = new LevelParser("SampleLevel", this);
+    LevelParser p2 = new LevelParser("Level2", this);
+
     List<EntityWrapper> tiles = parser.parseTileEntities();
     List<EntityWrapper> player = parser.parsePlayerEntities();
     List<EntityWrapper> enemy = parser.parseEnemyEntities();
@@ -75,7 +77,14 @@ public class FiniteLevelController implements Controller {
       myViewManager.updateEntityGroup(k.getRender());
     }
     myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
-    testLevel = new Level(tiles, player, enemy);
+    Level t1 = new FiniteLevel(tiles, player, enemy);
+    Level t2 = new FiniteLevel(p2.parseTileEntities(), p2.parsePlayerEntities(), p2.parseEnemyEntities());
+
+    List<Level> levelList = new ArrayList<>();
+    levelList.add(t1);
+    levelList.add(t2);
+    levelSelecter = new LevelSelecter(levelList);
+
   }
 
   private void setUpTimeline() {
@@ -89,8 +98,7 @@ public class FiniteLevelController implements Controller {
 
   private void step (double elapsedTime) {
     if (!myViewManager.getIsGamePaused()) {
-      testLevel.despawnEntities(entityList, myViewManager);
-      testLevel.spawnEntities(entityList, myViewManager);
+      levelSelecter.updateCurrentLevel(entityList, myViewManager);
       myViewManager.updateValues();
       //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
       for (EntityWrapper subjectEntity : entityList) {

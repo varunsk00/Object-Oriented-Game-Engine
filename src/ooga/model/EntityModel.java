@@ -20,6 +20,8 @@ public class EntityModel {
   private double health;
   private double xVelMax;
   private double yVelMax;
+  private boolean levelAdvancementStatus;
+  private int nextLevelIndex;
   private String entityID;
   private boolean onGround;
 
@@ -90,6 +92,15 @@ public class EntityModel {
   public void setX(double newX){xPos = newX;}
 
   public void setY(double newY){yPos = newY;}
+
+  public void setLevelAdvancementStatus(boolean newStatus){levelAdvancementStatus = newStatus;}
+
+  public void setNextLevelIndex(int levelIndex){nextLevelIndex = levelIndex;}
+
+  public boolean getLevelAdvancementStatus(){return levelAdvancementStatus;}
+
+  public int getNextLevelIndex(){return nextLevelIndex;}
+
 
   public double getWidth(){return entityWidth;}
 
