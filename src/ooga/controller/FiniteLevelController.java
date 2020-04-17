@@ -1,5 +1,10 @@
 package ooga.controller;
 
+import com.github.strikerx3.jxinput.XInputAxes;
+import com.github.strikerx3.jxinput.XInputButtons;
+import com.github.strikerx3.jxinput.XInputComponents;
+import com.github.strikerx3.jxinput.XInputDevice;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
@@ -83,14 +88,38 @@ public class FiniteLevelController implements Controller {
 
   private void setUpTimeline() {
     //TODO: Timeline Code -- don't remove
-    KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
+    KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> {
+      try {
+        step(SECOND_DELAY);
+      } catch (XInputNotLoadedException ex) {
+        ex.printStackTrace();
+      }
+    });
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
   }
 
-  private void step (double elapsedTime) {
+  private void step (double elapsedTime) throws XInputNotLoadedException {
+    for (XInputDevice device : XInputDevice.getAllDevices()) {
+      if (device.poll()) {
+        // controller is connected, implement your input handling logic here, e.g.:
+        XInputComponents components = device.getComponents();
+        XInputButtons buttons = components.getButtons();
+        boolean bRight = buttons.right; // etc ....
+        XInputAxes axes = components.getAxes();
+        double xPos = axes.lx; // ou rawx ....
+        double yPos = axes.ly;
+        int dp = axes.dpad;
+        System.out.println(xPos);
+
+        // use device.getPlayerNum() if you need to know which player this device is associated with
+      } else {
+        // controller is not connected
+        // in this situation games typically ask the player to reconnect the controller and pause if possible
+      }
+    }
     if (!myViewManager.getIsGamePaused()) {
       testLevel.despawnEntities(entityList, myViewManager);
       testLevel.spawnEntities(entityList, myViewManager);

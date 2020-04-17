@@ -1,5 +1,6 @@
 package ooga.view.gui;
 
+import com.github.strikerx3.jxinput.XInputDevice;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
