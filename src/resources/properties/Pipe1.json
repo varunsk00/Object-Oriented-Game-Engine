@@ -1,5 +1,6 @@
 {
   "levelName": "Pipe1",
+  "levelType": "InfiniteLevel",
   "tileWidth": 100,
   "tileHeight": 100,
   "tileArrangement": [
@@ -28,6 +29,15 @@
       "Arrangement": [
         {
           "3": ["1"]
+        }
+      ]
+    },
+    {
+      "EntityName": "ClearLevelSwitchBlock",
+      "Arrangement": [
+        {
+          "1": ["1"],
+          "2": ["1"]
         }
       ]
     }

@@ -8,45 +8,37 @@ import ooga.model.EntityModel;
 
 public class LevelSelecter {
 
-  private List<InfiniteLevel> parsedLevels;
-  private List<InfiniteLevel> activeLevels;
+  private List<Level> parsedLevels;
+  private Level activeLevel;
 
   private static final int spawningInterval = 500;
   private int currentPlayerInterval = -1;
 
 
-  public LevelSelecter(List<InfiniteLevel> levelList){
+  public LevelSelecter(List<Level> levelList){
     parsedLevels = levelList;
-    activeLevels = new ArrayList<>();
+    activeLevel = parsedLevels.get(0);
   }
 
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-    if(calculatePlayerInterval(currentEntityList.get(0)) > currentPlayerInterval) {
+    if(currentEntityList.get(0).getModel().getLevelAdvancementStatus() && calculatePlayerInterval(currentEntityList.get(0)) > currentPlayerInterval){
+      //TODO: find a better way that the interval to spawn pipes only once
+      switchLevel(currentEntityList.get(0).getModel().getNextLevelIndex());
+      currentEntityList.get(0).getModel().setLevelAdvancementStatus(false);
       currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
-      infiniteLevelSwitch(currentEntityList, viewManager);
-      for (InfiniteLevel level : activeLevels) {
-        level.despawnEntities(currentEntityList, viewManager);
-      }
     }
+    currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
+    activeLevel.spawnEntities(currentEntityList, viewManager);
+    activeLevel.despawnEntities(currentEntityList, viewManager);
   }
 
-  private void infiniteLevelSwitch(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-    double randomSeed = Math.random();
-    int randomIndex = (int) Math.floor(randomSeed * parsedLevels.size());
-    InfiniteLevel level = parsedLevels.get(randomIndex);
-    level.spawnEntities(currentEntityList, viewManager);
-    activeLevels.add(level);
-
-  }
-
-  public void specificLevelSwitch(int levelIndex){
-    activeLevels = new ArrayList<>();
-    activeLevels.add(parsedLevels.get(levelIndex));
+  private void switchLevel(int levelIndex){
+    activeLevel = null;
+    activeLevel = parsedLevels.get(levelIndex);
   }
 
   private int calculatePlayerInterval(EntityWrapper player) {
     return (int) player.getModel().getX()
         / spawningInterval; //TODO: generalize for X and Y scrollers
-
   }
 }
