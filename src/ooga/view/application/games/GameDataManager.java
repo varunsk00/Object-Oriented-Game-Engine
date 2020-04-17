@@ -10,7 +10,7 @@ public class GameDataManager  {
         = new ObjectOutputStream(Files.newOutputStream(Paths.get(fName)))) {
       gameStream.writeObject(data);
     } catch (IOException e) {
-      System.out.println("problem with data");
+      System.out.println(e);
     }
   }
 

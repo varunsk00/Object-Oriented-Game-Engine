@@ -1,5 +1,6 @@
 package ooga.controller;
 
+import java.io.Serializable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import ooga.model.PhysicsEngine;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.levels.Level;
 import ooga.util.GameParser;
+import ooga.view.application.games.Game;
 import ooga.view.gui.managers.StageManager;
 
 import java.util.ArrayList;
@@ -32,18 +34,13 @@ public class FiniteLevelController implements Controller {
   private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
   private Level testLevel;
+  private Game currentGame;
 
 
 
-  public FiniteLevelController(StageManager stageManager) { //FIXME add exception stuff
+  public FiniteLevelController(StageManager stageManager, Game currGame) { //FIXME add exception stuff
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
-    builder = new InfiniteLevelBuilder(this);
-
-
-    myViewManager = new ViewManager(stageManager, builder, null);
-    GameParser hee = new GameParser("SampleLevel", this);
-    List<EntityWrapper> je = hee.parseTileEntities();
 
 
     entityList = new ArrayList<>();
@@ -53,6 +50,8 @@ public class FiniteLevelController implements Controller {
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
+
+    setUpLevelBuilder(stageManager, currGame);
 
     myViewManager.getTestScene().setOnKeyPressed(e -> {
 
@@ -68,6 +67,16 @@ public class FiniteLevelController implements Controller {
     });
 
     setUpTimeline();
+
+
+  }
+
+  public void setUpLevelBuilder(StageManager stageManager, Game currGame) {
+    builder = new InfiniteLevelBuilder(this);
+
+    myViewManager = new ViewManager(stageManager, builder, null, currGame);
+    GameParser hee = new GameParser("SampleLevel", this);
+    List<EntityWrapper> je = hee.parseTileEntities();
 
     GameParser parser = new GameParser("SampleLevel", this);
     List<EntityWrapper> tiles = parser.parseTileEntities();

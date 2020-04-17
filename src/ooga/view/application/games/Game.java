@@ -21,9 +21,9 @@ public class Game implements Serializable {
     private ResourceBundle myGameTypes = ResourceBundle.getBundle(GAME_PACKAGE);
     private Pane myBackgroundPane;
     private StageManager stageManager;
-    private Scene oldScene;
+   // private Scene oldScene;
     private String gameName;
-    private Scene currentScene;
+    //private Scene currentScene;
     private Controller mainController;
     private Map<String, String> gameTypes;
 
@@ -32,8 +32,8 @@ public class Game implements Serializable {
 
     public Game(StageManager stageManager) {
         this.stageManager = stageManager;
-        this.oldScene = stageManager.getPastScene();
-        this.currentScene = stageManager.getCurrentScene();
+        //this.oldScene = stageManager.getPastScene();
+        //this.currentScene = stageManager.getCurrentScene();
         this.myBackgroundPane = new Pane();
         this.gameTypes = new HashMap<>();
         loadGameTypes();
@@ -47,8 +47,8 @@ public class Game implements Serializable {
     public void loadGame(String gameName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         stageManager.setCurrentTitle(gameName);
         Class<?> c = Class.forName(CONTROLLER_PACKAGE + myGameTypes.getString(gameName) + CONTROLLER);
-        Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
-        this.mainController = (Controller) cons.newInstance(stageManager);
+        Constructor<?> cons = c.getDeclaredConstructor(new Class[] {StageManager.class, Game.class});
+        this.mainController = (Controller) cons.newInstance(new Object[] {stageManager, this});
     }
 
     private void loadGameTypes(){
@@ -67,11 +67,11 @@ public class Game implements Serializable {
         stageManager.createAndSwitchScenes(myBackgroundPane, gameName);
     }
 
-    public Scene getCurrentScene() {
-        return currentScene;
-    }
-
-    public void setCurrentScene(StageManager sm) {
-        this.currentScene = sm.getCurrentScene();
-    }
+//    public Scene getCurrentScene() {
+//        return currentScene;
+//    }
+//
+//    public void setCurrentScene(StageManager sm) {
+//        this.currentScene = sm.getCurrentScene();
+//    }
 }

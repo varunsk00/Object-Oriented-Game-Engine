@@ -14,6 +14,7 @@ import ooga.apis.view.ViewExternalAPI;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.levels.LevelBuilder;
 import ooga.view.application.Camera;
+import ooga.view.application.games.Game;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
@@ -34,15 +35,16 @@ public class ViewManager implements ViewExternalAPI {
   private LevelBuilder builder;
   private Pane level;
   private Camera camera;
-
+  private Game currentGame;
   private boolean isGamePaused = false;
 
   private Scene testScene;
 
-  public ViewManager(StageManager stageManager, LevelBuilder builder, Node cameraNode){
-    this.menu = new InGameMenu("TestSandBox");
+  public ViewManager(StageManager stageManager, LevelBuilder builder, Node cameraNode, Game currGame){
+    this.menu = new InGameMenu(currGame);
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
+    currentGame = currGame;
     this.builder = builder;
 
     level = builder.generateLevel();

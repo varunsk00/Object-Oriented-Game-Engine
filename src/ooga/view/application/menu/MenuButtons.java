@@ -1,10 +1,13 @@
 package ooga.view.application.menu;
 
+import com.thoughtworks.xstream.XStream;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 import javafx.scene.text.Text;
+import ooga.view.application.games.Game;
+import ooga.view.application.games.GameDataManager;
 
 public class MenuButtons  {
     private boolean rightPressed;
@@ -12,6 +15,8 @@ public class MenuButtons  {
     private boolean resumePressed;
     private boolean downPressed;
     private VBox myButtons;
+    private Game currentGame;
+    private XStream xStream;
 
     /**
      * Constructor that sets Resource Bundle and initializes all initial states of buttons      *
@@ -19,11 +24,14 @@ public class MenuButtons  {
      * * @param language the current language passed in from ParserController      * @throws
      * FileNotFoundException in case the File does not exist
      */
-    public MenuButtons(String currentGame) {
+    public MenuButtons(Game currentGame) {
         this.rightPressed = false;
         this.leftPressed = false;
         this.downPressed = false;
         this.resumePressed = false;
+        this.currentGame = currentGame;
+        xStream = new XStream();
+        //gameDataManager = new GameDataManager();
         renderButtons();
     }
 
@@ -73,7 +81,11 @@ public class MenuButtons  {
     private void renderButtons() {
         myButtons = new VBox();
         Button ResumeButton = makeButton("Resume", event -> resumePressed = true);
-        Button DownButton = makeButton("Setting 2", event -> downPressed = true);
+        Button DownButton = makeButton("Save Game", event -> {
+            System.out.println("save button");
+            //xStream.toXML(currentGame);
+            GameDataManager.save(currentGame, "savedGameData");
+        });
         Button LeftButton = makeButton("Setting 3", event -> leftPressed = true);
         Button RightButton = makeButton("Setting 4", event -> rightPressed = true);
         Text instructions = new Text("Press Q to Quit");
