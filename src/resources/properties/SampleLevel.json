@@ -1,5 +1,6 @@
 {
   "levelName": "SampleLevel",
+  "levelType": "FiniteLevel",
   "tileWidth": 100,
   "tileHeight": 100,
   "tileArrangement": [
