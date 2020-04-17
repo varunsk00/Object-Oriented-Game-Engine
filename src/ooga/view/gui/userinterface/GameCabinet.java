@@ -75,7 +75,6 @@ public class GameCabinet extends Pane {
                 avManager.switchGame(stageManager, currentGame);
             }
         }
-
     }
 
 

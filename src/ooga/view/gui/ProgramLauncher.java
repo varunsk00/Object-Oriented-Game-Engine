@@ -55,7 +55,8 @@ public class ProgramLauncher {
     private void step() throws Exception { //FIXME: Please fix this monstrosity of if statements
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
-            stageManager.createAndSwitchScenes(library);
+            stageManager.createAndSwitchScenes(library, "GameSelect");
+            stageManager.updateCurrentScene("GameSelect", library.getScene());
         }
         library.updateCurrentGame();
 

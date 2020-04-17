@@ -147,7 +147,7 @@ public class ViewManager implements ViewExternalAPI {
       currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
       currentStage.updateCurrentScene(code.getChar(), currentStage.getPastScene());
       //TODO: pause game when on home screen //pauseGame();
-      currentStage.switchScenes(code.getChar());
+      currentStage.switchScenes("GameSelect");
     }
 
   }

@@ -38,12 +38,6 @@ public class AudioVideoManager {
         playSong(currentSong);
     }
 
-    public void launchPlayerSelect(StageManager sm, String gameName) throws Exception {
-        myPlayerSelect = new PlayerSelect(gameName);
-        sm.createAndSwitchScenes(myPlayerSelect, gameName);
-        switchGame(sm, gameName);
-    }
-
     public void switchGame(StageManager sm, String gameName) throws Exception {
         if (!myInPlayGames.containsKey(gameName)) {
             currentGame = new Game(sm);

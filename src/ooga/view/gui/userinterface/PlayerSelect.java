@@ -22,6 +22,8 @@ public class PlayerSelect extends BorderPane {
     private int playerNum;
     private boolean P1Pressed;
     private boolean P2Pressed;
+    private Button P1Button;
+    private Button P2Button;
     private VBox myButtons;
     private GameParser myGameParser;
 
@@ -57,8 +59,8 @@ public class PlayerSelect extends BorderPane {
 
     private void renderButtons() {
         myButtons = new VBox();
-        Button P1Button = makeButton("1 Player", event -> P1Pressed = true);
-        Button P2Button = makeButton("2 Players", event -> P2Pressed = true);
+        P1Button = makeButton("1 Player", event -> P1Pressed = true);
+        P2Button = makeButton("2 Players", event -> P2Pressed = true);
         myButtons.getChildren().addAll(P1Button, P2Button);
         formatButton(P1Button);
         formatButton(P2Button);
