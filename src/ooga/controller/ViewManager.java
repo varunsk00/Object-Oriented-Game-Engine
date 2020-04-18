@@ -143,7 +143,8 @@ public class ViewManager implements ViewExternalAPI {
       pauseGame();
     } else if (code == KeyCode.Q && escCounter == 1) {
       unPauseGame();
-    } else if (code == KeyCode.H) {
+    }
+    else if (code == KeyCode.H) {
       currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
       currentStage.updateCurrentScene(code.getChar(), currentStage.getPastScene());
       //TODO: pause game when on home screen //pauseGame();
