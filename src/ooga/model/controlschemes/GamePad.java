@@ -11,11 +11,16 @@ public class GamePad {
     private String LEFT_THUMBSTICK_LEFT = "LEFT_THUMBSTICK_LEFT";
     private String RIGHT_THUMBSTICK = "RIGHT_THUMBSTICK";
     private String A_BUTTON = "A_BUTTON";
-    private String B_BUTTON;
+    private String B_BUTTON = "B_BUTTON";
     private String X_BUTTON;
     private String Y_BUTTON;
     private GamePadState myState;
     private boolean released=true;
+    private boolean a_pressed = false;
+    private boolean leftthumbstick_pressed_right = false;
+    private boolean leftthumbstick_pressed_left = false;
+    private boolean rightthumbstick_pressed = false;
+    private boolean b_pressed = false;
     public GamePad() throws XInputNotLoadedException {
         XInputDeviceListener listener = new XInputDeviceListener() {
             @Override
@@ -49,29 +54,63 @@ public class GamePad {
                 XInputAxes axes = components.getAxes();
                 //System.out.println(axes.get(XInputAxis.LEFT_THUMBSTICK_X));
                 //System.out.println(buttons.a);
+                System.out.println(a_pressed);
                 if (buttons.a) {
                     GamePadState g = new GamePadState(A_BUTTON, false);
+                    a_pressed = true;
                     sendInput(g);
                     break;
                 }
-                else if (!buttons.a) {
+                if (a_pressed) {
                     GamePadState g = new GamePadState(A_BUTTON, true);
                     sendInput(g);
+                    a_pressed = false;
+                    break;
+                }
+                if (buttons.b) {
+                    GamePadState g = new GamePadState(B_BUTTON, false);
+                    b_pressed = true;
+                    sendInput(g);
+                    device.setVibration(65535, 65535);
+                    break;
+                }
+                if (b_pressed) {
+                    GamePadState g = new GamePadState(B_BUTTON, true);
+                    sendInput(g);
+                    device.setVibration(0, 0);
+                    b_pressed = false;
+                    break;
                 }
                 if (axes.get(XInputAxis.LEFT_THUMBSTICK_X) > .3) {
                     GamePadState g = new GamePadState(LEFT_THUMBSTICK_RIGHT, false);
                     sendInput(g);
+                    leftthumbstick_pressed_right = true;
                     break;
                 }
-                else if (axes.get(XInputAxis.LEFT_THUMBSTICK_X) <= .3) {
-                    GamePadState g = new GamePadState(LEFT_THUMBSTICK_RIGHT, true);
-                    sendInput(g);
-                }
-                if (axes.get(XInputAxis.LEFT_THUMBSTICK_X) < 0) {
+                if (axes.get(XInputAxis.LEFT_THUMBSTICK_X) < -.3) {
                     GamePadState g = new GamePadState(LEFT_THUMBSTICK_LEFT, false);
                     sendInput(g);
+                    leftthumbstick_pressed_left = true;
                     break;
                 }
+                if (leftthumbstick_pressed_right) {
+                    GamePadState g = new GamePadState(LEFT_THUMBSTICK_RIGHT, true);
+                    sendInput(g);
+                    leftthumbstick_pressed_right = false;
+                    break;
+                }
+                if (leftthumbstick_pressed_left) {
+                    GamePadState g = new GamePadState(LEFT_THUMBSTICK_LEFT, true);
+                    sendInput(g);
+                    leftthumbstick_pressed_left = false;
+                    break;
+                }
+
+
+//                else if (axes.get(XInputAxis.LEFT_THUMBSTICK_X) > -.3 || axes.get(XInputAxis.LEFT_THUMBSTICK_X) < .3) {
+//                    GamePadState g = new GamePadState(LEFT_THUMBSTICK_RIGHT, true);
+//                    sendInput(g);
+//                }
 
                 // use device.getPlayerNum() if you need to know which player this device is associated with
             } else {

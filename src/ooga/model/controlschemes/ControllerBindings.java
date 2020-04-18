@@ -34,8 +34,10 @@ public class ControllerBindings extends ControlScheme {
 
     @Override
     public void handleKeyReleased(String key) {
+        System.out.println(key);
         if (controllerBindings.containsKey(key) && currentAction
                 .containsAll(controllerBindings.get(key))) {
+            System.out.println("BINDINGS");
             currentAction.removeAll(controllerBindings.get(key));
             //System.out.println(keyEvent.getCode().toString());
         }

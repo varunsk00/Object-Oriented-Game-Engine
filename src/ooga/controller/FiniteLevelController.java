@@ -116,9 +116,10 @@ public class FiniteLevelController implements Controller {
     //System.out.println(g.getInput());
     if (g.getState() != null) {
       if (!g.getState().getPressed()) {
-        System.out.println("HERE");
+        System.out.println("PRESSED");
         entityList.get(0).handleControllerInputPressed(g.getState().getControl());
       } else if (g.getState().getPressed()) {
+        System.out.println("RELEASED");
         entityList.get(0).handleControllerInputReleased(g.getState().getControl());
       }
     }
