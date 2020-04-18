@@ -32,9 +32,9 @@ public class PhysicsEngine {
 
   //
   private void applyResistiveForces() {
-    if (Math.abs(entityModel.getXVelocity()) > 0) {
+    if (!entityModel.getFixed() || Math.abs(entityModel.getXVelocity()) > 0) {
       double opposingDirection = -Math.signum(entityModel.getXVelocity());
-      if (entityModel.getFixed() || entityModel.isOnGround()) {
+      if (entityModel.isOnGround()) {
         String frictionParameter = String.valueOf(opposingDirection * frictionForce);
         entityModel.getActionStack().push(new AccelerateX(frictionParameter));
       }
