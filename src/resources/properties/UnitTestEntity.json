@@ -6,7 +6,7 @@
   "yPos": 0,
   "xVel": 0,
   "yVel": 0,
-  "grounded": true,
+  "fixed": true,
   "maxXVel": 1000,
   "maxYVel": 1000,
   "height": 100,

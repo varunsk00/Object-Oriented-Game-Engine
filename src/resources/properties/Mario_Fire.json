@@ -6,7 +6,7 @@
   "yPos": 100,
   "xVel": 10,
   "yVel": 10,
-  "grounded": false,
+  "fixed": false,
   "maxXVel": 500,
   "maxYVel": 500,
   "height": 100,
@@ -98,7 +98,7 @@
         },
         {
           "action": "MoveY",
-          "param": "0",
+          "param": "-1",
           "orientation": "N"
         }
       ]
@@ -118,7 +118,7 @@
         },
         {
           "action": "MoveY",
-          "param": "0",
+          "param": "-1",
           "orientation": "N"
         }
       ]
@@ -138,7 +138,7 @@
         },
         {
           "action": "MoveY",
-          "param": "0",
+          "param": "-1",
           "orientation": "N"
         }
       ]
@@ -158,7 +158,7 @@
         },
         {
           "action": "MoveY",
-          "param": "0",
+          "param": "-1",
           "orientation": "N"
         }
       ]
@@ -387,7 +387,7 @@
       "ID": "DEFAULT",
       "Control": [
         {
-          "action": "SetGroundStatus",
+          "action": "NoAction",
           "param": "false",
           "orientation": "DEFAULT"
         }

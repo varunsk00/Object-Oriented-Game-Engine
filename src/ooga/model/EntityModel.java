@@ -21,9 +21,11 @@ public class EntityModel {
   private double xVelMax;
   private double yVelMax;
   private String entityID;
+  private boolean fixedEntity;
   private boolean onGround;
   private boolean boundedLeft;
   private boolean boundedRight;
+  private boolean colliding;
 
   private double xVel;
   private double yVel;
@@ -44,6 +46,7 @@ public class EntityModel {
     forwards = true;
     boundedLeft = false;
     boundedRight = false;
+    onGround = false;
   }
 
   private void loadStats() {
@@ -56,7 +59,7 @@ public class EntityModel {
     health = myEntity.getParser().readHealth();
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
-    onGround = myEntity.getParser().readGrounded();
+    fixedEntity = myEntity.getParser().readFixed();
   }
 
   public void update(double elapsedTime){
@@ -71,9 +74,9 @@ public class EntityModel {
     limitBounds();
     setX(xPos + xVel * elapsedTime);
     setY(yPos + yVel * elapsedTime);
-    System.out.println(yVel);
     boundedLeft = false;
     boundedRight = false;
+    onGround = false;
   }
 
   private void limitBounds() {
@@ -83,7 +86,7 @@ public class EntityModel {
     if(boundedLeft){
       if(xVel<0){xVel=0;}
     }
-    if(isOnGround()){
+    if(onGround){
       if (yVel > 0) {yVel=0;}
     }
   }
@@ -126,6 +129,7 @@ public class EntityModel {
   public boolean isOnGround(){
     return onGround;
   }
+
   public String getEntityID(){
     return this.entityID;
   }
@@ -174,4 +178,6 @@ public class EntityModel {
   public void setBoundedLeft(boolean value){boundedLeft = value;}
 
   public void setBoundedRight(boolean value){boundedRight = value;}
+
+  public boolean getFixed(){return fixedEntity;}
 }
