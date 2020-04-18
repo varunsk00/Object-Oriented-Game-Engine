@@ -23,7 +23,11 @@ public class EntityModel {
   private boolean levelAdvancementStatus;
   private int nextLevelIndex;
   private String entityID;
+  private boolean fixedEntity;
   private boolean onGround;
+  private boolean boundedLeft;
+  private boolean boundedRight;
+  private boolean colliding;
 
   private double xVel;
   private double yVel;
@@ -42,6 +46,9 @@ public class EntityModel {
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
     forwards = true;
+    boundedLeft = false;
+    boundedRight = false;
+    onGround = false;
   }
 
   private void loadStats() {
@@ -54,22 +61,36 @@ public class EntityModel {
     health = myEntity.getParser().readHealth();
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
-    onGround = myEntity.getParser().readGrounded();
+    fixedEntity = myEntity.getParser().readFixed();
   }
 
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
-
-    for(Action action : controlScheme.getCurrentAction()){
-      System.out.println(action);
+    for (Action action : controlScheme.getCurrentAction()) {
       actionStack.push(action);
     }
     while(!actionStack.isEmpty()){
       actionStack.pop().execute(this);
     }
     limitSpeed();
+    limitBounds();
     setX(xPos + xVel * elapsedTime);
     setY(yPos + yVel * elapsedTime);
+    boundedLeft = false;
+    boundedRight = false;
+    onGround = false;
+  }
+
+  private void limitBounds() {
+    if(boundedRight){
+      if(xVel>0){xVel=0;}
+    }
+    if(boundedLeft){
+      if(xVel<0){xVel=0;}
+    }
+    if(onGround){
+      if (yVel > 0) {yVel=0;}
+    }
   }
 
   public void handleKeyInput(String key) {
@@ -132,6 +153,7 @@ public class EntityModel {
   public boolean isOnGround(){
     return onGround;
   }
+
   public String getEntityID(){
     return this.entityID;
   }
@@ -176,4 +198,10 @@ public class EntityModel {
     entityHeight = newHeight;
     myEntity.setHeight(newHeight);
   }
+
+  public void setBoundedLeft(boolean value){boundedLeft = value;}
+
+  public void setBoundedRight(boolean value){boundedRight = value;}
+
+  public boolean getFixed(){return fixedEntity;}
 }

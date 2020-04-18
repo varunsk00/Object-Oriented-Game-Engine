@@ -6,15 +6,15 @@
   "yPos": 100,
   "xVel": 10,
   "yVel": 10,
-  "grounded": false,
+  "fixed": false,
   "maxXVel": 500,
   "maxYVel": 500,
   "height": 100,
   "width": 100,
-  "scheme": "Keybindings",
+  "scheme": "ControllerBindings",
   "actionBundles": [
     {
-      "ID": "L",
+      "ID": "LEFT_THUMBSTICK_RIGHT",
       "Control": [
         {
 
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "ID": "J",
+      "ID": "LEFT_THUMBSTICK_LEFT",
       "Control": [
         {
 
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "ID": "I",
+      "ID": "W",
       "Control": [
         {
 
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "ID": "K",
+      "ID": "S",
       "Control": [
         {
 
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "ID": "M",
+      "ID": "A_BUTTON",
       "Control": [
         {
           "action": "Jump",
@@ -72,7 +72,7 @@
       ]
     },
     {
-      "ID": "P",
+      "ID": "B_BUTTON",
       "Control": [
         {
           "action": "SpawnRelative",

@@ -9,7 +9,7 @@ import ooga.model.PhysicsEngine;
 import ooga.model.levels.InfiniteLevel;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.levels.Level;
-import ooga.model.levels.LevelSelecter;
+import ooga.model.levels.LevelSelector;
 import ooga.util.LevelParser;
 import ooga.view.application.Camera;
 import ooga.view.gui.managers.StageManager;
@@ -36,7 +36,7 @@ public class InfiniteLevelController implements Controller {
   private Camera camera;
   private Pane level;
   private ViewManager myViewManager;
-  private LevelSelecter levelSelecter;
+  private LevelSelector levelSelector;
 
 
   public InfiniteLevelController(StageManager stageManager) { //FIXME add exception stuff
@@ -93,7 +93,7 @@ public class InfiniteLevelController implements Controller {
     levels.add(level4);
     levels.add(level5);
 
-    levelSelecter = new LevelSelecter(levels);
+    levelSelector = new LevelSelector(levels);
 
 
   }
@@ -110,7 +110,7 @@ public class InfiniteLevelController implements Controller {
   private void step(double elapsedTime) {
 //    System.out.println(entityList.size());
     if (!myViewManager.getIsGamePaused()) {
-      levelSelecter.updateCurrentLevel(entityList, myViewManager);
+      levelSelector.updateCurrentLevel(entityList, myViewManager);
       myViewManager.updateValues();
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
@@ -138,7 +138,6 @@ public class InfiniteLevelController implements Controller {
 
   @Override
   public void removeEntity(EntityWrapper node) {
-
+    //FIXME why is this empty? are we combining controllers?
   }
-
 }

@@ -32,19 +32,19 @@ public class CollisionEngine {
 
   public CollisionEngine() {
     //TODO: do I need a parameter to the constructor?
+    //if this doesnt need to construct anything, consider making it static? -- alex
   }
 
   public void produceCollisionActions(EntityModel subjectEntity, EntityModel targetEntity) {
     Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
     if (!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)) {
-
       String targetEntityID = targetEntity.getEntityID();
       String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity,
           targetEntity);
 
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID,
           targetEntityCollisionSide);
-      //System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
+//      System.out.println("Subject: " + subjectEntity.getEntityID() + "-----------" + "Target: " + targetEntityID);
       for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
         if (targetEntityCollisionKey.equals(collisionMapKey)) {
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);

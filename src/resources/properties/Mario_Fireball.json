@@ -2,7 +2,7 @@
   "entityName": "Fireball",
   "image": "mario_fireball.gif",
   "health": 1,
-  "grounded": false,
+  "fixed": false,
   "xPos": -1000,
   "yPos": -100,
   "xVel": 10,
@@ -17,7 +17,7 @@
       "ID": "10",
       "Control": [
         {
-          "action": "VelocityX",
+          "action": "AbsoluteVelocityX",
           "param": "200.0"
         },
         {
@@ -30,7 +30,7 @@
       "ID": "10",
       "Control": [
         {
-          "action": "VelocityX",
+          "action": "AbsoluteVelocityX",
           "param": "200.0"
         },
         {

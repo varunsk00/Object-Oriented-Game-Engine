@@ -6,6 +6,7 @@ import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ooga.view.application.games.Game;
@@ -18,6 +19,7 @@ public class StageManager {
     private Stage stage;
     private Scene currentScene;
     private Scene pastScene;
+    private String pastTitle;
     private Scene homeScene;
     private Map<String, Scene> lastScene;
 
@@ -57,11 +59,28 @@ public class StageManager {
     }
     public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
+        pastTitle = stage.getTitle();
         currentScene = new Scene(parentNode, SCENE_WIDTH, SCENE_HEIGHT);
+        currentScene.setOnKeyPressed(e -> {
+            try {
+                handleKeyInput(e.getCode());
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+            }
+        });;
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);
     }
+
+    private void handleKeyInput (KeyCode code) throws FileNotFoundException { //TODO: COMBINE WITH HOME AND SUSPEND POINTS
+        if(code == KeyCode.H){
+            System.out.println("HOME");
+            stage.setScene(pastScene);
+            stage.setTitle("GameSelect");
+        }
+    }
+
     public String getCurrentTitle() {
         return stage.getTitle();
     }

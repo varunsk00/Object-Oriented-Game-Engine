@@ -14,7 +14,7 @@
   "scheme": "AI",
   "actionBundles": [
     {
-      "ID": "50",
+      "ID": "25",
       "Control": [
         {
 
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "ID": "50",
+      "ID": "25",
       "Control": [
         {
 
@@ -38,6 +38,16 @@
         {
           "action": "SetXDirection",
           "param": "backwards"
+        }
+      ]
+    },
+    {
+      "ID": "50",
+      "Control": [
+        {
+
+          "action": "NoAction",
+          "param": ""
         }
       ]
     }

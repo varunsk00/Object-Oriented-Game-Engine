@@ -34,7 +34,7 @@ public class PhysicsEngine {
   private void applyResistiveForces() {
     if (Math.abs(entityModel.getXVelocity()) > 0) {
       double opposingDirection = -Math.signum(entityModel.getXVelocity());
-      if (entityModel.isOnGround()) {
+      if (entityModel.getFixed() || entityModel.isOnGround()) {
         String frictionParameter = String.valueOf(opposingDirection * frictionForce);
         entityModel.getActionStack().push(new AccelerateX(frictionParameter));
       }
@@ -47,7 +47,7 @@ public class PhysicsEngine {
 
   private void applyGravity(){
     //System.out.print(entityModel.getEntityID() + ": ");
-    if(entityModel.isOnGround()){
+    if(entityModel.getFixed() || entityModel.isOnGround()){
       //System.out.print("Gravity Negated");
       entityModel.setYVelocity(0);
     }

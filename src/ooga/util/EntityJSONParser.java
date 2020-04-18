@@ -189,7 +189,10 @@ public class EntityJSONParser {
     return Double.parseDouble(jsonObject.get("maxYVel").toString());
   }
 
-  public boolean readGrounded() {
-    return Boolean.parseBoolean(jsonObject.get("grounded").toString());
+  public boolean readFixed() {
+    if (jsonObject.get("fixed") != null) {
+      return Boolean.parseBoolean(jsonObject.get("fixed").toString());
+    }
+    return false;
   }
 }
