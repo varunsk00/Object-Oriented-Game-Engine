@@ -23,11 +23,10 @@ public class LevelSelecter {
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager){
     if(currentEntityList.get(0).getModel().getLevelAdvancementStatus() && calculatePlayerInterval(currentEntityList.get(0)) > currentPlayerInterval){
       //TODO: find a better way that the interval to spawn pipes only once
+      currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
       switchLevel(currentEntityList.get(0).getModel().getNextLevelIndex());
       currentEntityList.get(0).getModel().setLevelAdvancementStatus(false);
-      currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
     }
-    currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
     activeLevel.spawnEntities(currentEntityList, viewManager);
     activeLevel.despawnEntities(currentEntityList, viewManager);
   }
