@@ -1,6 +1,7 @@
 package ooga.controller;
 
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -94,8 +95,8 @@ public class ViewManager implements ViewExternalAPI {
   }
 
   public void updateValues() {
-    handleMouseInput();
-    camera.update();
+    //handleMouseInput();
+    camera.update(menu);
     //builder.updateLevel(camera.getViewPort(), level);
   }
 
@@ -172,6 +173,7 @@ public class ViewManager implements ViewExternalAPI {
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
     isGamePaused = true;
+    menu.setAlignment(Pos.CENTER);
     testPane.getChildren().add(menu);
     escCounter++;
 

@@ -114,8 +114,8 @@ public class FiniteLevelController implements Controller {
 
   private void step (double elapsedTime) throws XInputNotLoadedException {
     g.update();
-    //System.out.println(g.getInput());
-    if (player.size() >1 ) {
+    myViewManager.handleMouseInput();
+    if (player.size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (g.getState() != null) {
         if (!g.getState().getPressed()) {
           System.out.println("PRESSED");
