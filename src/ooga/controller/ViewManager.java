@@ -24,10 +24,6 @@ public class ViewManager implements ViewExternalAPI {
   private Pane testPane;
   private Group EntityGroup;
 
-  private static final int groundY = 300;
-  private Rectangle testRectangle = new Rectangle(50, 50, Color.AZURE);
-
-  private Line testGround = new Line(0, groundY, 1000, groundY);
   private InGameMenu menu;
   private int escCounter = 0;
 
@@ -49,17 +45,12 @@ public class ViewManager implements ViewExternalAPI {
     level = builder.generateLevel();
 
     testPane = level;
-    for(int i = 0; i < 20; i++){
-      level.getChildren().add(new Rectangle(0+i*100, 10, 10, 10));
-    }
 
     testScene = currentStage.getCurrentScene();
     testScene.setRoot(testPane);
 
     EntityGroup = new Group();
     level.getChildren().add(EntityGroup);
-    EntityGroup.getChildren().add(testRectangle);
-    EntityGroup.getChildren().add(testGround);
 
     this.testScene = stageManager.getCurrentScene();
 

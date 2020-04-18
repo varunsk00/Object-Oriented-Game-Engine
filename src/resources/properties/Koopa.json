@@ -1,6 +1,6 @@
 {
-  "entityName": "Fire_Mario",
-  "image": "firemario_walk.gif",
+  "entityName": "Koopa",
+  "image": "koopa.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
@@ -9,17 +9,17 @@
   "grounded": false,
   "maxXVel": 500,
   "maxYVel": 500,
-  "height": 50,
-  "width": 50,
-  "scheme": "ControllerBindings",
+  "height": 40,
+  "width": 40,
+  "scheme": "AI",
   "actionBundles": [
     {
-      "ID": "LEFT_THUMBSTICK_RIGHT",
+      "ID": "50",
       "Control": [
         {
 
           "action": "AccelerateX",
-          "param": "300.0"
+          "param": "15.0"
         },
         {
           "action": "SetXDirection",
@@ -28,56 +28,16 @@
       ]
     },
     {
-      "ID": "LEFT_THUMBSTICK_LEFT",
+      "ID": "50",
       "Control": [
         {
 
           "action": "AccelerateX",
-          "param": "-300.0"
+          "param": "-15.0"
         },
         {
           "action": "SetXDirection",
           "param": "backwards"
-        }
-      ]
-    },
-    {
-      "ID": "W",
-      "Control": [
-        {
-
-          "action": "AccelerateY",
-          "param": "-300.0"
-        }
-      ]
-    },
-    {
-      "ID": "S",
-      "Control": [
-        {
-
-          "action": "AccelerateY",
-          "param": "+300.0"
-        }
-
-      ]
-    },
-    {
-      "ID": "A_BUTTON",
-      "Control": [
-        {
-          "action": "Jump",
-          "param": "-750.0"
-        }
-      ]
-    },
-    {
-      "ID": "B_BUTTON",
-      "Control": [
-        {
-          "action": "SpawnRelative",
-          "param": "Mario_Fireball",
-          "coolDown": "1000"
         }
       ]
     }

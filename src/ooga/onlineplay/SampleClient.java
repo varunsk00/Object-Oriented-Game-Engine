@@ -5,13 +5,16 @@ import java.net.*;
 
 
 public class SampleClient {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
+        
         Socket kkSocket = null;
         PrintWriter pw = null;
         BufferedReader br = null;
+        InetAddress ip = InetAddress.getLocalHost();
+        System.out.println(ip.getHostName());
 
         try {
-            kkSocket = new Socket("MSI", 4444);
+            kkSocket = new Socket(ip.getHostName(), 4444);
             pw = new PrintWriter(kkSocket.getOutputStream());
             br = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
         } catch (UnknownHostException e) {
