@@ -1,5 +1,7 @@
 package ooga.onlineplay;
 
+import ooga.Main;
+
 import java.net.*;
 import java.io.*;
 
@@ -20,8 +22,8 @@ public class SampleProtocol {
             "Bless you!",
             "Is there an owl in here?",
             "Is there an echo in here?" };
-
     public String processInput(String theInput) {
+
         String theOutput = null;
 
         if (state == WAITING) {

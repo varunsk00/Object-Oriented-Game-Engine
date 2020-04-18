@@ -1,15 +1,17 @@
 package ooga.controller;
 
-import com.github.strikerx3.jxinput.XInputAxes;
-import com.github.strikerx3.jxinput.XInputButtons;
-import com.github.strikerx3.jxinput.XInputComponents;
-import com.github.strikerx3.jxinput.XInputDevice;
+import com.github.strikerx3.jxinput.*;
+import com.github.strikerx3.jxinput.enums.XInputAxis;
+import com.github.strikerx3.jxinput.enums.XInputButton;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+import com.github.strikerx3.jxinput.listener.SimpleXInputDeviceListener;
+import com.github.strikerx3.jxinput.listener.XInputDeviceListener;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
+import ooga.model.controlschemes.GamePad;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.model.levels.FiniteLevel;
 import ooga.model.levels.Level;
@@ -36,15 +38,16 @@ public class FiniteLevelController implements Controller {
   private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
   private LevelSelecter levelSelecter;
+  private GamePad g;
 
 
 
 
-  public FiniteLevelController(StageManager stageManager) { //FIXME add exception stuff
+  public FiniteLevelController(StageManager stageManager) throws XInputNotLoadedException { //FIXME add exception stuff
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);
-
+    g = new GamePad();
 
     myViewManager = new ViewManager(stageManager, builder, null);
 
@@ -55,7 +58,6 @@ public class FiniteLevelController implements Controller {
 
     physicsEngine = new PhysicsEngine("dummyString");
     collisionEngine = new CollisionEngine();
-
     myViewManager.getTestScene().setOnKeyPressed(e -> {
 
       myViewManager.handlePressInput(e.getCode());
@@ -94,7 +96,8 @@ public class FiniteLevelController implements Controller {
 
   private void setUpTimeline() {
     //TODO: Timeline Code -- don't remove
-    KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> {
+    KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e ->
+    {
       try {
         step(SECOND_DELAY);
       } catch (XInputNotLoadedException ex) {
@@ -105,25 +108,18 @@ public class FiniteLevelController implements Controller {
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
+
   }
 
   private void step (double elapsedTime) throws XInputNotLoadedException {
-    for (XInputDevice device : XInputDevice.getAllDevices()) {
-      if (device.poll()) {
-        // controller is connected, implement your input handling logic here, e.g.:
-        XInputComponents components = device.getComponents();
-        XInputButtons buttons = components.getButtons();
-        boolean bRight = buttons.right; // etc ....
-        XInputAxes axes = components.getAxes();
-        double xPos = axes.lx; // ou rawx ....
-        double yPos = axes.ly;
-        int dp = axes.dpad;
-        System.out.println(xPos);
-
-        // use device.getPlayerNum() if you need to know which player this device is associated with
-      } else {
-        // controller is not connected
-        // in this situation games typically ask the player to reconnect the controller and pause if possible
+    g.update();
+    //System.out.println(g.getInput());
+    if (g.getState() != null) {
+      if (!g.getState().getPressed()) {
+        System.out.println("HERE");
+        entityList.get(0).handleControllerInputPressed(g.getState().getControl());
+      } else if (g.getState().getPressed()) {
+        entityList.get(0).handleControllerInputReleased(g.getState().getControl());
       }
     }
     if (!myViewManager.getIsGamePaused()) {

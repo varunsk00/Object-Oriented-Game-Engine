@@ -61,6 +61,7 @@ public class EntityModel {
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
 
     for(Action action : controlScheme.getCurrentAction()){
+      System.out.println(action);
       actionStack.push(action);
     }
     while(!actionStack.isEmpty()){
@@ -77,6 +78,18 @@ public class EntityModel {
 
   public void handleKeyReleased(String key) {
     controlScheme.handleKeyReleased(key);
+  }
+
+  public void handleControllerInputPressed(String key) {
+    if (key != null) {
+      System.out.println(key);
+      controlScheme.handleKeyInput(key);
+    }
+  }
+  public void handleControllerInputReleased(String key) {
+    if (key != null) {
+      controlScheme.handleKeyReleased(key);
+    }
   }
 
   private void limitSpeed(){
