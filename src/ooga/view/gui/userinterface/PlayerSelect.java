@@ -27,6 +27,9 @@ public class PlayerSelect extends BorderPane {
     private VBox myButtons;
     private LevelParser myGameParser;
 
+    public PlayerSelect() throws FileNotFoundException {
+    }
+
     public PlayerSelect(String name) throws FileNotFoundException {
         this.gameName = name;
         setBackground();

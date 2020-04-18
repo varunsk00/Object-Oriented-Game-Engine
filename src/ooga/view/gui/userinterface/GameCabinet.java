@@ -23,7 +23,7 @@ public class GameCabinet extends Pane {
         this.myGames = new ArrayList<>();
         this.avManager = av;
         this.stageManager = stageManager;
-        this.myPlayerSelect = new PlayerSelect("Mario");
+        this.myPlayerSelect = new PlayerSelect();
         initGameSelect();
         gameSelector = new GameSelector(myGames);
         this.getChildren().add(gameSelector);
@@ -63,6 +63,10 @@ public class GameCabinet extends Pane {
     }
 
     public void updateCurrentGame() throws Exception {
+        if(isHomePressed()){
+            avManager.switchMusic(stageManager);
+            stageManager.setCurrentTitle("BOOGA");
+        }
         for(GamePreview game: myGames){
             if(game.isGamePressed()) {
                 currentGame = game.getGameName();
@@ -78,6 +82,10 @@ public class GameCabinet extends Pane {
                 avManager.switchGame(stageManager, currentGame);
             }
         }
+    }
+
+    private boolean isHomePressed(){
+        return stageManager.getCurrentTitle().equals("GameSelect");
     }
 
 
