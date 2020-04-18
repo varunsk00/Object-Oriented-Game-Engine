@@ -16,6 +16,7 @@ public class GameCabinet extends Pane {
     private AudioVideoManager avManager;
     private StageManager stageManager;
     private PlayerSelect myPlayerSelect;
+    private int numPlayers;
     private String currentGame;
 
     public GameCabinet(StageManager stageManager, AudioVideoManager av) throws Exception { //FIXME ADD ERROR HANDLING
@@ -67,9 +68,11 @@ public class GameCabinet extends Pane {
                 currentGame = game.getGameName();
                 game.resetGameName();
                 launchPlayerSelect(stageManager, currentGame);
+                disableUnselectedButton();
                 avManager.switchMusic(stageManager);
             }
             if (myPlayerSelect.isPlayerSelected()){
+                this.numPlayers = myPlayerSelect.playerNumber();
                 myPlayerSelect.handleMultiplayer(currentGame);
                 myPlayerSelect.resetButtons();
                 avManager.switchGame(stageManager, currentGame);
@@ -78,7 +81,14 @@ public class GameCabinet extends Pane {
     }
 
 
-
+    private void disableUnselectedButton(){ //FIXME: HORRENDOUS CODE
+        if (numPlayers == 2){
+            myPlayerSelect.disableP1Button();
+        }
+        if (numPlayers == 1){
+            myPlayerSelect.disableP2Button();
+        }
+    }
     private void launchPlayerSelect(StageManager sm, String gameName) throws Exception {
         myPlayerSelect = new PlayerSelect(gameName);
         sm.createAndSwitchScenes(myPlayerSelect, gameName);
