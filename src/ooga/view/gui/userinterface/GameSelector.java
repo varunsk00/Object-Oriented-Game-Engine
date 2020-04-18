@@ -69,9 +69,9 @@ public class GameSelector extends BorderPane {
         Text t1 = new Text("BOOGA");
         Text t2 = new Text("Bob's Object Oriented Game Arcade");
         t1.setFill(Color.RED);
-        t1.setId("t");
+        t1.setId("logo");
         t2.setFill(Color.RED);
-        t2.setId("t");
+        t2.setId("logo");
         t1.setFont(Font.font(35));
         t2.setFont(Font.font(20));
         textbox.getChildren().addAll(t1, t2);

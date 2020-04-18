@@ -41,7 +41,7 @@ public class FiniteLevelController implements Controller {
   private GamePad g;
 
 
-  
+
   public FiniteLevelController(StageManager stageManager) throws XInputNotLoadedException { //FIXME add exception stuff
 
 

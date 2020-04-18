@@ -11,10 +11,10 @@
   "maxYVel": 500,
   "height": 100,
   "width": 100,
-  "scheme": "ControllerBindings",
+  "scheme": "Keybindings",
   "actionBundles": [
     {
-      "ID": "LEFT_THUMBSTICK_RIGHT",
+      "ID": "D",
       "Control": [
         {
 
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "ID": "LEFT_THUMBSTICK_LEFT",
+      "ID": "A",
       "Control": [
         {
 
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "ID": "A_BUTTON",
+      "ID": "SPACE",
       "Control": [
         {
           "action": "Jump",
