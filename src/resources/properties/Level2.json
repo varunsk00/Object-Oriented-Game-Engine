@@ -3,6 +3,7 @@
   "levelType": "FiniteLevel",
   "tileWidth": 100,
   "tileHeight": 100,
+  "players": 1,
   "tileArrangement": [
     {
       "EntityName": "Brick",

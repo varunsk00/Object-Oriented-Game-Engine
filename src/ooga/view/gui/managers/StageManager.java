@@ -1,5 +1,6 @@
 package ooga.view.gui.managers;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.Node;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ooga.view.application.games.Game;
+import ooga.view.gui.userinterface.Welcome;
 
 //TODO: REFACTOR, CLEAN UP MAGIC, REMOVE UNNECESSARY METHODS
 public class StageManager {
@@ -16,14 +18,13 @@ public class StageManager {
     private Stage stage;
     private Scene currentScene;
     private Scene pastScene;
+    private Scene homeScene;
     private Map<String, Scene> lastScene;
 
 
     public StageManager(Stage primaryStage) {
         this.stage = primaryStage;
         stage.setTitle("BOOGA");
-        //stage.setWidth(1280);
-        //stage.setHeight(720);
         stage.show();
         stage.setResizable(false);
         lastScene = new HashMap<String, Scene>();

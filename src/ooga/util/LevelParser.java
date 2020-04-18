@@ -1,5 +1,6 @@
 package ooga.util;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -35,8 +36,16 @@ public class LevelParser {
   private Controller mainController;
   private double tileHeight;
   private double tileWidth;
+  private int playerNumber;
 
   private JSONObject jsonObject;
+
+  public LevelParser(String fileName) {
+    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    jsonObject = (JSONObject) readJsonFile();
+    playerNumber = Integer.parseInt(jsonObject.get("players").toString());
+    setUpGameParser();
+  }
 
   public LevelParser(String fileName, Controller controller) {
     mainController = controller;
@@ -44,6 +53,7 @@ public class LevelParser {
     jsonObject = (JSONObject) readJsonFile();
     tileHeight = Double.parseDouble(jsonObject.get("tileHeight").toString());
     tileWidth = Double.parseDouble(jsonObject.get("tileWidth").toString());
+    playerNumber = Integer.parseInt(jsonObject.get("players").toString());
     setUpGameParser();
   }
 
@@ -57,6 +67,26 @@ public class LevelParser {
       throw new InvalidControlSchemeException(e);
     }
   }
+
+  public void updateJSONValue(String key, String newValue){
+    JSONObject root = jsonObject;
+    String new_val = newValue;
+    String old_val = root.get(key).toString();
+
+    if(!new_val.equals(old_val))
+    {
+      root.put(key,new_val);
+
+      try (FileWriter file = new FileWriter("src/resources/properties/MarioLevel.json", false)) //FIXME: MULT FILES
+      {
+        file.write(root.toString());
+        System.out.println("Successfully updated json object to file");
+      } catch (IOException e) {
+        e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+      }
+    }
+  }
+
 
   private List<EntityWrapper> readEntities(JSONArray entitiesArray) {
     List<EntityWrapper> entitiesParsed = new ArrayList<EntityWrapper>();
@@ -96,11 +126,11 @@ public class LevelParser {
               }
 
             }
-            }
           }
-
         }
+
       }
+    }
     return entitiesParsed;
   }
 
@@ -122,9 +152,11 @@ public class LevelParser {
   public List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
-
     playerEntityArray = readEntities(playerArrangement);
-
+    if(playerNumber == 1){ //FIXME: MAGIC NUMBER
+      System.out.println("REMOVE");
+      playerEntityArray.remove(playerEntityArray.size()-1);
+    }
     return playerEntityArray;
   }
 
@@ -151,7 +183,7 @@ public class LevelParser {
     for (String key : Collections.list(resources.getKeys())) {
       String regex = resources.getString(key);
       mySymbols.add(new SimpleEntry<>(key,
-          Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
+              Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
     }
   }
 
@@ -180,4 +212,3 @@ public class LevelParser {
     addPatterns(LevelParser.class.getPackageName() + ".resources." + "GameParsingRegex");
   }
 }
-

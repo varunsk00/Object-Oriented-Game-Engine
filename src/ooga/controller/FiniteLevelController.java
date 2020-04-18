@@ -41,9 +41,9 @@ public class FiniteLevelController implements Controller {
   private GamePad g;
 
 
-
-
+  
   public FiniteLevelController(StageManager stageManager) throws XInputNotLoadedException { //FIXME add exception stuff
+
 
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     builder = new InfiniteLevelBuilder(this);
@@ -73,7 +73,7 @@ public class FiniteLevelController implements Controller {
 
     setUpTimeline();
 
-    LevelParser parser = new LevelParser("SampleLevel", this);
+    LevelParser parser = new LevelParser("MarioLevel", this);
     LevelParser p2 = new LevelParser("Level2", this);
 
     List<EntityWrapper> tiles = parser.parseTileEntities();
@@ -156,4 +156,3 @@ public class FiniteLevelController implements Controller {
     return entityList;
   }
 }
-

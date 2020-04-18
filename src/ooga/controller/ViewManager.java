@@ -16,6 +16,8 @@ import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
+import java.io.FileNotFoundException;
+
 public class ViewManager implements ViewExternalAPI {
   private Controller myController;
 
@@ -145,7 +147,7 @@ public class ViewManager implements ViewExternalAPI {
       currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
       currentStage.updateCurrentScene(code.getChar(), currentStage.getPastScene());
       //TODO: pause game when on home screen //pauseGame();
-      currentStage.switchScenes(code.getChar());
+      currentStage.switchScenes("GameSelect");
     }
 
   }
