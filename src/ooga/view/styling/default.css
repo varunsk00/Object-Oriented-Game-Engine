@@ -7,6 +7,29 @@
     -fx-font-family: 'Pixeboy';
     -fx-font-size: 75px;
 }
+
+#gameselectionbox {
+    -fx-min-height: 300px;
+    -fx-alignment: center;
+}
+#buttonandnamebox {
+    -fx-spacing: 15px;
+    -fx-padding: 0.0 50.0 0.0 415.0;
+}
+
+#logo {
+    -fx-font-family: "Pixeboy";
+}
+#start {
+    -fx-background-color: #d3d3d3;
+    -fx-font-size: 15px;
+    -fx-background-radius: 0;
+    -fx-font-family: "Ariel";
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.5) , 2, 0.0 , 0 , 1);
+}
+#start:hover {
+    -fx-background-color: #c0c0c0;
+}
 .button {
     -fx-background-color:
         #ecebe9,
@@ -23,13 +46,4 @@
 .label {
     -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);
     -fx-font-family: "Ariel";
-}
-#gameselectionbox {
-    -fx-min-height: 300px;
-    -fx-translate-x: -75px;
-    -fx-alignment: center;
-}
-#buttonandnamebox {
-    -fx-spacing: 15px;
-    -fx-padding: 0.0 50.0 0.0 415.0;
 }

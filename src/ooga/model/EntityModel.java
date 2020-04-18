@@ -20,6 +20,8 @@ public class EntityModel {
   private double health;
   private double xVelMax;
   private double yVelMax;
+  private boolean levelAdvancementStatus;
+  private int nextLevelIndex;
   private String entityID;
   private boolean fixedEntity;
   private boolean onGround;
@@ -99,6 +101,19 @@ public class EntityModel {
     controlScheme.handleKeyReleased(key);
   }
 
+  public void handleControllerInputPressed(String key) {
+    if (key != null) {
+      System.out.println(key);
+      controlScheme.handleKeyInput(key);
+    }
+  }
+  public void handleControllerInputReleased(String key) {
+    if (key != null) {
+      System.out.println("ENTITYMODEL");
+      controlScheme.handleKeyReleased(key);
+    }
+  }
+
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
@@ -112,6 +127,15 @@ public class EntityModel {
   public void setX(double newX){xPos = newX;}
 
   public void setY(double newY){yPos = newY;}
+
+  public void setLevelAdvancementStatus(boolean newStatus){levelAdvancementStatus = newStatus;}
+
+  public void setNextLevelIndex(int levelIndex){nextLevelIndex = levelIndex;}
+
+  public boolean getLevelAdvancementStatus(){return levelAdvancementStatus;}
+
+  public int getNextLevelIndex(){return nextLevelIndex;}
+
 
   public double getWidth(){return entityWidth;}
 

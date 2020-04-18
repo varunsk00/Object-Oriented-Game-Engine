@@ -1,5 +1,6 @@
 package ooga.view.gui;
 
+import com.github.strikerx3.jxinput.XInputDevice;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
@@ -55,7 +56,8 @@ public class ProgramLauncher {
     private void step() throws Exception { //FIXME: Please fix this monstrosity of if statements
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
-            stageManager.createAndSwitchScenes(library);
+            stageManager.createAndSwitchScenes(library, "GameSelect");
+            stageManager.updateCurrentScene("GameSelect", library.getScene());
         }
         library.updateCurrentGame();
 

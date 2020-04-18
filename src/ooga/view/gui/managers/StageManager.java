@@ -1,13 +1,16 @@
 package ooga.view.gui.managers;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ooga.view.application.games.Game;
+import ooga.view.gui.userinterface.Welcome;
 
 //TODO: REFACTOR, CLEAN UP MAGIC, REMOVE UNNECESSARY METHODS
 public class StageManager {
@@ -16,16 +19,16 @@ public class StageManager {
     private Stage stage;
     private Scene currentScene;
     private Scene pastScene;
+    private String pastTitle;
+    private Scene homeScene;
     private Map<String, Scene> lastScene;
 
 
     public StageManager(Stage primaryStage) {
         this.stage = primaryStage;
         stage.setTitle("BOOGA");
-        //stage.setWidth(1280);
-        //stage.setHeight(720);
         stage.show();
-        stage.setFullScreen(true);
+        stage.setResizable(false);
         lastScene = new HashMap<String, Scene>();
         //stage.setResizable(false);
     }
@@ -56,11 +59,28 @@ public class StageManager {
     }
     public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
+        pastTitle = stage.getTitle();
         currentScene = new Scene(parentNode, SCENE_WIDTH, SCENE_HEIGHT);
+        currentScene.setOnKeyPressed(e -> {
+            try {
+                handleKeyInput(e.getCode());
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+            }
+        });;
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);
     }
+
+    private void handleKeyInput (KeyCode code) throws FileNotFoundException { //TODO: COMBINE WITH HOME AND SUSPEND POINTS
+        if(code == KeyCode.H){
+            System.out.println("HOME");
+            stage.setScene(pastScene);
+            stage.setTitle("GameSelect");
+        }
+    }
+
     public String getCurrentTitle() {
         return stage.getTitle();
     }

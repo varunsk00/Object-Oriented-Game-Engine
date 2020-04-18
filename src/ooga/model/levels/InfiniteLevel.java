@@ -7,7 +7,7 @@ import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
 
-public class InfiniteLevel {
+public class InfiniteLevel extends Level{
 
   private List<EntityWrapper> tileEntities;
   private List<EntityWrapper> playerEntities;
@@ -15,30 +15,15 @@ public class InfiniteLevel {
   private static final int spawningInterval = 500;
   private int currentPlayerInterval = -1;
 
-  public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList,
-      List<EntityWrapper> enemyList) {
+  public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList) {
+    super(tileList, playerList, enemyList);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
   }
 
-  public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
-    for (EntityWrapper player : playerEntities) {
-      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-      for (EntityWrapper targetEntity : currentEntityList) {
-        if (!playerEntities.contains(targetEntity) && !isInRange(player.getModel(),
-            targetEntity.getModel())) {
-          entitiesToDespawn.add(targetEntity);
-        }
-      }
-      for (EntityWrapper despawnedEntity : entitiesToDespawn) {
-        currentEntityList.remove(despawnedEntity);
-        viewManager.removeEntityGroup(despawnedEntity.getRender());
-      }
-    }
-  }
 
-
+  @Override
   public void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
     for (EntityWrapper player : playerEntities) {
       if (calculatePlayerInterval(player) > currentPlayerInterval) {
@@ -50,6 +35,7 @@ public class InfiniteLevel {
             setEntityPositions(newSpawn, tileInterval, tileEntity.getModel().getY());
             currentEntityList.add(newSpawn);
             viewManager.updateEntityGroup(newSpawn.getRender());
+
           }
 
         for (EntityWrapper enemyEntity : enemyEntities) {
@@ -71,13 +57,13 @@ public class InfiniteLevel {
         .setY(yPosition); //TODO: generalize for X and Y scrollers
   }
 
-  private boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity) {
-    if (Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), 2) + Math
-        .pow(subjectEntity.getY() - targetEntity.getY(), 2)) < 2000) {
-      return true;
-    }
-    return false;
-  }
+//  private boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity) {
+//    if (Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), 2) + Math
+//        .pow(subjectEntity.getY() - targetEntity.getY(), 2)) < 2000) {
+//      return true;
+//    }
+//    return false;
+//  }
 
   private int calculatePlayerInterval(EntityWrapper player) {
     return (int) player.getModel().getX()

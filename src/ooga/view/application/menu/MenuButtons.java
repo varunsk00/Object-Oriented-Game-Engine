@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 
 public class MenuButtons  {
     private boolean rightPressed;
-    private boolean leftPressed;
+    private boolean controlsPressed;
     private boolean resumePressed;
     private boolean downPressed;
     private VBox myButtons;
@@ -21,7 +21,7 @@ public class MenuButtons  {
      */
     public MenuButtons(String currentGame) {
         this.rightPressed = false;
-        this.leftPressed = false;
+        this.controlsPressed = false;
         this.downPressed = false;
         this.resumePressed = false;
         renderButtons();
@@ -59,12 +59,12 @@ public class MenuButtons  {
         rightPressed = false;
     }
 
-    public boolean getLeftPressed() {
-        return leftPressed;
+    public boolean getControlsPressed() {
+        return controlsPressed;
     }
 
-    public void setLeftOff() {
-        leftPressed = false;
+    public void setControlsOff() {
+        controlsPressed = false;
     }
 
     /**
@@ -74,7 +74,7 @@ public class MenuButtons  {
         myButtons = new VBox();
         Button ResumeButton = makeButton("Resume", event -> resumePressed = true);
         Button DownButton = makeButton("Setting 2", event -> downPressed = true);
-        Button LeftButton = makeButton("Setting 3", event -> leftPressed = true);
+        Button LeftButton = makeButton("Controls", event -> controlsPressed = true);
         Button RightButton = makeButton("Setting 4", event -> rightPressed = true);
         Text instructions = new Text("Press Q to Quit");
         myButtons.setSpacing(70); //FIXME: MAGIC NUMBER

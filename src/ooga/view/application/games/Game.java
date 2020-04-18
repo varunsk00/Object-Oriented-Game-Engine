@@ -62,6 +62,7 @@ public class Game {
 
     private void initStage() {
         stageManager.createAndSwitchScenes(myBackgroundPane, gameName);
+        System.out.println("GAME CLASS:" + gameName);
     }
 
     public Scene getCurrentScene() {
