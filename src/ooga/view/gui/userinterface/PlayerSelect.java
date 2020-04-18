@@ -72,6 +72,14 @@ public class PlayerSelect extends BorderPane {
         return tempButton;
     }
 
+    public void disableP1Button() {
+        P1Button.setDisable(true);
+    }
+
+    public void disableP2Button() {
+        P2Button.setDisable(true);
+    }
+
     private void formatButton(Button tempButton) {
         myButtons.setVgrow(tempButton, Priority.ALWAYS);
     }
