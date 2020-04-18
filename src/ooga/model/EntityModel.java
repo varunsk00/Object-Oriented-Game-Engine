@@ -88,6 +88,7 @@ public class EntityModel {
   }
   public void handleControllerInputReleased(String key) {
     if (key != null) {
+      System.out.println("ENTITYMODEL");
       controlScheme.handleKeyReleased(key);
     }
   }
