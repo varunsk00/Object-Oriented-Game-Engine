@@ -87,6 +87,7 @@ public class GameParser {
     JSONObject levels = (JSONObject) levelArrangement.get(0);
 
     for(Object levelNumber : levels.keySet()){
+      System.out.println(levelNumber);
       LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();

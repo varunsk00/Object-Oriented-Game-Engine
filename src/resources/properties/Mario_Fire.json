@@ -85,6 +85,16 @@
   ],
   "collisionBundles": [
     {
+      "ID": "ClearLevelSwitchBlock",
+      "Control": [
+        {
+          "action": "LevelSwitch",
+          "param": "1",
+          "orientation": "E"
+        }
+      ]
+    },
+    {
       "ID": "Brick",
       "Control": [
         {

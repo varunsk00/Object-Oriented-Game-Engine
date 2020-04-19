@@ -3,6 +3,16 @@
   "players": "2",
   "tileArrangement": [
     {
+      "EntityName": "ClearLevelSwitchBlock",
+      "Arrangement": [
+        {
+          "9": [
+            "19"
+          ]
+        }
+      ]
+    },
+    {
       "EntityName": "Brick",
       "Arrangement": [
         {
