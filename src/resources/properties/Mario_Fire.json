@@ -91,6 +91,16 @@
           "action": "LevelSwitch",
           "param": "1",
           "orientation": "E"
+        },
+        {
+          "action": "SetX",
+          "param": "100",
+          "orientation": "E"
+        },
+        {
+          "action": "SetY",
+          "param": "100",
+          "orientation": "E"
         }
       ]
     },

@@ -1,38 +1,33 @@
 {
   "levelName": "SampleLevel",
   "levelType": "FiniteLevel",
-  "tileWidth": 100,
-  "tileHeight": 100,
+  "tileWidth": 50,
+  "tileHeight": 50,
   "players": 1,
   "tileArrangement": [
     {
       "EntityName": "Brick",
       "Arrangement": [
         {
-          "5": ["0-69", "71-86", "89-153", "155-220"]
+          "13": [
+            "0-81",
+            "84-121",
+            "123-125",
+            "127-129",
+            "136-144",
+            "151-157"
+          ],
+          "14": [
+            "0-81",
+            "84-121",
+            "123-125",
+            "127-129",
+            "136-144",
+            "151-157"
+          ]
         }
       ]
-    },
-    {
-      "EntityName": "ItemBlock",
-      "Arrangement": [
-        {
-          "2": ["16","21","23", "78", "108", "111", "114"],
-          "0": ["22", "95", "111", "131-133"]
-        }
-      ]
-    }
-  ],
+    }],
   "enemyArrangement": [
-  ],
-  "playerArrangement": [
-    {
-      "EntityName": "Mario_Fire",
-      "Arrangement": [
-        {
-          "4": ["2"]
-        }
-      ]
-    }
   ]
 }
