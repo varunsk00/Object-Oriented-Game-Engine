@@ -36,16 +36,8 @@ public class LevelParser {
   private Controller mainController;
   private double tileHeight;
   private double tileWidth;
-  private int playerNumber;
 
   private JSONObject jsonObject;
-
-  public LevelParser(String fileName) {
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
-    jsonObject = (JSONObject) readJsonFile();
-    playerNumber = Integer.parseInt(jsonObject.get("players").toString());
-    setUpGameParser();
-  }
 
   public LevelParser(String fileName, Controller controller) {
     mainController = controller;
@@ -53,8 +45,7 @@ public class LevelParser {
     jsonObject = (JSONObject) readJsonFile();
     tileHeight = Double.parseDouble(jsonObject.get("tileHeight").toString());
     tileWidth = Double.parseDouble(jsonObject.get("tileWidth").toString());
-    playerNumber = Integer.parseInt(jsonObject.get("players").toString());
-    setUpGameParser();
+    setUpLevelParser();
   }
 
   //FIXME add error handling
@@ -77,7 +68,7 @@ public class LevelParser {
     {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/MarioLevel.json", false)) //FIXME: MULT FILES
+      try (FileWriter file = new FileWriter("src/resources/properties/MarioGame.json", false)) //FIXME: MULT FILES
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
@@ -140,8 +131,6 @@ public class LevelParser {
 
     tileEntityArray = readEntities(tileArrangement);
     for(EntityWrapper entity : tileEntityArray){
-      System.out.println(entity);
-
       entity.getModel().setHeight(tileHeight);
       entity.getModel().setWidth(tileWidth);
     }
@@ -153,10 +142,6 @@ public class LevelParser {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
     playerEntityArray = readEntities(playerArrangement);
-    if(playerNumber == 1){ //FIXME: MAGIC NUMBER
-      System.out.println("REMOVE");
-      playerEntityArray.remove(playerEntityArray.size()-1);
-    }
     return playerEntityArray;
   }
 
@@ -172,7 +157,6 @@ public class LevelParser {
   public String readLevelType() {
     return jsonObject.get("levelType").toString();
   }
-
 
 
   /**
@@ -207,8 +191,9 @@ public class LevelParser {
     return regex.matcher(text).matches();
   }
 
-  private void setUpGameParser(){
+  private void setUpLevelParser(){
     mySymbols = new ArrayList<>();
-    addPatterns(LevelParser.class.getPackageName() + ".resources." + "GameParsingRegex");
+    addPatterns(LevelParser.class.getPackageName() + ".resources." + "LevelParsingRegex");
   }
+
 }

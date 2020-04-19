@@ -1,23 +1,27 @@
 package ooga.controller;
 
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-import ooga.model.CollisionEngine;
-import ooga.model.PhysicsEngine;
-import ooga.model.controlschemes.GamePad;
-import ooga.model.levels.InfiniteLevelBuilder;
-import ooga.model.levels.FiniteLevel;
-import ooga.model.levels.Level;
-import ooga.model.levels.LevelSelector;
-import ooga.util.LevelParser;
-import ooga.view.gui.managers.StageManager;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FiniteLevelController implements Controller {
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import javax.swing.text.html.parser.Entity;
+import ooga.model.CollisionEngine;
+import ooga.model.PhysicsEngine;
+import ooga.model.controlschemes.GamePad;
+import ooga.model.levels.InfiniteLevelBuilder;
+
+
+import ooga.model.levels.LevelSelector;
+import ooga.util.GameParser;
+
+import ooga.view.gui.managers.StageManager;
+
+public class GameController implements Controller {
 
   private PhysicsEngine physicsEngine;
   private CollisionEngine collisionEngine;
@@ -35,24 +39,29 @@ public class FiniteLevelController implements Controller {
   private ViewManager myViewManager;
   private LevelSelector levelSelector;
   private GamePad g;
+  private GameParser gameParser;
 
 
 
-  public FiniteLevelController(StageManager stageManager) throws XInputNotLoadedException { //FIXME add exception stuff
-
-
-    //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
+  public GameController(StageManager stageManager, String gameName) throws XInputNotLoadedException { //FIXME add exception stuff
+    System.out.println(gameName);
     builder = new InfiniteLevelBuilder(this);
     g = new GamePad();
 
     myViewManager = new ViewManager(stageManager, builder, null);
+    gameParser = new GameParser(gameName, this);
 
     entityList = new ArrayList<>();
-    entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    //myViewManager.setUpCamera(entityList.get(0).getRender());
+//    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
-    physicsEngine = new PhysicsEngine("dummyString");
+    for(EntityWrapper player : gameParser.getPlayerList()){
+      System.out.println(player);
+      entityList.add(player);
+      myViewManager.updateEntityGroup(player.getRender());
+    }
+
+    physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile()); //TODO: add PhysicsProfile object
     collisionEngine = new CollisionEngine();
     myViewManager.getTestScene().setOnKeyPressed(e -> {
 
@@ -67,25 +76,10 @@ public class FiniteLevelController implements Controller {
       }
     });
 
-    LevelParser parser = new LevelParser("MarioLevel", this);
-    LevelParser p2 = new LevelParser("Level2", this);
-
-    List<EntityWrapper> tiles = parser.parseTileEntities();
-    player = parser.parsePlayerEntities();
-    List<EntityWrapper> enemy = parser.parseEnemyEntities();
-    for(EntityWrapper k : player){
-      entityList.add(k);
-      myViewManager.updateEntityGroup(k.getRender());
-    }
     myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
-    Level t1 = new FiniteLevel(tiles, player, enemy);
-    Level t2 = new FiniteLevel(p2.parseTileEntities(), p2.parsePlayerEntities(), p2.parseEnemyEntities());
 
-    List<Level> levelList = new ArrayList<>();
-    levelList.add(t1);
-    levelList.add(t2);
-    levelSelector = new LevelSelector(levelList);
 
+    levelSelector = new LevelSelector(gameParser.parseLevels());
     setUpTimeline();
 
   }
@@ -110,17 +104,17 @@ public class FiniteLevelController implements Controller {
   private void step (double elapsedTime) throws XInputNotLoadedException {
     g.update();
     myViewManager.handleMouseInput();
-    if (player.size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
-      if (g.getState() != null) {
-        if (!g.getState().getPressed()) {
-          System.out.println("PRESSED");
-          player.get(1).handleControllerInputPressed(g.getState().getControl());
-        } else if (g.getState().getPressed()) {
-          System.out.println("RELEASED");
-          player.get(1).handleControllerInputReleased(g.getState().getControl());
-        }
-      }
-    }
+//    if (player.size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+//      if (g.getState() != null) {
+//        if (!g.getState().getPressed()) {
+//          System.out.println("PRESSED");
+//          player.get(1).handleControllerInputPressed(g.getState().getControl());
+//        } else if (g.getState().getPressed()) {
+//          System.out.println("RELEASED");
+//          player.get(1).handleControllerInputReleased(g.getState().getControl());
+//        }
+//      }
+//    }
       if (!myViewManager.getIsGamePaused()) {
         levelSelector.updateCurrentLevel(entityList, myViewManager);
         myViewManager.updateValues();
