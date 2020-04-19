@@ -1,6 +1,6 @@
 {
   "entityName": "ClearLevelSwitchBlock",
-  "image": "Brick.png",
+  "image": "transparent.png",
   "health": 1,
   "fixed": true,
   "xPos": -100,
