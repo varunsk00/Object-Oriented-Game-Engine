@@ -94,7 +94,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "0",
           "orientation": "N"
         }
       ]
@@ -114,7 +114,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "0",
           "orientation": "N"
         }
       ]
@@ -134,7 +134,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "0",
           "orientation": "N"
         }
       ]
@@ -154,7 +154,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "0",
           "orientation": "N"
         }
       ]
@@ -320,11 +320,66 @@
       ]
     },
     {
+      "ID": "Pipetop",
+      "Control": [
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "0",
+          "orientation": "W"
+        },
+        {
+          "action": "MoveX",
+          "param": "0",
+          "orientation": "E"
+        },
+        {
+          "action": "VelocityX",
+          "param": "0",
+          "orientation": "E"
+        },
+        {
+          "action": "SetBoundedLeft",
+          "param": "true",
+          "orientation": "E"
+        },
+        {
+          "action": "SetBoundedRight",
+          "param": "true",
+          "orientation": "W"
+        }
+      ]
+    },
+    {
       "ID": "Brick",
       "Control": [
         {
           "action": "MoveY",
-          "param": "1.0",
+          "param": "0",
+          "orientation": "S"
+        },
+        {
+          "action": "VelocityY",
+          "param": "0",
+          "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "Pipetop",
+      "Control": [
+        {
+          "action": "MoveY",
+          "param": "0",
           "orientation": "S"
         },
         {
@@ -339,7 +394,7 @@
       "Control": [
         {
           "action": "MoveY",
-          "param": "1.0",
+          "param": "0",
           "orientation": "S"
         },
         {
@@ -354,7 +409,7 @@
       "Control": [
         {
           "action": "MoveY",
-          "param": "1.0",
+          "param": "0",
           "orientation": "S"
         },
         {
@@ -369,7 +424,7 @@
       "Control": [
         {
           "action": "MoveY",
-          "param": "1.0",
+          "param": "0",
           "orientation": "S"
         },
         {
