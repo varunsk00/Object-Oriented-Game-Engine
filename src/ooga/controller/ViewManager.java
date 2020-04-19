@@ -7,22 +7,18 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
-import java.io.FileNotFoundException;
-
 public class ViewManager implements ViewExternalAPI {
   private Controller myController;
 
-  private Pane testPane;
+  private BorderPane testPane;
   private Group EntityGroup;
 
   private InGameMenu menu;
@@ -30,7 +26,7 @@ public class ViewManager implements ViewExternalAPI {
 
   private StageManager currentStage;
   private InfiniteLevelBuilder builder;
-  private Pane level;
+  private BorderPane level;
   private Camera camera;
 
   private boolean isGamePaused = false;
@@ -81,14 +77,12 @@ public class ViewManager implements ViewExternalAPI {
     return testScene;
   }
 
-  public void setLevel(Pane levelBuilt) {
+  public void setLevel(BorderPane levelBuilt) {
     this.level = levelBuilt;
   }
 
   public void updateValues() {
-    //handleMouseInput();
     camera.update(menu);
-    //builder.updateLevel(camera.getViewPort(), level);
   }
 
   @Override
@@ -138,10 +132,7 @@ public class ViewManager implements ViewExternalAPI {
     }
     else if (code == KeyCode.H) {
       pauseGame();
-      currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
-      currentStage.updateCurrentScene(code.getChar(), currentStage.getPastScene());
-      //TODO: pause game when on home screen //pauseGame();
-      currentStage.switchScenes("GameSelect");
+      goHome(code.getChar());
     }
 
   }
@@ -153,12 +144,21 @@ public class ViewManager implements ViewExternalAPI {
   }
 
 
-  public void handleMouseInput() {
-    if (menu.getButtons().getResumePressed()) {
+  public void handleMenuInput() { //TODO: REFACTOR
+    if (menu.getResumePressed()) {
       unPauseGame();
-      menu.getButtons().setResumeOff();
+      menu.setResumeOff();
     }
+    if (menu.getExitPressed()) { //FIXME: FIX THIS BUT I DIDN'T WANT TO BREAK SHRUTHI'S SAVE POINTS, ideally should independently go home
+      handlePressInput(KeyCode.H);
+      menu.setExitOff();
+    }
+  }
 
+  public void goHome(String state){
+    currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
+    currentStage.updateCurrentScene(state, currentStage.getPastScene());
+    currentStage.switchScenes("GameSelect");
   }
 
   public void pauseGame(){
@@ -166,9 +166,8 @@ public class ViewManager implements ViewExternalAPI {
     EntityGroup.setEffect(bb);
     isGamePaused = true;
     menu.setAlignment(Pos.CENTER);
-    testPane.getChildren().add(menu);
+    testPane.setCenter(menu);
     escCounter++;
-
   }
 
   public void unPauseGame(){

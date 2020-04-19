@@ -8,7 +8,9 @@ import ooga.view.gui.managers.StageManager;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameCabinet extends Pane {
     private GameSelector gameSelector;
@@ -16,8 +18,7 @@ public class GameCabinet extends Pane {
     private AudioVideoManager avManager;
     private StageManager stageManager;
     private TitleScreen myTitleScreen;
-    private boolean relaunched;
-    private int count;
+    private Map<String, Integer> gameLaunchCount = new HashMap<>();
     private int numPlayers;
     private String currentGame;
 
@@ -71,16 +72,16 @@ public class GameCabinet extends Pane {
         }
         for(GamePreview game: myGames){
             if(game.isGamePressed()) {
-                determineRelaunched();
                 currentGame = game.getGameName();
-                game.resetGameName();
-                if(relaunched){
+                game.resetGameButton();
+                if(isRelaunched(currentGame)){
                     avManager.switchGame(stageManager, currentGame); }
                 else{
                     launchTitleScreen(stageManager, currentGame); }
                 avManager.switchMusic(stageManager);
             }
             if (myTitleScreen.isPlayerSelected()){
+                incrementLaunchCounter(currentGame);
                 this.numPlayers = myTitleScreen.playerNumber();
                 myTitleScreen.handleMultiplayer(currentGame);
                 myTitleScreen.resetButtons();
@@ -89,9 +90,18 @@ public class GameCabinet extends Pane {
         }
     }
 
-    private void determineRelaunched(){
-        count ++;
-        relaunched = (count > 1);
+    private void incrementLaunchCounter(String game){
+        Integer count = gameLaunchCount.get(game);
+        if(count == null){
+            gameLaunchCount.put(game, 1); }
+        else{
+            gameLaunchCount.put(game, count + 1); }
+    }
+
+    private boolean isRelaunched(String game){ //FIXME: IS THIS A FAIL CASE? I'M CHECKING FOR NULL, SO IDK
+        if(gameLaunchCount.get(game) != null){
+            return gameLaunchCount.get(game) > 0; }
+        return false;
     }
 
     private boolean isHomePressed(){
