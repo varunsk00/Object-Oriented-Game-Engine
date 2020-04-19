@@ -15,7 +15,9 @@ public class GameCabinet extends Pane {
     private List<GamePreview> myGames;
     private AudioVideoManager avManager;
     private StageManager stageManager;
-    private PlayerSelect myPlayerSelect;
+    private TitleScreen myTitleScreen;
+    private boolean relaunched;
+    private int count;
     private int numPlayers;
     private String currentGame;
 
@@ -23,7 +25,7 @@ public class GameCabinet extends Pane {
         this.myGames = new ArrayList<>();
         this.avManager = av;
         this.stageManager = stageManager;
-        this.myPlayerSelect = new PlayerSelect();
+        this.myTitleScreen = new TitleScreen();
         initGameSelect();
         gameSelector = new GameSelector(myGames);
         this.getChildren().add(gameSelector);
@@ -71,14 +73,13 @@ public class GameCabinet extends Pane {
             if(game.isGamePressed()) {
                 currentGame = game.getGameName();
                 game.resetGameName();
-                launchPlayerSelect(stageManager, currentGame);
-                disableUnselectedButton();
+                launchTitleScreen(stageManager, currentGame);
                 avManager.switchMusic(stageManager);
             }
-            if (myPlayerSelect.isPlayerSelected()){
-                this.numPlayers = myPlayerSelect.playerNumber();
-                myPlayerSelect.handleMultiplayer(currentGame);
-                myPlayerSelect.resetButtons();
+            if (myTitleScreen.isPlayerSelected()){
+                this.numPlayers = myTitleScreen.playerNumber();
+                myTitleScreen.handleMultiplayer(currentGame);
+                myTitleScreen.resetButtons();
                 avManager.switchGame(stageManager, currentGame);
             }
         }
@@ -88,18 +89,12 @@ public class GameCabinet extends Pane {
         return stageManager.getCurrentTitle().equals("GameSelect");
     }
 
-
-    private void disableUnselectedButton(){ //FIXME: HORRENDOUS CODE
-        if (numPlayers == 2){
-            myPlayerSelect.disableP1Button();
-        }
-        if (numPlayers == 1){
-            myPlayerSelect.disableP2Button();
-        }
-    }
-    private void launchPlayerSelect(StageManager sm, String gameName) throws Exception {
-        myPlayerSelect = new PlayerSelect(gameName);
-        sm.createAndSwitchScenes(myPlayerSelect, gameName);
+    private void launchTitleScreen(StageManager sm, String gameName) throws Exception {
+        count ++;
+        if (count > 1){
+            relaunched = true; }
+        myTitleScreen = new TitleScreen(gameName, relaunched);
+        sm.createAndSwitchScenes(myTitleScreen, gameName);
     }
 
 }

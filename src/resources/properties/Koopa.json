@@ -1,25 +1,25 @@
 {
-  "entityName": "Fire_Mario",
-  "image": "firemario_walk.gif",
+  "entityName": "Koopa",
+  "image": "koopa.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
   "xVel": 10,
   "yVel": 10,
-  "fixed": false,
+  "grounded": false,
   "maxXVel": 500,
   "maxYVel": 500,
-
-  "height": 50,
-  "width": 50,
-  "scheme": "Keybindings",
+  "height": 40,
+  "width": 40,
+  "scheme": "AI",
   "actionBundles": [
     {
-      "ID": "D",
+      "ID": "50",
       "Control": [
         {
+
           "action": "AccelerateX",
-          "param": "300.0"
+          "param": "15.0"
         },
         {
           "action": "SetXDirection",
@@ -28,52 +28,16 @@
       ]
     },
     {
-      "ID": "A",
+      "ID": "50",
       "Control": [
         {
+
           "action": "AccelerateX",
-          "param": "-300.0"
+          "param": "-15.0"
         },
         {
           "action": "SetXDirection",
           "param": "backwards"
-        }
-      ]
-    },
-    {
-      "ID": "W",
-      "Control": [
-        {
-          "action": "AccelerateY",
-          "param": "-300.0"
-        }
-      ]
-    },
-    {
-      "ID": "S",
-      "Control": [
-        {
-          "action": "AccelerateY",
-          "param": "+300.0"
-        }
-      ]
-    },
-    {
-      "ID": "SPACE",
-      "Control": [
-        {
-          "action": "Jump",
-          "param": "-750.0"
-        }
-      ]
-    },
-    {
-      "ID": "F",
-      "Control": [
-        {
-          "action": "SpawnRelative",
-          "param": "Mario_Fireball",
-          "coolDown": "1000"
         }
       ]
     }
@@ -94,7 +58,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "-0.5",
           "orientation": "N"
         }
       ]
@@ -114,7 +78,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "-0.5",
           "orientation": "N"
         }
       ]
@@ -134,7 +98,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "-0.5",
           "orientation": "N"
         }
       ]
@@ -154,7 +118,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "-0.5",
           "orientation": "N"
         }
       ]
@@ -174,28 +138,18 @@
         },
         {
           "action": "MoveX",
-          "param": "0",
+          "param": "-1",
           "orientation": "W"
         },
         {
           "action": "MoveX",
-          "param": "0",
+          "param": "1",
           "orientation": "E"
         },
         {
           "action": "VelocityX",
           "param": "0",
           "orientation": "E"
-        },
-        {
-          "action": "SetBoundedLeft",
-          "param": "true",
-          "orientation": "E"
-        },
-        {
-          "action": "SetBoundedRight",
-          "param": "true",
-          "orientation": "W"
         }
       ]
     },
@@ -214,28 +168,18 @@
         },
         {
           "action": "MoveX",
-          "param": "0",
+          "param": "-1",
           "orientation": "W"
         },
         {
           "action": "MoveX",
-          "param": "0",
+          "param": "1",
           "orientation": "E"
         },
         {
           "action": "VelocityX",
           "param": "0",
           "orientation": "E"
-        },
-        {
-          "action": "SetBoundedLeft",
-          "param": "true",
-          "orientation": "E"
-        },
-        {
-          "action": "SetBoundedRight",
-          "param": "true",
-          "orientation": "W"
         }
       ]
     },
@@ -254,28 +198,18 @@
         },
         {
           "action": "MoveX",
-          "param": "0",
+          "param": "-1",
           "orientation": "W"
         },
         {
           "action": "MoveX",
-          "param": "0",
+          "param": "1",
           "orientation": "E"
         },
         {
           "action": "VelocityX",
           "param": "0",
           "orientation": "E"
-        },
-        {
-          "action": "SetBoundedLeft",
-          "param": "true",
-          "orientation": "E"
-        },
-        {
-          "action": "SetBoundedRight",
-          "param": "true",
-          "orientation": "W"
         }
       ]
     },
@@ -294,28 +228,18 @@
         },
         {
           "action": "MoveX",
-          "param": "0",
+          "param": "-1",
           "orientation": "W"
         },
         {
           "action": "MoveX",
-          "param": "0",
+          "param": "1",
           "orientation": "E"
         },
         {
           "action": "VelocityX",
           "param": "0",
           "orientation": "E"
-        },
-        {
-          "action": "SetBoundedLeft",
-          "param": "true",
-          "orientation": "E"
-        },
-        {
-          "action": "SetBoundedRight",
-          "param": "true",
-          "orientation": "W"
         }
       ]
     },
@@ -324,12 +248,7 @@
       "Control": [
         {
           "action": "MoveY",
-          "param": "1.0",
-          "orientation": "S"
-        },
-        {
-          "action": "VelocityY",
-          "param": "0",
+          "param": "-100.0",
           "orientation": "S"
         }
       ]
@@ -339,12 +258,7 @@
       "Control": [
         {
           "action": "MoveY",
-          "param": "1.0",
-          "orientation": "S"
-        },
-        {
-          "action": "VelocityY",
-          "param": "0",
+          "param": "-100.0",
           "orientation": "S"
         }
       ]
@@ -354,12 +268,7 @@
       "Control": [
         {
           "action": "MoveY",
-          "param": "1.0",
-          "orientation": "S"
-        },
-        {
-          "action": "VelocityY",
-          "param": "0",
+          "param": "-100.0",
           "orientation": "S"
         }
       ]
@@ -369,12 +278,7 @@
       "Control": [
         {
           "action": "MoveY",
-          "param": "1.0",
-          "orientation": "S"
-        },
-        {
-          "action": "VelocityY",
-          "param": "0",
+          "param": "-100.0",
           "orientation": "S"
         }
       ]
@@ -383,11 +287,12 @@
       "ID": "DEFAULT",
       "Control": [
         {
-          "action": "NoAction",
+          "action": "SetGroundStatus",
           "param": "false",
           "orientation": "DEFAULT"
         }
       ]
     }
   ]
+
 }

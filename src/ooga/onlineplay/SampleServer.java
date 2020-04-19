@@ -22,6 +22,7 @@ class SampleServer {
         Socket clientSocket = null;
         try {
             clientSocket = serverSocket.accept();
+            System.out.println("Connection from:" + clientSocket.getInetAddress());
         } catch (IOException e) {
             System.out.println("Accept failed: " + 4444 + ", " + e);
             System.exit(1);

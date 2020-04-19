@@ -6,7 +6,7 @@ import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
 
-public class LevelSelecter {
+public class LevelSelector {
 
   private List<Level> parsedLevels;
   private Level activeLevel;
@@ -15,19 +15,21 @@ public class LevelSelecter {
   private int currentPlayerInterval = -1;
 
 
-  public LevelSelecter(List<Level> levelList){
+  public LevelSelector(List<Level> levelList){
     parsedLevels = levelList;
     activeLevel = parsedLevels.get(0);
   }
 
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager){
+//    System.out.print(currentPlayerInterval);
+//    System.out.println("     " + calculatePlayerInterval(currentEntityList.get(0)));
+//    System.out.println(currentEntityList.get(0).getModel().getLevelAdvancementStatus());
     if(currentEntityList.get(0).getModel().getLevelAdvancementStatus() && calculatePlayerInterval(currentEntityList.get(0)) > currentPlayerInterval){
       //TODO: find a better way that the interval to spawn pipes only once
+      currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
       switchLevel(currentEntityList.get(0).getModel().getNextLevelIndex());
       currentEntityList.get(0).getModel().setLevelAdvancementStatus(false);
-      currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
     }
-    currentPlayerInterval = calculatePlayerInterval(currentEntityList.get(0));
     activeLevel.spawnEntities(currentEntityList, viewManager);
     activeLevel.despawnEntities(currentEntityList, viewManager);
   }

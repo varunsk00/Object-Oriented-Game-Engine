@@ -1,11 +1,11 @@
 package ooga.view.application.games;
 
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
-import ooga.controller.InfiniteLevelController;
-import ooga.controller.Controller;
+import ooga.controller.GameController;
 import ooga.view.gui.managers.StageManager;
 
 import java.lang.reflect.Constructor;
@@ -21,9 +21,9 @@ public class Game {
     private Pane myBackgroundPane;
     private StageManager stageManager;
     private Scene oldScene;
-    private String gameName;
+    private String game;
     private Scene currentScene;
-    private Controller mainController;
+    private GameController mainController;
     private Map<String, String> gameTypes;
 
 
@@ -41,11 +41,10 @@ public class Game {
         myBackgroundPane.setBackground(new Background(bg));
     }
 
-    public void loadGame(String gameName) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void loadGame(String gameName) throws XInputNotLoadedException {
         stageManager.setCurrentTitle(gameName);
-        Class<?> c = Class.forName(CONTROLLER_PACKAGE + myGameTypes.getString(gameName) + CONTROLLER);
-        Constructor<?> cons = c.getDeclaredConstructor(StageManager.class);
-        this.mainController = (Controller) cons.newInstance(stageManager);
+//        game = gameName;
+        this.mainController = new GameController(stageManager, gameName); //FIXME MAGIC VALUE
     }
 
     private void loadGameTypes(){
@@ -61,8 +60,8 @@ public class Game {
     }
 
     private void initStage() {
-        stageManager.createAndSwitchScenes(myBackgroundPane, gameName);
-        System.out.println("GAME CLASS:" + gameName);
+        stageManager.createAndSwitchScenes(myBackgroundPane, game);
+        System.out.println("GAME CLASS:" + game);
     }
 
     public Scene getCurrentScene() {

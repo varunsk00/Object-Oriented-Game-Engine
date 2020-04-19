@@ -8,20 +8,19 @@ import ooga.model.actions.AccelerateY;
 import ooga.model.actions.Action;
 import ooga.model.actions.VelocityY;
 import ooga.model.controlschemes.ControlScheme;
+import ooga.util.PhysicsProfile;
 
 public class PhysicsEngine {
 
-  private double gravityForce = 20;
-  private double dragForce = 1;
-  private double frictionForce = 1;
+  private double gravityForce;
+  private double dragForce;
+  private double frictionForce;
   private EntityModel entityModel;
 
-  public PhysicsEngine(String physicsProfile) {
-    //TODO: Add a parser that parses through a physics file for the constants of friction
-//    PhysicsParser physicsParser = new PhysicsParser(physicsProfile);
-//    gravityForce = physicsParser.getDragForce();
-//    dragForce = physicsParser.getDragForce();
-//    frictionForce = physicsParser.getFrictionForce();
+  public PhysicsEngine(PhysicsProfile physicsProfile) {
+    gravityForce = physicsProfile.readGravity();
+    dragForce = physicsProfile.readDrag();
+    frictionForce = physicsProfile.readFriction();
   }
 
   public void applyForces(EntityModel currentEntityModel){
@@ -30,7 +29,6 @@ public class PhysicsEngine {
     applyGravity();
   }
 
-  //
   private void applyResistiveForces() {
     if (!entityModel.getFixed() || Math.abs(entityModel.getXVelocity()) > 0) {
       double opposingDirection = -Math.signum(entityModel.getXVelocity());
@@ -46,17 +44,16 @@ public class PhysicsEngine {
   }
 
   private void applyGravity(){
+
     //System.out.print(entityModel.getEntityID() + ": ");
     if(entityModel.getFixed() || entityModel.isOnGround()){
       //System.out.print("Gravity Negated");
       entityModel.setYVelocity(0);
     }
     else{
-      //System.out.print("Gravity On");
       String gravityParameter = String.valueOf(gravityForce);
       entityModel.getActionStack().push(new AccelerateY(gravityParameter));
     }
 
-    //System.out.println("--------------Distance: " + entityModel.getY());
   }
 }
