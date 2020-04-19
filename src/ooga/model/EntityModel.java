@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Stack;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
+import ooga.model.actions.AbsoluteVelocityX;
 import ooga.model.actions.AccelerateX;
 import ooga.model.actions.Action;
 import ooga.model.actions.CollisionKey;
@@ -180,6 +181,8 @@ public class EntityModel {
     newEntity.getModel().setX(this.getX() + this.getWidth()/2);
     newEntity.getModel().setY(this.getY());
     newEntity.getModel().setForwards(this.getForwards());
+    Action updateVelocity = new AbsoluteVelocityX("" + (this.getXVelocity() + newEntity.getModel().getXVelocity()));
+    updateVelocity.execute(newEntity.getModel());
   }
 
   public EntityWrapper spawnEntity(String param) {
