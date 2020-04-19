@@ -71,9 +71,13 @@ public class GameCabinet extends Pane {
         }
         for(GamePreview game: myGames){
             if(game.isGamePressed()) {
+                determineRelaunched();
                 currentGame = game.getGameName();
                 game.resetGameName();
-                launchTitleScreen(stageManager, currentGame);
+                if(relaunched){
+                    avManager.switchGame(stageManager, currentGame); }
+                else{
+                    launchTitleScreen(stageManager, currentGame); }
                 avManager.switchMusic(stageManager);
             }
             if (myTitleScreen.isPlayerSelected()){
@@ -85,15 +89,17 @@ public class GameCabinet extends Pane {
         }
     }
 
+    private void determineRelaunched(){
+        count ++;
+        relaunched = (count > 1);
+    }
+
     private boolean isHomePressed(){
         return stageManager.getCurrentTitle().equals("GameSelect");
     }
 
     private void launchTitleScreen(StageManager sm, String gameName) throws Exception {
-        count ++;
-        if (count > 1){
-            relaunched = true; }
-        myTitleScreen = new TitleScreen(gameName, relaunched);
+        myTitleScreen = new TitleScreen(gameName);
         sm.createAndSwitchScenes(myTitleScreen, gameName);
     }
 

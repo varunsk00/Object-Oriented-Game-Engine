@@ -137,6 +137,7 @@ public class ViewManager implements ViewExternalAPI {
       unPauseGame();
     }
     else if (code == KeyCode.H) {
+      pauseGame();
       currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
       currentStage.updateCurrentScene(code.getChar(), currentStage.getPastScene());
       //TODO: pause game when on home screen //pauseGame();

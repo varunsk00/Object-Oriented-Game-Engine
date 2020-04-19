@@ -21,8 +21,6 @@ public class TitleScreen extends BorderPane {
     private final String LOGO = "_logo.png";
     private final double HUNDRED_PERCENT = 100.0;
     private String gameName;
-    private int playerNum;
-    private boolean relaunched;
     private boolean onePressed;
     private boolean twoPressed;
     private Button Button1;
@@ -33,9 +31,8 @@ public class TitleScreen extends BorderPane {
     public TitleScreen() {
     }
 
-    public TitleScreen(String name, boolean relaunched) throws FileNotFoundException {
+    public TitleScreen(String name) throws FileNotFoundException {
         this.gameName = name;
-        this.relaunched = relaunched;
         setBackground();
         setLogo();
         renderButtons();
@@ -66,15 +63,9 @@ public class TitleScreen extends BorderPane {
 
     private void renderButtons() { //TODO: REFACTOR
         myButtons = new VBox();
-        if (relaunched){
-            Button1 = makeButton(myResources.getString("Resume"), event -> {
-                onePressed = true; twoPressed = true;});
-        }
-        else{
-            Button1 = makeButton(myResources.getString(gameName + "1"), event -> onePressed = true);
-            if (!(myResources.getString(gameName + "2").equals("NOBUTTON"))){
-                Button2 = makeButton(myResources.getString(gameName + "2"), event -> twoPressed = true);
-            }
+        Button1 = makeButton(myResources.getString(gameName + "1"), event -> onePressed = true);
+        if (!(myResources.getString(gameName + "2").equals("NOBUTTON"))){
+            Button2 = makeButton(myResources.getString(gameName + "2"), event -> twoPressed = true);
         }
     }
 
@@ -111,13 +102,9 @@ public class TitleScreen extends BorderPane {
     }
 
     public int playerNumber() { //FIXME: STREAMLINE
-        if (getOnePressed()){
-            playerNum = 1;
-        }
         if (getTwoPressed()){
-            playerNum = 2;
-        }
-        return playerNum;
+            return 2; }
+        return 1;
     }
 
     public void resetButtons() {
