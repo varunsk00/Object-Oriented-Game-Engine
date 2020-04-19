@@ -58,6 +58,8 @@ public class StageManager {
     public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
         currentScene = new Scene(parentNode, SCENE_WIDTH, SCENE_HEIGHT);
+        lastScene.put(title, currentScene);
+
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);

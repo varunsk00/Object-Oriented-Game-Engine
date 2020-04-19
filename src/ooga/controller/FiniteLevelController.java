@@ -82,7 +82,7 @@ public class FiniteLevelController implements Controller {
     builder = new InfiniteLevelBuilder(this);
 
     myViewManager = new ViewManager(stageManager, builder, null, currGame);
-    GameParser hee = new GameParser("SampleLevel", this);
+    GameParser hee = new GameParser("MarioLevel", this);
     List<EntityWrapper> je = hee.parseTileEntities();
 
   //  GameParser parser = new GameParser("SampleLevel", this);
