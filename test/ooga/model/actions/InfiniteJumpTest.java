@@ -26,7 +26,7 @@ class InfiniteJumpTest extends DukeApplicationTest {
     myAction.execute(myEntity.getModel());
     assertTrue(preVelocity != myEntity.getModel().getYVelocity());
     assertTrue(myEntity.getModel().getYVelocity() == Double.parseDouble(param));
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
   }
 
   @Test
@@ -35,11 +35,11 @@ class InfiniteJumpTest extends DukeApplicationTest {
     myAction.execute(myEntity.getModel());
     assertTrue(preVelocity != myEntity.getModel().getYVelocity());
     assertTrue(myEntity.getModel().getYVelocity() == Double.parseDouble(param));
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
 
     preVelocity = myEntity.getModel().getYVelocity();
     myAction.execute(myEntity.getModel());
     assertTrue(preVelocity == myEntity.getModel().getYVelocity());
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
   }
 }

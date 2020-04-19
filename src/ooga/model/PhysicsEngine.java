@@ -1,13 +1,7 @@
 package ooga.model;
 
-import java.util.Stack;
-import javafx.scene.input.KeyEvent;
-import ooga.controller.EntityWrapper;
 import ooga.model.actions.AccelerateX;
 import ooga.model.actions.AccelerateY;
-import ooga.model.actions.Action;
-import ooga.model.actions.VelocityY;
-import ooga.model.controlschemes.ControlScheme;
 import ooga.util.PhysicsProfile;
 
 public class PhysicsEngine {
@@ -32,7 +26,7 @@ public class PhysicsEngine {
   private void applyResistiveForces() {
     if (!entityModel.getFixed() || Math.abs(entityModel.getXVelocity()) > 0) {
       double opposingDirection = -Math.signum(entityModel.getXVelocity());
-      if (entityModel.isOnGround()) {
+      if (entityModel.getBoundedBelow()) {
         String frictionParameter = String.valueOf(opposingDirection * frictionForce);
         entityModel.getActionStack().push(new AccelerateX(frictionParameter));
       }
@@ -46,7 +40,7 @@ public class PhysicsEngine {
   private void applyGravity(){
 
     //System.out.print(entityModel.getEntityID() + ": ");
-    if(entityModel.getFixed() || entityModel.isOnGround()){
+    if(entityModel.getFixed() || entityModel.getBoundedBelow()){
       //System.out.print("Gravity Negated");
       entityModel.setYVelocity(0);
     }
