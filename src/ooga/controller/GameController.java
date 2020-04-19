@@ -103,17 +103,17 @@ public class GameController implements Controller {
   private void step (double elapsedTime) throws XInputNotLoadedException {
     g.update();
     myViewManager.handleMenuInput();
-//    if (player.size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
-//      if (g.getState() != null) {
-//        if (!g.getState().getPressed()) {
-//          System.out.println("PRESSED");
-//          player.get(1).handleControllerInputPressed(g.getState().getControl());
-//        } else if (g.getState().getPressed()) {
-//          System.out.println("RELEASED");
-//          player.get(1).handleControllerInputReleased(g.getState().getControl());
-//        }
-//      }
-//    }
+    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+      if (g.getState() != null) {
+        if (!g.getState().getPressed()) {
+          System.out.println("PRESSED");
+          gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
+        } else if (g.getState().getPressed()) {
+          System.out.println("RELEASED");
+          gameParser.getPlayerList().get(1).handleControllerInputReleased(g.getState().getControl());
+        }
+      }
+    }
       if (!myViewManager.getIsGamePaused()) {
         levelSelector.updateCurrentLevel(entityList, myViewManager);
         myViewManager.updateValues();
