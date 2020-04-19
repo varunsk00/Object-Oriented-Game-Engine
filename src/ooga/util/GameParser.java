@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Array;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.SortedMap;
 import java.util.regex.Pattern;
 import javax.swing.text.html.parser.Entity;
 import ooga.controller.Controller;
@@ -80,13 +83,23 @@ public class GameParser {
     }
   }
 
+  private List<String> sortLevelKeySet(Set keySet){
+    List<String> sortedKeys = new ArrayList<>();
+    for(Object key : keySet){
+      sortedKeys.add(key.toString());
+    }
+    Collections.sort(sortedKeys);
+    return sortedKeys;
+  }
+
 
   public List<Level> parseLevels() {
     List<Level> levelList = new ArrayList<>();
     JSONArray levelArrangement = (JSONArray) jsonObject.get("levelArrangement");
     JSONObject levels = (JSONObject) levelArrangement.get(0);
+    List<String> sortedLevelKeys = sortLevelKeySet(levels.keySet());
 
-    for(Object levelNumber : levels.keySet()){
+    for(String levelNumber : sortedLevelKeys){
       LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();

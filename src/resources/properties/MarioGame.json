@@ -3,7 +3,8 @@
   "players":"1",
   "levelArrangement": [
     {
-      "Level_1": "MarioLevel"
+      "Level_1": "MarioLevel",
+      "Level_2": "Level2"
     }
   ],
   "physicsProfile": [
