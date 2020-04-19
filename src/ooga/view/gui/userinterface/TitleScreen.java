@@ -6,33 +6,36 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import ooga.util.GameParser;
-import ooga.util.LevelParser;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ResourceBundle;
 
-public class PlayerSelect extends BorderPane {
-    private final String RESOURCES_PACKAGE = "src/ooga/view/gui/resources/";
+public class TitleScreen extends BorderPane {
+    private final String IMAGES_PACKAGE = "src/ooga/view/gui/resources/";
+    private final String RESOURCES_PACKAGE = "ooga.view.gui.userinterface.resources.";
+    private final String TITLE_SCREEN = "titleScreenButtons";
+    private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE + TITLE_SCREEN);
     private final String BG = "_player_select.png";
     private final String LOGO = "_logo.png";
     private final double HUNDRED_PERCENT = 100.0;
     private String gameName;
     private int playerNum;
-    private boolean P1Pressed;
-    private boolean P2Pressed;
-    private Button P1Button;
-    private Button P2Button;
+    private boolean relaunched;
+    private boolean onePressed;
+    private boolean twoPressed;
+    private Button Button1;
+    private Button Button2;
     private VBox myButtons;
     private GameParser myGameParser;
 
-    public PlayerSelect() throws FileNotFoundException {
+    public TitleScreen() {
     }
 
-    public PlayerSelect(String name) throws FileNotFoundException {
+    public TitleScreen(String name, boolean relaunched) throws FileNotFoundException {
         this.gameName = name;
+        this.relaunched = relaunched;
         setBackground();
         setLogo();
         renderButtons();
@@ -58,73 +61,74 @@ public class PlayerSelect extends BorderPane {
     }
 
     private Image loadImage(String type) throws FileNotFoundException {
-        return new Image(new FileInputStream(RESOURCES_PACKAGE + gameName.toLowerCase() + type));
+        return new Image(new FileInputStream(IMAGES_PACKAGE + gameName.toLowerCase() + type));
     }
 
-    private void renderButtons() {
+    private void renderButtons() { //TODO: REFACTOR
         myButtons = new VBox();
-        P1Button = makeButton("1 Player", event -> P1Pressed = true);
-        P2Button = makeButton("2 Players", event -> P2Pressed = true);
-        myButtons.getChildren().addAll(P1Button, P2Button);
-        formatButton(P1Button);
-        formatButton(P2Button);
+        if (relaunched){
+            Button1 = makeButton(myResources.getString("Resume"), event -> {
+                onePressed = true; twoPressed = true;});
+        }
+        else{
+            Button1 = makeButton(myResources.getString(gameName + "1"), event -> onePressed = true);
+            if (!(myResources.getString(gameName + "2").equals("NOBUTTON"))){
+                Button2 = makeButton(myResources.getString(gameName + "2"), event -> twoPressed = true);
+            }
+        }
     }
 
     private Button makeButton(String key, EventHandler e) {
         Button tempButton = new Button(key);
         tempButton.setOnAction(e);
+        myButtons.getChildren().add(tempButton);
+        formatButton(tempButton);
         return tempButton;
-    }
-
-    public void disableP1Button() {
-        P1Button.setDisable(true);
-    }
-
-    public void disableP2Button() {
-        P2Button.setDisable(true);
     }
 
     private void formatButton(Button tempButton) {
         myButtons.setVgrow(tempButton, Priority.ALWAYS);
     }
 
-    public boolean getP1Pressed() {
-        return P1Pressed;
+    public boolean getOnePressed() {
+        return onePressed;
     }
 
-    public void setP1PressedOff() {
-        P1Pressed = false;
+    public void setOneOff() {
+        onePressed = false;
     }
 
-    public boolean getP2Pressed() {
-        return P2Pressed;
+    public boolean getTwoPressed() {
+        return twoPressed;
     }
 
-    public void setP2PressedOff() {
-        P2Pressed = false;
+    public void setTwoOff() {
+        twoPressed = false;
     }
 
     public boolean isPlayerSelected() {
-        return P1Pressed || P2Pressed;
+        return onePressed || twoPressed;
     }
 
     public int playerNumber() { //FIXME: STREAMLINE
-        if (getP1Pressed()){
+        if (getOnePressed()){
             playerNum = 1;
         }
-        if (getP2Pressed()){
+        if (getTwoPressed()){
             playerNum = 2;
         }
         return playerNum;
     }
 
     public void resetButtons() {
-        setP1PressedOff();
-        setP2PressedOff();
+        setOneOff();
+        setTwoOff();
     }
 
     public void handleMultiplayer(String gameName){ //TODO: need to ask Varun about this
-//        this.myGameParser = new GameParser(gameName + "Game");
-//        myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
+        this.myGameParser = new GameParser(gameName);
+        if (myGameParser.supportsMultiplayer()){
+            myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
+        }
     }
 }

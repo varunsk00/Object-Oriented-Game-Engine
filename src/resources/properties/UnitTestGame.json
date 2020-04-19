@@ -1,25 +1,22 @@
 {
-  "gameName": "FlappyBird",
+  "gameName": "UnitTest",
   "players": "1",
   "physicsProfile": [
     {
-      "Friction": "0",
-      "Drag": "0",
+      "Friction": "20",
+      "Drag": "1",
       "Gravity": "20"
     }
   ],
   "levelArrangement": [
     {
-      "Level_2": "Pipe2",
-      "Level_1": "Pipe1",
-      "Level_4": "Pipe4",
-      "Level_3": "Pipe3",
-      "Level_5": "Pipe5"
+      "Level_2": "Level2",
+      "Level_1": "MarioLevel"
     }
   ],
   "playerArrangement": [
     {
-      "EntityName": "Flappy_Bird",
+      "EntityName": "Mario_Fire",
       "Arrangement": {
         "X": "100",
         "Y": "100"

@@ -34,18 +34,30 @@ public class GameParser {
   private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String LEVELS_PREFIX = PACKAGE_PREFIX_NAME + "levels.";
+  private String fileName;
   private Controller mainController;
-  private int playerNumber;
+  private int maxPlayers;
+  private int selectedPlayers;
   private List<EntityWrapper> playerList;
 
 
   private JSONObject jsonObject;
 
-  public GameParser(String fileName, Controller controller) {
+  public GameParser(String gameName) {
+    fileName = gameName + "Game";
+    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    jsonObject = (JSONObject) readJsonFile();
+    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
+    playerList = parsePlayerEntities();
+  }
+
+
+  public GameParser(String gameName, Controller controller) {
+    fileName = gameName + "Game";
     mainController = controller;
     myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
-    playerNumber = Integer.parseInt(jsonObject.get("players").toString());
+    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
   }
 
@@ -73,7 +85,7 @@ public class GameParser {
     {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/MarioGame.json", false)) //FIXME: MULT FILES
+      try (FileWriter file = new FileWriter("src/resources/properties/" + fileName + ".json", false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
@@ -90,6 +102,10 @@ public class GameParser {
     }
     Collections.sort(sortedKeys);
     return sortedKeys;
+  }
+
+  public boolean supportsMultiplayer(){
+    return maxPlayers > 1;
   }
 
 
@@ -122,9 +138,11 @@ public class GameParser {
 
   private List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
+    this.maxPlayers = playerArrangement.size();
+    System.out.println(maxPlayers);
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
 
-    for(int i = 0; i < playerArrangement.size(); i++){
+    for(int i = 0; i < selectedPlayers; i++){ //TODO: DISCUSS TREATING SINGLEPLAYER MARIO AND MULTIPLAYER MARIO AS DIFF GAMES WITH DIFF DATA FILES
       JSONObject playerInfo = (JSONObject) playerArrangement.get(i);
       String entityName = playerInfo.get("EntityName").toString();
       JSONObject playerLocation = (JSONObject) playerInfo.get("Arrangement");
@@ -135,11 +153,6 @@ public class GameParser {
       playerEntityArray.add(newPlayer);
     }
 
-
-//    if(playerNumber == 1){ //FIXME: MAGIC NUMBER
-//      System.out.println("REMOVE");
-//      playerEntityArray.remove(playerEntityArray.size()-1);
-//    }
     return playerEntityArray;
   }
 

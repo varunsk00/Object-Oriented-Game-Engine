@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import ooga.controller.EntityWrapper;
 import ooga.model.actions.Action;
 import ooga.model.actions.VelocityX;
+import ooga.util.GameParser;
+import ooga.util.PhysicsProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +17,9 @@ class PhysicsEngineTest {
   @BeforeEach
   void setUp() {
     myEntity = new EntityWrapper("UnitTestEntity", null);
-   // myEngine = new PhysicsEngine("yeet");
+    GameParser gameParser = new GameParser("UnitTest");
+    myEngine = new PhysicsEngine(gameParser.parsePhysicsProfile());
+
   }
 
   @Test

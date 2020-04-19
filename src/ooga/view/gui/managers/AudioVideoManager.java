@@ -1,16 +1,14 @@
 package ooga.view.gui.managers;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import ooga.view.application.games.Game;
-import ooga.view.gui.userinterface.PlayerSelect;
+import ooga.view.gui.userinterface.TitleScreen;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
 
 public class AudioVideoManager {
@@ -20,7 +18,7 @@ public class AudioVideoManager {
     private final String MUSIC_PACKAGE = RESOURCES_PACKAGE1 + "soundtrack";
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private Game currentGame;
-    private PlayerSelect myPlayerSelect;
+    private TitleScreen myTitleScreen;
     private MediaPlayer currentSong;
     private MediaPlayer currentSoundEffect;
     private Map<String, Object> myInPlayGames;
@@ -61,7 +59,6 @@ public class AudioVideoManager {
         currentSoundEffect.seek(Duration.ZERO);
         currentSoundEffect.setVolume(0.1);
         currentSoundEffect.play();
-       // currentSoundEffect.setVolume(0);
     }
 
     private void playSong(MediaPlayer song){
@@ -69,6 +66,5 @@ public class AudioVideoManager {
         song.setCycleCount(MediaPlayer.INDEFINITE);
         song.setVolume(0.1);
         song.play();
-       // song.setVolume(0);
     }
 }
