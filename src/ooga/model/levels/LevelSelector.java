@@ -6,7 +6,7 @@ import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
 
-public class LevelSelecter {
+public class LevelSelector {
 
   private List<Level> parsedLevels;
   private Level activeLevel;
@@ -15,7 +15,7 @@ public class LevelSelecter {
   private int currentPlayerInterval = -1;
 
 
-  public LevelSelecter(List<Level> levelList){
+  public LevelSelector(List<Level> levelList){
     parsedLevels = levelList;
     activeLevel = parsedLevels.get(0);
   }

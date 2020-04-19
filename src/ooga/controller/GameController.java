@@ -6,15 +6,13 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javax.swing.text.html.parser.Entity;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
 import ooga.model.controlschemes.GamePad;
-import ooga.model.levels.FiniteLevel;
 import ooga.model.levels.InfiniteLevelBuilder;
-import ooga.model.levels.Level;
-import ooga.model.levels.LevelSelecter;
+import ooga.model.levels.LevelSelector;
 import ooga.util.GameParser;
-import ooga.util.LevelParser;
 import ooga.view.gui.managers.StageManager;
 
 public class GameController implements Controller {
@@ -33,7 +31,7 @@ public class GameController implements Controller {
   private Timeline animation;
   private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
-  private LevelSelecter levelSelecter;
+  private LevelSelector levelSelector;
   private GamePad g;
   private GameParser gameParser;
 
@@ -49,8 +47,13 @@ public class GameController implements Controller {
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
+//    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
+    for(EntityWrapper player : gameParser.getPlayerList()){
+      System.out.println(player);
+      entityList.add(player);
+      myViewManager.updateEntityGroup(player.getRender());
+    }
 
     physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile()); //TODO: add PhysicsProfile object
     collisionEngine = new CollisionEngine();
@@ -67,15 +70,10 @@ public class GameController implements Controller {
       }
     });
 
-
-
-    entityList.add(player);
-    myViewManager.updateEntityGroup(player.getRender());
-
     myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
 
 
-    levelSelecter = new LevelSelecter(gameParser.parseLevels());
+    levelSelector = new LevelSelector(gameParser.parseLevels());
 
     setUpTimeline();
 
@@ -113,7 +111,7 @@ public class GameController implements Controller {
 //      }
 //    }
       if (!myViewManager.getIsGamePaused()) {
-        levelSelecter.updateCurrentLevel(entityList, myViewManager);
+        levelSelector.updateCurrentLevel(entityList, myViewManager);
         myViewManager.updateValues();
         //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
         for (EntityWrapper subjectEntity : entityList) {

@@ -2,25 +2,29 @@
   "gameName": "FlappyBird",
   "players":"1",
   "levelArrangement": [
-    "Pipe1", "Pipe2", "Pipe3", "Pipe4", "Pipe5"
+    {
+      "Level_1": "Pipe1",
+      "Level_2": "Pipe2",
+      "Level_3": "Pipe3",
+      "Level_4": "Pipe4",
+      "Level_5": "Pipe5"
+    }
   ],
   "physicsProfile": [
     {
-      "Gravity": "100",
-      "Friction": "20",
-      "Drag": "1"
+      "Gravity": "20",
+      "Friction": "0",
+      "Drag": "0"
     }
   ],
   "playerArrangement": [
     {
       "EntityName": "Flappy_Bird",
-      "Arrangement": [
-        {
-          "4": [
-            "2"
-          ]
-        }
-      ]
+      "Arrangement":
+      {
+        "X": "100",
+        "Y": "100"
+      }
     }
   ]
 }

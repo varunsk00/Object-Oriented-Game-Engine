@@ -176,4 +176,5 @@ public class EntityModel {
     entityHeight = newHeight;
     myEntity.setHeight(newHeight);
   }
+
 }

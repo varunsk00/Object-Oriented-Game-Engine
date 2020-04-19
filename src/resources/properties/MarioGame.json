@@ -3,7 +3,7 @@
   "players":"1",
   "levelArrangement": [
     {
-      "Level_1": "SampleLevel",
+      "Level_1": "SampleLevel"
     }
   ],
   "physicsProfile": [
@@ -16,11 +16,11 @@
   "playerArrangement": [
     {
       "EntityName": "Mario_Fire",
-      "Arrangement": [
+      "Arrangement":
         {
-          "4": ["2"]
+          "X": "100",
+          "Y": "100"
         }
-      ]
     }
   ]
 }

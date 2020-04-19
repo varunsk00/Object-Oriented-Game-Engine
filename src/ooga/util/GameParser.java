@@ -33,6 +33,8 @@ public class GameParser {
   private static final String LEVELS_PREFIX = PACKAGE_PREFIX_NAME + "levels.";
   private Controller mainController;
   private int playerNumber;
+  private List<EntityWrapper> playerList;
+
 
   private JSONObject jsonObject;
 
@@ -41,6 +43,7 @@ public class GameParser {
     myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
     playerNumber = Integer.parseInt(jsonObject.get("players").toString());
+    playerList = parsePlayerEntities();
   }
 
   //FIXME add error handling
@@ -52,6 +55,10 @@ public class GameParser {
     } catch (IOException | ParseException e) {
       throw new InvalidControlSchemeException(e);
     }
+  }
+
+  public List<EntityWrapper> getPlayerList(){
+    return playerList;
   }
 
   public void updateJSONValue(String key, String newValue){
@@ -84,15 +91,14 @@ public class GameParser {
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
-      List<EntityWrapper> players = parsedLevel.parsePlayerEntities(); //TODO: may be removed depending on where we make players
       try {
-        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor(List.class, List.class, List.class).newInstance(tiles, enemies, players);
+        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor(List.class, List.class, List.class).newInstance(tiles, playerList, enemies);
+
         levelList.add(newLevel);
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
           throw new InvalidActionException("Level could not be found.");
       }
     }
-    System.out.println(levelList.get(0).);
 
     return levelList;
   }
@@ -100,14 +106,26 @@ public class GameParser {
 
 
 
-  public List<EntityWrapper> parsePlayerEntities() {
+  private List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
 
-    if(playerNumber == 1){ //FIXME: MAGIC NUMBER
-      System.out.println("REMOVE");
-      playerEntityArray.remove(playerEntityArray.size()-1);
+    for(int i = 0; i < playerArrangement.size(); i++){
+      JSONObject playerInfo = (JSONObject) playerArrangement.get(i);
+      String entityName = playerInfo.get("EntityName").toString();
+      JSONObject playerLocation = (JSONObject) playerInfo.get("Arrangement");
+
+      EntityWrapper newPlayer = new EntityWrapper(entityName, mainController);
+      newPlayer.getModel().setX(Double.parseDouble(playerLocation.get("X").toString()));
+      newPlayer.getModel().setY(Double.parseDouble(playerLocation.get("Y").toString()));
+      playerEntityArray.add(newPlayer);
     }
+
+
+//    if(playerNumber == 1){ //FIXME: MAGIC NUMBER
+//      System.out.println("REMOVE");
+//      playerEntityArray.remove(playerEntityArray.size()-1);
+//    }
     return playerEntityArray;
   }
 

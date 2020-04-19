@@ -21,7 +21,7 @@ public class Game {
     private Pane myBackgroundPane;
     private StageManager stageManager;
     private Scene oldScene;
-    private String gameName;
+    private String game;
     private Scene currentScene;
     private GameController mainController;
     private Map<String, String> gameTypes;
@@ -43,6 +43,7 @@ public class Game {
 
     public void loadGame(String gameName) throws XInputNotLoadedException {
         stageManager.setCurrentTitle(gameName);
+//        game = gameName;
         this.mainController = new GameController(stageManager, gameName + "Game"); //FIXME MAGIC VALUE
     }
 
@@ -59,8 +60,8 @@ public class Game {
     }
 
     private void initStage() {
-        stageManager.createAndSwitchScenes(myBackgroundPane, gameName);
-        System.out.println("GAME CLASS:" + gameName);
+        stageManager.createAndSwitchScenes(myBackgroundPane, game);
+        System.out.println("GAME CLASS:" + game);
     }
 
     public Scene getCurrentScene() {
