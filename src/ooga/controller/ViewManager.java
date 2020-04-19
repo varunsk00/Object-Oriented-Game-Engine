@@ -1,12 +1,16 @@
 package ooga.controller;
 
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -46,7 +50,7 @@ public class ViewManager implements ViewExternalAPI {
     level = builder.generateLevel();
 
     testPane = level;
-
+    testPane.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
     testScene = currentStage.getCurrentScene();
     testScene.setRoot(testPane);
 

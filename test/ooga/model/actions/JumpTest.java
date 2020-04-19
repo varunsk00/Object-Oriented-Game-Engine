@@ -18,7 +18,7 @@ class JumpTest extends DukeApplicationTest {
     param = "100";
     myAction = new Jump(param);
     myEntity = new EntityWrapper("UnitTestEntity", null);
-    myEntity.getModel().setOnGround(true);
+    myEntity.getModel().setBoundedBelow(true);
   }
 
   @Test
@@ -29,7 +29,7 @@ class JumpTest extends DukeApplicationTest {
     System.out.println(myEntity.getModel().getYVelocity());
     assertTrue(preVelocity != myEntity.getModel().getYVelocity());
     assertTrue(myEntity.getModel().getYVelocity() == Double.parseDouble(param));
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
   }
 
   @Test
@@ -38,12 +38,12 @@ class JumpTest extends DukeApplicationTest {
     myAction.execute(myEntity.getModel());
     assertTrue(preVelocity != myEntity.getModel().getYVelocity());
     assertTrue(myEntity.getModel().getYVelocity() == Double.parseDouble(param));
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
 
     preVelocity = myEntity.getModel().getYVelocity();
     myAction.execute(myEntity.getModel());
     assertTrue(preVelocity == myEntity.getModel().getYVelocity());
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
   }
 
   @Test
@@ -52,17 +52,17 @@ class JumpTest extends DukeApplicationTest {
     myAction.execute(myEntity.getModel());
     assertTrue(preVelocity != myEntity.getModel().getYVelocity());
     assertTrue(myEntity.getModel().getYVelocity() == Double.parseDouble(param));
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
 
-    myEntity.getModel().setOnGround(true);
+    myEntity.getModel().setBoundedBelow(true);
     myEntity.getModel().setYVelocity(0);
-    assertTrue(myEntity.getModel().isOnGround());
+    assertTrue(myEntity.getModel().getBoundedBelow());
 
     preVelocity = myEntity.getModel().getYVelocity();
     myAction.execute(myEntity.getModel());
     assertTrue(preVelocity != myEntity.getModel().getYVelocity());
     assertTrue(myEntity.getModel().getYVelocity() == Double.parseDouble(param));
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
   }
 
 }

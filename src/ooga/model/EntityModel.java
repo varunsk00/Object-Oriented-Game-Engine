@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Stack;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
+import ooga.model.actions.AbsoluteVelocityX;
 import ooga.model.actions.AccelerateX;
 import ooga.model.actions.Action;
 import ooga.model.actions.CollisionKey;
@@ -24,10 +25,10 @@ public class EntityModel {
   private int nextLevelIndex;
   private String entityID;
   private boolean fixedEntity;
-  private boolean onGround;
+  private boolean boundedBelow;
   private boolean boundedLeft;
   private boolean boundedRight;
-  private boolean colliding;
+  private boolean boundedTop;
 
   private double xVel;
   private double yVel;
@@ -48,7 +49,8 @@ public class EntityModel {
     forwards = true;
     boundedLeft = false;
     boundedRight = false;
-    onGround = false;
+    boundedTop = false;
+    boundedBelow = false;
   }
 
   private void loadStats() {
@@ -78,7 +80,8 @@ public class EntityModel {
     setY(yPos + yVel * elapsedTime);
     boundedLeft = false;
     boundedRight = false;
-    onGround = false;
+    boundedBelow = false;
+    boundedTop = false;
   }
 
   private void limitBounds() {
@@ -88,8 +91,11 @@ public class EntityModel {
     if(boundedLeft){
       if(xVel<0){xVel=0;}
     }
-    if(onGround){
+    if(boundedBelow){
       if (yVel > 0) {yVel=0;}
+    }
+    if(boundedTop){
+      if (yVel < 0) { yVel = 0;}
     }
   }
 
@@ -150,16 +156,16 @@ public class EntityModel {
 
   public void setYVelocity(double newYVelocity){yVel = newYVelocity; }
 
-  public boolean isOnGround(){
-    return onGround;
+  public boolean getBoundedBelow(){
+    return boundedBelow;
   }
 
   public String getEntityID(){
     return this.entityID;
   }
 
-  public void setOnGround(boolean groundStatus){
-    this.onGround = groundStatus;
+  public void setBoundedBelow(boolean groundStatus){
+    this.boundedBelow = groundStatus;
   }
 
   public Stack<Action> getActionStack() {
@@ -175,6 +181,8 @@ public class EntityModel {
     newEntity.getModel().setX(this.getX() + this.getWidth()/2);
     newEntity.getModel().setY(this.getY());
     newEntity.getModel().setForwards(this.getForwards());
+    Action updateVelocity = new AbsoluteVelocityX("" + (this.getXVelocity() + newEntity.getModel().getXVelocity()));
+    updateVelocity.execute(newEntity.getModel());
   }
 
   public EntityWrapper spawnEntity(String param) {
@@ -205,4 +213,5 @@ public class EntityModel {
 
   public boolean getFixed(){return fixedEntity;}
 
+  public void setBoundedTop(boolean value) { }
 }
