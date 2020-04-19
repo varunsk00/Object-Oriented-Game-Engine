@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class PlayerSelect extends BorderPane {
+public class TitleScreen extends BorderPane {
     private final String RESOURCES_PACKAGE = "src/ooga/view/gui/resources/";
     private final String BG = "_player_select.png";
     private final String LOGO = "_logo.png";
@@ -28,10 +28,10 @@ public class PlayerSelect extends BorderPane {
     private VBox myButtons;
     private GameParser myGameParser;
 
-    public PlayerSelect() throws FileNotFoundException {
+    public TitleScreen() throws FileNotFoundException {
     }
 
-    public PlayerSelect(String name) throws FileNotFoundException {
+    public TitleScreen(String name) throws FileNotFoundException {
         this.gameName = name;
         setBackground();
         setLogo();
@@ -124,7 +124,9 @@ public class PlayerSelect extends BorderPane {
     }
 
     public void handleMultiplayer(String gameName){ //TODO: need to ask Varun about this
-//        this.myGameParser = new GameParser(gameName + "Game");
-//        myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
+        this.myGameParser = new GameParser(gameName);
+        if (myGameParser.supportsMultiplayer()){
+            myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
+        }
     }
 }
