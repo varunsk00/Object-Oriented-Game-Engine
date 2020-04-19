@@ -58,7 +58,7 @@ public class GamePreview extends StackPane {
     public boolean isGamePressed(){
         return this.isPressed;
     }
-    public void resetGameName(){
+    public void resetGameButton(){
         this.isPressed = false;
     }
     public void setGameName(String name){

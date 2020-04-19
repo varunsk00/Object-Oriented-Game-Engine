@@ -18,13 +18,18 @@ public class AudioVideoManager {
     private final String MUSIC_PACKAGE = RESOURCES_PACKAGE1 + "soundtrack";
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private Game currentGame;
-    private TitleScreen myTitleScreen;
     private MediaPlayer currentSong;
     private MediaPlayer currentSoundEffect;
+    private boolean destroyed;
     private Map<String, Object> myInPlayGames;
+    //TODO: FIX THIS DUMB IMPLEMENTATION OF DISABLING THE AV MANAGER FOR THE GLOBAL RESET
 
     public AudioVideoManager(){
         myInPlayGames = new HashMap<String, Object>();
+    }
+
+    public void close(){
+        this.destroyed = true;
     }
 
     public void switchMusic(StageManager sm){
@@ -33,7 +38,9 @@ public class AudioVideoManager {
         }
         this.currentSong = new MediaPlayer
                 (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sm.getCurrentTitle()) + ".mp3").toURI().toString()));
-        playSong(currentSong);
+        if(!destroyed) {
+            playSong(currentSong);
+        }
     }
 
     public void switchGame(StageManager sm, String gameName) throws Exception {

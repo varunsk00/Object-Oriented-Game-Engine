@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ooga.view.application.games.Game;
+import ooga.view.gui.ProgramLauncher;
 import ooga.view.gui.userinterface.Welcome;
 
 //TODO: REFACTOR, CLEAN UP MAGIC, REMOVE UNNECESSARY METHODS
@@ -21,9 +22,7 @@ public class StageManager {
     private Scene currentScene;
     private Scene pastScene;
     private AudioVideoManager avManager;
-    private Parent reset;
     private String pastTitle;
-    private Scene resetScene;
     private Map<String, Scene> lastScene;
 
 
@@ -58,11 +57,7 @@ public class StageManager {
     public Scene getPastScene() {
         return pastScene;
     }
-    public void createAndSwitchScenes(Parent parentNode) {
-        createAndSwitchScenes(parentNode, stage.getTitle());
-        //this.reset = parentNode;
-        //this.resetScene = new Scene(parentNode, SCENE_WIDTH, SCENE_HEIGHT);
-    }
+    public void createAndSwitchScenes(Parent parentNode) { createAndSwitchScenes(parentNode, stage.getTitle()); }
     public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
         pastTitle = stage.getTitle();
@@ -70,7 +65,7 @@ public class StageManager {
         currentScene.setOnKeyPressed(e -> {
             try {
                 handleKeyInput(e.getCode());
-            } catch (FileNotFoundException fileNotFoundException) {
+            } catch (Exception fileNotFoundException) {
                 fileNotFoundException.printStackTrace();//FIXME: TO AVOID FAILING CLASS
             }
         });;
@@ -79,14 +74,16 @@ public class StageManager {
         stage.setTitle(title);
     }
 
-    private void handleKeyInput (KeyCode code) throws FileNotFoundException { //TODO: COMBINE WITH HOME AND SUSPEND POINTS
+    private void handleKeyInput (KeyCode code) throws Exception { //TODO: COMBINE WITH HOME AND SUSPEND POINTS
         if(code == KeyCode.H){
             stage.setScene(pastScene);
             stage.setTitle("GameSelect");
         }
         if(code == KeyCode.R){
-            //switchRoot(reset);
+            ProgramLauncher launcher = new ProgramLauncher(stage);
+            avManager.close();
             avManager.switchMusic(this);
+            launcher.start();
         }
     }
 

@@ -1,19 +1,19 @@
 package ooga.model.levels;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import ooga.controller.Controller;
 
 public abstract class LevelBuilder {
-  protected Pane level;
+  protected BorderPane level;
   protected Controller myController;
 
   public LevelBuilder(Controller controller){
     myController = controller;
-    level = new Pane();
+    level = new BorderPane();
   };
 
-  public Pane generateLevel(){return level;}
+  public BorderPane generateLevel(){return level;}
 
-  public abstract void updateLevel(Rectangle camera, Pane level);
+  public abstract void updateLevel(Rectangle camera, BorderPane level);
 }

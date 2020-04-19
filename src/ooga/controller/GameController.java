@@ -9,7 +9,6 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import javax.swing.text.html.parser.Entity;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
 import ooga.model.controlschemes.GamePad;
@@ -103,7 +102,7 @@ public class GameController implements Controller {
 
   private void step (double elapsedTime) throws XInputNotLoadedException {
     g.update();
-    myViewManager.handleMouseInput();
+    myViewManager.handleMenuInput();
 //    if (player.size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
 //      if (g.getState() != null) {
 //        if (!g.getState().getPressed()) {
