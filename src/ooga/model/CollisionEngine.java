@@ -9,6 +9,8 @@ import javafx.util.Pair;
 import ooga.model.actions.Action;
 import ooga.model.actions.CollisionKey;
 import ooga.model.actions.MoveX;
+import ooga.model.actions.MoveY;
+import ooga.model.actions.NoAction;
 
 public class CollisionEngine {
 
@@ -38,6 +40,10 @@ public class CollisionEngine {
   public void produceCollisionActions(EntityModel subjectEntity, EntityModel targetEntity) {
     Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
     if (!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)) {
+      //move it outside
+      moveEntityOut(subjectEntity, targetEntity);
+
+
       String targetEntityID = targetEntity.getEntityID();
       String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity,
           targetEntity);
@@ -61,6 +67,24 @@ public class CollisionEngine {
         }
       }
     }
+  }
+
+  private void moveEntityOut(EntityModel subjectEntity, EntityModel targetEntity) {
+    String direction = determineTargetEntityCollisionSide(subjectEntity,
+        targetEntity);
+    Action correctionAction = new NoAction();
+    if(!subjectEntity.getFixed()) {
+      if (direction.equals(RIGHT)) {
+        correctionAction = new MoveX("" + ((targetEntity.getX()+targetEntity.getWidth())-subjectEntity.getX()));
+      } else if (direction.equals(LEFT)){
+        correctionAction = new MoveX(""+ (targetEntity.getX()-(subjectEntity.getX()+subjectEntity.getWidth())));
+      } else if (direction.equals(TOP)){
+        correctionAction = new MoveY("" + (targetEntity.getY()-(subjectEntity.getY()+subjectEntity.getHeight())));
+      } else if (direction.equals(BOTTOM)){
+        correctionAction = new MoveY("" + ((targetEntity.getY()+targetEntity.getWidth())-subjectEntity.getY()));
+      }
+    }
+    correctionAction.execute(subjectEntity);
   }
 
   private String determineTargetEntityCollisionSide(EntityModel subjectEntity, EntityModel targetEntity){

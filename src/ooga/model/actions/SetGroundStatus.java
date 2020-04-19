@@ -12,7 +12,7 @@ public class SetGroundStatus extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setOnGround(groundStatus);
+    entity.setBoundedBelow(groundStatus);
     //System.out.println("help" + groundStatus);
   }
 }
