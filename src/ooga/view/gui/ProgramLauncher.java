@@ -24,15 +24,17 @@ public class ProgramLauncher {
     private AudioVideoManager audioVideoManager;
 
     public ProgramLauncher(Stage primaryStage) throws FileNotFoundException {
-        this.stageManager = new StageManager(primaryStage);
         this.audioVideoManager = new AudioVideoManager();
+        this.stageManager = new StageManager(primaryStage, audioVideoManager);
     }
+
     //TODO: make better css
     public void start() throws Exception {
         library = new GameCabinet(stageManager, audioVideoManager);
         initBootupScreen();
         startAnimationLoop();
     }
+
 
     private void initBootupScreen(){ //FIXME: filepath declared as variable
         stageManager.createAndSwitchScenes(welcomeScreen);
@@ -60,6 +62,5 @@ public class ProgramLauncher {
             stageManager.updateCurrentScene("GameSelect", library.getScene());
         }
         library.updateCurrentGame();
-
     }
 }

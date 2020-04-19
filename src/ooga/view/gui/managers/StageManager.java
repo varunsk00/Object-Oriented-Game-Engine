@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ooga.view.application.games.Game;
@@ -19,13 +20,16 @@ public class StageManager {
     private Stage stage;
     private Scene currentScene;
     private Scene pastScene;
+    private AudioVideoManager avManager;
+    private Parent reset;
     private String pastTitle;
-    private Scene homeScene;
+    private Scene resetScene;
     private Map<String, Scene> lastScene;
 
 
-    public StageManager(Stage primaryStage) {
+    public StageManager(Stage primaryStage, AudioVideoManager avManager) throws FileNotFoundException {
         this.stage = primaryStage;
+        this.avManager = avManager;
         stage.setTitle("BOOGA");
         stage.show();
         stage.setResizable(false);
@@ -56,6 +60,8 @@ public class StageManager {
     }
     public void createAndSwitchScenes(Parent parentNode) {
         createAndSwitchScenes(parentNode, stage.getTitle());
+        //this.reset = parentNode;
+        //this.resetScene = new Scene(parentNode, SCENE_WIDTH, SCENE_HEIGHT);
     }
     public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
@@ -75,9 +81,12 @@ public class StageManager {
 
     private void handleKeyInput (KeyCode code) throws FileNotFoundException { //TODO: COMBINE WITH HOME AND SUSPEND POINTS
         if(code == KeyCode.H){
-            System.out.println("HOME");
             stage.setScene(pastScene);
             stage.setTitle("GameSelect");
+        }
+        if(code == KeyCode.R){
+            //switchRoot(reset);
+            avManager.switchMusic(this);
         }
     }
 

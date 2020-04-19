@@ -44,7 +44,7 @@ public class Game {
     public void loadGame(String gameName) throws XInputNotLoadedException {
         stageManager.setCurrentTitle(gameName);
 //        game = gameName;
-        this.mainController = new GameController(stageManager, gameName + "Game"); //FIXME MAGIC VALUE
+        this.mainController = new GameController(stageManager, gameName); //FIXME MAGIC VALUE
     }
 
     private void loadGameTypes(){
