@@ -23,7 +23,7 @@ class GuiTest extends DukeApplicationTest {
   void testSelectGame() {
     assertTrue(playButton != null);
     clickOn(playButton);
-    selectButton = (Button) lookup("#Select").queryLabeled();
+    selectButton = (Button) lookup("#start").queryLabeled();
     assertTrue(selectButton != null);
     clickOn(selectButton);
   }
@@ -31,7 +31,7 @@ class GuiTest extends DukeApplicationTest {
   @Test
   void testPlayGame() throws InterruptedException {
     clickOn(playButton);
-    selectButton = (Button) lookup("#Select").queryLabeled();
+    selectButton = (Button) lookup("#start").queryLabeled();
     clickOn(selectButton);
     press(KeyCode.SPACE);
     press(KeyCode.D);
@@ -52,7 +52,7 @@ class GuiTest extends DukeApplicationTest {
       clickOn(rightArrow);
       Thread.sleep(800);
     }
-    selectButton = (Button) lookup("#Select").queryLabeled();
+    selectButton = (Button) lookup("#start").queryLabeled();
     clickOn(selectButton);
   }
 
@@ -61,7 +61,7 @@ class GuiTest extends DukeApplicationTest {
     clickOn(playButton);
     Node leftArrow = lookup("#LeftArrow").query();
     Node rightArrow = lookup("#RightArrow").query();
-    selectButton = (Button) lookup("#Select").queryLabeled();
+    selectButton = (Button) lookup("#start").queryLabeled();
     assertTrue(rightArrow != null);
     assertTrue(leftArrow != null);
     clickOn(selectButton);

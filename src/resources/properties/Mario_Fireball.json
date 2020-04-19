@@ -9,8 +9,8 @@
   "yVel": 10,
   "maxXVel": 200,
   "maxYVel": 200,
-  "height": 50,
-  "width": 50,
+  "height": 25,
+  "width": 25,
   "scheme": "Pattern",
   "actionBundles": [
     {
