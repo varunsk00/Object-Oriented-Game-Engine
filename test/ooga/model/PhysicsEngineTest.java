@@ -15,7 +15,7 @@ class PhysicsEngineTest {
   @BeforeEach
   void setUp() {
     myEntity = new EntityWrapper("UnitTestEntity", null);
-    myEngine = new PhysicsEngine("yeet");
+   // myEngine = new PhysicsEngine("yeet");
   }
 
   @Test

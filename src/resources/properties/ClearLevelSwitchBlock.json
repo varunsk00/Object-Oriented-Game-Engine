@@ -2,7 +2,7 @@
   "entityName": "ClearLevelSwitchBlock",
   "image": "Brick.png",
   "health": 1,
-  "grounded": true,
+  "fixed": true,
   "xPos": -100,
   "yPos": -100,
   "xVel": 0,

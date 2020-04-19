@@ -204,4 +204,5 @@ public class EntityModel {
   public void setBoundedRight(boolean value){boundedRight = value;}
 
   public boolean getFixed(){return fixedEntity;}
+
 }

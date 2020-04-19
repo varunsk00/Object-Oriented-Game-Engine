@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import ooga.util.GameParser;
 import ooga.util.LevelParser;
 
 import java.io.File;
@@ -25,7 +26,7 @@ public class PlayerSelect extends BorderPane {
     private Button P1Button;
     private Button P2Button;
     private VBox myButtons;
-    private LevelParser myGameParser;
+    private GameParser myGameParser;
 
     public PlayerSelect() throws FileNotFoundException {
     }
@@ -122,8 +123,8 @@ public class PlayerSelect extends BorderPane {
         setP2PressedOff();
     }
 
-    public void handleMultiplayer(String gameName){
-        this.myGameParser = new LevelParser(gameName + "Level");
-        myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
+    public void handleMultiplayer(String gameName){ //TODO: need to ask Varun about this
+//        this.myGameParser = new GameParser(gameName + "Game");
+//        myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
     }
 }
