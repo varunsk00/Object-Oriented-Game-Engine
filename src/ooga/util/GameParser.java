@@ -96,7 +96,7 @@ public class GameParser {
 
         levelList.add(newLevel);
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-          throw new InvalidActionException("Level could not be found.");
+          throw new InvalidActionException("Level could not be found."); //TODO: change exception heading
       }
     }
 

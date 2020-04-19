@@ -164,26 +164,6 @@
   ],
   "levelName": "SampleLevel",
   "playerArrangement": [
-    {
-      "EntityName": "Mario_Fire",
-      "Arrangement": [
-        {
-          "12": [
-            "2"
-          ]
-        }
-      ]
-    },
-    {
-      "EntityName": "P2_Luigi_Fire",
-      "Arrangement": [
-        {
-          "12": [
-            "1"
-          ]
-        }
-      ]
-    }
   ],
   "tileWidth": 50,
   "enemyArrangement": [],
