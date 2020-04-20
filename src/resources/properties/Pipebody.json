@@ -3,6 +3,8 @@
   "image": "flappy_body.png",
   "health": 1,
   "fixed": true,
+  "permeable": false,
+
   "xPos": -1000,
   "yPos": -100,
   "xVel": 10,

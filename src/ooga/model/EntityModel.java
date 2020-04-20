@@ -25,6 +25,7 @@ public class EntityModel {
   private int nextLevelIndex;
   private String entityID;
   private boolean fixedEntity;
+  private boolean permeableEntity;
   private boolean boundedBelow;
   private boolean boundedLeft;
   private boolean boundedRight;
@@ -64,6 +65,7 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
     fixedEntity = myEntity.getParser().readFixed();
+    permeableEntity = myEntity.getParser().readPermeable();
   }
 
   public void update(double elapsedTime){
@@ -214,4 +216,6 @@ public class EntityModel {
   public boolean getFixed(){return fixedEntity;}
 
   public void setBoundedTop(boolean value) { }
+
+  public boolean isPermeable(){return permeableEntity;}
 }

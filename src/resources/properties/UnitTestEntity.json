@@ -7,6 +7,8 @@
   "xVel": 0,
   "yVel": 0,
   "fixed": false,
+  "permeable": false,
+
   "maxXVel": 1000,
   "maxYVel": 1000,
   "height": 100,

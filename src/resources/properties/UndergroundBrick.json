@@ -3,6 +3,8 @@
   "image": "mariobrickunderground_base.jpg",
   "health": 1,
   "fixed": true,
+  "permeable": false,
+
   "xPos": 300,
   "yPos": 275,
   "xVel": 0,
