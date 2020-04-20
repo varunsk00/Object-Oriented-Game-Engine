@@ -20,10 +20,10 @@ class SetGroundStatusTest {
 
   @Test
   void testExecute() {
-    myEntity.getModel().setOnGround(true);
-    assertTrue(myEntity.getModel().isOnGround());
+    myEntity.getModel().setBoundedBelow(true);
+    assertTrue(myEntity.getModel().getBoundedBelow());
 
     myAction.execute(myEntity.getModel());
-    assertTrue(!myEntity.getModel().isOnGround());
+    assertTrue(!myEntity.getModel().getBoundedBelow());
   }
 }

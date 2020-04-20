@@ -115,6 +115,7 @@ public class GameParser {
     JSONObject levels = (JSONObject) levelArrangement.get(0);
     List<String> sortedLevelKeys = sortLevelKeySet(levels.keySet());
 
+
     for(String levelNumber : sortedLevelKeys){
       LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
       String levelType = parsedLevel.readLevelType();
@@ -138,7 +139,6 @@ public class GameParser {
   private List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
     this.maxPlayers = playerArrangement.size();
-    System.out.println(maxPlayers);
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
 
     for(int i = 0; i < selectedPlayers; i++){ //TODO: DISCUSS TREATING SINGLEPLAYER MARIO AND MULTIPLAYER MARIO AS DIFF GAMES WITH DIFF DATA FILES

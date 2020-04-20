@@ -9,7 +9,6 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import javax.swing.text.html.parser.Entity;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
 import ooga.model.controlschemes.GamePad;
@@ -103,18 +102,18 @@ public class GameController implements Controller {
 
   private void step (double elapsedTime) throws XInputNotLoadedException {
     g.update();
-    myViewManager.handleMouseInput();
-//    if (player.size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
-////      if (g.getState() != null) {
-////        if (!g.getState().getPressed()) {
-////          System.out.println("PRESSED");
-////          player.get(1).handleControllerInputPressed(g.getState().getControl());
-////        } else if (g.getState().getPressed()) {
-////          System.out.println("RELEASED");
-////          player.get(1).handleControllerInputReleased(g.getState().getControl());
-////        }
-////      }
-//    }
+    myViewManager.handleMenuInput();
+    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+      if (g.getState() != null) {
+        if (!g.getState().getPressed()) {
+          System.out.println("PRESSED");
+          gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
+        } else if (g.getState().getPressed()) {
+          System.out.println("RELEASED");
+          gameParser.getPlayerList().get(1).handleControllerInputReleased(g.getState().getControl());
+        }
+      }
+    }
       if (!myViewManager.getIsGamePaused()) {
         levelSelector.updateCurrentLevel(entityList, myViewManager);
         myViewManager.updateValues();

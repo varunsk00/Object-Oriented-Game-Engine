@@ -3,6 +3,7 @@ package ooga.view.gui;
 import com.github.strikerx3.jxinput.XInputDevice;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.view.gui.managers.AudioVideoManager;
@@ -21,10 +22,9 @@ public class ProgramLauncher {
     private Welcome welcomeScreen = new Welcome();
     private GameCabinet library;
     private StageManager stageManager;
-    private AudioVideoManager audioVideoManager;
+    private AudioVideoManager audioVideoManager = new AudioVideoManager();
 
     public ProgramLauncher(Stage primaryStage) throws FileNotFoundException {
-        this.audioVideoManager = new AudioVideoManager();
         this.stageManager = new StageManager(primaryStage, audioVideoManager);
     }
 
