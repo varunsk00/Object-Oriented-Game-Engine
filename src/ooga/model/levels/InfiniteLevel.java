@@ -13,7 +13,6 @@ public class InfiniteLevel extends Level{
   private List<EntityWrapper> playerEntities;
   private List<EntityWrapper> enemyEntities;
   private static final int spawningInterval = 500;
-  private int currentPlayerInterval = -1;
 
   public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList) {
     super(tileList, playerList, enemyList);
@@ -25,10 +24,11 @@ public class InfiniteLevel extends Level{
 
   @Override
   public void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
+//    System.out.println(getCurrentPlayerInterval() + "     " + calculatePlayerInterval(currentEntityList.get(0)));
     for (EntityWrapper player : playerEntities) {
-      if (calculatePlayerInterval(player) > currentPlayerInterval) {
-        currentPlayerInterval = calculatePlayerInterval(player);
-        int tileInterval = currentPlayerInterval + 2; //TODO: find a better way to spawn pipes outwards
+      if (calculatePlayerInterval(player) > this.getCurrentPlayerInterval()) {
+        this.setCurrentPlayerInterval(calculatePlayerInterval(currentEntityList.get(0)));
+        int tileInterval = calculatePlayerInterval(player) + 2; //TODO: find a better way to spawn pipes outwards
 
         for (EntityWrapper tileEntity : tileEntities) {
             EntityWrapper newSpawn = new EntityWrapper(tileEntity.getEntityID(), tileEntity.getController()); //FIXME: Need a better way to make the new entity
@@ -56,14 +56,6 @@ public class InfiniteLevel extends Level{
     targetEntity.getModel()
         .setY(yPosition); //TODO: generalize for X and Y scrollers
   }
-
-//  private boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity) {
-//    if (Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), 2) + Math
-//        .pow(subjectEntity.getY() - targetEntity.getY(), 2)) < 2000) {
-//      return true;
-//    }
-//    return false;
-//  }
 
   private int calculatePlayerInterval(EntityWrapper player) {
     return (int) player.getModel().getX()

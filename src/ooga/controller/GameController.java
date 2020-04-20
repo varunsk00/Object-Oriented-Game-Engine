@@ -105,15 +105,15 @@ public class GameController implements Controller {
     g.update();
     myViewManager.handleMouseInput();
 //    if (player.size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
-//      if (g.getState() != null) {
-//        if (!g.getState().getPressed()) {
-//          System.out.println("PRESSED");
-//          player.get(1).handleControllerInputPressed(g.getState().getControl());
-//        } else if (g.getState().getPressed()) {
-//          System.out.println("RELEASED");
-//          player.get(1).handleControllerInputReleased(g.getState().getControl());
-//        }
-//      }
+////      if (g.getState() != null) {
+////        if (!g.getState().getPressed()) {
+////          System.out.println("PRESSED");
+////          player.get(1).handleControllerInputPressed(g.getState().getControl());
+////        } else if (g.getState().getPressed()) {
+////          System.out.println("RELEASED");
+////          player.get(1).handleControllerInputReleased(g.getState().getControl());
+////        }
+////      }
 //    }
       if (!myViewManager.getIsGamePaused()) {
         levelSelector.updateCurrentLevel(entityList, myViewManager);
