@@ -865,18 +865,6 @@
       ]
     },
     {
-      "ID": "Pipebottom",
-      "Control": [
-        {
-          "action": "SpawnRelative",
-          "param": "Mario_Fire",
-          "coolDown": "1000",
-          "orientation": "S"
-        }
-      ]
-    },
-
-    {
       "ID": "DEFAULT",
       "Control": [
         {

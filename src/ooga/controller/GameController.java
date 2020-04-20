@@ -126,8 +126,8 @@ public class GameController implements Controller {
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
-          if(targetEntity.getModel().getIsDead()) {
-            entityRemove.add(targetEntity);
+          if(targetEntity.getModel().getEntityID().equals("Goomba") && targetEntity.getModel().getIsDead()) {
+            myViewManager.removeEntityGroup(targetEntity.getRender());
           }
         }
         subjectEntity.update(elapsedTime);
@@ -135,7 +135,11 @@ public class GameController implements Controller {
       }
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
+      if(entityRemove.size() > 0) {
+        System.out.println("Removed: " + entityRemove.get(0).getModel().getEntityID());
+      }
       entityList.removeAll(entityRemove);
+      entityRemove = new ArrayList<>();
 
     }
     entityList.addAll(entityBuffer);
