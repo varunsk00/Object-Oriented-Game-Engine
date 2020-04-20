@@ -4,6 +4,8 @@ import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javafx.animation.KeyFrame;
@@ -29,6 +31,7 @@ public class GameController implements Controller {
   private List<EntityWrapper> player;
   private List<EntityWrapper> entityBrickList;
   private List<EntityWrapper> entityBuffer;
+  private List<EntityWrapper> entityRemove;
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -52,6 +55,7 @@ public class GameController implements Controller {
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
+    entityRemove = new ArrayList<>();
 //    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
     for(EntityWrapper player : gameParser.getPlayerList()){
@@ -118,15 +122,21 @@ public class GameController implements Controller {
       levelSelector.updateCurrentLevel(entityList, myViewManager);
       myViewManager.updateValues();
       //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
+
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+          if(targetEntity.getModel().getIsDead()) {
+            entityRemove.add(targetEntity);
+          }
         }
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
       }
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
+      entityList.removeAll(entityRemove);
+
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();

@@ -29,6 +29,7 @@ public class EntityModel {
   private boolean boundedLeft;
   private boolean boundedRight;
   private boolean boundedTop;
+  private boolean isDead;
 
   private double xVel;
   private double yVel;
@@ -51,6 +52,7 @@ public class EntityModel {
     boundedRight = false;
     boundedTop = false;
     boundedBelow = false;
+    isDead = false;
   }
 
   private void loadStats() {
@@ -214,4 +216,12 @@ public class EntityModel {
   public boolean getFixed(){return fixedEntity;}
 
   public void setBoundedTop(boolean value) { }
+
+  public void setIsDead(boolean dead) {
+    this.isDead = dead;
+  }
+
+  public boolean getIsDead() {
+    return isDead;
+  }
 }
