@@ -1,16 +1,14 @@
 package ooga.view.gui.managers;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import ooga.view.application.games.Game;
-import ooga.view.gui.userinterface.PlayerSelect;
+import ooga.view.gui.userinterface.TitleScreen;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
 
 public class AudioVideoManager {
@@ -20,13 +18,18 @@ public class AudioVideoManager {
     private final String MUSIC_PACKAGE = RESOURCES_PACKAGE1 + "soundtrack";
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private Game currentGame;
-    private PlayerSelect myPlayerSelect;
     private MediaPlayer currentSong;
     private MediaPlayer currentSoundEffect;
+    private boolean destroyed;
     private Map<String, Object> myInPlayGames;
+    //TODO: FIX THIS DUMB IMPLEMENTATION OF DISABLING THE AV MANAGER FOR THE GLOBAL RESET
 
     public AudioVideoManager(){
         myInPlayGames = new HashMap<String, Object>();
+    }
+
+    public void close(){
+        this.destroyed = true;
     }
 
     public void switchMusic(StageManager sm){
@@ -35,13 +38,9 @@ public class AudioVideoManager {
         }
         this.currentSong = new MediaPlayer
                 (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sm.getCurrentTitle()) + ".mp3").toURI().toString()));
-        playSong(currentSong);
-    }
-
-    public void launchPlayerSelect(StageManager sm, String gameName) throws Exception {
-        myPlayerSelect = new PlayerSelect(gameName);
-        sm.createAndSwitchScenes(myPlayerSelect, gameName);
-        switchGame(sm, gameName);
+        if(!destroyed) {
+            playSong(currentSong);
+        }
     }
 
     public void switchGame(StageManager sm, String gameName) throws Exception {
@@ -65,12 +64,14 @@ public class AudioVideoManager {
         this.currentSoundEffect = new MediaPlayer
                 (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
         currentSoundEffect.seek(Duration.ZERO);
+        currentSoundEffect.setVolume(0.1);
         currentSoundEffect.play();
     }
 
     private void playSong(MediaPlayer song){
         song.seek(Duration.ZERO);
         song.setCycleCount(MediaPlayer.INDEFINITE);
+        song.setVolume(0.1);
         song.play();
     }
 }

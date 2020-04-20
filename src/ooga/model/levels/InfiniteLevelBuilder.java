@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import ooga.controller.Controller;
@@ -23,7 +24,7 @@ public class InfiniteLevelBuilder extends LevelBuilder {
   }
 
   @Override
-  public void updateLevel(Rectangle camera, Pane level) {
+  public void updateLevel(Rectangle camera, BorderPane level) {
 //    Iterator<EntityWrapper> iterator = myController.getEntityList().iterator();
     Iterator<EntityWrapper> iterator = proceduralEntitiesList.iterator();
     while(iterator.hasNext()){

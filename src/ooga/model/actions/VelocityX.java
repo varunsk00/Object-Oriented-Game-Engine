@@ -12,6 +12,6 @@ public class VelocityX extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setXVelocity(xVelocity*(entity.getForwards() ? 1 : -1));
+    entity.setXVelocity(xVelocity);
   }
 }

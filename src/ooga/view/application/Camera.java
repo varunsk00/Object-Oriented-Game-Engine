@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import jdk.swing.interop.SwingInterOpUtils;
@@ -42,10 +43,11 @@ public class Camera {
 
   public Rectangle getViewPort(){return viewPort;}
 
-  public void update(){
+  public void update(VBox menu){
 //    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+2));
     //note: try to get level width working
     viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (999999)));
+    menu.setTranslateX(viewPort.getX());
 
   }
 }

@@ -1,29 +1,32 @@
 package ooga.controller;
 
-import java.io.Serializable;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-import javax.swing.text.html.parser.Entity;
-import ooga.model.CollisionEngine;
-import ooga.model.PhysicsEngine;
-import ooga.model.levels.InfiniteLevelBuilder;
-import ooga.model.levels.Level;
-import ooga.util.GameParser;
-import ooga.view.application.games.Game;
-import ooga.view.gui.managers.StageManager;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FiniteLevelController implements Controller {
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import ooga.model.CollisionEngine;
+import ooga.model.PhysicsEngine;
+import ooga.model.controlschemes.GamePad;
+import ooga.model.levels.InfiniteLevelBuilder;
+
+
+import ooga.model.levels.LevelSelector;
+import ooga.util.GameParser;
+
+import ooga.view.gui.managers.StageManager;
+
+public class GameController implements Controller {
 
   private PhysicsEngine physicsEngine;
   private CollisionEngine collisionEngine;
   private EntityWrapper entityWrapper;
   private List<EntityWrapper> entityList;
+  private List<EntityWrapper> player;
   private List<EntityWrapper> entityBrickList;
   private List<EntityWrapper> entityBuffer;
   private static final int FRAMES_PER_SECOND = 60;
@@ -33,33 +36,32 @@ public class FiniteLevelController implements Controller {
   private Timeline animation;
   private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
-  private Level testLevel;
-  private Game currentGame;
+  private LevelSelector levelSelector;
+  private GamePad g;
+  private GameParser gameParser;
 
 
 
-  public FiniteLevelController(StageManager stageManager, Game currGame) { //FIXME add exception stuff
+  public GameController(StageManager stageManager, String gameName) throws XInputNotLoadedException { //FIXME add exception stuff
+    System.out.println(gameName);
+    builder = new InfiniteLevelBuilder(this);
+    g = new GamePad();
 
-    //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
-//<<<<<<< HEAD
-//
-//=======
-//    builder = new InfiniteLevelBuilder(this);
-//
-//
-//    myViewManager = new ViewManager(stageManager, builder, null);
-//>>>>>>> c8147b6db3bebc4253ceb470282bbe059ca37edc
+    myViewManager = new ViewManager(stageManager, builder, null);
+    gameParser = new GameParser(gameName, this);
 
     entityList = new ArrayList<>();
-    entityBrickList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
-    //myViewManager.setUpCamera(entityList.get(0).getRender());
+//    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
-    physicsEngine = new PhysicsEngine("dummyString");
+    for(EntityWrapper player : gameParser.getPlayerList()){
+      System.out.println(player);
+      entityList.add(player);
+      myViewManager.updateEntityGroup(player.getRender());
+    }
+
+    physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile()); //TODO: add PhysicsProfile object
     collisionEngine = new CollisionEngine();
-
-    setUpLevelBuilder(stageManager, currGame);
-
     myViewManager.getTestScene().setOnKeyPressed(e -> {
 
       myViewManager.handlePressInput(e.getCode());
@@ -73,44 +75,47 @@ public class FiniteLevelController implements Controller {
       }
     });
 
+    myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
+
+
+    levelSelector = new LevelSelector(gameParser.parseLevels());
     setUpTimeline();
 
-
-  }
-
-  public void setUpLevelBuilder(StageManager stageManager, Game currGame) {
-    builder = new InfiniteLevelBuilder(this);
-
-    myViewManager = new ViewManager(stageManager, builder, null, currGame);
-    GameParser hee = new GameParser("MarioLevel", this);
-    List<EntityWrapper> je = hee.parseTileEntities();
-
-  //  GameParser parser = new GameParser("SampleLevel", this);
-    GameParser parser = new GameParser("MarioLevel", this);
-    List<EntityWrapper> tiles = parser.parseTileEntities();
-    List<EntityWrapper> player = parser.parsePlayerEntities();
-    List<EntityWrapper> enemy = parser.parseEnemyEntities();
-    for(EntityWrapper k : player){
-      entityList.add(k);
-      myViewManager.updateEntityGroup(k.getRender());
-    }
-    myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
-    testLevel = new Level(tiles, player, enemy);
   }
 
   private void setUpTimeline() {
     //TODO: Timeline Code -- don't remove
-    KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
+    KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e ->
+    {
+      try {
+        step(SECOND_DELAY);
+      } catch (XInputNotLoadedException ex) {
+        ex.printStackTrace();
+      }
+    });
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
+
   }
 
-  private void step (double elapsedTime) {
+  private void step (double elapsedTime) throws XInputNotLoadedException {
+    g.update();
+    myViewManager.handleMenuInput();
+    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+      if (g.getState() != null) {
+        if (!g.getState().getPressed()) {
+          System.out.println("PRESSED");
+          gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
+        } else if (g.getState().getPressed()) {
+          System.out.println("RELEASED");
+          gameParser.getPlayerList().get(1).handleControllerInputReleased(g.getState().getControl());
+        }
+      }
+    }
     if (!myViewManager.getIsGamePaused()) {
-      testLevel.despawnEntities(entityList, myViewManager);
-      testLevel.spawnEntities(entityList, myViewManager);
+      levelSelector.updateCurrentLevel(entityList, myViewManager);
       myViewManager.updateValues();
       //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
       for (EntityWrapper subjectEntity : entityList) {
@@ -127,6 +132,7 @@ public class FiniteLevelController implements Controller {
     entityBuffer = new ArrayList<>();
   }
 
+  @Override
   public void removeEntity(EntityWrapper node) {
     myViewManager.removeEntity(node.getRender());
   }
@@ -143,4 +149,3 @@ public class FiniteLevelController implements Controller {
     return entityList;
   }
 }
-

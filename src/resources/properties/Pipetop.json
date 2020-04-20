@@ -2,7 +2,7 @@
   "entityName": "Pipetop",
   "image": "flappy_top.png",
   "health": 1,
-  "grounded": true,
+  "fixed": true,
   "xPos": -1000,
   "yPos": -100,
   "xVel": 10,

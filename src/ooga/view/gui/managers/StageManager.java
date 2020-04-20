@@ -6,9 +6,12 @@ import java.util.Map;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ooga.view.application.games.Game;
+import ooga.view.gui.ProgramLauncher;
 import ooga.view.gui.userinterface.Welcome;
 
 //TODO: REFACTOR, CLEAN UP MAGIC, REMOVE UNNECESSARY METHODS
@@ -18,15 +21,17 @@ public class StageManager {
     private Stage stage;
     private Scene currentScene;
     private Scene pastScene;
-    private Scene homeScene;
+    private AudioVideoManager avManager;
+    private String pastTitle;
     private Map<String, Scene> lastScene;
 
 
-    public StageManager(Stage primaryStage) {
+    public StageManager(Stage primaryStage, AudioVideoManager avManager) throws FileNotFoundException {
         this.stage = primaryStage;
+        this.avManager = avManager;
         stage.setTitle("BOOGA");
         stage.show();
-        stage.setFullScreen(true);
+        stage.setResizable(false);
         lastScene = new HashMap<String, Scene>();
         //stage.setResizable(false);
     }
@@ -52,18 +57,36 @@ public class StageManager {
     public Scene getPastScene() {
         return pastScene;
     }
-    public void createAndSwitchScenes(Parent parentNode) {
-        createAndSwitchScenes(parentNode, stage.getTitle());
-    }
+    public void createAndSwitchScenes(Parent parentNode) { createAndSwitchScenes(parentNode, stage.getTitle()); }
     public void createAndSwitchScenes(Parent parentNode, String title) {
         pastScene = stage.getScene();
+        pastTitle = stage.getTitle();
         currentScene = new Scene(parentNode, SCENE_WIDTH, SCENE_HEIGHT);
-        lastScene.put(title, currentScene);
-
+        currentScene.setOnKeyPressed(e -> {
+            try {
+                handleKeyInput(e.getCode());
+            } catch (Exception fileNotFoundException) {
+                fileNotFoundException.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+            }
+        });;
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);
     }
+
+    private void handleKeyInput (KeyCode code) throws Exception { //TODO: COMBINE WITH HOME AND SUSPEND POINTS
+        if(code == KeyCode.H){
+            stage.setScene(pastScene);
+            stage.setTitle("GameSelect");
+        }
+        if(code == KeyCode.R){
+            ProgramLauncher launcher = new ProgramLauncher(stage);
+            avManager.close();
+            avManager.switchMusic(this);
+            launcher.start();
+        }
+    }
+
     public String getCurrentTitle() {
         return stage.getTitle();
     }

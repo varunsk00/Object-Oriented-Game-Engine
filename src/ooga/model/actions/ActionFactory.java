@@ -24,6 +24,7 @@ public class ActionFactory {
     setGeneralCommands();
     /*
     setMovementCommands();
+    setMovementCommands();
     setControlCommands();
      */
   }

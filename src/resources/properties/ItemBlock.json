@@ -2,7 +2,7 @@
   "entityName": "ItemBlock",
   "image": "mariobrick_item.png",
   "health": 1,
-  "grounded": true,
+  "fixed": true,
   "xPos": 300,
   "yPos": 275,
   "xVel": 0,

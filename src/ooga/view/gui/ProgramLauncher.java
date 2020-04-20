@@ -1,7 +1,9 @@
 package ooga.view.gui;
 
+import com.github.strikerx3.jxinput.XInputDevice;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.view.gui.managers.AudioVideoManager;
@@ -20,18 +22,19 @@ public class ProgramLauncher {
     private Welcome welcomeScreen = new Welcome();
     private GameCabinet library;
     private StageManager stageManager;
-    private AudioVideoManager audioVideoManager;
+    private AudioVideoManager audioVideoManager = new AudioVideoManager();
 
     public ProgramLauncher(Stage primaryStage) throws FileNotFoundException {
-        this.stageManager = new StageManager(primaryStage);
-        this.audioVideoManager = new AudioVideoManager();
+        this.stageManager = new StageManager(primaryStage, audioVideoManager);
     }
+
     //TODO: make better css
     public void start() throws Exception {
         library = new GameCabinet(stageManager, audioVideoManager);
         initBootupScreen();
         startAnimationLoop();
     }
+
 
     private void initBootupScreen(){ //FIXME: filepath declared as variable
         stageManager.createAndSwitchScenes(welcomeScreen);
@@ -55,9 +58,9 @@ public class ProgramLauncher {
     private void step() throws Exception { //FIXME: Please fix this monstrosity of if statements
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
-            stageManager.createAndSwitchScenes(library);
+            stageManager.createAndSwitchScenes(library, "GameSelect");
+            stageManager.updateCurrentScene("GameSelect", library.getScene());
         }
         library.updateCurrentGame();
-
     }
 }

@@ -84,7 +84,7 @@ public class MenuButtons  {
         Button DownButton = makeButton("Save Game", event -> {
             System.out.println("save button");
             //xStream.toXML(currentGame);
-            GameDataManager.save(currentGame, "savedGameData");
+//            GameDataManager.save(currentGame, "savedGameData");
         });
         Button LeftButton = makeButton("Setting 3", event -> leftPressed = true);
         Button RightButton = makeButton("Setting 4", event -> rightPressed = true);

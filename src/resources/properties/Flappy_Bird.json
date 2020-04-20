@@ -10,7 +10,7 @@
   "maxYVel": 100,
   "height": 100,
   "width": 100,
-  "grounded": true,
+  "fixed": false,
   "scheme": "Keybindings",
   "actionBundles": [
     {
@@ -84,12 +84,12 @@
   ],
   "collisionBundles": [
     {
-      "ID": "Brick",
+      "ID": "ClearLevelSwitchBlock",
       "Control": [
         {
-          "action": "VelocityY",
-          "param": "0",
-          "orientation": "N"
+          "action": "RandomLevelSwitch",
+          "param": "5",
+          "orientation": "E"
         }
       ]
     },

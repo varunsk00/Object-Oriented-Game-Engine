@@ -8,21 +8,25 @@ import ooga.view.gui.managers.StageManager;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameCabinet extends Pane {
     private GameSelector gameSelector;
     private List<GamePreview> myGames;
     private AudioVideoManager avManager;
     private StageManager stageManager;
-    private PlayerSelect myPlayerSelect;
+    private TitleScreen myTitleScreen;
+    private Map<String, Integer> gameLaunchCount = new HashMap<>();
+    private int numPlayers;
     private String currentGame;
 
     public GameCabinet(StageManager stageManager, AudioVideoManager av) throws Exception { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
         this.avManager = av;
         this.stageManager = stageManager;
-        this.myPlayerSelect = new PlayerSelect("Mario");
+        this.myTitleScreen = new TitleScreen();
         initGameSelect();
         gameSelector = new GameSelector(myGames);
         this.getChildren().add(gameSelector);
@@ -42,9 +46,9 @@ public class GameCabinet extends Pane {
         GamePreview g5 = new GamePreview(Color.ORANGE, "varun");
         g1.setGameName("FlappyBird");
         g2.setGameName("Mario");
-        g3.setGameName("TestSandboxGreen");
-        g4.setGameName("TestSandboxYellow");
-        g5.setGameName("TestSandboxOrange");
+        g3.setGameName("Zelda");
+        g4.setGameName("Metroid");
+        g5.setGameName("Varun");
         myGames.add(g1);
         myGames.add(g2);
         myGames.add(g3);
@@ -62,26 +66,51 @@ public class GameCabinet extends Pane {
     }
 
     public void updateCurrentGame() throws Exception {
+        if(isHomePressed()){
+            avManager.switchMusic(stageManager);
+            stageManager.setCurrentTitle("BOOGA");
+        }
         for(GamePreview game: myGames){
             if(game.isGamePressed()) {
                 currentGame = game.getGameName();
-                game.resetGameName();
-                launchPlayerSelect(stageManager, currentGame);
+                game.resetGameButton();
+                if(isRelaunched(currentGame)){
+                    avManager.switchGame(stageManager, currentGame); }
+                else{
+                    launchTitleScreen(stageManager, currentGame); }
                 avManager.switchMusic(stageManager);
             }
-            if (myPlayerSelect.isPlayerSelected()){
-                myPlayerSelect.handleMultiplayer(currentGame);
-                myPlayerSelect.resetButtons();
+            if (myTitleScreen.isPlayerSelected()){
+                incrementLaunchCounter(currentGame);
+                this.numPlayers = myTitleScreen.playerNumber();
+                myTitleScreen.handleMultiplayer(currentGame);
+                myTitleScreen.resetButtons();
                 avManager.switchGame(stageManager, currentGame);
             }
         }
-
     }
 
-
-
-    private void launchPlayerSelect(StageManager sm, String gameName) throws Exception {
-        myPlayerSelect = new PlayerSelect(gameName);
-        sm.createAndSwitchScenes(myPlayerSelect, gameName);
+    private void incrementLaunchCounter(String game){
+        Integer count = gameLaunchCount.get(game);
+        if(count == null){
+            gameLaunchCount.put(game, 1); }
+        else{
+            gameLaunchCount.put(game, count + 1); }
     }
+
+    private boolean isRelaunched(String game){ //FIXME: IS THIS A FAIL CASE? I'M CHECKING FOR NULL, SO IDK
+        if(gameLaunchCount.get(game) != null){
+            return gameLaunchCount.get(game) > 0; }
+        return false;
+    }
+
+    private boolean isHomePressed(){
+        return stageManager.getCurrentTitle().equals("GameSelect");
+    }
+
+    private void launchTitleScreen(StageManager sm, String gameName) throws Exception {
+        myTitleScreen = new TitleScreen(gameName);
+        sm.createAndSwitchScenes(myTitleScreen, gameName);
+    }
+
 }

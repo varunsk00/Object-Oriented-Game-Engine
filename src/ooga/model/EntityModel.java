@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Stack;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
+import ooga.model.actions.AbsoluteVelocityX;
 import ooga.model.actions.AccelerateX;
 import ooga.model.actions.Action;
 import ooga.model.actions.CollisionKey;
@@ -20,8 +21,14 @@ public class EntityModel {
   private double health;
   private double xVelMax;
   private double yVelMax;
+  private boolean levelAdvancementStatus;
+  private int nextLevelIndex;
   private String entityID;
-  private boolean onGround;
+  private boolean fixedEntity;
+  private boolean boundedBelow;
+  private boolean boundedLeft;
+  private boolean boundedRight;
+  private boolean boundedTop;
 
   private double xVel;
   private double yVel;
@@ -40,6 +47,10 @@ public class EntityModel {
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
     forwards = true;
+    boundedLeft = false;
+    boundedRight = false;
+    boundedTop = false;
+    boundedBelow = false;
   }
 
   private void loadStats() {
@@ -52,21 +63,40 @@ public class EntityModel {
     health = myEntity.getParser().readHealth();
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
-    onGround = myEntity.getParser().readGrounded();
+    fixedEntity = myEntity.getParser().readFixed();
   }
 
   public void update(double elapsedTime){
     //TODO: change this ground status checker to be implemented in collisions with the top of a block
-
-    for(Action action : controlScheme.getCurrentAction()){
+    for (Action action : controlScheme.getCurrentAction()) {
       actionStack.push(action);
     }
     while(!actionStack.isEmpty()){
       actionStack.pop().execute(this);
     }
     limitSpeed();
+    limitBounds();
     setX(xPos + xVel * elapsedTime);
     setY(yPos + yVel * elapsedTime);
+    boundedLeft = false;
+    boundedRight = false;
+    boundedBelow = false;
+    boundedTop = false;
+  }
+
+  private void limitBounds() {
+    if(boundedRight){
+      if(xVel>0){xVel=0;}
+    }
+    if(boundedLeft){
+      if(xVel<0){xVel=0;}
+    }
+    if(boundedBelow){
+      if (yVel > 0) {yVel=0;}
+    }
+    if(boundedTop){
+      if (yVel < 0) { yVel = 0;}
+    }
   }
 
   public void handleKeyInput(String key) {
@@ -75,6 +105,19 @@ public class EntityModel {
 
   public void handleKeyReleased(String key) {
     controlScheme.handleKeyReleased(key);
+  }
+
+  public void handleControllerInputPressed(String key) {
+    if (key != null) {
+      System.out.println(key);
+      controlScheme.handleKeyInput(key);
+    }
+  }
+  public void handleControllerInputReleased(String key) {
+    if (key != null) {
+      System.out.println("ENTITYMODEL");
+      controlScheme.handleKeyReleased(key);
+    }
   }
 
   private void limitSpeed(){
@@ -91,6 +134,15 @@ public class EntityModel {
 
   public void setY(double newY){yPos = newY;}
 
+  public void setLevelAdvancementStatus(boolean newStatus){levelAdvancementStatus = newStatus;}
+
+  public void setNextLevelIndex(int levelIndex){nextLevelIndex = levelIndex;}
+
+  public boolean getLevelAdvancementStatus(){return levelAdvancementStatus;}
+
+  public int getNextLevelIndex(){return nextLevelIndex;}
+
+
   public double getWidth(){return entityWidth;}
 
   public double getHeight(){return entityHeight;}
@@ -104,15 +156,16 @@ public class EntityModel {
 
   public void setYVelocity(double newYVelocity){yVel = newYVelocity; }
 
-  public boolean isOnGround(){
-    return onGround;
+  public boolean getBoundedBelow(){
+    return boundedBelow;
   }
+
   public String getEntityID(){
     return this.entityID;
   }
 
-  public void setOnGround(boolean groundStatus){
-    this.onGround = groundStatus;
+  public void setBoundedBelow(boolean groundStatus){
+    this.boundedBelow = groundStatus;
   }
 
   public Stack<Action> getActionStack() {
@@ -128,6 +181,8 @@ public class EntityModel {
     newEntity.getModel().setX(this.getX() + this.getWidth()/2);
     newEntity.getModel().setY(this.getY());
     newEntity.getModel().setForwards(this.getForwards());
+    Action updateVelocity = new AbsoluteVelocityX("" + (this.getXVelocity() + newEntity.getModel().getXVelocity()));
+    updateVelocity.execute(newEntity.getModel());
   }
 
   public EntityWrapper spawnEntity(String param) {
@@ -151,4 +206,12 @@ public class EntityModel {
     entityHeight = newHeight;
     myEntity.setHeight(newHeight);
   }
+
+  public void setBoundedLeft(boolean value){boundedLeft = value;}
+
+  public void setBoundedRight(boolean value){boundedRight = value;}
+
+  public boolean getFixed(){return fixedEntity;}
+
+  public void setBoundedTop(boolean value) { }
 }
