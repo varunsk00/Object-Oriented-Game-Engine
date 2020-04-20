@@ -73,7 +73,7 @@ public class CollisionEngine {
     String direction = determineTargetEntityCollisionSide(subjectEntity,
         targetEntity);
     Action correctionAction = new NoAction();
-    if(!subjectEntity.getFixed() && !targetEntity.isPermeable()) {
+    if(!subjectEntity.getFixed() && (!targetEntity.isPermeable() || !subjectEntity.isPermeable())) {
       if (direction.equals(RIGHT)) {
         correctionAction = new MoveX("" + ((targetEntity.getX()+targetEntity.getWidth())-subjectEntity.getX()));
       } else if (direction.equals(LEFT)){

@@ -24,16 +24,17 @@ import org.json.simple.parser.ParseException;
 public class EntityJSONParser {
 
   private String myFileName;
+  private String myGame;
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String IMG_FILEPATH = "resources/";
+  private static final String RESOURCES = "resources";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
-  private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
   private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
 
   private JSONObject jsonObject;
 
-  public EntityJSONParser(String fileName) {
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+  public EntityJSONParser(String game, String fileName) {
+    myFileName = TXT_FILEPATH + game + "/entities/" + fileName + ".json";
+    myGame = game;
     jsonObject = (JSONObject) readJsonFile();
   }
 
@@ -116,8 +117,9 @@ public class EntityJSONParser {
   }
 
   private ImageView loadImage(String imageName) {
+    System.out.println(RESOURCES + "/" + myGame + "/images/" + imageName);
     Image entityImage = new Image(this.getClass().getClassLoader()
-        .getResourceAsStream(IMG_FILEPATH + imageName));
+        .getResourceAsStream(RESOURCES + "/" + myGame + "/images/" + imageName));
     return new ImageView(entityImage);
   }
 

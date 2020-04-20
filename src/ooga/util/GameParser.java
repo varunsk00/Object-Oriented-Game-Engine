@@ -145,7 +145,6 @@ public class GameParser {
       JSONObject playerInfo = (JSONObject) playerArrangement.get(i);
       String entityName = playerInfo.get("EntityName").toString();
       JSONObject playerLocation = (JSONObject) playerInfo.get("Arrangement");
-
       EntityWrapper newPlayer = new EntityWrapper(entityName, mainController);
       newPlayer.getModel().setX(Double.parseDouble(playerLocation.get("X").toString()));
       newPlayer.getModel().setY(Double.parseDouble(playerLocation.get("Y").toString()));
