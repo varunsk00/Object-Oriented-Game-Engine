@@ -76,8 +76,6 @@ public class GameController implements Controller {
     });
 
     myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
-
-
     levelSelector = new LevelSelector(gameParser.parseLevels());
     setUpTimeline();
 
