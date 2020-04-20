@@ -126,8 +126,8 @@ public class GameController implements Controller {
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
-          if(targetEntity.getModel().getEntityID().equals("Goomba") && targetEntity.getModel().getIsDead()) {
-            myViewManager.removeEntityGroup(targetEntity.getRender());
+          if(targetEntity.getModel().getIsDead() && targetEntity.getModel().getEntityID().equals("Goomba")) {
+            myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
           }
         }
         subjectEntity.update(elapsedTime);
