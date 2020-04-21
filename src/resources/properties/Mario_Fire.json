@@ -858,8 +858,8 @@
       "ID": "Goomba",
       "Control": [
         {
-          "action": "Die",
-          "param": "Mario_Fire",
+          "action": "MoveY",
+          "param": "-10.0",
           "orientation": "N"
         }
       ]

@@ -61,6 +61,11 @@ public class LevelParser {
     }
   }
 
+  public void writeOutSavedLevel(String key, String newValue) {
+    JSONObject saveObj = new JSONObject();
+
+  }
+
   public void updateJSONValue(String key, String newValue){
     JSONObject root = jsonObject;
     String new_val = newValue;

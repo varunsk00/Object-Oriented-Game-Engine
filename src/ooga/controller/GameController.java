@@ -3,6 +3,8 @@ package ooga.controller;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,10 +19,13 @@ import ooga.model.controlschemes.GamePad;
 import ooga.model.levels.InfiniteLevelBuilder;
 
 
+import ooga.model.levels.Level;
 import ooga.model.levels.LevelSelector;
 import ooga.util.GameParser;
 
 import ooga.view.gui.managers.StageManager;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class GameController implements Controller {
 
@@ -35,6 +40,8 @@ public class GameController implements Controller {
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  private static final String TXT_FILEPATH = "src/resources/";
+
 
   private Timeline animation;
   private InfiniteLevelBuilder builder;
@@ -105,6 +112,7 @@ public class GameController implements Controller {
   }
 
   private void step (double elapsedTime) throws XInputNotLoadedException {
+
     g.update();
     myViewManager.handleMenuInput();
     if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
@@ -120,6 +128,25 @@ public class GameController implements Controller {
     }
     if (!myViewManager.getIsGamePaused()) {
       levelSelector.updateCurrentLevel(entityList, myViewManager);
+      if(myViewManager.getSaveGame()) {
+        for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
+          System.out.println("Level Left: " + levelSelector.getLevelsToPlay().get(i));
+        }
+        System.out.println("SOIDGHIWOEHGIPEWGNV94RIHOENBV");
+        JSONArray saveGame = new JSONArray();
+        for(Level temp : levelSelector.getLevelsToPlay()) {
+          saveGame.add(temp.getLevelName());
+        }
+//        saveGame.addAll(levelSelector.getLevelsToPlay());
+        gameParser.updateLevelValue("levelArrangement", saveGame);
+
+//        try (FileWriter file = new FileWriter(TXT_FILEPATH + "properties/" + "MARIO_SAVED_GAME" + ".json")) {
+//          file.write(saveGame.toJSONString());
+//        } catch (IOException e) {
+//          e.printStackTrace();
+//        }
+        myViewManager.setSaveGame();
+      }
       myViewManager.updateValues();
       //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
 

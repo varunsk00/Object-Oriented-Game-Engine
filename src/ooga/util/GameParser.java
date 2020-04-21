@@ -76,6 +76,27 @@ public class GameParser {
     return playerList;
   }
 
+
+  public void updateLevelValue(String key, JSONArray newValue){
+    JSONObject root = jsonObject;
+    JSONArray new_val = newValue;
+    root.put(key, newValue);
+//    String old_val = root.get(key).toString();
+//
+//    if(!new_val.equals(old_val))
+//    {
+//      root.put(key,new_val);
+
+      try (FileWriter file = new FileWriter("src/resources/properties/" + fileName + ".json", false))
+      {
+        file.write(root.toString());
+        System.out.println("Successfully updated json object to file");
+      } catch (IOException e) {
+        e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+      }
+//    }
+  }
+
   public void updateJSONValue(String key, String newValue){
     JSONObject root = jsonObject;
     String new_val = newValue;
@@ -117,6 +138,7 @@ public class GameParser {
 
 
     for(String levelNumber : sortedLevelKeys){
+      System.out.println("level name: " + levelNumber);
       LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
