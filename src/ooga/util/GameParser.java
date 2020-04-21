@@ -87,7 +87,7 @@ public class GameParser {
 //    {
 //      root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/" + fileName + ".json", false))
+      try (FileWriter file = new FileWriter("src/resources/properties/" + "MARIO_SAVE_LEVEL" + ".json", false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
@@ -138,13 +138,13 @@ public class GameParser {
 
 
     for(String levelNumber : sortedLevelKeys){
-      System.out.println("level name: " + levelNumber);
+      String levelName = (String) levels.get(levelNumber);
       LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
       try {
-        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor(List.class, List.class, List.class).newInstance(tiles, playerList, enemies);
+        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor(List.class, List.class, List.class, String.class).newInstance(tiles, playerList, enemies, levelName);
 
         levelList.add(newLevel);
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

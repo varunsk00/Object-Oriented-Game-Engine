@@ -1,1 +1,1 @@
-{"UndergroundBreakableBrick":"yeehaw","Pipebody":"yeehaw","Mario_Fire":"yeehaw","Pipetop":"yeehaw","UndergroundBrick":"yeehaw"}
+{"gameName":"Mario","players":"1","physicsProfile":[{"Friction":"20","Drag":"1","Gravity":"20"}],"levelArrangement":["MarioLevel","Level2"],"playerArrangement":[{"EntityName":"Mario_Fire","Arrangement":{"X":"100","Y":"100"}},{"EntityName":"P2_Luigi_Fire","Arrangement":{"X":"0","Y":"100"}}]}
