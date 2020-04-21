@@ -134,9 +134,11 @@ public class GameController implements Controller {
         }
         System.out.println("SOIDGHIWOEHGIPEWGNV94RIHOENBV");
         JSONArray saveGame = new JSONArray();
-        for(Level temp : levelSelector.getLevelsToPlay()) {
-          saveGame.add(temp.getLevelName());
+        JSONObject obj = new JSONObject();
+        for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
+          obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
         }
+        saveGame.add(obj);
 //        saveGame.addAll(levelSelector.getLevelsToPlay());
         gameParser.updateLevelValue("levelArrangement", saveGame);
 
