@@ -1,7 +1,9 @@
 package ooga.util;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,9 +119,9 @@ public class EntityJSONParser {
   }
 
   private ImageView loadImage(String imageName) {
-    System.out.println(RESOURCES + "/" + myGame + "/images/" + imageName);
-    Image entityImage = new Image(this.getClass().getClassLoader()
-        .getResourceAsStream(RESOURCES + "/" + myGame + "/images/" + imageName));
+    InputStream is = this.getClass().getClassLoader().getResourceAsStream("/"+ RESOURCES + "/" + myGame + "/images/" + imageName);
+    Image entityImage = null;
+    entityImage = new Image(is);
     return new ImageView(entityImage);
   }
 
