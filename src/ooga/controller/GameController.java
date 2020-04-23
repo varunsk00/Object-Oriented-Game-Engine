@@ -52,13 +52,13 @@ public class GameController implements Controller {
 
 
 
-  public GameController(StageManager stageManager, String gameName) throws XInputNotLoadedException { //FIXME add exception stuff
+  public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
     System.out.println(gameName);
     builder = new InfiniteLevelBuilder(this);
     g = new GamePad();
 
     myViewManager = new ViewManager(stageManager, builder, null);
-    gameParser = new GameParser(gameName, this);
+    gameParser = new GameParser(gameName, this, loadedGame);
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();

@@ -39,6 +39,7 @@ public class GameParser {
   private int maxPlayers;
   private int selectedPlayers;
   private List<EntityWrapper> playerList;
+  private boolean loadedGame;
 
 
   private JSONObject jsonObject;
@@ -52,19 +53,26 @@ public class GameParser {
   }
 
 
-  public GameParser(String gameName, Controller controller) {
+  public GameParser(String gameName, Controller controller, boolean loadedGame) {
     fileName = gameName + "Game";
     mainController = controller;
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    // if(loadedGame) {
+      myFileName = "src/resources/properties/" + "MARIO_SAVE_LEVEL" + ".json";
+//    } else {
+//      myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+//    }
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
+    this.loadedGame = loadedGame;
   }
 
   //FIXME add error handling
   public Object readJsonFile() {
     try {
-      FileReader reader = new FileReader(myFileName);
+
+
+      FileReader reader = new FileReader("src/resources/properties/" + "MARIO_SAVE_LEVEL" + ".json");
       JSONParser jsonParser = new JSONParser();
       return jsonParser.parse(reader);
     } catch (IOException | ParseException e) {

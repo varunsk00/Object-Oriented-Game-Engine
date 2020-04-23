@@ -43,10 +43,13 @@ public class AudioVideoManager {
         }
     }
 
-    public void switchGame(StageManager sm, String gameName) throws Exception {
-        if (!myInPlayGames.containsKey(gameName)) {
+    public void switchGame(StageManager sm, String gameName, boolean loadGame) throws Exception {
+
+        if (loadGame || !myInPlayGames.containsKey(gameName)) {
+            System.out.println("BOOLEAN switch game:" + loadGame);
+
             currentGame = new Game(sm);
-            currentGame.loadGame(gameName);
+            currentGame.loadGame(gameName, loadGame);
             myInPlayGames.put(gameName, currentGame);
         } else {
             sm.switchScenes(gameName);
