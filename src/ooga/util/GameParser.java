@@ -83,7 +83,7 @@ public class GameParser {
     {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/" + fileName + ".json", false))
+      try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + "/" + fileName + ".json", false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");

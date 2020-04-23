@@ -15,11 +15,11 @@ public class Camera {
   private double xPosition;
   private double yPosition;
   private Rectangle viewPort;
-  private Node target;
+  private List<Node> target;
   private Stage myStage;
   private Pane myLevel;
 
-  public Camera(Stage stage, Pane level, Node focus){
+  public Camera(Stage stage, Pane level, List<Node> focus){
     xPosition = 0;
     yPosition = 0;
     viewPort = new Rectangle();
@@ -47,17 +47,17 @@ public class Camera {
   public void update(VBox menu){
 //    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+2));
     //note: try to get level width working
-    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (999999)));
+    viewPort.setX(boundPosition(getCenterOfPlayers()-myStage.getWidth()/2, 0, (999999)));
     menu.setTranslateX(viewPort.getX());
 
   }
 
-//  private double getCenterOfPlayers(){
-//    double sum = 0;
-//    for(int i = 0; i < target.size(); i++){
-//      sum += target.get(i).getBoundsInParent().getMinX();
-//    }
-//    sum /= target.size();
-//    return sum;
-//  }
+  private double getCenterOfPlayers(){
+    double sum = 0;
+    for(int i = 0; i < target.size(); i++){
+      sum += target.get(i).getBoundsInParent().getMinX();
+    }
+    sum /= target.size();
+    return sum;
+  }
 }
