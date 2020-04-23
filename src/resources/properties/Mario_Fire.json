@@ -79,6 +79,7 @@
     }
   ],
   "collisionBundles": [
+
     {
       "ID": "MarioFlagPole",
       "Control": [
@@ -595,7 +596,7 @@
       ]
     },
     {
-      "ID": "UndergroundBrickBreakable",
+      "ID": "UndergroundBreakableBrick",
       "Control": [
         {
           "action": "SetGroundStatus",
@@ -609,7 +610,7 @@
         },
         {
           "action": "MoveY",
-          "param": "-1",
+          "param": "0",
           "orientation": "N"
         }
       ]

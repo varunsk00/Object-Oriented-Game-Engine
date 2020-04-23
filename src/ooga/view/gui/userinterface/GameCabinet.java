@@ -46,7 +46,7 @@ public class GameCabinet extends Pane {
         GamePreview g5 = new GamePreview(Color.ORANGE, "varun");
         g1.setGameName("FlappyBird");
         g2.setGameName("Mario");
-        g3.setGameName("Zelda");
+        g3.setGameName("RivalRacer");
         g4.setGameName("Metroid");
         g5.setGameName("Varun");
         myGames.add(g1);

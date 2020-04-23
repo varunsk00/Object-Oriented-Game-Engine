@@ -47,6 +47,12 @@ public class Camera {
 //    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+2));
     //note: try to get level width working
     viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (999999)));
+    if (target.getBoundsInParent().getMaxY() < myStage.getHeight()/2) {
+      viewPort.setY(boundPosition(target.getBoundsInParent().getMinY() - myStage.getHeight() / 2, -999999, 999999));
+    }
+    else {
+      viewPort.setY(0);
+    }
     menu.setTranslateX(viewPort.getX());
 
   }
