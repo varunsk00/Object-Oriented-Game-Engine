@@ -47,27 +47,27 @@ public class GameParser {
 
 
 
-  public GameParser(String gameName, boolean loadedGame) {
-    this.gameName = gameName;
-    this.loadedGame = loadedGame;
-    fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
-    jsonObject = (JSONObject) readJsonFile();
-    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-    playerList = parsePlayerEntities();
-  }
-
-
-  public GameParser(String gameName, Controller controller) {
-
-    mainController = controller;
-    this.gameName = gameName;
-    fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
-    jsonObject = (JSONObject) readJsonFile();
-    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-    playerList = parsePlayerEntities();
-  }
+//  public GameParser(String gameName, boolean loadedGame) {
+//    this.gameName = gameName;
+//    this.loadedGame = loadedGame;
+//    fileName = gameName + "Game";
+//    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
+//    jsonObject = (JSONObject) readJsonFile();
+//    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
+//    playerList = parsePlayerEntities();
+//  }
+//
+//
+//  public GameParser(String gameName, Controller controller) {
+//
+//    mainController = controller;
+//    this.gameName = gameName;
+//    fileName = gameName + "Game";
+//    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
+//    jsonObject = (JSONObject) readJsonFile();
+//    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
+//    playerList = parsePlayerEntities();
+//  }
 
 //<<<<<<< HEAD
 //  public GameParser(String gameName, Controller controller, boolean loadedGame) {
