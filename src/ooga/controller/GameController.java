@@ -37,6 +37,7 @@ public class GameController implements Controller {
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final String TXT_FILEPATH = "src/resources/";
+  private boolean restartLevel;
 
 
   private Timeline animation;
@@ -124,6 +125,10 @@ public class GameController implements Controller {
       }
     }
     if (!myViewManager.getIsGamePaused()) {
+//      if(restartLevel) {
+//        restartLevel = false;
+//        levelSelector.restartLevel(entityList, myViewManager);
+//      }
       levelSelector.updateCurrentLevel(entityList, myViewManager);
       handleSaveGame();
       myViewManager.updateValues();
@@ -132,24 +137,29 @@ public class GameController implements Controller {
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+          if(entityList.get(0).getModel().getHealth() <= 0) {
+            entityList.get(0).getModel().setHealth();
+            restartLevel = true;
+            //reset level in some way
+          }
           if(targetEntity.getModel().getIsDead()) {
             myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
           }
         }
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
+
       }
+
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
-      if(entityRemove.size() > 0) {
-        System.out.println("Removed: " + entityRemove.get(0).getModel().getEntityID());
-      }
       entityList.removeAll(entityRemove);
       entityRemove = new ArrayList<>();
 
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
+
   }
 
   private void handleSaveGame() {

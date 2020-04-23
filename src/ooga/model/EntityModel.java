@@ -227,4 +227,16 @@ public class EntityModel {
   public void setBoundedTop(boolean value) {boundedTop = value;}
 
   public boolean isPermeable(){return permeableEntity;}
+
+  public double getHealth() {
+    return health;
+  }
+
+  public void setHealth() {
+    health = 2;
+  }
+
+  public void loseHealth() {
+    health--;
+  }
 }
