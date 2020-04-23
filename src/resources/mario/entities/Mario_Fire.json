@@ -412,6 +412,16 @@
       ]
     },
     {
+      "ID": "mario.Goomba",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "-750.0",
+          "orientation": "N"
+        }
+      ]
+    },
+    {
       "ID": "DEFAULT",
       "Control": [
         {

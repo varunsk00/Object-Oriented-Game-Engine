@@ -20,6 +20,8 @@ import ooga.model.levels.LevelSelector;
 import ooga.util.GameParser;
 
 import ooga.view.gui.managers.StageManager;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class GameController implements Controller {
 
@@ -30,9 +32,12 @@ public class GameController implements Controller {
   private List<EntityWrapper> player;
   private List<EntityWrapper> entityBrickList;
   private List<EntityWrapper> entityBuffer;
+  private List<EntityWrapper> entityRemove;
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+  private static final String TXT_FILEPATH = "src/resources/";
+
 
   private Timeline animation;
   private InfiniteLevelBuilder builder;
@@ -43,16 +48,18 @@ public class GameController implements Controller {
 
 
 
-  public GameController(StageManager stageManager, String gameName) throws XInputNotLoadedException { //FIXME add exception stuff
+  public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
     System.out.println(gameName);
     builder = new InfiniteLevelBuilder(this);
     g = new GamePad();
 
+
     myViewManager = new ViewManager(stageManager, builder);
-    gameParser = new GameParser(gameName, this);
+    gameParser = new GameParser(gameName, this, loadedGame);
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
+    entityRemove = new ArrayList<>();
 //    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
     for(EntityWrapper player : gameParser.getPlayerList()){
@@ -75,11 +82,8 @@ public class GameController implements Controller {
         entity.handleKeyReleased(e.getCode().toString());//FIXME i would like to
       }
     });
-    List<Node> playerViewList = new ArrayList<Node>();
-    for(int i = 0; i < gameParser.getPlayerList().size(); i++){
-      playerViewList.add(gameParser.getPlayerList().get(i).getRender());
-    }
-    myViewManager.setUpCamera(playerViewList); //FIXME to be more generalized and done instantly
+
+    myViewManager.setUpCamera(gameParser.getPlayerList()); //FIXME to be more generalized and done instantly
 
 
     levelSelector = new LevelSelector(gameParser.parseLevels());
@@ -105,6 +109,7 @@ public class GameController implements Controller {
   }
 
   private void step (double elapsedTime) throws XInputNotLoadedException {
+
     g.update();
     myViewManager.handleMenuInput();
     if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
@@ -118,22 +123,46 @@ public class GameController implements Controller {
         }
       }
     }
-      if (!myViewManager.getIsGamePaused()) {
-        levelSelector.updateCurrentLevel(entityList, myViewManager);
-        myViewManager.updateValues();
-        //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
-        for (EntityWrapper subjectEntity : entityList) {
-          for (EntityWrapper targetEntity : entityList) {
-            collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+    if (!myViewManager.getIsGamePaused()) {
+      levelSelector.updateCurrentLevel(entityList, myViewManager);
+      handleSaveGame();
+      myViewManager.updateValues();
+      //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
+
+      for (EntityWrapper subjectEntity : entityList) {
+        for (EntityWrapper targetEntity : entityList) {
+          collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+          if(targetEntity.getModel().getIsDead()) {
+            myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
           }
-          subjectEntity.update(elapsedTime);
-          physicsEngine.applyForces(subjectEntity.getModel());
         }
-        entityList.addAll(entityBuffer);
-        entityBuffer = new ArrayList<>();
+        subjectEntity.update(elapsedTime);
+        physicsEngine.applyForces(subjectEntity.getModel());
       }
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
+      if(entityRemove.size() > 0) {
+        System.out.println("Removed: " + entityRemove.get(0).getModel().getEntityID());
+      }
+      entityList.removeAll(entityRemove);
+      entityRemove = new ArrayList<>();
+
+    }
+    entityList.addAll(entityBuffer);
+    entityBuffer = new ArrayList<>();
+  }
+
+  private void handleSaveGame() {
+    if(myViewManager.getSaveGame()) {
+      JSONArray saveGame = new JSONArray();
+      JSONObject obj = new JSONObject();
+      for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
+        obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
+      }
+      saveGame.add(obj);
+      gameParser.saveGame("levelArrangement", saveGame);
+      myViewManager.setSaveGame();
+    }
   }
 
   @Override
