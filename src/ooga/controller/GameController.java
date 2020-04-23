@@ -75,11 +75,8 @@ public class GameController implements Controller {
         entity.handleKeyReleased(e.getCode().toString());//FIXME i would like to
       }
     });
-    List<Node> playerViewList = new ArrayList<Node>();
-    for(int i = 0; i < gameParser.getPlayerList().size(); i++){
-      playerViewList.add(gameParser.getPlayerList().get(i).getRender());
-    }
-    myViewManager.setUpCamera(playerViewList); //FIXME to be more generalized and done instantly
+
+    myViewManager.setUpCamera(gameParser.getPlayerList()); //FIXME to be more generalized and done instantly
 
 
     levelSelector = new LevelSelector(gameParser.parseLevels());

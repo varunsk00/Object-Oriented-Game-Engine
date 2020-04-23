@@ -63,7 +63,7 @@ public class ViewManager implements ViewExternalAPI {
     return level;
   }
 
-  public void setUpCamera(List<Node> node) { camera = new Camera(currentStage.getStage(), level, node); }
+  public void setUpCamera(List<EntityWrapper> node) { camera = new Camera(currentStage.getStage(), level, node); }
 
   public StageManager getCurrentStage() {
     return currentStage;

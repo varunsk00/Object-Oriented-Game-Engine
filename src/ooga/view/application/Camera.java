@@ -10,16 +10,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import jdk.swing.interop.SwingInterOpUtils;
+import ooga.controller.EntityWrapper;
 
 public class Camera {
   private double xPosition;
   private double yPosition;
   private Rectangle viewPort;
-  private List<Node> target;
+  private List<EntityWrapper> target;
   private Stage myStage;
   private Pane myLevel;
 
-  public Camera(Stage stage, Pane level, List<Node> focus){
+  public Camera(Stage stage, Pane level, List<EntityWrapper> focus){
     xPosition = 0;
     yPosition = 0;
     viewPort = new Rectangle();
@@ -49,16 +50,31 @@ public class Camera {
     //note: try to get level width working
     viewPort.setX(boundPosition(getCenterOfPlayers()-myStage.getWidth()/2, 0, (999999)));
     menu.setTranslateX(viewPort.getX());
-
+    boundPlayers();
   }
+
+  private void boundPlayers() {
+    for(EntityWrapper player : target){
+      if(player.getRender().getBoundsInParent().getMinX() <= viewPort.getBoundsInParent().getMinX()){
+        player.getModel().setBoundedLeft(true);
+      } else if(player.getRender().getBoundsInParent().getMaxX() >= viewPort.getBoundsInParent().getMaxX()){
+        player.getModel().setBoundedRight(true);
+      }
+    }
+  }
+
+//  private boolean withinBounds(){
+//    for(EntityWrapper player : target){
+//      if(player.getRender().getBoundsInParent().getMinX())
+//    }
+//  }
 
   private double getCenterOfPlayers(){
     double sum = 0;
     for(int i = 0; i < target.size(); i++){
-      sum += target.get(i).getBoundsInParent().getMinX();
+        sum += target.get(i).getRender().getBoundsInParent().getCenterX();
     }
     sum /= target.size();
-    System.out.println(sum);
     return sum;
   }
 }
