@@ -56,15 +56,19 @@ public class GameParser {
   public GameParser(String gameName, Controller controller, boolean loadedGame) {
     fileName = gameName + "Game";
     mainController = controller;
-    if(loadedGame) {
-      myFileName = "src/resources/properties/" + "MARIO_SAVE_LEVEL" + ".json";
-    } else {
-      myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
-    }
+    checkLoadGame(loadedGame);
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
     this.loadedGame = loadedGame;
+  }
+
+  private void checkLoadGame(boolean loadedGame) {
+    if(loadedGame) {
+      myFileName = "src/resources/properties/" + fileName + "Saved" + ".json";
+    } else {
+      myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    }
   }
 
   //FIXME add error handling
@@ -95,7 +99,7 @@ public class GameParser {
 //    {
 //      root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/" + "MARIO_SAVE_LEVEL" + ".json", false))
+      try (FileWriter file = new FileWriter("src/resources/properties/" + fileName + "Saved" + ".json", false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
