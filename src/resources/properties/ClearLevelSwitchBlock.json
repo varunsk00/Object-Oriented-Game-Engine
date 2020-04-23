@@ -3,6 +3,8 @@
   "image": "transparent.png",
   "health": 1,
   "fixed": true,
+  "permeable": true,
+
   "xPos": -100,
   "yPos": -100,
   "xVel": 0,

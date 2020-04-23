@@ -12,6 +12,7 @@ public abstract class Level {
   private List<EntityWrapper> playerEntities;
   private List<EntityWrapper> enemyEntities;
   private static final int TWO = 2;
+  private int currentPlayerInterval = -1;
 
   public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList){
     tileEntities = tileList;
@@ -34,6 +35,7 @@ public abstract class Level {
     }
   }
 
+
   public abstract void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager);
 
   public boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity){
@@ -41,6 +43,14 @@ public abstract class Level {
       return true;
     }
     return false;
+  }
+
+  public void setCurrentPlayerInterval(int newInterval){
+    currentPlayerInterval = newInterval;
+  }
+
+  public int getCurrentPlayerInterval(){
+    return this.currentPlayerInterval;
   }
 
 

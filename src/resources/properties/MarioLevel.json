@@ -220,7 +220,13 @@
           ]
         }
       ]
-    },
+    }
+  ],
+  "levelName": "SampleLevel",
+  "playerArrangement": [
+  ],
+  "tileWidth": 50,
+  "enemyArrangement": [
     {
       "EntityName": "Goomba",
       "Arrangement": [
@@ -244,10 +250,5 @@
       ]
     }
   ],
-  "levelName": "SampleLevel",
-  "playerArrangement": [
-  ],
-  "tileWidth": 50,
-  "enemyArrangement": [],
   "tileHeight": 50
 }

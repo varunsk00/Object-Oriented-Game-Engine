@@ -3,6 +3,8 @@
   "image": "mario_fireball.gif",
   "health": 1,
   "fixed": false,
+  "permeable": true,
+
   "xPos": -1000,
   "yPos": -100,
   "xVel": 10,

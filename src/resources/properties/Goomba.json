@@ -6,11 +6,12 @@
   "yPos": 100,
   "xVel": 10,
   "yVel": 10,
-  "grounded": false,
+  "permeable": false,
+  "fixed":false,
   "maxXVel": 500,
   "maxYVel": 500,
-  "height": 40,
-  "width": 40,
+  "height": 45,
+  "width": 51,
   "scheme": "AI",
   "actionBundles": [
     {

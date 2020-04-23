@@ -103,7 +103,7 @@ public class GameController implements Controller {
   private void step (double elapsedTime) throws XInputNotLoadedException {
     g.update();
     myViewManager.handleMenuInput();
-    if (gameParser.getPlayerList().size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (g.getState() != null) {
         if (!g.getState().getPressed()) {
           System.out.println("PRESSED");

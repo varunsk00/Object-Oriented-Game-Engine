@@ -195,4 +195,11 @@ public class EntityJSONParser {
     }
     return false;
   }
+
+  public boolean readPermeable() {
+    if (jsonObject.get("permeable") != null) {
+      return Boolean.parseBoolean(jsonObject.get("permeable").toString());
+    }
+    return false;
+  }
 }
