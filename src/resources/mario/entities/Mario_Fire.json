@@ -415,7 +415,7 @@
       "ID": "mario.Goomba",
       "Control": [
         {
-          "action": "Jump",
+          "action": "AccelerateY",
           "param": "-750.0",
           "orientation": "N"
         }
