@@ -6,7 +6,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import ooga.view.application.games.Game;
-import ooga.view.gui.userinterface.TitleScreen;
+//import ooga.view.gui.userinterface.TitleScreen;
 
 import java.io.File;
 import java.util.ResourceBundle;
@@ -43,10 +43,13 @@ public class AudioVideoManager {
         }
     }
 
-    public void switchGame(StageManager sm, String gameName) throws Exception {
-        if (!myInPlayGames.containsKey(gameName)) {
+    public void switchGame(StageManager sm, String gameName, boolean loadGame) throws Exception {
+
+        if (loadGame || !myInPlayGames.containsKey(gameName)) {
+            System.out.println("BOOLEAN switch game:" + loadGame);
+
             currentGame = new Game(sm);
-            currentGame.loadGame(gameName);
+            currentGame.loadGame(gameName, loadGame);
             myInPlayGames.put(gameName, currentGame);
         } else {
             sm.switchScenes(gameName);

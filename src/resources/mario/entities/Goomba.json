@@ -375,6 +375,16 @@
       ]
     },
     {
+      "ID": "mario.Mario_Fire",
+      "Control": [
+        {
+          "action": "Die",
+          "param": "Goomba",
+          "orientation": "S"
+        }
+      ]
+    },
+    {
       "ID": "DEFAULT",
       "Control": [
         {

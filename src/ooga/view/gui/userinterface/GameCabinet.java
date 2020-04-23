@@ -75,17 +75,22 @@ public class GameCabinet extends Pane {
                 currentGame = game.getGameName();
                 game.resetGameButton();
                 if(isRelaunched(currentGame)){
-                    avManager.switchGame(stageManager, currentGame); }
+                    avManager.switchGame(stageManager, currentGame, false); }
                 else{
                     launchTitleScreen(stageManager, currentGame); }
                 avManager.switchMusic(stageManager);
             }
             if (myTitleScreen.isPlayerSelected()){
                 incrementLaunchCounter(currentGame);
-                this.numPlayers = myTitleScreen.playerNumber();
-                myTitleScreen.handleMultiplayer(currentGame);
+                if(!myTitleScreen.isLoadSavedGame()) {
+                    this.numPlayers = myTitleScreen.playerNumber();
+                    myTitleScreen.handleMultiplayer(currentGame);
+                }
+
+                avManager.switchGame(stageManager, currentGame, myTitleScreen.isLoadSavedGame());
                 myTitleScreen.resetButtons();
-                avManager.switchGame(stageManager, currentGame);
+
+
             }
         }
     }
