@@ -58,6 +58,7 @@ public class Camera {
       sum += target.get(i).getBoundsInParent().getMinX();
     }
     sum /= target.size();
+    System.out.println(sum);
     return sum;
   }
 }

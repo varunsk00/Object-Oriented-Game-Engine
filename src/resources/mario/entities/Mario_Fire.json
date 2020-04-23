@@ -405,7 +405,7 @@
       "ID": "mario.Koopa",
       "Control": [
         {
-          "action": "Jump",
+          "action": "AccelerateY",
           "param": "-750.0",
           "orientation": "N"
         }
