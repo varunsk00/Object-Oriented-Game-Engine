@@ -57,8 +57,7 @@ public class GameParser {
     playerList = parsePlayerEntities();
   }
 
-
-  public GameParser(String gameName, Controller controller) {
+  public GameParser(String gameName, Controller controller, boolean loadedGame) {
     mainController = controller;
     this.gameName = gameName;
     fileName = gameName + "Game";
@@ -66,17 +65,10 @@ public class GameParser {
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
+    this.loadedGame = loadedGame;
+//    checkLoadGame(this.loadedGame);
   }
-
-//  public GameParser(String gameName, Controller controller, boolean loadedGame) {
-//    fileName = gameName + "Game";
-//    mainController = controller;
-//    checkLoadGame(loadedGame);
-//    jsonObject = (JSONObject) readJsonFile();
-//    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-//    playerList = parsePlayerEntities();
-//    this.loadedGame = loadedGame;
-//  }
+  
 
   private void checkLoadGame(boolean loadedGame) {
     if (loadedGame) {
