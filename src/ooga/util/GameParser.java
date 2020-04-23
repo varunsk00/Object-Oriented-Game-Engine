@@ -35,6 +35,7 @@ public class GameParser {
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String LEVELS_PREFIX = PACKAGE_PREFIX_NAME + "levels.";
   private String fileName;
+  private String gameName;
   private Controller mainController;
   private int maxPlayers;
   private int selectedPlayers;
@@ -44,8 +45,9 @@ public class GameParser {
   private JSONObject jsonObject;
 
   public GameParser(String gameName) {
+    this.gameName = gameName;
     fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
@@ -53,12 +55,8 @@ public class GameParser {
 
 
   public GameParser(String gameName, Controller controller) {
-    fileName = gameName + "Game";
+    this(gameName);
     mainController = controller;
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
-    jsonObject = (JSONObject) readJsonFile();
-    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-    playerList = parsePlayerEntities();
   }
 
   //FIXME add error handling
@@ -117,7 +115,7 @@ public class GameParser {
 
 
     for(String levelNumber : sortedLevelKeys){
-      LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
+      LevelParser parsedLevel = new LevelParser(gameName.toLowerCase(), levels.get(levelNumber).toString(), mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();

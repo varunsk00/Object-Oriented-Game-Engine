@@ -2,10 +2,10 @@ package ooga.model.actions;
 
 import ooga.model.EntityModel;
 
-public class SetGroundStatus extends Action {
+public class SetBoundedBottom extends Action {
   private boolean groundStatus;
 
-  public SetGroundStatus(String parameter){
+  public SetBoundedBottom(String parameter){
     super(parameter);
     groundStatus = Boolean.valueOf(param);
   }

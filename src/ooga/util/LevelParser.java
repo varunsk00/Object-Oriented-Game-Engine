@@ -39,9 +39,9 @@ public class LevelParser {
 
   private JSONObject jsonObject;
 
-  public LevelParser(String fileName, Controller controller) {
+  public LevelParser(String gameName, String fileName, Controller controller) {
     mainController = controller;
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    myFileName = TXT_FILEPATH + gameName + "/levels/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
     tileHeight = Double.parseDouble(jsonObject.get("tileHeight").toString());
     tileWidth = Double.parseDouble(jsonObject.get("tileWidth").toString());

@@ -6,7 +6,7 @@ import ooga.controller.EntityWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SetGroundStatusTest {
+class SetBoundedBottomTest {
   private String param;
   private Action myAction;
   private EntityWrapper myEntity;
@@ -14,7 +14,7 @@ class SetGroundStatusTest {
   @BeforeEach
   void setUp() {
     param = "false";
-    myAction = new SetGroundStatus(param);
+    myAction = new SetBoundedBottom(param);
     myEntity = new EntityWrapper("UnitTestEntity", null);
   }
 
