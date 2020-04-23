@@ -67,7 +67,7 @@ public class GameParser {
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
   }
-  
+
 //  public GameParser(String gameName, Controller controller, boolean loadedGame) {
 //    fileName = gameName + "Game";
 //    mainController = controller;
