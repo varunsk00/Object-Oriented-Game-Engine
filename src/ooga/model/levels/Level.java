@@ -13,11 +13,13 @@ public abstract class Level {
   private List<EntityWrapper> enemyEntities;
   private static final int TWO = 2;
   private int currentPlayerInterval = -1;
+  private String levelName;
 
-  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList){
+  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, String name){
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
+    levelName = name;
   }
 
   public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
@@ -51,6 +53,12 @@ public abstract class Level {
 
   public int getCurrentPlayerInterval(){
     return this.currentPlayerInterval;
+  }
+
+  public String getLevelName() {
+    //String[] arr = levelName.split("\\.");
+    //return arr[1];
+    return levelName;
   }
 
 

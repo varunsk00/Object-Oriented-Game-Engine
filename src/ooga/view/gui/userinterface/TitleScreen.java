@@ -23,8 +23,10 @@ public class TitleScreen extends BorderPane {
     private String gameName;
     private boolean onePressed;
     private boolean twoPressed;
+    private boolean threePressed;
     private Button Button1;
     private Button Button2;
+    private Button Button3;
     private VBox myButtons;
     private GameParser myGameParser;
 
@@ -67,6 +69,8 @@ public class TitleScreen extends BorderPane {
         if (!(myResources.getString(gameName + "2").equals("NOBUTTON"))){
             Button2 = makeButton(myResources.getString(gameName + "2"), event -> twoPressed = true);
         }
+        Button3 = makeButton(myResources.getString("LoadSavedGame"), event -> threePressed = true);
+
     }
 
     private Button makeButton(String key, EventHandler e) {
@@ -97,9 +101,19 @@ public class TitleScreen extends BorderPane {
         twoPressed = false;
     }
 
-    public boolean isPlayerSelected() {
-        return onePressed || twoPressed;
+    public boolean getThreePressed() {
+        return threePressed;
     }
+
+    public void setThreeOff() {
+        threePressed = false;
+    }
+
+    public boolean isPlayerSelected() {
+        return onePressed || twoPressed || threePressed;
+    }
+
+    public boolean isLoadSavedGame() { return threePressed; }
 
     public int playerNumber() { //FIXME: STREAMLINE
         if (getTwoPressed()){
@@ -110,10 +124,11 @@ public class TitleScreen extends BorderPane {
     public void resetButtons() {
         setOneOff();
         setTwoOff();
+        setThreeOff();
     }
 
     public void handleMultiplayer(String gameName){
-        this.myGameParser = new GameParser(gameName);
+        this.myGameParser = new GameParser(gameName, false);
         if (myGameParser.supportsMultiplayer()){
             myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
         }

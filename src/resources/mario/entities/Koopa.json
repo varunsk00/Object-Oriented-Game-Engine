@@ -366,6 +366,16 @@
       ]
     },
     {
+      "ID": "mario.Mario_Fire",
+      "Control": [
+        {
+          "action": "Die",
+          "param": "Koopa",
+          "orientation": "S"
+        }
+      ]
+    },
+    {
       "ID": "DEFAULT",
       "Control": [
         {

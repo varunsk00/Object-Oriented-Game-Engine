@@ -32,6 +32,7 @@ public class ViewManager implements ViewExternalAPI {
   private InfiniteLevelBuilder builder;
   private BorderPane level;
   private Camera camera;
+  private boolean saveGame = false;
 
   private boolean isGamePaused = false;
 
@@ -94,7 +95,7 @@ public class ViewManager implements ViewExternalAPI {
 
   @Override
   public void removeEntity(Node node) {
-      EntityGroup.getChildren().remove(node);
+    EntityGroup.getChildren().remove(node);
   }
 
   @Override
@@ -135,6 +136,8 @@ public class ViewManager implements ViewExternalAPI {
     else if (code == KeyCode.H) {
       pauseGame();
       goHome(code.getChar());
+    } else if(code == KeyCode.X) {
+      saveGame = true;
     }
 
   }
@@ -143,6 +146,10 @@ public class ViewManager implements ViewExternalAPI {
 
   }
   public void handleReleaseInput (KeyCode code) {
+  }
+
+  public boolean getSaveGame() {
+    return saveGame;
   }
 
 
@@ -182,5 +189,9 @@ public class ViewManager implements ViewExternalAPI {
 
   public boolean getIsGamePaused() {
     return isGamePaused;
+  }
+
+  public void setSaveGame() {
+    saveGame = !saveGame;
   }
 }

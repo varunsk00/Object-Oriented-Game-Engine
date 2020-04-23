@@ -40,12 +40,16 @@ public class GameParser {
   private int maxPlayers;
   private int selectedPlayers;
   private List<EntityWrapper> playerList;
+  private boolean loadedGame;
 
 
   private JSONObject jsonObject;
 
-  public GameParser(String gameName) {
+
+
+  public GameParser(String gameName, boolean loadedGame) {
     this.gameName = gameName;
+    this.loadedGame = loadedGame;
     fileName = gameName + "Game";
     myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
     jsonObject = (JSONObject) readJsonFile();
@@ -55,6 +59,7 @@ public class GameParser {
 
 
   public GameParser(String gameName, Controller controller) {
+
     mainController = controller;
     this.gameName = gameName;
     fileName = gameName + "Game";
@@ -64,9 +69,31 @@ public class GameParser {
     playerList = parsePlayerEntities();
   }
 
+//<<<<<<< HEAD
+//  public GameParser(String gameName, Controller controller, boolean loadedGame) {
+//    fileName = gameName + "Game";
+//    mainController = controller;
+//    checkLoadGame(loadedGame);
+//    jsonObject = (JSONObject) readJsonFile();
+//    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
+//    playerList = parsePlayerEntities();
+//    this.loadedGame = loadedGame;
+//  }
+
+  private void checkLoadGame(boolean loadedGame) {
+    if (loadedGame) {
+      myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json";
+    } else {
+      myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json";
+    }
+  }
+
+
+
   //FIXME add error handling
   public Object readJsonFile() {
     try {
+      checkLoadGame(this.loadedGame);
       FileReader reader = new FileReader(myFileName);
       JSONParser jsonParser = new JSONParser();
       return jsonParser.parse(reader);
@@ -79,13 +106,35 @@ public class GameParser {
     return playerList;
   }
 
-  public void updateJSONValue(String key, String newValue){
-    JSONObject root = jsonObject;
-    String new_val = newValue;
-    String old_val = root.get(key).toString();
 
-    if(!new_val.equals(old_val))
-    {
+  public void saveGame(String key, JSONArray newValue){
+    JSONObject root = jsonObject;
+    JSONArray new_val = newValue;
+    root.put(key, newValue);
+    root.put("players", jsonObject.get("players"));
+//    String old_val = root.get(key).toString();
+//
+//    if(!new_val.equals(old_val))
+//    {
+//      root.put(key,new_val);
+
+      try (FileWriter file = new FileWriter(TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json", false))
+      {
+        file.write(root.toString());
+        System.out.println("Successfully updated json object to file");
+      } catch (IOException e) {
+        e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+      }
+//    }
+  }
+
+  public void updateJSONValue(String key, Object newValue){
+    JSONObject root = jsonObject;
+    Object new_val = newValue;
+    Object old_val = root.get(key).toString();
+
+//    if(!new_val.equals(old_val))
+//    {
       root.put(key,new_val);
 
       try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + "/" + fileName + ".json", false))
@@ -95,7 +144,7 @@ public class GameParser {
       } catch (IOException e) {
         e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
       }
-    }
+    //}
   }
 
   private List<String> sortLevelKeySet(Set keySet){
@@ -120,12 +169,13 @@ public class GameParser {
 
 
     for(String levelNumber : sortedLevelKeys){
+      String levelName = (String) levels.get(levelNumber);
       LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
       try {
-        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor(List.class, List.class, List.class).newInstance(tiles, playerList, enemies);
+        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor(List.class, List.class, List.class, String.class).newInstance(tiles, playerList, enemies, levelName);
 
         levelList.add(newLevel);
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

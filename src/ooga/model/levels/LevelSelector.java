@@ -1,6 +1,7 @@
 package ooga.model.levels;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
@@ -63,5 +64,9 @@ public class LevelSelector {
       return true;
     }
     return false;
+  }
+
+  public List<Level> getLevelsToPlay() {
+    return parsedLevels.subList(parsedLevels.indexOf(activeLevel), parsedLevels.size());
   }
 }

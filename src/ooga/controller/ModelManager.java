@@ -3,7 +3,7 @@ package ooga.controller;
 import javax.swing.text.html.parser.Entity;
 import ooga.apis.model.ModelExternalAPI;
 
-public class ModelController implements ModelExternalAPI {
+public class ModelManager implements ModelExternalAPI {
 
   @Override
   public void addEntity() {
