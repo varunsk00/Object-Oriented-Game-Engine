@@ -6,7 +6,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import ooga.view.application.games.Game;
-import ooga.view.gui.userinterface.TitleScreen;
+//import ooga.view.gui.userinterface.TitleScreen;
 
 import java.io.File;
 import java.util.ResourceBundle;
@@ -64,11 +64,11 @@ public class AudioVideoManager {
     }
 
     public void playSoundEffect(String sound){
-//        this.currentSoundEffect = new MediaPlayer
-//                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
-//        currentSoundEffect.seek(Duration.ZERO);
-//        currentSoundEffect.setVolume(0.1);
-//        currentSoundEffect.play();
+        this.currentSoundEffect = new MediaPlayer
+                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
+        currentSoundEffect.seek(Duration.ZERO);
+        currentSoundEffect.setVolume(0.1);
+        currentSoundEffect.play();
     }
 
     private void playSong(MediaPlayer song){

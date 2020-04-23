@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
@@ -52,7 +53,8 @@ public class GameController implements Controller {
     builder = new InfiniteLevelBuilder(this);
     g = new GamePad();
 
-    myViewManager = new ViewManager(stageManager, builder, null);
+
+    myViewManager = new ViewManager(stageManager, builder);
     gameParser = new GameParser(gameName, this, loadedGame);
 
     entityList = new ArrayList<>();
@@ -81,7 +83,7 @@ public class GameController implements Controller {
       }
     });
 
-    myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
+    myViewManager.setUpCamera(gameParser.getPlayerList()); //FIXME to be more generalized and done instantly
 
 
     levelSelector = new LevelSelector(gameParser.parseLevels());

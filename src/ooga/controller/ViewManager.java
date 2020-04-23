@@ -1,6 +1,7 @@
 package ooga.controller;
 
 
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -41,7 +42,7 @@ public class ViewManager implements ViewExternalAPI {
    * NEED TO REFACTOR
    * @Deprecated fuck
    */
-  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, Node cameraNode){
+  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
@@ -57,18 +58,13 @@ public class ViewManager implements ViewExternalAPI {
     level.getChildren().add(EntityGroup);
 
     this.testScene = stageManager.getCurrentScene();
-
-    this.camera = new Camera(currentStage.getStage(), level, cameraNode);
-
   }
 
   public Pane getLevel() {
     return level;
   }
 
-  public void setUpCamera(Node node) {
-    camera = new Camera(currentStage.getStage(), level, node);
-  }
+  public void setUpCamera(List<EntityWrapper> node) { camera = new Camera(currentStage.getStage(), level, node); }
 
   public StageManager getCurrentStage() {
     return currentStage;
