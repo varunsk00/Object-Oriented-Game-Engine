@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
@@ -47,7 +48,7 @@ public class GameController implements Controller {
     builder = new InfiniteLevelBuilder(this);
     g = new GamePad();
 
-    myViewManager = new ViewManager(stageManager, builder, null);
+    myViewManager = new ViewManager(stageManager, builder);
     gameParser = new GameParser(gameName, this);
 
     entityList = new ArrayList<>();
@@ -75,7 +76,10 @@ public class GameController implements Controller {
       }
     });
 
-    myViewManager.setUpCamera(entityList.get(0).getRender()); //FIXME to be more generalized and done instantly
+
+    myViewManager.setUpCamera(gameParser.getPlayerList()); //FIXME to be more generalized and done instantly
+
+
     levelSelector = new LevelSelector(gameParser.parseLevels());
     setUpTimeline();
 
@@ -101,17 +105,17 @@ public class GameController implements Controller {
   private void step (double elapsedTime) throws XInputNotLoadedException {
     g.update();
     myViewManager.handleMenuInput();
-//    if (player.size() >1 ) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
-//      if (g.getState() != null) {
-//        if (!g.getState().getPressed()) {
-//          System.out.println("PRESSED");
-//          player.get(1).handleControllerInputPressed(g.getState().getControl());
-//        } else if (g.getState().getPressed()) {
-//          System.out.println("RELEASED");
-//          player.get(1).handleControllerInputReleased(g.getState().getControl());
-//        }
-//      }
-//    }
+    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+      if (g.getState() != null) {
+        if (!g.getState().getPressed()) {
+          System.out.println("PRESSED");
+          gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
+        } else if (g.getState().getPressed()) {
+          System.out.println("RELEASED");
+          gameParser.getPlayerList().get(1).handleControllerInputReleased(g.getState().getControl());
+        }
+      }
+    }
       if (!myViewManager.getIsGamePaused()) {
         levelSelector.updateCurrentLevel(entityList, myViewManager);
         myViewManager.updateValues();

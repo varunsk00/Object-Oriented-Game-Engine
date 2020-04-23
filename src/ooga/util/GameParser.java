@@ -35,6 +35,7 @@ public class GameParser {
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String LEVELS_PREFIX = PACKAGE_PREFIX_NAME + "levels.";
   private String fileName;
+  private String gameName;
   private Controller mainController;
   private int maxPlayers;
   private int selectedPlayers;
@@ -44,8 +45,9 @@ public class GameParser {
   private JSONObject jsonObject;
 
   public GameParser(String gameName) {
+    this.gameName = gameName;
     fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
@@ -53,12 +55,8 @@ public class GameParser {
 
 
   public GameParser(String gameName, Controller controller) {
-    fileName = gameName + "Game";
+    this(gameName);
     mainController = controller;
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
-    jsonObject = (JSONObject) readJsonFile();
-    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-    playerList = parsePlayerEntities();
   }
 
   //FIXME add error handling
@@ -85,7 +83,7 @@ public class GameParser {
     {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/" + fileName + ".json", false))
+      try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + "/" + fileName + ".json", false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
@@ -145,7 +143,6 @@ public class GameParser {
       JSONObject playerInfo = (JSONObject) playerArrangement.get(i);
       String entityName = playerInfo.get("EntityName").toString();
       JSONObject playerLocation = (JSONObject) playerInfo.get("Arrangement");
-
       EntityWrapper newPlayer = new EntityWrapper(entityName, mainController);
       newPlayer.getModel().setX(Double.parseDouble(playerLocation.get("X").toString()));
       newPlayer.getModel().setY(Double.parseDouble(playerLocation.get("Y").toString()));

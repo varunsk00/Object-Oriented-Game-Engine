@@ -17,7 +17,7 @@ class InfiniteJumpTest extends DukeApplicationTest {
   void setUp() {
     param = "10";
     myAction = new InfiniteJump(param);
-    myEntity = new EntityWrapper("UnitTestEntity", null);
+    myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
   }
 
   @Test

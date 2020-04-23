@@ -20,7 +20,8 @@ public class EntityWrapper {
   public EntityWrapper(String entityName, Controller controller) {
     myController = controller;
     EntityID = entityName;
-    myParser = new EntityJSONParser(entityName);
+    String[] gameAndName = entityName.split("\\.");
+    myParser = new EntityJSONParser(gameAndName[0], gameAndName[1]);
 
     myModel = new EntityModel(this);
     myView = new EntityView(this);

@@ -1,0 +1,33 @@
+{
+  "gameName": "Mario",
+  "players": "1",
+  "physicsProfile": [
+    {
+      "Friction": "50",
+      "Drag": "50",
+      "Gravity": "50"
+    }
+  ],
+  "levelArrangement": [
+    {
+      "Level_2": "Level2",
+      "Level_1": "MarioLevel"
+    }
+  ],
+  "playerArrangement": [
+    {
+      "EntityName": "smash.mario",
+      "Arrangement": {
+        "X": "100",
+        "Y": "100"
+      }
+    },
+    {
+      "EntityName": "smash.link",
+      "Arrangement": {
+        "X": "0",
+        "Y": "100"
+      }
+    }
+  ]
+}

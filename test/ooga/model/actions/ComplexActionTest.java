@@ -13,9 +13,9 @@ class ComplexActionTest {
 
   @BeforeEach
   void setUp() {
-    param = "SampleComplexAction";
+    param = "unittest.SampleComplexAction";
     myAction = new ComplexAction(param);
-    myEntity = new EntityWrapper("UnitTestEntity", null);
+    myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
   }
 
   @Test

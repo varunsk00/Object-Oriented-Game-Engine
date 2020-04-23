@@ -25,6 +25,7 @@ public class EntityModel {
   private int nextLevelIndex;
   private String entityID;
   private boolean fixedEntity;
+  private boolean permeableEntity;
   private boolean boundedBelow;
   private boolean boundedLeft;
   private boolean boundedRight;
@@ -64,6 +65,7 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
     fixedEntity = myEntity.getParser().readFixed();
+    permeableEntity = myEntity.getParser().readPermeable();
   }
 
   public void update(double elapsedTime){
@@ -95,7 +97,7 @@ public class EntityModel {
       if (yVel > 0) {yVel=0;}
     }
     if(boundedTop){
-      if (yVel < 0) { yVel = 0;}
+      if (yVel < 0) {yVel = 0;}
     }
   }
 
@@ -115,7 +117,6 @@ public class EntityModel {
   }
   public void handleControllerInputReleased(String key) {
     if (key != null) {
-      System.out.println("ENTITYMODEL");
       controlScheme.handleKeyReleased(key);
     }
   }
@@ -213,5 +214,7 @@ public class EntityModel {
 
   public boolean getFixed(){return fixedEntity;}
 
-  public void setBoundedTop(boolean value) { }
+  public void setBoundedTop(boolean value) {boundedTop = value;}
+
+  public boolean isPermeable(){return permeableEntity;}
 }
