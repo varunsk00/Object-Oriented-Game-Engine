@@ -55,8 +55,13 @@ public class GameParser {
 
 
   public GameParser(String gameName, Controller controller) {
-    this(gameName);
     mainController = controller;
+    this.gameName = gameName;
+    fileName = gameName + "Game";
+    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
+    jsonObject = (JSONObject) readJsonFile();
+    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
+    playerList = parsePlayerEntities();
   }
 
   //FIXME add error handling

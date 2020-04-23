@@ -18,6 +18,9 @@ public class EntityWrapper {
 
 
   public EntityWrapper(String entityName, Controller controller) {
+    if(controller == null){
+      System.out.println("error");
+    }
     myController = controller;
     EntityID = entityName;
     String[] gameAndName = entityName.split("\\.");
