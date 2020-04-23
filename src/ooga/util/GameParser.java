@@ -69,17 +69,6 @@ public class GameParser {
 //    playerList = parsePlayerEntities();
 //  }
 
-//<<<<<<< HEAD
-//  public GameParser(String gameName, Controller controller, boolean loadedGame) {
-//    fileName = gameName + "Game";
-//    mainController = controller;
-//    checkLoadGame(loadedGame);
-//    jsonObject = (JSONObject) readJsonFile();
-//    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-//    playerList = parsePlayerEntities();
-//    this.loadedGame = loadedGame;
-//  }
-
   private void checkLoadGame(boolean loadedGame) {
     if (loadedGame) {
       myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json";
