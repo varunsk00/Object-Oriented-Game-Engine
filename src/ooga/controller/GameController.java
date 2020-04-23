@@ -3,11 +3,7 @@ package ooga.controller;
 import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javafx.animation.KeyFrame;
@@ -19,7 +15,6 @@ import ooga.model.controlschemes.GamePad;
 import ooga.model.levels.InfiniteLevelBuilder;
 
 
-import ooga.model.levels.Level;
 import ooga.model.levels.LevelSelector;
 import ooga.util.GameParser;
 
@@ -128,35 +123,14 @@ public class GameController implements Controller {
     }
     if (!myViewManager.getIsGamePaused()) {
       levelSelector.updateCurrentLevel(entityList, myViewManager);
-      if(myViewManager.getSaveGame()) {
-//        for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
-//          System.out.println("Level Left: " + levelSelector.getLevelsToPlay().get(i));
-//        }
-//        System.out.println("SOIDGHIWOEHGIPEWGNV94RIHOENBV");
-        JSONArray saveGame = new JSONArray();
-        JSONObject obj = new JSONObject();
-        for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
-//          System.out.println("level name: " + levelSelector.getLevelsToPlay().get(i).getLevelName());
-          obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
-        }
-        saveGame.add(obj);
-//        saveGame.addAll(levelSelector.getLevelsToPlay());
-        gameParser.updateLevelValue("levelArrangement", saveGame);
-
-//        try (FileWriter file = new FileWriter(TXT_FILEPATH + "properties/" + "MARIO_SAVED_GAME" + ".json")) {
-//          file.write(saveGame.toJSONString());
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
-        myViewManager.setSaveGame();
-      }
+      handleSaveGame();
       myViewManager.updateValues();
       //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
 
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
-          if(targetEntity.getModel().getIsDead() && targetEntity.getModel().getEntityID().equals("Goomba")) {
+          if(targetEntity.getModel().getIsDead() && targetEntity.getModel().getEntityID().equals("mario.Goomba")) {
             myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
           }
         }
@@ -174,6 +148,19 @@ public class GameController implements Controller {
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
+  }
+
+  private void handleSaveGame() {
+    if(myViewManager.getSaveGame()) {
+      JSONArray saveGame = new JSONArray();
+      JSONObject obj = new JSONObject();
+      for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
+        obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
+      }
+      saveGame.add(obj);
+      gameParser.saveGame("levelArrangement", saveGame);
+      myViewManager.setSaveGame();
+    }
   }
 
   @Override

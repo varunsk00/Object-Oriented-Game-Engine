@@ -64,11 +64,11 @@ public class AudioVideoManager {
     }
 
     public void playSoundEffect(String sound){
-        this.currentSoundEffect = new MediaPlayer
-                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
-        currentSoundEffect.seek(Duration.ZERO);
-        currentSoundEffect.setVolume(0.1);
-        currentSoundEffect.play();
+//        this.currentSoundEffect = new MediaPlayer
+//                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
+//        currentSoundEffect.seek(Duration.ZERO);
+//        currentSoundEffect.setVolume(0.1);
+//        currentSoundEffect.play();
     }
 
     private void playSong(MediaPlayer song){

@@ -103,10 +103,11 @@ public class GameParser {
   }
 
 
-  public void updateLevelValue(String key, JSONArray newValue){
+  public void saveGame(String key, JSONArray newValue){
     JSONObject root = jsonObject;
     JSONArray new_val = newValue;
     root.put(key, newValue);
+    root.put("players", jsonObject.get("players"));
 //    String old_val = root.get(key).toString();
 //
 //    if(!new_val.equals(old_val))
@@ -123,23 +124,23 @@ public class GameParser {
 //    }
   }
 
-  public void updateJSONValue(String key, String newValue){
+  public void updateJSONValue(String key, Object newValue){
     JSONObject root = jsonObject;
-    String new_val = newValue;
-    String old_val = root.get(key).toString();
+    Object new_val = newValue;
+    Object old_val = root.get(key).toString();
 
-    if(!new_val.equals(old_val))
-    {
+//    if(!new_val.equals(old_val))
+//    {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + fileName + ".json", false))
+      try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + "/" + fileName + ".json", false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
       } catch (IOException e) {
         e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
       }
-    }
+    //}
   }
 
   private List<String> sortLevelKeySet(Set keySet){

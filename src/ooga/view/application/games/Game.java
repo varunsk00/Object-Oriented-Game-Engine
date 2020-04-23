@@ -25,6 +25,7 @@ public class Game {
     private Scene currentScene;
     private GameController mainController;
     private Map<String, String> gameTypes;
+    private int numPlayers = 0;
 
 
 
