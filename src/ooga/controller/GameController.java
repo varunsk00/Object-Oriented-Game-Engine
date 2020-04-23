@@ -129,13 +129,14 @@ public class GameController implements Controller {
     if (!myViewManager.getIsGamePaused()) {
       levelSelector.updateCurrentLevel(entityList, myViewManager);
       if(myViewManager.getSaveGame()) {
-        for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
-          System.out.println("Level Left: " + levelSelector.getLevelsToPlay().get(i));
-        }
-        System.out.println("SOIDGHIWOEHGIPEWGNV94RIHOENBV");
+//        for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
+//          System.out.println("Level Left: " + levelSelector.getLevelsToPlay().get(i));
+//        }
+//        System.out.println("SOIDGHIWOEHGIPEWGNV94RIHOENBV");
         JSONArray saveGame = new JSONArray();
         JSONObject obj = new JSONObject();
         for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
+//          System.out.println("level name: " + levelSelector.getLevelsToPlay().get(i).getLevelName());
           obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
         }
         saveGame.add(obj);

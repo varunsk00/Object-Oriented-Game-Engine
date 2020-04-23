@@ -1,0 +1,49 @@
+{
+  "levelName": "Pipe1",
+  "levelType": "InfiniteLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "flappybird.Pipebody",
+      "Arrangement": [
+        {
+
+         "4": ["1"],
+          "5": ["1"],
+          "6": ["1"],
+         "7": ["1"]
+        }
+      ]
+    },
+    {
+      "EntityName": "flappybird.Pipebottom",
+      "Arrangement": [
+        {
+          "0": ["1"]
+        }
+      ]
+    },
+    {
+      "EntityName": "flappybird.Pipetop",
+      "Arrangement": [
+        {
+          "3": ["1"]
+        }
+      ]
+    },
+    {
+      "EntityName": "flappybird.ClearLevelSwitchBlock",
+      "Arrangement": [
+        {
+          "1": ["1"],
+          "2": ["1"]
+        }
+      ]
+    }
+  ],
+  "enemyArrangement": [
+  ],
+  "playerArrangement": [
+      ]
+}

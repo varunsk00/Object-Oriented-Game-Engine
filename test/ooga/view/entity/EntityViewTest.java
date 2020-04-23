@@ -12,7 +12,7 @@ class EntityViewTest {
 
   @BeforeEach
   void setUp() {
-    myEntity = new EntityWrapper("UnitTestEntity", null);
+    myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
     myView = new EntityView(myEntity);
   }
 

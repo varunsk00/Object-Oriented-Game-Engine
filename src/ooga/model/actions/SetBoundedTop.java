@@ -9,7 +9,5 @@ public class SetBoundedTop extends Action {
   }
 
   @Override
-  public void execute(EntityModel entity) {
-    entity.setBoundedTop(Boolean.parseBoolean(param));
-  }
+  public void execute(EntityModel entity) { entity.setBoundedTop(Boolean.parseBoolean(param)); }
 }

@@ -35,6 +35,7 @@ public class GameParser {
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String LEVELS_PREFIX = PACKAGE_PREFIX_NAME + "levels.";
   private String fileName;
+  private String gameName;
   private Controller mainController;
   private int maxPlayers;
   private int selectedPlayers;
@@ -44,9 +45,13 @@ public class GameParser {
 
   private JSONObject jsonObject;
 
-  public GameParser(String gameName) {
+
+
+  public GameParser(String gameName, boolean loadedGame) {
+    this.gameName = gameName;
+    this.loadedGame = loadedGame;
     fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
@@ -54,28 +59,37 @@ public class GameParser {
 
 
   public GameParser(String gameName, Controller controller, boolean loadedGame) {
-    fileName = gameName + "Game";
-    mainController = controller;
-    checkLoadGame(loadedGame);
-    jsonObject = (JSONObject) readJsonFile();
-    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-    playerList = parsePlayerEntities();
+    this(gameName, loadedGame);
     this.loadedGame = loadedGame;
+//    checkLoadGame(this.loadedGame);
+    mainController = controller;
   }
 
+//<<<<<<< HEAD
+//  public GameParser(String gameName, Controller controller, boolean loadedGame) {
+//    fileName = gameName + "Game";
+//    mainController = controller;
+//    checkLoadGame(loadedGame);
+//    jsonObject = (JSONObject) readJsonFile();
+//    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
+//    playerList = parsePlayerEntities();
+//    this.loadedGame = loadedGame;
+//  }
+
   private void checkLoadGame(boolean loadedGame) {
-    if(loadedGame) {
-      myFileName = "src/resources/properties/" + fileName + "Saved" + ".json";
+    if (loadedGame) {
+      myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json";
     } else {
-      myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+      myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json";
     }
   }
+
+
 
   //FIXME add error handling
   public Object readJsonFile() {
     try {
-
-
+      checkLoadGame(this.loadedGame);
       FileReader reader = new FileReader(myFileName);
       JSONParser jsonParser = new JSONParser();
       return jsonParser.parse(reader);
@@ -99,7 +113,7 @@ public class GameParser {
 //    {
 //      root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/" + fileName + "Saved" + ".json", false))
+      try (FileWriter file = new FileWriter(TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json", false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
@@ -118,7 +132,7 @@ public class GameParser {
     {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/" + fileName + ".json", false))
+      try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + fileName + ".json", false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
@@ -179,7 +193,6 @@ public class GameParser {
       JSONObject playerInfo = (JSONObject) playerArrangement.get(i);
       String entityName = playerInfo.get("EntityName").toString();
       JSONObject playerLocation = (JSONObject) playerInfo.get("Arrangement");
-
       EntityWrapper newPlayer = new EntityWrapper(entityName, mainController);
       newPlayer.getModel().setX(Double.parseDouble(playerLocation.get("X").toString()));
       newPlayer.getModel().setY(Double.parseDouble(playerLocation.get("Y").toString()));

@@ -1,0 +1,1 @@
+{"gameName":"Mario","players":"1","physicsProfile":[{"Friction":"20","Drag":"1","Gravity":"20"}],"levelArrangement":[{"Level_1":"mario.Level2"}],"playerArrangement":[{"EntityName":"mario.Mario_Fire","Arrangement":{"X":"100","Y":"100"}},{"EntityName":"mario.P2_Luigi_Fire","Arrangement":{"X":"0","Y":"100"}}]}

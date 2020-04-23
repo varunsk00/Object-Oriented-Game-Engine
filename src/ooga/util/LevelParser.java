@@ -40,8 +40,9 @@ public class LevelParser {
   private JSONObject jsonObject;
 
   public LevelParser(String fileName, Controller controller) {
+    String[] gameAndName = fileName.split("\\.");
     mainController = controller;
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+    myFileName = TXT_FILEPATH + gameAndName[0] + "/levels/" + gameAndName[1] + ".json";
     jsonObject = (JSONObject) readJsonFile();
     tileHeight = Double.parseDouble(jsonObject.get("tileHeight").toString());
     tileWidth = Double.parseDouble(jsonObject.get("tileWidth").toString());
@@ -75,7 +76,7 @@ public class LevelParser {
     {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/MarioGame.json", false)) //FIXME: MULT FILES
+      try (FileWriter file = new FileWriter("src/resources/mario/MarioGame.json", false)) //FIXME: MULT FILES
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
