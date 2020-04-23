@@ -47,10 +47,17 @@ public class LevelParser {
     try {
       FileReader reader = new FileReader(myFileName);
       JSONParser jsonParser = new JSONParser();
+      System.out.println(myFileName);
+
       return jsonParser.parse(reader);
     } catch (IOException | ParseException e) {
       throw new InvalidControlSchemeException(e);
     }
+  }
+
+  public void writeOutSavedLevel(String key, String newValue) {
+    JSONObject saveObj = new JSONObject();
+
   }
 
   public void updateJSONValue(String key, String newValue){
@@ -62,7 +69,7 @@ public class LevelParser {
     {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/MetroidGame.json", false)) //FIXME: MULT FILES
+      try (FileWriter file = new FileWriter("src/resources/mario/MarioGame.json", false)) //FIXME: MULT FILES
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");

@@ -25,6 +25,8 @@ public class Game {
     private Scene currentScene;
     private GameController mainController;
     private Map<String, String> gameTypes;
+    private int numPlayers = 0;
+
 
 
     public Game(StageManager stageManager) {
@@ -41,10 +43,10 @@ public class Game {
         myBackgroundPane.setBackground(new Background(bg));
     }
 
-    public void loadGame(String gameName) throws XInputNotLoadedException {
+    public void loadGame(String gameName, boolean loadedGame) throws XInputNotLoadedException {
         stageManager.setCurrentTitle(gameName);
 //        game = gameName;
-        this.mainController = new GameController(stageManager, gameName); //FIXME MAGIC VALUE
+        this.mainController = new GameController(stageManager, gameName, loadedGame); //FIXME MAGIC VALUE
     }
 
     private void loadGameTypes(){

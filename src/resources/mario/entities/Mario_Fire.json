@@ -412,6 +412,16 @@
       ]
     },
     {
+      "ID": "mario.Goomba",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-750.0",
+          "orientation": "N"
+        }
+      ]
+    },
+    {
       "ID": "DEFAULT",
       "Control": [
         {

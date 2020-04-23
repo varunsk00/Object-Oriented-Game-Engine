@@ -14,8 +14,8 @@ public class InfiniteLevel extends Level{
   private List<EntityWrapper> enemyEntities;
   private static final int spawningInterval = 500;
 
-  public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList) {
-    super(tileList, playerList, enemyList);
+  public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, String name) {
+    super(tileList, playerList, enemyList, name);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
