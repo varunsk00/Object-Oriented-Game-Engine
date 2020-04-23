@@ -13,7 +13,8 @@ public class ComplexAction extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    ComplexActionParser myParser = new ComplexActionParser(param);
+    String[] gameAndName = param.split("\\.");
+    ComplexActionParser myParser = new ComplexActionParser(gameAndName[0], gameAndName[1]);
     complexAction = myParser.createComplexAction();
     entity.getActionStack().addAll(complexAction);
   }

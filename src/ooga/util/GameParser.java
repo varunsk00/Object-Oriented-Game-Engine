@@ -115,7 +115,7 @@ public class GameParser {
 
 
     for(String levelNumber : sortedLevelKeys){
-      LevelParser parsedLevel = new LevelParser(gameName.toLowerCase(), levels.get(levelNumber).toString(), mainController);
+      LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();

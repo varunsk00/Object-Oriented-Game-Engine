@@ -5,7 +5,7 @@
   "tileHeight": 100,
   "tileArrangement": [
     {
-      "EntityName": "Pipebody",
+      "EntityName": "flappybird.Pipebody",
       "Arrangement": [
         {
 
@@ -17,7 +17,7 @@
       ]
     },
         {
-          "EntityName": "Pipebottom",
+          "EntityName": "flappybird.Pipebottom",
           "Arrangement": [
             {
               "3": ["1"]
@@ -25,7 +25,7 @@
           ]
         },
         {
-          "EntityName": "Pipetop",
+          "EntityName": "flappybird.Pipetop",
           "Arrangement": [
             {
               "6": ["1"]
@@ -33,7 +33,7 @@
           ]
         },
     {
-      "EntityName": "ClearLevelSwitchBlock",
+      "EntityName": "flappybird.ClearLevelSwitchBlock",
       "Arrangement": [
         {
           "4": ["1"],

@@ -1,11 +1,11 @@
 {
-  "gameName": "UnitTest",
+  "gameName": "Mario",
   "players": "1",
   "physicsProfile": [
     {
-      "Friction": "20",
-      "Drag": "1",
-      "Gravity": "20"
+      "Friction": "50",
+      "Drag": "50",
+      "Gravity": "50"
     }
   ],
   "levelArrangement": [
@@ -16,9 +16,16 @@
   ],
   "playerArrangement": [
     {
-      "EntityName": "Mario_Fire",
+      "EntityName": "smash.mario",
       "Arrangement": {
         "X": "100",
+        "Y": "100"
+      }
+    },
+    {
+      "EntityName": "smash.link",
+      "Arrangement": {
+        "X": "0",
         "Y": "100"
       }
     }

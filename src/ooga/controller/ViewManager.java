@@ -36,6 +36,10 @@ public class ViewManager implements ViewExternalAPI {
 
   private Scene testScene;
 
+  /**
+   * NEED TO REFACTOR
+   * @Deprecated fuck
+   */
   public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, Node cameraNode){
     this.menu = new InGameMenu("TestSandBox");
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff

@@ -119,7 +119,6 @@ public class EntityJSONParser {
   }
 
   private ImageView loadImage(String imageName) {
-    System.out.println(imageName);
     InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
     Image entityImage = null;
     entityImage = new Image(is);

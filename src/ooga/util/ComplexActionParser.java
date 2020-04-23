@@ -24,8 +24,8 @@ public class ComplexActionParser {
 
   private JSONObject jsonObject;
 
-  public ComplexActionParser(String fileName) {
-    myFileName = TXT_FILEPATH + "complexaction/" + fileName + ".json";
+  public ComplexActionParser(String gameName, String fileName) {
+    myFileName = TXT_FILEPATH + gameName + "/" + "complexactions/" + fileName + ".json";
     jsonObject = (JSONObject) readJsonFile();
   }
 

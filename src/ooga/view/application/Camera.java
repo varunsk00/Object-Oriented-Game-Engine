@@ -1,5 +1,6 @@
 package ooga.view.application;
 
+import java.util.List;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -50,4 +51,13 @@ public class Camera {
     menu.setTranslateX(viewPort.getX());
 
   }
+
+//  private double getCenterOfPlayers(){
+//    double sum = 0;
+//    for(int i = 0; i < target.size(); i++){
+//      sum += target.get(i).getBoundsInParent().getMinX();
+//    }
+//    sum /= target.size();
+//    return sum;
+//  }
 }

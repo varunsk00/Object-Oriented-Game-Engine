@@ -15,7 +15,7 @@ class SetBoundedBottomTest {
   void setUp() {
     param = "false";
     myAction = new SetBoundedBottom(param);
-    myEntity = new EntityWrapper("UnitTestEntity", null);
+    myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
   }
 
   @Test

@@ -1,24 +1,25 @@
 {
-  "entityName": "Fire_Mario",
-  "image": "firemario_walk.gif",
+  "entityName": "UnitTestEntity",
+  "image": "mario_fire.png",
   "health": 1,
-  "xPos": 100,
-  "yPos": 100,
-  "xVel": 10,
-  "yVel": 10,
+  "xPos": 0,
+  "yPos": 0,
+  "xVel": 0,
+  "yVel": 0,
   "fixed": false,
-  "permeable": false,
-  "maxXVel": 500,
-  "maxYVel": 500,
+  "permeable": true,
 
-  "height": 50,
-  "width": 51,
+  "maxXVel": 1000,
+  "maxYVel": 1000,
+  "height": 100,
+  "width": 100,
   "scheme": "Keybindings",
   "actionBundles": [
     {
       "ID": "D",
       "Control": [
         {
+
           "action": "AccelerateX",
           "param": "300.0"
         },
@@ -32,6 +33,7 @@
       "ID": "A",
       "Control": [
         {
+
           "action": "AccelerateX",
           "param": "-300.0"
         },
@@ -45,6 +47,7 @@
       "ID": "W",
       "Control": [
         {
+
           "action": "AccelerateY",
           "param": "-300.0"
         }
@@ -54,9 +57,11 @@
       "ID": "S",
       "Control": [
         {
+
           "action": "AccelerateY",
           "param": "+300.0"
         }
+
       ]
     },
     {
@@ -65,16 +70,6 @@
         {
           "action": "Jump",
           "param": "-750.0"
-        }
-      ]
-    },
-    {
-      "ID": "F",
-      "Control": [
-        {
-          "action": "SpawnRelative",
-          "param": "mario.Mario_Fireball",
-          "coolDown": "1000"
         }
       ]
     }
@@ -387,7 +382,6 @@
           "action": "SetBoundedRight",
           "param": "true",
           "orientation": "W"
-
         },
         {
           "action": "SetBoundedBottom",
@@ -407,6 +401,16 @@
         {
           "action": "Jump",
           "param": "-750.0",
+          "orientation": "N"
+        }
+      ]
+    },
+    {
+      "ID": "UnitTestEntity",
+      "Control": [
+        {
+          "action": "MoveY",
+          "param": "-10",
           "orientation": "N"
         }
       ]
