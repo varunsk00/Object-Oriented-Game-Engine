@@ -1,8 +1,11 @@
 package ooga.view.gui.userinterface;
 
+import java.io.FileReader;
+import java.io.IOException;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.view.gui.managers.AudioVideoManager;
 import ooga.view.gui.managers.StageManager;
 
@@ -11,6 +14,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class GameCabinet extends Pane {
     private GameSelector gameSelector;
@@ -21,39 +28,53 @@ public class GameCabinet extends Pane {
     private Map<String, Integer> gameLaunchCount = new HashMap<>();
     private int numPlayers;
     private String currentGame;
+    private String gameListFilePath = "src/resources/GameList.json";
 
-    public GameCabinet(StageManager stageManager, AudioVideoManager av) throws Exception { //FIXME ADD ERROR HANDLING
+
+  public GameCabinet(StageManager stageManager, AudioVideoManager av) throws Exception { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
         this.avManager = av;
         this.stageManager = stageManager;
         this.myTitleScreen = new TitleScreen();
-        initGameSelect();
+        List<String> gameList = this.readGameList();
+        initGameSelect(gameList);
         gameSelector = new GameSelector(myGames);
         this.getChildren().add(gameSelector);
         this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         updateCurrentGame();
     }
 
+    private List<String> readGameList(){
+      List<String> gameList = new ArrayList<>();
+      JSONObject gameListJSONObject = (JSONObject) readJsonFile();
+      JSONArray gameListJSONArray = (JSONArray) gameListJSONObject.get("gameList");
+      for(int i = 0; i < gameListJSONArray.size(); i++){
+        gameList.add(gameListJSONArray.get(i).toString());
+      }
+      return gameList;
+    }
+
+  public Object readJsonFile() {
+    try {
+      FileReader reader = new FileReader(gameListFilePath);
+      JSONParser jsonParser = new JSONParser();
+      return jsonParser.parse(reader);
+    } catch (IOException | ParseException e) {
+      throw new InvalidControlSchemeException(e);
+    }
+  }
+
     public void addNewGamePreview(GamePreview newGamePreview) {
         this.myGames.add(newGamePreview);
     }
 
-    private void initGameSelect() throws FileNotFoundException { //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
-        GamePreview g1 = new GamePreview(Color.BLUE, "flappybird");
-        GamePreview g2 = new GamePreview(Color.RED, "mario1-1");
-        GamePreview g3 = new GamePreview(Color.GREEN, "zelda2");
-        GamePreview g4 = new GamePreview(Color.YELLOW, "metroid");
-        GamePreview g5 = new GamePreview(Color.ORANGE, "varun");
-        g1.setGameName("FlappyBird");
-        g2.setGameName("Mario");
-        g3.setGameName("Zelda");
-        g4.setGameName("Metroid");
-        g5.setGameName("Varun");
-        myGames.add(g1);
-        myGames.add(g2);
-        myGames.add(g3);
-        myGames.add(g4);
-        myGames.add(g5);
+    private void initGameSelect(List<String> gameList) throws FileNotFoundException { //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
+      for(int i = 0; i < gameList.size(); i++){
+        GameSelectParser newGameParser = new GameSelectParser(gameList.get(i));
+        GamePreview newGame = new GamePreview(Color.BLUE, newGameParser.readGamePreviewGIF());
+        newGame.setGameName(newGameParser.readGameName());
+        myGames.add(newGame);
+      }
     }
 
     public void handleAltScrollInput(KeyCode code) {

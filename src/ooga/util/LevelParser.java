@@ -23,16 +23,9 @@ import java.io.FileReader;
 public class LevelParser {
 
   private String myFileName;
-  private static final String REGEX_SYNTAX = "Syntax";
   private List<Entry<String, Pattern>> mySymbols;
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
-  private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
-  private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
-  public static final String CORRUPTED_FILE = "Error with file input. Check game file or choose another game.";
-  public static final String CORRUPTED_FIELD = "XML file has corrupted/missing fields";
-  public final String CLASS_NOT_FOUND = "Game not valid";
   private Controller mainController;
   private double tileHeight;
   private double tileWidth;
@@ -69,7 +62,7 @@ public class LevelParser {
     {
       root.put(key,new_val);
 
-      try (FileWriter file = new FileWriter("src/resources/properties/MarioGame.json", false)) //FIXME: MULT FILES
+      try (FileWriter file = new FileWriter("src/resources/properties/MetroidGame.json", false)) //FIXME: MULT FILES
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
