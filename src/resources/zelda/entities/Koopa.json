@@ -1,6 +1,6 @@
 {
-  "entityName": "Fire_Mario",
-  "image": "firemario_walk.gif",
+  "entityName": "Koopa",
+  "image": "koopa.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
@@ -8,19 +8,20 @@
   "yVel": 10,
   "fixed": false,
   "permeable": false,
+
   "maxXVel": 500,
   "maxYVel": 500,
-
-  "height": 50,
-  "width": 51,
-  "scheme": "Keybindings",
+  "height": 40,
+  "width": 40,
+  "scheme": "AI",
   "actionBundles": [
     {
-      "ID": "D",
+      "ID": "50",
       "Control": [
         {
+
           "action": "AccelerateX",
-          "param": "300.0"
+          "param": "15.0"
         },
         {
           "action": "SetXDirection",
@@ -29,52 +30,16 @@
       ]
     },
     {
-      "ID": "A",
+      "ID": "50",
       "Control": [
         {
+
           "action": "AccelerateX",
-          "param": "-300.0"
+          "param": "-15.0"
         },
         {
           "action": "SetXDirection",
           "param": "backwards"
-        }
-      ]
-    },
-    {
-      "ID": "W",
-      "Control": [
-        {
-          "action": "AccelerateY",
-          "param": "-300.0"
-        }
-      ]
-    },
-    {
-      "ID": "S",
-      "Control": [
-        {
-          "action": "AccelerateY",
-          "param": "+300.0"
-        }
-      ]
-    },
-    {
-      "ID": "SPACE",
-      "Control": [
-        {
-          "action": "Jump",
-          "param": "-750.0"
-        }
-      ]
-    },
-    {
-      "ID": "F",
-      "Control": [
-        {
-          "action": "SpawnRelative",
-          "param": "mario.Mario_Fireball",
-          "coolDown": "1000"
         }
       ]
     }
@@ -387,7 +352,6 @@
           "action": "SetBoundedRight",
           "param": "true",
           "orientation": "W"
-
         },
         {
           "action": "SetBoundedBottom",
@@ -398,26 +362,6 @@
           "action": "SetBoundedTop",
           "param": "true",
           "orientation": "S"
-        }
-      ]
-    },
-    {
-      "ID": "mario.Koopa",
-      "Control": [
-        {
-          "action": "AccelerateY",
-          "param": "-750.0",
-          "orientation": "N"
-        }
-      ]
-    },
-    {
-      "ID": "mario.Goomba",
-      "Control": [
-        {
-          "action": "AccelerateY",
-          "param": "-750.0",
-          "orientation": "N"
         }
       ]
     },
