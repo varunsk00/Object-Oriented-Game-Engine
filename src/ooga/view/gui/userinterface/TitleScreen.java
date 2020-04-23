@@ -124,7 +124,7 @@ public class TitleScreen extends BorderPane {
     public void resetButtons() {
         setOneOff();
         setTwoOff();
-       // setThreeOff();
+        setThreeOff();
     }
 
     public void handleMultiplayer(String gameName){
