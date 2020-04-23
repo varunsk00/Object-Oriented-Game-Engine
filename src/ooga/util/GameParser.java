@@ -51,7 +51,7 @@ public class GameParser {
     this.gameName = gameName;
     this.loadedGame = loadedGame;
     fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
+//    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
@@ -60,13 +60,12 @@ public class GameParser {
   public GameParser(String gameName, Controller controller, boolean loadedGame) {
     mainController = controller;
     this.gameName = gameName;
+    this.loadedGame = loadedGame;
     fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
+//    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
-    this.loadedGame = loadedGame;
-//    checkLoadGame(this.loadedGame);
   }
 
 

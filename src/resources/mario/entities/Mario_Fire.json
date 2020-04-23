@@ -408,6 +408,16 @@
           "action": "AccelerateY",
           "param": "-750.0",
           "orientation": "N"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "idk",
+          "orientation": "E"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "idk",
+          "orientation": "W"
         }
       ]
     },
@@ -418,6 +428,16 @@
           "action": "AccelerateY",
           "param": "-750.0",
           "orientation": "N"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "idk",
+          "orientation": "E"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "idk",
+          "orientation": "W"
         }
       ]
     },
