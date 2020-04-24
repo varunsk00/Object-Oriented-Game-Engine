@@ -33,9 +33,13 @@ public class LevelSelector {
       activeLevel.setCurrentPlayerInterval(Math.abs(calculatePlayerInterval(currentEntityList.get(0))));
     }
     activeLevel.spawnEntities(currentEntityList, viewManager);
+//<<<<<<< HEAD
+//    activeLevel.despawnEntities(currentEntityList, viewManager);
+//=======
 //    activeLevel.despawnEntities(currentEntityList, viewManager);
     this.despawnEntities(currentEntityList, viewManager);
 
+//>>>>>>> 5854a31735b775444eaaa1b24aa6a390047d9e73
   }
 
   private void switchLevel(int levelIndex){
@@ -70,5 +74,9 @@ public class LevelSelector {
 
   public List<Level> getLevelsToPlay() {
     return parsedLevels.subList(parsedLevels.indexOf(activeLevel), parsedLevels.size());
+  }
+
+  public Level getActiveLevel() {
+    return activeLevel;
   }
 }

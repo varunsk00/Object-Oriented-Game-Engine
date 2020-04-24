@@ -13,6 +13,7 @@ public class Game {
     private GameController mainController;
 
 
+
     public Game(StageManager stageManager) {
         this.stageManager = stageManager;
         this.currentScene = stageManager.getCurrentScene();
