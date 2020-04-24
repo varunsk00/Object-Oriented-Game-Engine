@@ -1,5 +1,6 @@
 package ooga.controller;
 
+import java.util.List;
 import javax.swing.text.html.parser.Entity;
 import ooga.apis.model.ModelExternalAPI;
 import ooga.model.CollisionEngine;
@@ -51,5 +52,17 @@ public class ModelManager implements ModelExternalAPI {
 
   public boolean checkHealthGone(EntityWrapper entity) {
     return entity.getModel().getHealth() <= 0;
+  }
+
+  public void resetPlayerValues(List<EntityWrapper> playerList) {
+    for(EntityWrapper player : playerList) {
+      player.getModel().setHealth();
+      player.getModel().setLevelAdvancementStatus(true);
+    }
+  }
+  public void resetPlayerPositions(List<EntityWrapper> playerList) {
+    for(EntityWrapper player : playerList) {
+      player.getModel().resetPosition();
+    }
   }
 }
