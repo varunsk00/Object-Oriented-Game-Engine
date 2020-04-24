@@ -86,7 +86,7 @@ public class GameController implements Controller {
       }
     });
     myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.parseGameStatusProfile().readScrollingStatusX(), gameParser.parseGameStatusProfile().readScrollingStatusY());
-    levelSelector = new LevelSelector(gameParser.parseLevels());
+    levelSelector = new LevelSelector(gameParser.parseLevels(), gameParser.parseGameStatusProfile());
     setUpTimeline();
 
   }

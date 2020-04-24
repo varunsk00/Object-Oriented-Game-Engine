@@ -1,0 +1,13 @@
+{
+  "levelName": "dummyPlatform",
+  "levelType": "InfiniteLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+      ],
+
+  "enemyArrangement": [
+  ],
+  "playerArrangement": [
+      ]
+}
