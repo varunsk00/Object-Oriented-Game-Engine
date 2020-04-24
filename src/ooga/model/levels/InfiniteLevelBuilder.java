@@ -34,9 +34,9 @@ public class InfiniteLevelBuilder extends LevelBuilder {
 //          || entity.getRender().getBoundsInParent().getMinY() > camera.getBoundsInParent().getMaxY()*2+(camera.getHeight()*2)
 //          || entity.getRender().getBoundsInParent().getMaxY() < camera.getBoundsInParent().getMinY()*2-(camera.getHeight()*2)){
         entityNum -=1;
-        System.out.println(entity.getModel().getX());
-        System.out.println(camera.getBoundsInParent().getMinX()-(camera.getWidth()));
-        System.out.println(entityNum);
+//        System.out.println(entity.getModel().getX());
+//        System.out.println(camera.getBoundsInParent().getMinX()-(camera.getWidth()));
+//        System.out.println(entityNum);
         //level.getChildren().remove(entity);
         iterator.remove();
         //myController.getEntityList().remove(entity);

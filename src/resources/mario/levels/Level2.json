@@ -29,6 +29,16 @@
       ]
     },
     {
+      "EntityName": "mario.Koopa",
+      "Arrangement": [
+        {
+          "12": [
+            "10"
+          ]
+        }
+      ]
+    },
+    {
       "EntityName": "mario.Pipebody",
       "Arrangement": [
         {
