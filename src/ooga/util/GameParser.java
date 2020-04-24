@@ -22,14 +22,15 @@ import ooga.model.actions.Action;
 import ooga.model.actions.actionExceptions.InvalidActionException;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.model.levels.Level;
+import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class GameParser {
+public class GameParser extends Parser {
 
-  private String myFileName;
+//  private String myFileName;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
@@ -44,16 +45,15 @@ public class GameParser {
   private GameStatusProfile gameStatusProfile;
 
 
-
   private JSONObject jsonObject;
 
   public GameParser(String gameName, Controller controller, boolean loadedGame) {
     mainController = controller;
     this.gameName = gameName;
-    this.loadedGame = loadedGame;
+    this.myFileName = "";
     fileName = gameName + "Game";
-
     this.loadedGame = loadedGame;
+    checkLoadGame(this.loadedGame);
     jsonObject = (JSONObject) readJsonFile();
     gameStatusProfile = parseGameStatusProfile();
     selectedPlayers = readPlayerCount();
@@ -63,25 +63,12 @@ public class GameParser {
 
   private void checkLoadGame(boolean loadedGame) {
     if (loadedGame) {
-      myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json";
+      setMyFileName(TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json");
     } else {
-      myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json";
+      setMyFileName(TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json");
     }
   }
 
-
-
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      checkLoadGame(this.loadedGame);
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e) {
-      throw new InvalidControlSchemeException(e);
-    }
-  }
 
   public List<EntityWrapper> getPlayerList(){
     return playerList;

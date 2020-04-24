@@ -94,14 +94,15 @@ public class TitleScreen extends BorderPane {
                 if(playerBooleans[i]){
                     this.num = (i +1);
                     ret = playerBooleans[i]; } } }
-        return ret;
+        return ret || loadPressed;
     }
 
     public boolean isLoadSavedGame() { return loadPressed; }
 
     public void resetButtons() {
         for(int i = 0; i<playerBooleans.length; i++){
-            playerBooleans[i] = false; }
+            playerBooleans[i] = false;
+        loadPressed = false; }
     }
 
     public void handleMultiplayer(String gameName){
