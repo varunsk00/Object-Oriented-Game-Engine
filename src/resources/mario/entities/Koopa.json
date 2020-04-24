@@ -424,6 +424,16 @@
       ]
     },
     {
+      "ID": "mario.Mario_Fireball",
+      "Control": [
+        {
+          "action": "Die",
+          "param": "",
+          "orientation": "W"
+        }
+      ]
+    },
+    {
       "ID": "DEFAULT",
       "Control": [
         {
