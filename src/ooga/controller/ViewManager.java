@@ -15,23 +15,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.model.levels.InfiniteLevelBuilder;
+import ooga.util.GameParser;
 import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
 public class ViewManager implements ViewExternalAPI {
-  private Controller myController;
-
   private BorderPane testPane;
   private Group EntityGroup;
 
   private InGameMenu menu;
+  private ControlSchemeSwitcher config;
   private int escCounter = 0;
 
   private StageManager currentStage;
-  private InfiniteLevelBuilder builder;
   private BorderPane level;
   private Camera camera;
+  private boolean launchControlSwitcher;
   private boolean saveGame = false;
 
   private boolean isGamePaused = false;
@@ -43,11 +43,9 @@ public class ViewManager implements ViewExternalAPI {
    * @Deprecated fuck
    */
   public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
-    this.menu = new InGameMenu("TestSandBox");
+    this.menu = new InGameMenu();
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
-    this.builder = builder;
-
     level = builder.generateLevel();
 
     testPane = level;
@@ -153,34 +151,52 @@ public class ViewManager implements ViewExternalAPI {
   }
 
 
-  public void handleMenuInput() { //TODO: REFACTOR
+  public void handleMenuInput(GameParser gp) throws Exception { //TODO: REFACTOR
     if (menu.getResumePressed()) {
       unPauseGame();
       menu.setResumeOff();
+    }
+    if (menu.getSavePressed()) {
+      saveGame=true;
+      unPauseGame();
+      menu.setSaveOff();
     }
     if (menu.getExitPressed()) { //FIXME: FIX THIS BUT I DIDN'T WANT TO BREAK SHRUTHI'S SAVE POINTS, ideally should independently go home
       handlePressInput(KeyCode.H);
       menu.setExitOff();
     }
+    if (menu.getControlsPressed()){
+      launchConfigMenu(gp);
+      menu.setControlsOff();
+    }
+    if (menu.getRebootPressed()){
+      menu.setRebootOff();
+      currentStage.reboot();
+    }
   }
 
-  public void goHome(String state){
+  private void goHome(String state){
     currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
     currentStage.updateCurrentScene(state, currentStage.getPastScene());
     currentStage.switchScenes("GameSelect");
   }
 
-  public void pauseGame(){
+  private void pauseGame(){
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
     isGamePaused = true;
-    menu.setAlignment(Pos.CENTER);
-    testPane.setCenter(menu);
+    testPane.setLeft(menu);
     escCounter++;
   }
 
-  public void unPauseGame(){
+  private void launchConfigMenu(GameParser gp){
+    config = new ControlSchemeSwitcher(gp);
+    menu.getChildren().add(config);
+  }
+
+  private void unPauseGame(){
     testPane.getChildren().remove(menu);
+    menu.getChildren().remove(config);
     EntityGroup.setEffect(null);
     isGamePaused = false;
     escCounter--;
@@ -193,5 +209,9 @@ public class ViewManager implements ViewExternalAPI {
 
   public void setSaveGame() {
     saveGame = !saveGame;
+  }
+
+  public boolean getControlSwitcher(){
+    return launchControlSwitcher;
   }
 }

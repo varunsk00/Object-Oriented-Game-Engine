@@ -1,17 +1,16 @@
 package ooga.view.application.menu;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
-import javafx.scene.text.Text;
 
 public class InGameMenu extends VBox{
-    private boolean rightPressed;
+    private boolean savePressed;
     private boolean controlsPressed;
     private boolean resumePressed;
     private boolean exitPressed;
+    private boolean rebootPressed;
     private VBox myButtons;
 
     /**
@@ -20,11 +19,12 @@ public class InGameMenu extends VBox{
      * * @param language the current language passed in from ParserController      * @throws
      * FileNotFoundException in case the File does not exist
      */
-    public InGameMenu(String currentGame) {
-        this.rightPressed = false;
+    public InGameMenu() {
+        this.savePressed = false;
         this.controlsPressed = false;
         this.exitPressed = false;
         this.resumePressed = false;
+        this.rebootPressed = false;
         renderButtons();
         getChildren().add(myButtons);
     }
@@ -53,12 +53,20 @@ public class InGameMenu extends VBox{
         exitPressed = false;
     }
 
-    public boolean getRightPressed() {
-        return rightPressed;
+    public boolean getSavePressed() {
+        return savePressed;
     }
 
-    public void setRightOff() {
-        rightPressed = false;
+    public void setSaveOff() {
+        savePressed = false;
+    }
+
+    public boolean getRebootPressed() {
+        return rebootPressed;
+    }
+
+    public void setRebootOff() {
+        rebootPressed = false;
     }
 
     public boolean getControlsPressed() {
@@ -74,17 +82,19 @@ public class InGameMenu extends VBox{
      */
     private void renderButtons() {
         myButtons = new VBox();
-        Button ResumeButton = makeButton(" Resume ", event -> resumePressed = true);
-        Button DownButton = makeButton("Setting 2", event -> rightPressed = true);
-        Button ControlsButton = makeButton(" Controls ", event -> controlsPressed = true);
-        Button ExitButton = makeButton("Go Home", event -> exitPressed = true);
-        myButtons.setTranslateX(590);
-        myButtons.setSpacing(70); //FIXME: MAGIC NUMBER
-        myButtons.getChildren().addAll(ResumeButton, DownButton, ControlsButton, ExitButton);
+        Button ResumeButton = makeButton("Play Game", event -> resumePressed = true);
+        Button SaveButton = makeButton("Save Game", event -> savePressed = true);
+        Button ControlsButton = makeButton("Configuration", event -> controlsPressed = true);
+        Button ExitButton = makeButton("Game Select", event -> exitPressed = true);
+        Button RestartButton = makeButton("Reboot System", event -> rebootPressed = true);
+        //myButtons.setTranslateX(590);
+        //myButtons.setSpacing(70); //FIXME: MAGIC NUMBER
+        myButtons.getChildren().addAll(ResumeButton, SaveButton, ControlsButton, ExitButton, RestartButton);
         formatButton(ResumeButton);
-        formatButton(DownButton);
+        formatButton(SaveButton);
         formatButton(ControlsButton);
         formatButton(ExitButton);
+        formatButton(RestartButton);
     }
 
     private Button makeButton(String key, EventHandler e) {

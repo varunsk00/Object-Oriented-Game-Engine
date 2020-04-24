@@ -36,7 +36,7 @@ public class EntityView {
   }
 
   public void changeImage(String param) {
-    myImage.setImage(new Image(RESOURCES+param));
+    myImage.setImage(new Image(this.getClass().getClassLoader().getResourceAsStream(RESOURCES+param)));
   }
 
 }

@@ -80,10 +80,7 @@ public class StageManager {
             stage.setTitle("GameSelect");
         }
         if(code == KeyCode.R){
-            ProgramLauncher launcher = new ProgramLauncher(stage);
-            avManager.close();
-            avManager.switchMusic(this);
-            launcher.start();
+            reboot();
         }
     }
 
@@ -98,5 +95,12 @@ public class StageManager {
 
     public void updateCurrentScene(String title, Scene saveScene) {
         lastScene.put(title, saveScene);
+    }
+
+    public void reboot() throws Exception {
+        ProgramLauncher launcher = new ProgramLauncher(stage);
+        avManager.close();
+        avManager.switchMusic(this);
+        launcher.start();
     }
 }
