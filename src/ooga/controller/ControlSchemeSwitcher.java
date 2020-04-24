@@ -100,8 +100,10 @@ public class ControlSchemeSwitcher {
     private void drawActionsOnScreen(){
         for(String s: actions){
             System.out.println(s);
-            Text action = new Text(myResources.getString(s));
-            myActions.getChildren().add(action);
+            if(myResources.containsKey(s)){
+                Text action = new Text(myResources.getString(s));
+                myActions.getChildren().add(action);
+            }
         }
         ret.getChildren().add(myActions);
     }
