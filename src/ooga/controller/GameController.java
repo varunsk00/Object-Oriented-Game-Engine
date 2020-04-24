@@ -143,7 +143,7 @@ public class GameController implements Controller {
             restartLevel = true;
             //reset level in some way
           }
-          if(targetEntity.getModel().getIsDead()) {
+          if(targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
             System.out.println("Model: " + targetEntity.getModel().getEntityID());
             entityRemove.add(targetEntity);
             //myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
@@ -159,17 +159,9 @@ public class GameController implements Controller {
         entityList.remove(despawnedEntity);
         myViewManager.removeEntityGroup(despawnedEntity.getRender());
       }
-      entityRemove = new ArrayList<>();
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
-    for(EntityWrapper despawnedEntity : entityRemove){
-      entityList.remove(despawnedEntity);
-      myViewManager.removeEntityGroup(despawnedEntity.getRender());
-    }
-
-    entityRemove = new ArrayList<>();
-
 
   }
 
