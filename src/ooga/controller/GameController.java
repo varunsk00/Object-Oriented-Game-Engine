@@ -146,7 +146,7 @@ public class GameController implements Controller {
           }
           if(targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
             entityRemove.add(targetEntity);
-            //myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
+            targetEntity.getModel().setIsDead(false);
           }
         }
         subjectEntity.update(elapsedTime);
@@ -156,8 +156,8 @@ public class GameController implements Controller {
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
       for(EntityWrapper despawnedEntity : entityRemove){
-        entityList.remove(despawnedEntity);
         myViewManager.removeEntityGroup(despawnedEntity.getRender());
+        entityList.remove(despawnedEntity);
       }
     }
     entityList.addAll(entityBuffer);
