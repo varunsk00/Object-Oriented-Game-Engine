@@ -17,6 +17,7 @@ public class InfiniteLevel extends Level{
   private int scrollingStatusX;
   private int scrollingStatusY;
   private int spawningInterval;
+  private int levelSpawnOffset;
   private GameStatusProfile gameStatusProfile;
 
   public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name) {
@@ -28,6 +29,7 @@ public class InfiniteLevel extends Level{
     scrollingStatusX = gameStatusProfile.readScrollingStatusX();
     scrollingStatusY = gameStatusProfile.readScrollingStatusY();
     spawningInterval = gameStatusProfile.readSpawningInterval();
+    levelSpawnOffset = gameStatusProfile.readLevelSpawnOffset();
   }
 
 
@@ -37,7 +39,7 @@ public class InfiniteLevel extends Level{
     for (EntityWrapper player : playerEntities) {
       if (calculatePlayerInterval(player) > this.getCurrentPlayerInterval()) {
         this.setCurrentPlayerInterval(calculatePlayerInterval(currentEntityList.get(0)));
-        int tileInterval = calculatePlayerInterval(player) + 2; //TODO: find a better way to spawn pipes outwards
+        int tileInterval = calculatePlayerInterval(player) + levelSpawnOffset;
 
         for (EntityWrapper tileEntity : tileEntities) {
             EntityWrapper newSpawn = new EntityWrapper(tileEntity.getEntityID(), tileEntity.getController());

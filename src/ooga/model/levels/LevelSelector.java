@@ -20,7 +20,7 @@ public class LevelSelector {
   private GameStatusProfile gameStatusProfile;
   private Camera gameCamera;
   private List<EntityWrapper> playerList;
-  private static final int cameraBuffer = 200;
+  private static final int cameraBuffer = 500;
 
 
 
@@ -34,8 +34,9 @@ public class LevelSelector {
   }
 
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager, int nextLevel) {
-    System.out.println(currentEntityList.size());
     for(EntityWrapper player : playerList) {
+      System.out.print(calculatePlayerInterval(player));
+      System.out.println("      " + activeLevel.getCurrentPlayerInterval());
       if (player.getModel().getLevelAdvancementStatus()) {
         player.getModel().setLevelAdvancementStatus(false);
         switchLevel(nextLevel);
@@ -68,7 +69,6 @@ public class LevelSelector {
     }
 
   private boolean isInRangeofCamera(EntityWrapper targetEntity){
-
     return targetEntity.getModel().getX() < gameCamera.getViewPort().getBoundsInParent().getMaxX() + cameraBuffer &&
         targetEntity.getModel().getX() > gameCamera.getViewPort().getBoundsInParent().getMinX() - cameraBuffer &&
         targetEntity.getModel().getY() < gameCamera.getViewPort().getBoundsInParent().getMaxY() + cameraBuffer &&

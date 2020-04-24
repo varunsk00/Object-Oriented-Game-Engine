@@ -9,6 +9,7 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import ooga.model.levels.Level;
 import ooga.util.GamePadListener;
 
 
@@ -157,13 +158,16 @@ public class GameController implements Controller {
 
   private void resetLevel() {
     nextLevel = 0;
-      entityList.get(0).getModel().setHealth();
-      entityList.get(0).getModel().setLevelAdvancementStatus(true);
+    entityList.get(0).getModel().setHealth();
+    entityList.get(0).getModel().setLevelAdvancementStatus(true);
 
     despawnOldLevel();
 
+    entityList.get(0).getModel().resetPosition();
     levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
-      entityList.get(0).getModel().resetPosition();
+    for(Level level : levelSelector.getLevelsToPlay()){
+      level.setCurrentPlayerInterval(-1);
+    }
   }
 
   //TODO: fix duplicated code if possible?
