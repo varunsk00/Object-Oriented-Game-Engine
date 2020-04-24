@@ -35,13 +35,12 @@ public class ControlSchemeSwitcher {
     private HBox ret = new HBox();
 
     public ControlSchemeSwitcher(List<EntityWrapper> playerList){
-        this.playerNum = playerList.size();
+        this.ret.setId("configMenu");
         populateIDs(playerList);
         createParsers();
-        Text config = new Text(myResources.getString("MenuTitle"));
-        ret.getChildren().add(config);
+        this.playerNum = playerList.size();
         this.actionMap = parseAction2KeyMap();
-        System.out.println(actionMap);
+        loadTitle();
         loadDefaultControls();
         for(VBox box: bindingDisplay){
             for(Node field: box.getChildren()){
@@ -57,20 +56,26 @@ public class ControlSchemeSwitcher {
         }
     }
 
-    private void updateControls(int playerIndex, String oldBind, String newBind){
-        for (Map.Entry<String,String> entry : actionMap.entries()){
-            if(entry.getValue().equals(oldBind)) {
-                parsers.get(playerIndex).updateControls(entry.getKey(), newBind, true);
-            }
-        }
-        updateAlert.setContentText(myResources.getString("UpdateBind"));
-        updateAlert.show();
+    public HBox getMenu(){ //TODO: Hide with CSS
+        return ret;
     }
 
-    private void updateControlType(int playerIndex, String selectedType){
-        parsers.get(playerIndex).updateControlScheme(selectedType);
-        updateAlert.setContentText(myResources.getString("UpdateControlType"));
-        updateAlert.show();
+    private void populateIDs(List<EntityWrapper> characters){
+        for(EntityWrapper entity: characters){
+            this.ids.add(entity.getEntityID()); }
+    }
+
+    private void createParsers(){
+        for(String s: this.ids){
+            String[] gameAndName = s.split("\\.");
+            EntityJSONParser entityParser = new EntityJSONParser(gameAndName[0], gameAndName[1]);
+            this.parsers.add(entityParser); }
+    }
+
+    private void loadTitle(){
+        Text config = new Text(myResources.getString("MenuTitle"));
+        config.setId("configTitle");
+        ret.getChildren().add(config);
     }
 
     private void loadDefaultControls(){
@@ -89,6 +94,29 @@ public class ControlSchemeSwitcher {
             setTextFields(playerIndex); }
     }
 
+    private void updateControls(int playerIndex, String oldBind, String newBind){
+        for (Map.Entry<String,String> entry : actionMap.entries()){
+            if(entry.getValue().equals(oldBind)) {
+                parsers.get(playerIndex).updateControls(entry.getKey(), newBind, true);
+            }
+        }
+        updateAlert.setContentText(myResources.getString("UpdateBind"));
+        updateAlert.show();
+    }
+
+    private void updateControlType(int playerIndex, String selectedType){
+        parsers.get(playerIndex).updateControlScheme(selectedType);
+        updateAlert.setContentText(myResources.getString("UpdateControlType"));
+        updateAlert.show();
+    }
+
+    private void generateMultiplayerBindings(List<Map.Entry<String, String>> entryList, int index) { //FIXME: figure out algorithm for >2 players
+        if(index%2==0){ //evenIndex
+            playerBindings.get(0).add(entryList.get(index).getValue()); }//Single-player
+        else { //2-Player
+            playerBindings.get(1).add(entryList.get(index).getValue()); }
+    }
+
     private void setTextFields(int index) {
         for(String s : playerBindings.get(index)){
             TextField bind = new TextField(s);
@@ -99,17 +127,18 @@ public class ControlSchemeSwitcher {
 
     private void drawActionsOnScreen(){
         for(String s: actions){
-            System.out.println(s);
             if(myResources.containsKey(s)){
                 Text action = new Text(myResources.getString(s));
+                action.setId("actionList");
                 myActions.getChildren().add(action);
             }
         }
+        myActions.setId("actionVBox");
         ret.getChildren().add(myActions);
     }
 
     private void setVBoxes(int index){
-        bindingDisplay.get(index).setSpacing(30);//FIXME: MOVE TO CSS
+        bindingDisplay.get(index).setId("player" + (index+1) + "VBox");
         bindingDisplay.get(index).getChildren().add(dropDowns.get(index));
         ret.getChildren().add(bindingDisplay.get(index));
     }
@@ -117,14 +146,7 @@ public class ControlSchemeSwitcher {
     private void setControlSchemeDropDowns(int index){
         dropDowns.get(index).getItems().add(myResources.getString("Keyboard"));
         dropDowns.get(index).getItems().add(myResources.getString("GamePad"));
-        dropDowns.get(index).setValue("Player " + (index+1));
-    }
-
-    private void generateMultiplayerBindings(List<Map.Entry<String, String>> entryList, int index) { //FIXME: >2 players (figure out algorithm)
-        if(index%2==0){ //evenIndex
-            playerBindings.get(0).add(entryList.get(index).getValue()); }//Single-player
-        else { //2-Player
-            playerBindings.get(1).add(entryList.get(index).getValue()); }
+        dropDowns.get(index).setValue(myResources.getString("Player") + (index+1));
     }
 
     private Multimap parseAction2KeyMap(){
@@ -147,25 +169,5 @@ public class ControlSchemeSwitcher {
     private String findJSONParam(String controlString){
         String param = controlString.substring(controlString.lastIndexOf(PARAM_START), controlString.lastIndexOf(PARAM_END));
         return param.substring(param.lastIndexOf("\"")+1);
-    }
-
-    private void populateIDs(List<EntityWrapper> characters){
-        for(EntityWrapper entity: characters){
-            this.ids.add(entity.getEntityID());
-        }
-    }
-
-    private void createParsers(){
-        for(String s: this.ids){
-            String[] gameAndName = s.split("\\.");
-            EntityJSONParser entityParser = new EntityJSONParser(gameAndName[0], gameAndName[1]);
-            this.parsers.add(entityParser);
-        }
-    }
-
-    public HBox getMenu(){ //TODO: Hide with CSS
-        myActions.setTranslateY(60);
-        myActions.setSpacing(39);
-        return ret;
     }
 }

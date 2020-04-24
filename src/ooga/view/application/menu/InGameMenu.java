@@ -13,12 +13,6 @@ public class InGameMenu extends VBox{
     private boolean rebootPressed;
     private VBox myButtons;
 
-    /**
-     * Constructor that sets Resource Bundle and initializes all initial states of buttons      *
-     * * Button states are initially False; ComboBox states have a defined initial String      *
-     * * @param language the current language passed in from ParserController      * @throws
-     * FileNotFoundException in case the File does not exist
-     */
     public InGameMenu() {
         this.savePressed = false;
         this.controlsPressed = false;
@@ -29,13 +23,6 @@ public class InGameMenu extends VBox{
         getChildren().add(myButtons);
     }
 
-    /**
-     * @return the JavaFX HBox that contains all the buttons
-     */
-    public VBox getVBox() {
-        return myButtons;
-    }
-
     public boolean getResumePressed() {
         return resumePressed;
     }
@@ -43,7 +30,6 @@ public class InGameMenu extends VBox{
     public void setResumeOff() {
         resumePressed = false;
     }
-
 
     public boolean getExitPressed() {
         return exitPressed;
@@ -77,18 +63,13 @@ public class InGameMenu extends VBox{
         controlsPressed = false;
     }
 
-    /**
-     * Creates and initializes all Buttons based on Regex Values
-     */
-    private void renderButtons() {
+    private void renderButtons() { //FIXME: MAGIC STRINGS
         myButtons = new VBox();
         Button ResumeButton = makeButton("Play Game", event -> resumePressed = true);
         Button SaveButton = makeButton("Save Game", event -> savePressed = true);
         Button ControlsButton = makeButton("Configuration", event -> controlsPressed = true);
         Button ExitButton = makeButton("Game Select", event -> exitPressed = true);
         Button RestartButton = makeButton("Reboot System", event -> rebootPressed = true);
-        //myButtons.setTranslateX(590);
-        //myButtons.setSpacing(70); //FIXME: MAGIC NUMBER
         myButtons.getChildren().addAll(ResumeButton, SaveButton, ControlsButton, ExitButton, RestartButton);
         formatButton(ResumeButton);
         formatButton(SaveButton);
@@ -99,7 +80,6 @@ public class InGameMenu extends VBox{
 
     private Button makeButton(String key, EventHandler e) {
         Button tempButton = new Button(key);
-        //tempButton.setMaxWidth(Double.MAX_VALUE);
         tempButton.setOnAction(e);
         return tempButton;
     }
