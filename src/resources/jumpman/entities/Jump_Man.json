@@ -1,7 +1,7 @@
 {
   "image": "doodle.jpg",
   "yPos": 100,
-  "scheme": "Keybindings",
+  "scheme": "Keyboard",
   "permeable": false,
   "health": 1,
   "xPos": 100,
