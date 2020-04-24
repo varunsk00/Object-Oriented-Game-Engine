@@ -1,12 +1,14 @@
 package ooga.view.entity;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ooga.controller.EntityWrapper;
 
 public class EntityView {
   private ImageView myImage;
   private EntityWrapper myEntity;
+  private static final String RESOURCES = "resources/";
 
   public EntityView(EntityWrapper entityWrapper){
     myEntity = entityWrapper;
@@ -21,7 +23,7 @@ public class EntityView {
     myImage.setScaleX(forwards ? 1 : -1);
   };
 
-  public Node getRender(){
+  public ImageView getRender(){
     return myImage;
   }
 
@@ -32,4 +34,9 @@ public class EntityView {
   public void setHeight(double newHeight) {
     myImage.setFitHeight(newHeight);
   }
+
+  public void changeImage(String param) {
+    myImage.setImage(new Image(RESOURCES+param));
+  }
+
 }

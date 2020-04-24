@@ -77,6 +77,24 @@
           "coolDown": "1000"
         }
       ]
+    },
+    {
+      "ID": "J",
+      "Control": [
+        {
+          "action": "ChangeImage",
+          "param": "mario/images/fireluigi_walk.gif"
+        }
+      ]
+    },
+    {
+      "ID": "K",
+      "Control": [
+        {
+          "action": "ChangeImage",
+          "param": "mario/images/firemario_walk.gif"
+        }
+      ]
     }
   ],
   "collisionBundles": [

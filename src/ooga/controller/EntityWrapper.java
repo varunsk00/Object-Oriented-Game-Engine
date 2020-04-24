@@ -1,6 +1,7 @@
 package ooga.controller;
 
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javax.swing.text.html.parser.Entity;
 import ooga.model.EntityModel;
@@ -56,7 +57,7 @@ public class EntityWrapper {
 
   public Controller getController(){return myController;}
 
-  public Node getRender(){return myView.getRender();}
+  public ImageView getRender(){return myView.getRender();}
 
   public void handleKeyReleased(String key) {myModel.handleKeyReleased(key);}
 
@@ -79,5 +80,5 @@ public class EntityWrapper {
     myView.setHeight(newHeight);
   }
 
-
+  public void changeImage(String param) {myView.changeImage(param);}
 }

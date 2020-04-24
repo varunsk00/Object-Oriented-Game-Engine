@@ -52,7 +52,6 @@ public class EntityJSONParser {
   }
 
   public ControlScheme parseControls() {
-   String entityName = (String) jsonObject.get("entityName");
     JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
     List<ActionBundle> controlMap = new ArrayList<ActionBundle>();
     String controlType = (String) jsonObject.get("scheme");
