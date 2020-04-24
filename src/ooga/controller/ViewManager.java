@@ -184,7 +184,6 @@ public class ViewManager implements ViewExternalAPI {
   public void endGame() {
     //need to reset game;
     goHome(KeyCode.H.getChar());
-
   }
 
 

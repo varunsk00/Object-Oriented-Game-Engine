@@ -239,4 +239,11 @@ public class EntityModel {
   public void loseHealth() {
     health--;
   }
+
+  public void resetPosition() {
+    this.setX(100);
+    this.setY(100);
+    this.setXVelocity(0);
+    this.setYVelocity(0);
+  }
 }

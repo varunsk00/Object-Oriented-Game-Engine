@@ -127,10 +127,6 @@ public class GameController implements Controller {
       }
     }
     if (!myViewManager.getIsGamePaused()) {
-//      if(restartLevel) {
-//        restartLevel = false;
-//        levelSelector.restartLevel(entityList, myViewManager);
-//      }
       levelSelector.updateCurrentLevel(entityList, myViewManager);
       handleSaveGame();
       myViewManager.updateValues();
@@ -138,18 +134,19 @@ public class GameController implements Controller {
 
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
-          collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
-          if(entityList.get(0).getModel().getHealth() <= 0) {
-            System.out.println("Here: ");
+          if (!entityRemove.contains(targetEntity)) {
+            collisionEngine
+                .produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+          if (entityList.get(0).getModel().getHealth() <= 0) {
             entityList.get(0).getModel().setHealth();
-            entityList.get(0).getModel().setLevelAdvancementStatus(true);
-            restartLevel = true;
+            entityList.get(0).getModel().resetPosition();
             //reset level in some way
           }
-          if(targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
+          if (targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
             entityRemove.add(targetEntity);
-            targetEntity.getModel().setIsDead(false);
+//            targetEntity.getModel().setIsDead(false);
           }
+        }
         }
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
@@ -157,6 +154,7 @@ public class GameController implements Controller {
 
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
+
       for(EntityWrapper despawnedEntity : entityRemove){
         myViewManager.removeEntityGroup(despawnedEntity.getRender());
         entityList.remove(despawnedEntity);
