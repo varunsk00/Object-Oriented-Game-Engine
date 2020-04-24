@@ -113,7 +113,7 @@ public class EntityModel {
 
   public void handleControllerInputPressed(String key) {
     if (key != null) {
-      System.out.println(key);
+      //System.out.println(key);
       controlScheme.handleKeyInput(key);
     }
   }

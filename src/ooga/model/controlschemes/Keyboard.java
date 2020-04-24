@@ -8,10 +8,10 @@ import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
 import ooga.util.ActionBundle;
 
-public class Keybindings extends ControlScheme {
+public class Keyboard extends ControlScheme {
   private Map<String, List<Action>> keyBindings;
 
-  public Keybindings(List<ActionBundle> bindings){
+  public Keyboard(List<ActionBundle> bindings){
     super(bindings);
     keyBindings = new HashMap<>();
     for(ActionBundle bundle : actionMap){

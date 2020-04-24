@@ -8,12 +8,10 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Node;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
-import ooga.model.controlschemes.ControlScheme;
-import ooga.model.controlschemes.GamePad;
+import ooga.util.GamePadListener;
 import ooga.model.levels.InfiniteLevelBuilder;
 
 
@@ -44,7 +42,7 @@ public class GameController implements Controller {
   private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
   private LevelSelector levelSelector;
-  private GamePad g;
+  private GamePadListener g;
   private GameParser gameParser;
   private ControlSchemeSwitcher myControlSchemeSwitcher;
 
@@ -52,12 +50,10 @@ public class GameController implements Controller {
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
     builder = new InfiniteLevelBuilder(this);
-    g = new GamePad();
+    g = new GamePadListener();
 
-
-    myViewManager = new ViewManager(stageManager, builder);
     gameParser = new GameParser(gameName, this, loadedGame);
-    myControlSchemeSwitcher = new ControlSchemeSwitcher(gameParser);
+    myViewManager = new ViewManager(stageManager, builder, gameParser.getPlayerList());
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
@@ -113,7 +109,7 @@ public class GameController implements Controller {
 
   private void step (double elapsedTime) throws Exception {
     g.update();
-    myViewManager.handleMenuInput(gameParser);
+    myViewManager.handleMenuInput();
     if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (g.getState() != null) {
         if (!g.getState().getPressed()) {
@@ -144,7 +140,7 @@ public class GameController implements Controller {
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
       if(entityRemove.size() > 0) {
-        System.out.println("Removed: " + entityRemove.get(0).getModel().getEntityID());
+        //System.out.println("Removed: " + entityRemove.get(0).getModel().getEntityID());
       }
       entityList.removeAll(entityRemove);
       entityRemove = new ArrayList<>();

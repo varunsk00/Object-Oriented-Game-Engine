@@ -1,6 +1,7 @@
 package ooga.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,6 +25,7 @@ public class ViewManager implements ViewExternalAPI {
   private BorderPane testPane;
   private Group EntityGroup;
 
+  private List<Node> overlay = new ArrayList<>();
   private InGameMenu menu;
   private ControlSchemeSwitcher config;
   private int escCounter = 0;
@@ -43,8 +45,11 @@ public class ViewManager implements ViewExternalAPI {
    * NEED TO REFACTOR
    * @Deprecated fuck
    */
-  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
+  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, List<EntityWrapper> playerList){
     this.menu = new InGameMenu();
+    this.config = new ControlSchemeSwitcher(playerList);
+    this.overlay.add(menu);
+    this.overlay.add(config.getMenu());
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
     level = builder.generateLevel();
@@ -84,7 +89,7 @@ public class ViewManager implements ViewExternalAPI {
   }
 
   public void updateValues() {
-    camera.update(menu);
+    camera.update(overlay);
   }
 
   @Override
@@ -152,7 +157,7 @@ public class ViewManager implements ViewExternalAPI {
   }
 
 
-  public void handleMenuInput(GameParser gp) throws Exception { //TODO: REFACTOR
+  public void handleMenuInput() throws Exception { //TODO: REFACTOR
     if (menu.getResumePressed()) {
       unPauseGame();
       menu.setResumeOff();
@@ -166,9 +171,11 @@ public class ViewManager implements ViewExternalAPI {
       handlePressInput(KeyCode.H);
       menu.setExitOff();
     }
-    if (menu.getControlsPressed() && configCounter < 1){
-      launchConfigMenu(gp);
+    if (menu.getControlsPressed()){
       menu.setControlsOff();
+      if(configCounter < 1){
+        launchConfigMenu();
+      }
     }
     if (menu.getRebootPressed()){
       menu.setRebootOff();
@@ -190,15 +197,14 @@ public class ViewManager implements ViewExternalAPI {
     escCounter++;
   }
 
-  private void launchConfigMenu(GameParser gp){
-    config = new ControlSchemeSwitcher(gp);
-    menu.getChildren().add(config);
+  private void launchConfigMenu(){
+    testPane.setCenter(config.getMenu());
     configCounter++;
   }
 
   private void unPauseGame(){
+    testPane.getChildren().remove(config.getMenu());
     testPane.getChildren().remove(menu);
-    menu.getChildren().remove(config);
     EntityGroup.setEffect(null);
     isGamePaused = false;
     escCounter--;

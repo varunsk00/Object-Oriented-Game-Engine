@@ -74,7 +74,13 @@ public class EntityJSONParser {
     return myScheme;
   }
 
-  public List<String> updateControls(String param, String newKeyBind, boolean write) { //TODO: REFACTOR
+  public void updateControlScheme(String newScheme) {
+    JSONObject root = jsonObject;
+    root.put("scheme", newScheme);
+    write2JSON(root, "Successfully Updated Control Scheme!");
+  }
+
+  public List<String> updateControls(String param, String newKeyBind, boolean write) {
     List<String> ret = new ArrayList<>();
     JSONObject root = jsonObject;
     JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
