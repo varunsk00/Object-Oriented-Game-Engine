@@ -1,8 +1,10 @@
 package ooga.model;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
 import ooga.model.actions.AbsoluteVelocityX;
@@ -115,7 +117,6 @@ public class EntityModel {
 
   public void handleControllerInputPressed(String key) {
     if (key != null) {
-      System.out.println(key);
       controlScheme.handleKeyInput(key);
     }
   }
@@ -128,6 +129,9 @@ public class EntityModel {
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
+    }
+    if(Math.abs(yVel)>yVelMax){
+      setYVelocity(Math.signum(yVel)*yVelMax);
     }
   }
 
@@ -147,11 +151,9 @@ public class EntityModel {
 
   public int getNextLevelIndex(){return nextLevelIndex;}
 
-
   public double getWidth(){return entityWidth;}
 
   public double getHeight(){return entityHeight;}
-
 
   public double getXVelocity(){return xVel;}
 
@@ -247,5 +249,9 @@ public class EntityModel {
     this.setY(100);
     this.setXVelocity(0);
     this.setYVelocity(0);
+  }
+
+  public void changeImage(String param) {
+    myEntity.changeImage(param);
   }
 }

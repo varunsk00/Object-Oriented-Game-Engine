@@ -13,6 +13,7 @@ import java.util.*;
 public class ControlSchemeSwitcher extends VBox {
     private final String RESOURCES_PACKAGE = "resources.params";
     private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
+    private int launchCount;
     private List<String> ids = new ArrayList<>();
     private List<EntityJSONParser> parsers = new ArrayList<>();
     private Map<String,String> actionMap;
@@ -80,7 +81,7 @@ public class ControlSchemeSwitcher extends VBox {
     }
 
     private String findParam(String controlString){
-        String param = controlString.substring(controlString.lastIndexOf("param\":\""), controlString.lastIndexOf("\","));
+        String param = controlString.substring(controlString.lastIndexOf("param\":\""), controlString.lastIndexOf("\",\"a"));
         return param.substring(param.lastIndexOf("\"")+1);
     }
 

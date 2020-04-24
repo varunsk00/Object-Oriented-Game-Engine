@@ -67,7 +67,7 @@ public class GameParser {
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
   }
-
+  
 
   private void checkLoadGame(boolean loadedGame) {
     if (loadedGame) {

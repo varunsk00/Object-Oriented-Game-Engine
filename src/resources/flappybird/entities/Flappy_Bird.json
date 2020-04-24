@@ -6,6 +6,12 @@
   "health": 1,
   "xPos": 100,
   "xVel": 10,
+  "maxXVel": 1000,
+  "width": 50,
+  "height": 50,
+  "maxYVel": 100,
+  "fixed": false,
+  "yVel": 10,
   "entityName": "Flappy Bird",
   "collisionBundles": [
     {
@@ -49,11 +55,7 @@
       "ID": "flappybird.Pipebody"
     }
   ],
-  "maxXVel": 1000,
-  "width": 100,
-  "maxYVel": 100,
-  "fixed": false,
-  "yVel": 10,
+
   "actionBundles": [
     {
       "Control": [
@@ -112,17 +114,6 @@
         }
       ],
       "ID": "SPACE"
-    },
-    {
-      "Control": [
-        {
-          "param": "Mario_Fireball",
-          "action": "SpawnRelative",
-          "coolDown": "1000"
-        }
-      ],
-      "ID": "F"
     }
-  ],
-  "height": 100
+  ]
 }

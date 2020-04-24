@@ -38,7 +38,8 @@ public class GameController implements Controller {
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final String TXT_FILEPATH = "src/resources/";
-  private boolean restartLevel;
+  private int nextLevel;
+
 
 
   private Timeline animation;
@@ -127,7 +128,7 @@ public class GameController implements Controller {
       }
     }
     if (!myViewManager.getIsGamePaused()) {
-      levelSelector.updateCurrentLevel(entityList, myViewManager);
+      levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
       handleSaveGame();
       myViewManager.updateValues();
       //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
@@ -156,6 +157,7 @@ public class GameController implements Controller {
         myViewManager.removeEntityGroup(despawnedEntity.getRender());
         entityList.remove(despawnedEntity);
       }
+      nextLevel = entityList.get(0).getModel().getNextLevelIndex();
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
@@ -169,10 +171,11 @@ public class GameController implements Controller {
   }
 
   private void resetLevel() {
+    nextLevel = 0;
       entityList.get(0).getModel().setHealth();
       entityList.get(0).getModel().setLevelAdvancementStatus(true);
 
-      levelSelector.restartLevel(entityList, myViewManager);
+      levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
       entityList.get(0).getModel().resetPosition();
 //      myViewManager.resetLevelScene(gameName);
 

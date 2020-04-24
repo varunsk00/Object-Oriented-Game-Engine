@@ -23,7 +23,8 @@ public class EntityJSONParser {
   private String myFileName;
   private String myGame;
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String RESOURCES = "resources";
+  private static final String RESOURCES = "resources/";
+  private static final String IMAGE_PACKAGE = "/images/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
 
@@ -47,7 +48,6 @@ public class EntityJSONParser {
   }
 
   public ControlScheme parseControls() {
-   String entityName = (String) jsonObject.get("entityName");
     JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
     List<ActionBundle> controlMap = new ArrayList<ActionBundle>();
     String controlType = (String) jsonObject.get("scheme");
@@ -150,7 +150,8 @@ public class EntityJSONParser {
   }
 
   private ImageView loadImage(String imageName) {
-    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
+//    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
+    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
     Image entityImage = null;
     entityImage = new Image(is);
     return new ImageView(entityImage);
