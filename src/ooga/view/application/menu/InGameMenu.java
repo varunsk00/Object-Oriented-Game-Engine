@@ -1,6 +1,8 @@
 package ooga.view.application.menu;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
@@ -12,6 +14,8 @@ public class InGameMenu extends VBox{
     private boolean exitPressed;
     private boolean rebootPressed;
     private VBox myButtons;
+    private TextField gameResult;
+    private final String DEFAULT_MENU_TEXT = "Game in Progress";
 
     public InGameMenu() {
         this.savePressed = false;
@@ -19,8 +23,9 @@ public class InGameMenu extends VBox{
         this.exitPressed = false;
         this.resumePressed = false;
         this.rebootPressed = false;
+        this.gameResult = new TextField(DEFAULT_MENU_TEXT);
         renderButtons();
-        getChildren().add(myButtons);
+        getChildren().addAll(myButtons, gameResult);
     }
 
     public boolean getResumePressed() {
@@ -87,4 +92,14 @@ public class InGameMenu extends VBox{
     private void formatButton(Button tempButton) {
         myButtons.setVgrow(tempButton, Priority.ALWAYS);
     }
+
+    public void updateGameResult(String gameResult) {
+        TextField textField = new TextField(gameResult);
+        textField.setEditable(false);
+        getChildren().set(getChildren().size() - 1, textField);
+    }
+
+
+
+
 }
