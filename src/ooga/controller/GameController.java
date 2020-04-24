@@ -143,7 +143,11 @@ public class GameController implements Controller {
         physicsEngine.applyForces(subjectEntity.getModel());
       }
 
-      resetLevel();
+      if (entityList.get(0).getModel().getHealth() <= 0) {
+        resetLevel();
+        return;
+      }
+
 
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
@@ -165,16 +169,14 @@ public class GameController implements Controller {
   }
 
   private void resetLevel() {
-    if (entityList.get(0).getModel().getHealth() <= 0) {
       entityList.get(0).getModel().setHealth();
       entityList.get(0).getModel().setLevelAdvancementStatus(true);
 
       levelSelector.restartLevel(entityList, myViewManager);
+      entityList.get(0).getModel().resetPosition();
 //      myViewManager.resetLevelScene(gameName);
 
-    }
-    entityList.get(0).getModel().resetPosition();
-    return;
+
   }
 
   private void handleSaveGame() {
