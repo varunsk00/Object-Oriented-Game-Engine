@@ -7,8 +7,8 @@
   "xPos": 100,
   "xVel": 10,
   "maxXVel": 1000,
-  "width": 50,
-  "height": 50,
+  "width": 100,
+  "height": 100,
   "maxYVel": 100,
   "fixed": false,
   "yVel": 10,
@@ -58,6 +58,36 @@
         }
       ],
       "ID": "flappybird.Pipebody"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "-50",
+          "action": "MoveX"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "none",
+          "orientation": "W"
+        }
+      ],
+      "ID": "flappybird.Pipetop"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "-50",
+          "action": "MoveX"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "none",
+          "orientation": "W"
+        }
+      ],
+      "ID": "flappybird.Pipebottom"
     }
   ],
 
