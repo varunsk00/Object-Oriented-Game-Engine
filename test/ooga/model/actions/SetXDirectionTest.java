@@ -15,7 +15,7 @@ class SetXDirectionTest {
   void setUp() {
     param = "forwards";
     myAction = new SetXDirection(param);
-    myEntity = new EntityWrapper("UnitTestEntity", null);
+    myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
   }
 
   @Test

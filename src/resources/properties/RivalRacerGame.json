@@ -1,1 +1,0 @@
-{"gameName":"RivalRacer","players":"1","physicsProfile":[{"Friction":"20","Drag":"1","Gravity":"45"}],"levelArrangement":[{"Level_1":"RivalRacerLevel1"}],"playerArrangement":[{"EntityName":"RacecarRed","Arrangement":{"X":"50","Y":"670"}},{"EntityName":"RacecarBlue","Arrangement":{"X":"50","Y":"330"}}]}

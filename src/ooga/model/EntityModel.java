@@ -97,7 +97,7 @@ public class EntityModel {
       if (yVel > 0) {yVel=0;}
     }
     if(boundedTop){
-      if (yVel < 0) { yVel = 0;}
+      if (yVel < 0) {yVel = 0;}
     }
   }
 
@@ -117,7 +117,6 @@ public class EntityModel {
   }
   public void handleControllerInputReleased(String key) {
     if (key != null) {
-      System.out.println("ENTITYMODEL");
       controlScheme.handleKeyReleased(key);
     }
   }
@@ -215,7 +214,7 @@ public class EntityModel {
 
   public boolean getFixed(){return fixedEntity;}
 
-  public void setBoundedTop(boolean value) { }
+  public void setBoundedTop(boolean value) {boundedTop = value;}
 
   public boolean isPermeable(){return permeableEntity;}
 }

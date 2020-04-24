@@ -13,7 +13,7 @@ class PhysicsEngineTest {
 
   @BeforeEach
   void setUp() {
-    myEntity = new EntityWrapper("UnitTestEntity", null);
+    myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
     GameParser gameParser = new GameParser("UnitTest");
     myEngine = new PhysicsEngine(gameParser.parsePhysicsProfile());
 

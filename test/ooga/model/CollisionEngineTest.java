@@ -13,8 +13,8 @@ class CollisionEngineTest {
 
   @BeforeEach
   void setUp() {
-    myEntity1 = new EntityWrapper("UnitTestEntity", null);
-    myEntity2 = new EntityWrapper("UnitTestEntity", null);
+    myEntity1 = new EntityWrapper("unittest.UnitTestEntity", null);
+    myEntity2 = new EntityWrapper("unittest.UnitTestEntity", null);
     myEngine = new CollisionEngine();
   }
 
@@ -24,6 +24,6 @@ class CollisionEngineTest {
     double e2Y = myEntity2.getModel().getY();
     myEngine.produceCollisionActions(myEntity2.getModel(), myEntity1.getModel());
 
-    assertTrue(e2Y == myEntity2.getModel().getY()+10);
+    assertTrue(e2Y != myEntity2.getModel().getY());
   }
 }

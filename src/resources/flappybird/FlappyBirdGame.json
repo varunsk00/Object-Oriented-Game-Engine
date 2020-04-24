@@ -1,0 +1,29 @@
+{
+  "gameName": "FlappyBird",
+  "players": "1",
+  "physicsProfile": [
+    {
+      "Friction": "0",
+      "Drag": "0",
+      "Gravity": "20"
+    }
+  ],
+  "levelArrangement": [
+    {
+      "Level_2": "flappybird.Pipe2",
+      "Level_1": "flappybird.Pipe1",
+      "Level_4": "flappybird.Pipe4",
+      "Level_3": "flappybird.Pipe3",
+      "Level_5": "flappybird.Pipe5"
+    }
+  ],
+  "playerArrangement": [
+    {
+      "EntityName": "flappybird.Flappy_Bird",
+      "Arrangement": {
+        "X": "100",
+        "Y": "100"
+      }
+    }
+  ]
+}

@@ -1,7 +1,9 @@
 package ooga.util;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,16 +26,18 @@ import org.json.simple.parser.ParseException;
 public class EntityJSONParser {
 
   private String myFileName;
+  private String myGame;
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String IMG_FILEPATH = "resources/";
+  private static final String RESOURCES = "resources/";
+  private static final String IMAGE_PACKAGE = "/images/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
-  private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
   private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
 
   private JSONObject jsonObject;
 
-  public EntityJSONParser(String fileName) {
-    myFileName = TXT_FILEPATH + "properties/" + fileName + ".json";
+  public EntityJSONParser(String game, String fileName) {
+    myFileName = TXT_FILEPATH + game + "/entities/" + fileName + ".json";
+    myGame = game;
     jsonObject = (JSONObject) readJsonFile();
   }
 
@@ -116,8 +120,11 @@ public class EntityJSONParser {
   }
 
   private ImageView loadImage(String imageName) {
-    Image entityImage = new Image(this.getClass().getClassLoader()
-        .getResourceAsStream(IMG_FILEPATH + imageName));
+//    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
+    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
+//    InputStream is = this.getClass().getClassLoader().getResourceAsStream("resources/mario/images/brick.png");
+    Image entityImage = null;
+    entityImage = new Image(is);
     return new ImageView(entityImage);
   }
 

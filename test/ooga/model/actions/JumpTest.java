@@ -17,7 +17,7 @@ class JumpTest extends DukeApplicationTest {
   void setUp() {
     param = "100";
     myAction = new Jump(param);
-    myEntity = new EntityWrapper("UnitTestEntity", null);
+    myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
     myEntity.getModel().setBoundedBelow(true);
   }
 

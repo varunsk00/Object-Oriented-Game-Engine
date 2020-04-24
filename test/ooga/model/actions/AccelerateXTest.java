@@ -15,7 +15,7 @@ class AccelerateXTest {
   void setUp() {
     param = "10";
     myAction = new AccelerateX(param);
-    myEntity = new EntityWrapper("UnitTestEntity", null);
+    myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
   }
 
   @Test
