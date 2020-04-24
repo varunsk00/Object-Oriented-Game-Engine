@@ -168,7 +168,6 @@ public class ViewManager implements ViewExternalAPI {
     }
     if (menu.getControlsPressed() && configCounter < 1){
       launchConfigMenu(gp);
-      System.out.println("ADDED");
       menu.setControlsOff();
     }
     if (menu.getRebootPressed()){
@@ -203,7 +202,7 @@ public class ViewManager implements ViewExternalAPI {
     EntityGroup.setEffect(null);
     isGamePaused = false;
     escCounter--;
-    configCounter--;
+    configCounter = 0;
   }
 
   public boolean getIsGamePaused() {
