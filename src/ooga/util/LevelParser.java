@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.Parser;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -20,7 +21,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.io.FileReader;
 
-public class LevelParser {
+public class LevelParser extends Parser {
 
   private String myFileName;
   private List<Entry<String, Pattern>> mySymbols;
@@ -35,48 +36,11 @@ public class LevelParser {
   public LevelParser(String fileName, Controller controller) {
     String[] gameAndName = fileName.split("\\.");
     mainController = controller;
-    myFileName = TXT_FILEPATH + gameAndName[0] + "/levels/" + gameAndName[1] + ".json";
+    setMyFileName(TXT_FILEPATH + gameAndName[0] + "/levels/" + gameAndName[1] + ".json");
     jsonObject = (JSONObject) readJsonFile();
     tileHeight = Double.parseDouble(jsonObject.get("tileHeight").toString());
     tileWidth = Double.parseDouble(jsonObject.get("tileWidth").toString());
     setUpLevelParser();
-  }
-
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      System.out.println(myFileName);
-
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e) {
-      throw new InvalidControlSchemeException(e);
-    }
-  }
-
-  public void writeOutSavedLevel(String key, String newValue) {
-    JSONObject saveObj = new JSONObject();
-
-  }
-
-  public void updateJSONValue(String key, String newValue){
-    JSONObject root = jsonObject;
-    String new_val = newValue;
-    String old_val = root.get(key).toString();
-
-    if(!new_val.equals(old_val))
-    {
-      root.put(key,new_val);
-
-      try (FileWriter file = new FileWriter("src/resources/mario/MarioGame.json", false)) //FIXME: MULT FILES
-      {
-        file.write(root.toString());
-        System.out.println("Successfully updated json object to file");
-      } catch (IOException e) {
-        e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
-      }
-    }
   }
 
 

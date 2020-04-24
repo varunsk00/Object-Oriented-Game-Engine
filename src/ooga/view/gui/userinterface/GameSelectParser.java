@@ -1,6 +1,7 @@
 package ooga.view.gui.userinterface;
 
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,7 +13,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-public class GameSelectParser {
+public class GameSelectParser extends Parser {
 
   private String myFileName;
   private static final String REGEX_SYNTAX = "Syntax";
@@ -30,20 +31,10 @@ public class GameSelectParser {
 
   public GameSelectParser(String gameName) {
     String gameFile = gameName + "Select";
-    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + gameFile + ".json";
+    setMyFileName(TXT_FILEPATH + gameName.toLowerCase() + "/" + gameFile + ".json");
     jsonObject = (JSONObject) readJsonFile();
   }
 
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e) {
-      throw new InvalidControlSchemeException(e);
-    }
-  }
 
   public String readGameName() {
     return jsonObject.get("gameName").toString();

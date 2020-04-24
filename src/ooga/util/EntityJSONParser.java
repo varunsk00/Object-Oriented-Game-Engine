@@ -11,6 +11,7 @@ import ooga.model.actions.ActionFactory;
 import ooga.model.actions.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,7 +19,7 @@ import org.json.simple.parser.ParseException;
 //import org.json.JSONParser;
 //import org.json.simple.parser.ParseException;
 
-public class EntityJSONParser {
+public class EntityJSONParser extends Parser {
 
   private String myFileName;
   private String myGame;
@@ -31,21 +32,11 @@ public class EntityJSONParser {
   private JSONObject jsonObject;
 
   public EntityJSONParser(String game, String fileName) {
-    myFileName = TXT_FILEPATH + game + "/entities/" + fileName + ".json";
+    setMyFileName(TXT_FILEPATH + game + "/entities/" + fileName + ".json");
     myGame = game;
     jsonObject = (JSONObject) readJsonFile();
   }
 
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e){
-      throw new InvalidControlSchemeException(e);
-    }
-  }
 
   public ControlScheme parseControls() {
     JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
