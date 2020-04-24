@@ -1,6 +1,7 @@
 package ooga.controller;
 
 
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -14,23 +15,24 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.model.levels.InfiniteLevelBuilder;
+import ooga.util.GameParser;
 import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
 public class ViewManager implements ViewExternalAPI {
-  private Controller myController;
-
   private BorderPane testPane;
   private Group EntityGroup;
 
   private InGameMenu menu;
+  private ControlSchemeSwitcher config;
   private int escCounter = 0;
 
   private StageManager currentStage;
-  private InfiniteLevelBuilder builder;
   private BorderPane level;
   private Camera camera;
+  private boolean launchControlSwitcher;
+  private boolean saveGame = false;
 
   private boolean isGamePaused = false;
 
@@ -40,12 +42,10 @@ public class ViewManager implements ViewExternalAPI {
    * NEED TO REFACTOR
    * @Deprecated fuck
    */
-  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, Node cameraNode){
-    this.menu = new InGameMenu("TestSandBox");
+  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
+    this.menu = new InGameMenu();
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
     currentStage = stageManager;
-    this.builder = builder;
-
     level = builder.generateLevel();
 
     testPane = level;
@@ -56,18 +56,13 @@ public class ViewManager implements ViewExternalAPI {
     level.getChildren().add(EntityGroup);
 
     this.testScene = stageManager.getCurrentScene();
-
-    this.camera = new Camera(currentStage.getStage(), level, cameraNode);
-
   }
 
   public Pane getLevel() {
     return level;
   }
 
-  public void setUpCamera(Node node) {
-    camera = new Camera(currentStage.getStage(), level, node);
-  }
+  public void setUpCamera(List<EntityWrapper> node) { camera = new Camera(currentStage.getStage(), level, node); }
 
   public StageManager getCurrentStage() {
     return currentStage;
@@ -98,7 +93,7 @@ public class ViewManager implements ViewExternalAPI {
 
   @Override
   public void removeEntity(Node node) {
-      EntityGroup.getChildren().remove(node);
+    EntityGroup.getChildren().remove(node);
   }
 
   @Override
@@ -139,6 +134,8 @@ public class ViewManager implements ViewExternalAPI {
     else if (code == KeyCode.H) {
       pauseGame();
       goHome(code.getChar());
+    } else if(code == KeyCode.X) {
+      saveGame = true;
     }
 
   }
@@ -149,35 +146,57 @@ public class ViewManager implements ViewExternalAPI {
   public void handleReleaseInput (KeyCode code) {
   }
 
+  public boolean getSaveGame() {
+    return saveGame;
+  }
 
-  public void handleMenuInput() { //TODO: REFACTOR
+
+  public void handleMenuInput(GameParser gp) throws Exception { //TODO: REFACTOR
     if (menu.getResumePressed()) {
       unPauseGame();
       menu.setResumeOff();
+    }
+    if (menu.getSavePressed()) {
+      saveGame=true;
+      unPauseGame();
+      menu.setSaveOff();
     }
     if (menu.getExitPressed()) { //FIXME: FIX THIS BUT I DIDN'T WANT TO BREAK SHRUTHI'S SAVE POINTS, ideally should independently go home
       handlePressInput(KeyCode.H);
       menu.setExitOff();
     }
+    if (menu.getControlsPressed()){
+      launchConfigMenu(gp);
+      menu.setControlsOff();
+    }
+    if (menu.getRebootPressed()){
+      menu.setRebootOff();
+      currentStage.reboot();
+    }
   }
 
-  public void goHome(String state){
+  private void goHome(String state){
     currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
     currentStage.updateCurrentScene(state, currentStage.getPastScene());
     currentStage.switchScenes("GameSelect");
   }
 
-  public void pauseGame(){
+  private void pauseGame(){
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
     isGamePaused = true;
-    menu.setAlignment(Pos.CENTER);
-    testPane.setCenter(menu);
+    testPane.setLeft(menu);
     escCounter++;
   }
 
-  public void unPauseGame(){
+  private void launchConfigMenu(GameParser gp){
+    config = new ControlSchemeSwitcher(gp);
+    menu.getChildren().add(config);
+  }
+
+  private void unPauseGame(){
     testPane.getChildren().remove(menu);
+    menu.getChildren().remove(config);
     EntityGroup.setEffect(null);
     isGamePaused = false;
     escCounter--;
@@ -186,5 +205,13 @@ public class ViewManager implements ViewExternalAPI {
 
   public boolean getIsGamePaused() {
     return isGamePaused;
+  }
+
+  public void setSaveGame() {
+    saveGame = !saveGame;
+  }
+
+  public boolean getControlSwitcher(){
+    return launchControlSwitcher;
   }
 }

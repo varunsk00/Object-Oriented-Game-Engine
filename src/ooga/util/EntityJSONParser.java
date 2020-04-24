@@ -1,14 +1,9 @@
 package ooga.util;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ooga.model.actions.Action;
@@ -77,6 +72,42 @@ public class EntityJSONParser {
       e.printStackTrace(); //FIXME to not fail the class
     }
     return myScheme;
+  }
+
+  public List<String> updateControls(String param, String newKeyBind, boolean write) { //TODO: REFACTOR
+    List<String> ret = new ArrayList<>();
+    JSONObject root = jsonObject;
+    JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
+    updateActionBundleArray(actionBundlesArray, param, newKeyBind, ret);
+    root.put("actionBundles", actionBundlesArray);
+    if(write){
+      write2JSON(root, "Successfully Updated Control Scheme!"); }
+    return ret;
+  }
+
+  private void updateActionBundleArray(JSONArray ja, String param, String newKeyBind, List<String> ret){
+    Iterator itr2 = ja.iterator();
+    boolean match = false;
+    while (itr2.hasNext()){
+      Iterator<Map.Entry> itr1 = ((Map) itr2.next()).entrySet().iterator();
+      while (itr1.hasNext()) {
+        Map.Entry keybind = itr1.next();
+        if(keybind.getKey().equals("ID")){
+          ret.add((String) keybind.getValue());
+          if(match){
+            keybind.setValue(newKeyBind);
+            match = false; } }
+        if(keybind.getKey().equals("Control")){
+          JSONArray controlArray = (JSONArray) keybind.getValue();
+          ret.add(controlArray.toString());
+          Iterator itr3 = controlArray.iterator();
+          while(itr3.hasNext()){
+            Iterator<Map.Entry> itr4 = ((Map) itr3.next()).entrySet().iterator();
+            while(itr4.hasNext()){
+              Map.Entry action = itr4.next();
+              if(action.getKey().equals("param")){
+                if(action.getValue().equals(param)){
+                  match = true; } } } } } } }
   }
 
   public Map<CollisionKey, Action> parseCollisions() {
@@ -160,6 +191,16 @@ public class EntityJSONParser {
       outputBundle.addAction(newAction);
     }
     return outputBundle;
+  }
+
+  private void write2JSON(JSONObject root, String message){
+    try (FileWriter file = new FileWriter(myFileName, false))
+    {
+      file.write(root.toString());
+      System.out.println(message);
+    } catch (IOException e) {
+      e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+    }
   }
 
   public double readWidth() { return Double.parseDouble(jsonObject.get("width").toString()); }
