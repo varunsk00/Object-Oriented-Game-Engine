@@ -27,6 +27,7 @@ public class ViewManager implements ViewExternalAPI {
   private InGameMenu menu;
   private ControlSchemeSwitcher config;
   private int escCounter = 0;
+  private int configCounter = 0;
 
   private StageManager currentStage;
   private BorderPane level;
@@ -165,7 +166,7 @@ public class ViewManager implements ViewExternalAPI {
       handlePressInput(KeyCode.H);
       menu.setExitOff();
     }
-    if (menu.getControlsPressed()){
+    if (menu.getControlsPressed() && configCounter < 1){
       launchConfigMenu(gp);
       menu.setControlsOff();
     }
@@ -192,6 +193,7 @@ public class ViewManager implements ViewExternalAPI {
   private void launchConfigMenu(GameParser gp){
     config = new ControlSchemeSwitcher(gp);
     menu.getChildren().add(config);
+    configCounter++;
   }
 
   private void unPauseGame(){
@@ -200,7 +202,7 @@ public class ViewManager implements ViewExternalAPI {
     EntityGroup.setEffect(null);
     isGamePaused = false;
     escCounter--;
-
+    configCounter = 0;
   }
 
   public boolean getIsGamePaused() {
