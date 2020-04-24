@@ -66,6 +66,6 @@ public class GameSelectParser {
 
 
   public int readButtonArrangement() {
-    return 1; //jsonObject.get("buttonArrangement");
+    return 1; //jsonObject.get("buttonArrangement"))[0]).intValue();
   }
 }
