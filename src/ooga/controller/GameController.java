@@ -169,11 +169,26 @@ public class GameController implements Controller {
       entityList.get(0).getModel().setHealth();
       entityList.get(0).getModel().setLevelAdvancementStatus(true);
 
-      levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
+    despawnOldLevel();
+
+    levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
       entityList.get(0).getModel().resetPosition();
 //      myViewManager.resetLevelScene(gameName);
 
 
+  }
+
+  private void despawnOldLevel() {
+    List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
+    for (EntityWrapper targetEntity : entityList) {
+      if (!gameParser.getPlayerList().contains(targetEntity)) {
+        entitiesToDespawn.add(targetEntity);
+      }
+    }
+    for(EntityWrapper despawnedEntity : entitiesToDespawn){
+      entityList.remove(despawnedEntity);
+      myViewManager.removeEntityGroup(despawnedEntity.getRender());
+    }
   }
 
   private void handleSaveGame() {
