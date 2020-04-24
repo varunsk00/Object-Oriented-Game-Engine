@@ -6,6 +6,7 @@ import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
+import ooga.util.GameStatusProfile;
 
 public class LevelSelector {
 
@@ -13,12 +14,14 @@ public class LevelSelector {
   private Level activeLevel;
 
 
-  private static final int spawningInterval = 500;
-  private int currentPlayerInterval = -1;
+  private int spawningInterval;
+  private GameStatusProfile gameStatusProfile;
 
 
-  public LevelSelector(List<Level> levelList){
+  public LevelSelector(List<Level> levelList, GameStatusProfile gameProfile){
     parsedLevels = levelList;
+    gameStatusProfile = gameProfile;
+    spawningInterval = gameStatusProfile.readSpawningInterval();
     activeLevel = parsedLevels.get(0);
   }
 
@@ -27,11 +30,11 @@ public class LevelSelector {
     if (currentEntityList.get(0).getModel().getLevelAdvancementStatus()) {
       currentEntityList.get(0).getModel().setLevelAdvancementStatus(false);
       switchLevel(nextLevel);
-      activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(currentEntityList.get(0)));
+      activeLevel.setCurrentPlayerInterval(Math.abs(calculatePlayerInterval(currentEntityList.get(0))));
     }
     activeLevel.spawnEntities(currentEntityList, viewManager);
-    activeLevel.despawnEntities(currentEntityList, viewManager);
-//    this.despawnEntities(currentEntityList, viewManager);
+//    activeLevel.despawnEntities(currentEntityList, viewManager);
+    this.despawnEntities(currentEntityList, viewManager);
 
   }
 
@@ -40,9 +43,9 @@ public class LevelSelector {
   }
 
   private int calculatePlayerInterval(EntityWrapper player) {
-    return (int) player.getModel().getX()
-        / spawningInterval; //TODO: generalize for X and Y scrollers
+    return (int) Math.abs((player.getModel().getX() * gameStatusProfile.readScrollingStatusX() + player.getModel().getY() * gameStatusProfile.readScrollingStatusY())/spawningInterval);
   }
+
 //TODO: decide whether or not to have despawning done by level selector or levels (actually has
 // nothing pertaining to individual levels.
   private void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
