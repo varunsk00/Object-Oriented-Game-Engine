@@ -64,7 +64,7 @@ public class GameController implements Controller {
 //    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
     for(EntityWrapper player : gameParser.getPlayerList()){
-      System.out.println(player);
+      //System.out.println(player);
       entityList.add(player);
       myViewManager.updateEntityGroup(player.getRender());
     }
@@ -139,26 +139,37 @@ public class GameController implements Controller {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
           if(entityList.get(0).getModel().getHealth() <= 0) {
             entityList.get(0).getModel().setHealth();
+            entityList.get(0).getModel().setLevelAdvancementStatus(true);
             restartLevel = true;
             //reset level in some way
           }
           if(targetEntity.getModel().getIsDead()) {
-            myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
+            System.out.println("Model: " + targetEntity.getModel().getEntityID());
+            entityRemove.add(targetEntity);
+            //myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
           }
         }
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
-
       }
 
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
-      entityList.removeAll(entityRemove);
+      for(EntityWrapper despawnedEntity : entityRemove){
+        entityList.remove(despawnedEntity);
+        myViewManager.removeEntityGroup(despawnedEntity.getRender());
+      }
       entityRemove = new ArrayList<>();
-
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
+    for(EntityWrapper despawnedEntity : entityRemove){
+      entityList.remove(despawnedEntity);
+      myViewManager.removeEntityGroup(despawnedEntity.getRender());
+    }
+
+    entityRemove = new ArrayList<>();
+
 
   }
 

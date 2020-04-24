@@ -170,6 +170,12 @@ public class ViewManager implements ViewExternalAPI {
     currentStage.switchScenes("GameSelect");
   }
 
+  public void endGame() {
+    //need to reset game;
+    goHome(KeyCode.H.getChar());
+
+  }
+
   public void pauseGame(){
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
