@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
+import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.GamePad;
 import ooga.model.levels.InfiniteLevelBuilder;
 
@@ -46,17 +47,18 @@ public class GameController implements Controller {
   private LevelSelector levelSelector;
   private GamePad g;
   private GameParser gameParser;
+  private ControlSchemeSwitcher myControlSchemeSwitcher;
 
 
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
-    System.out.println(gameName);
     builder = new InfiniteLevelBuilder(this);
     g = new GamePad();
 
 
     myViewManager = new ViewManager(stageManager, builder);
     gameParser = new GameParser(gameName, this, loadedGame);
+    myControlSchemeSwitcher = new ControlSchemeSwitcher(gameParser);
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
@@ -64,7 +66,6 @@ public class GameController implements Controller {
 //    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
     for(EntityWrapper player : gameParser.getPlayerList()){
-      //System.out.println(player);
       entityList.add(player);
       myViewManager.updateEntityGroup(player.getRender());
     }
@@ -100,6 +101,8 @@ public class GameController implements Controller {
         step(SECOND_DELAY);
       } catch (XInputNotLoadedException ex) {
         ex.printStackTrace();
+      } catch (Exception exception) {
+        exception.printStackTrace(); //FIXME: REPLACE TO AVOID FAIL CASE
       }
     });
     animation = new Timeline();
@@ -109,10 +112,9 @@ public class GameController implements Controller {
 
   }
 
-  private void step (double elapsedTime) throws XInputNotLoadedException {
-
+  private void step (double elapsedTime) throws Exception {
     g.update();
-    myViewManager.handleMenuInput();
+    myViewManager.handleMenuInput(gameParser);
     if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (g.getState() != null) {
         if (!g.getState().getPressed()) {

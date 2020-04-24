@@ -19,7 +19,7 @@ public class EntityWrapper {
 
   public EntityWrapper(String entityName, Controller controller) {
     if(controller == null){
-      System.out.println("error");
+      System.out.println("Controller null");
     }
     myController = controller;
     EntityID = entityName;
