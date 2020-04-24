@@ -16,7 +16,6 @@ import org.json.simple.parser.ParseException;
 
 
 public class ComplexActionParser extends Parser {
-  private String myFileName;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";

@@ -21,7 +21,6 @@ import org.json.simple.parser.ParseException;
 
 public class EntityJSONParser extends Parser {
 
-  private String myFileName;
   private String myGame;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String RESOURCES = "resources/";

@@ -30,7 +30,7 @@ import org.json.simple.parser.ParseException;
 
 public class GameParser extends Parser {
 
-  private String myFileName;
+//  private String myFileName;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
@@ -45,13 +45,12 @@ public class GameParser extends Parser {
   private GameStatusProfile gameStatusProfile;
 
 
-
   private JSONObject jsonObject;
 
   public GameParser(String gameName, Controller controller, boolean loadedGame) {
-    super();
     mainController = controller;
     this.gameName = gameName;
+    this.myFileName = "";
     fileName = gameName + "Game";
     this.loadedGame = loadedGame;
     checkLoadGame(this.loadedGame);

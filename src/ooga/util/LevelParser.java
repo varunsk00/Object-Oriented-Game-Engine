@@ -23,7 +23,6 @@ import java.io.FileReader;
 
 public class LevelParser extends Parser {
 
-  private String myFileName;
   private List<Entry<String, Pattern>> mySymbols;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";

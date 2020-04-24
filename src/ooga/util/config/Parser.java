@@ -10,6 +10,7 @@ public abstract class Parser {
   protected String myFileName;
 
   public Parser() {
+    myFileName = "";
   }
 
   public Object readJsonFile() {

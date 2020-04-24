@@ -95,12 +95,13 @@ public class GameCabinet extends Pane {
                 avManager.switchMusic(stageManager);
             }
             if (myTitleScreen.isPlayerSelected()){
-                myTitleScreen.resetButtons();
                 incrementLaunchCounter(currentGame);
                 if(!myTitleScreen.isLoadSavedGame()) {
                     myTitleScreen.handleMultiplayer(currentGame);
                 }
                 avManager.switchGame(stageManager, currentGame, myTitleScreen.isLoadSavedGame());
+              myTitleScreen.resetButtons();
+
             }
         }
     }

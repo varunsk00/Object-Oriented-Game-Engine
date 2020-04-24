@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 public class GameSelectParser extends Parser {
 
-  private String myFileName;
   private static final String REGEX_SYNTAX = "Syntax";
   private List<Entry<String, Pattern>> mySymbols;
   private static final String TXT_FILEPATH = "src/resources/";
