@@ -41,11 +41,7 @@ public class ViewManager implements ViewExternalAPI {
 
   private Scene testScene;
 
-  /**
-   * NEED TO REFACTOR
-   * @Deprecated fuck
-   */
-  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, List<EntityWrapper> playerList){
+  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
     this.menu = new InGameMenu();
     this.config = new ControlSchemeSwitcher(playerList);
     this.overlay.add(menu);
@@ -68,7 +64,7 @@ public class ViewManager implements ViewExternalAPI {
     return level;
   }
 
-  public void setUpCamera(List<EntityWrapper> node) { camera = new Camera(currentStage.getStage(), level, node); }
+  public void setUpCamera(List<EntityWrapper> node, int scrollStatusX, int scrollStatusY) { camera = new Camera(currentStage.getStage(), level, node, scrollStatusX, scrollStatusY); }
 
   public StageManager getCurrentStage() {
     return currentStage;
@@ -188,6 +184,21 @@ public class ViewManager implements ViewExternalAPI {
     currentStage.updateCurrentScene(state, currentStage.getPastScene());
     currentStage.switchScenes("GameSelect");
   }
+
+//  public void saveResetScenes(String state) {
+//    currentStage.saveResetGameScenes(state, currentStage.getCurrentScene());
+//  }
+//
+//  public void resetLevelScene(String gameName) {
+//    currentStage.switchRestartScenes(gameName);
+//
+//  }
+
+  public void endGame() {
+    //need to reset game;
+    goHome(KeyCode.H.getChar());
+  }
+
 
   private void pauseGame(){
     BoxBlur bb = new BoxBlur();

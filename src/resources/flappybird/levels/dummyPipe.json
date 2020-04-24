@@ -1,0 +1,13 @@
+{
+  "levelName": "Pipe1",
+  "levelType": "InfiniteLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+      ],
+
+  "enemyArrangement": [
+  ],
+  "playerArrangement": [
+      ]
+}

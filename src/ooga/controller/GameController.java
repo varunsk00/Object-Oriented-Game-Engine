@@ -36,10 +36,13 @@ public class GameController implements Controller {
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private static final String TXT_FILEPATH = "src/resources/";
+  private int nextLevel;
+
 
 
   private Timeline animation;
   private InfiniteLevelBuilder builder;
+  private String gameName;
   private ViewManager myViewManager;
   private LevelSelector levelSelector;
   private GamePadListener g;
@@ -58,38 +61,33 @@ public class GameController implements Controller {
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
     entityRemove = new ArrayList<>();
-//    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
     for(EntityWrapper player : gameParser.getPlayerList()){
       entityList.add(player);
       myViewManager.updateEntityGroup(player.getRender());
     }
 
-    physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile()); //TODO: add PhysicsProfile object
+    physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile());
     collisionEngine = new CollisionEngine();
     myViewManager.getTestScene().setOnKeyPressed(e -> {
 
       myViewManager.handlePressInput(e.getCode());
       for(EntityWrapper entity : entityList){
-        entity.handleKeyInput(e.getCode().toString());//FIXME i would like to
+        entity.handleKeyInput(e.getCode().toString());
       }
     });
     myViewManager.getTestScene().setOnKeyReleased(e-> {
       for(EntityWrapper entity : entityList){
-        entity.handleKeyReleased(e.getCode().toString());//FIXME i would like to
+        entity.handleKeyReleased(e.getCode().toString());
       }
     });
-
-    myViewManager.setUpCamera(gameParser.getPlayerList()); //FIXME to be more generalized and done instantly
-
-
+    myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.parseGameStatusProfile().readScrollingStatusX(), gameParser.parseGameStatusProfile().readScrollingStatusY());
     levelSelector = new LevelSelector(gameParser.parseLevels());
     setUpTimeline();
 
   }
 
   private void setUpTimeline() {
-    //TODO: Timeline Code -- don't remove
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e ->
     {
       try {
@@ -122,32 +120,56 @@ public class GameController implements Controller {
       }
     }
     if (!myViewManager.getIsGamePaused()) {
-      levelSelector.updateCurrentLevel(entityList, myViewManager);
+      levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
       handleSaveGame();
       myViewManager.updateValues();
-      //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
-
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
-          collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
-          if(targetEntity.getModel().getIsDead()) {
-            myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
+          if (!entityRemove.contains(targetEntity)) {
+            collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+            handleDeadEntities(targetEntity);
           }
         }
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
       }
+
+      if (entityList.get(0).getModel().getHealth() <= 0) {
+        resetLevel();
+        return;
+      }
+
+
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
-      if(entityRemove.size() > 0) {
-        //System.out.println("Removed: " + entityRemove.get(0).getModel().getEntityID());
-      }
-      entityList.removeAll(entityRemove);
-      entityRemove = new ArrayList<>();
 
+      for(EntityWrapper despawnedEntity : entityRemove){
+        myViewManager.removeEntityGroup(despawnedEntity.getRender());
+        entityList.remove(despawnedEntity);
+      }
+      nextLevel = entityList.get(0).getModel().getNextLevelIndex();
     }
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
+
+  }
+
+  private void handleDeadEntities(EntityWrapper targetEntity) {
+    if (targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
+      entityRemove.add(targetEntity);
+    }
+  }
+
+  private void resetLevel() {
+    nextLevel = 0;
+      entityList.get(0).getModel().setHealth();
+      entityList.get(0).getModel().setLevelAdvancementStatus(true);
+
+      levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
+      entityList.get(0).getModel().resetPosition();
+//      myViewManager.resetLevelScene(gameName);
+
+
   }
 
   private void handleSaveGame() {

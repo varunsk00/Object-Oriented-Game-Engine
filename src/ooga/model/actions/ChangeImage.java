@@ -2,14 +2,15 @@ package ooga.model.actions;
 
 import ooga.model.EntityModel;
 
-public class LoseHealth extends Action {
+public class ChangeImage extends Action{
 
-  public LoseHealth(String parameter) {
+
+  public ChangeImage(String parameter) {
     super(parameter);
   }
 
   @Override
   public void execute(EntityModel entity) {
-    entity.loseHealth();
+    entity.changeImage(param);
   }
 }

@@ -128,9 +128,9 @@ public class TitleScreen extends BorderPane {
     }
 
     public void handleMultiplayer(String gameName){
-        this.myGameParser = new GameParser(gameName, false);
+        this.myGameParser = new GameParser(gameName, null, false);
         if (myGameParser.supportsMultiplayer()){
-            myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
+            myGameParser.updateJSONValue("playerCount", String.valueOf(playerNumber()));
         }
     }
 }

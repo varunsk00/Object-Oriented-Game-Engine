@@ -18,9 +18,9 @@ public class Pattern extends ControlScheme {
   @Override
   public List<Action> getCurrentAction() {
     ActionBundle output = actionMap.get(index);
-    System.out.println(output);
-    System.out.println(output.getId());
-    System.out.println(frameDuration);
+//    System.out.println(output);
+//    System.out.println(output.getId());
+//    System.out.println(frameDuration);
     frameDuration++;
 
     if(frameDuration >= Integer.parseInt(output.getId())) {

@@ -10,7 +10,7 @@
   "permeable": false,
 
   "maxXVel": 500,
-  "maxYVel": 500,
+  "maxYVel": 1000,
   "height": 45,
   "width": 41,
   "scheme": "Pattern",
