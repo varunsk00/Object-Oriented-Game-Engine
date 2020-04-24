@@ -44,13 +44,13 @@ public class InfiniteLevel extends Level{
             resizeEntity(newSpawn, tileEntity);
             setEntityPositions(newSpawn, tileEntity, tileInterval);
             currentEntityList.add(newSpawn);
-            viewManager.updateEntityGroup(newSpawn.getRender());
+            viewManager.addEntity(newSpawn.getRender());
           }
         for (EntityWrapper enemyEntity : enemyEntities) {
             EntityWrapper newSpawn = new EntityWrapper(enemyEntity.getEntityID(), enemyEntity.getController());
             setEntityPositions(newSpawn, enemyEntity, tileInterval);
             currentEntityList.add(newSpawn);
-            viewManager.updateEntityGroup(newSpawn.getRender());
+            viewManager.addEntity(newSpawn.getRender());
         }
       }
     }

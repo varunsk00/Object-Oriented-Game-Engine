@@ -32,7 +32,6 @@ public class EntityModel {
   private boolean boundedLeft;
   private boolean boundedRight;
   private boolean boundedTop;
-  private boolean isDead;
   private double MAX_HEALTH;
 
   private double xVel;
@@ -56,7 +55,6 @@ public class EntityModel {
     boundedRight = false;
     boundedTop = false;
     boundedBelow = false;
-    isDead = false;
   }
 
   private void loadStats() {
@@ -197,6 +195,9 @@ public class EntityModel {
     return newEntity;
   }
 
+  public void despawnEntity() {
+    myEntity.despawnEntity();
+  }
 
   public boolean getForwards() {return forwards;}
 
@@ -219,14 +220,6 @@ public class EntityModel {
   public void setBoundedRight(boolean value){boundedRight = value;}
 
   public boolean getFixed(){return fixedEntity;}
-
-  public void setIsDead(boolean dead) {
-    this.isDead = dead;
-  }
-
-  public boolean getIsDead() {
-    return isDead;
-  }
 
   public void setBoundedTop(boolean value) {boundedTop = value;}
 
