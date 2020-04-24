@@ -418,6 +418,16 @@
           "action": "LoseHealth",
           "param": "idk",
           "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "500.0",
+          "orientation": "E"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "-500.0",
+          "orientation": "W"
         }
       ]
     },
@@ -437,6 +447,16 @@
         {
           "action": "LoseHealth",
           "param": "idk",
+          "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "500.0",
+          "orientation": "E"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "-500.0",
           "orientation": "W"
         }
       ]

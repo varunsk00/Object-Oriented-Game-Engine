@@ -138,13 +138,13 @@ public class GameController implements Controller {
         for (EntityWrapper targetEntity : entityList) {
           collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
           if(entityList.get(0).getModel().getHealth() <= 0) {
+            System.out.println("Here: ");
             entityList.get(0).getModel().setHealth();
             entityList.get(0).getModel().setLevelAdvancementStatus(true);
             restartLevel = true;
             //reset level in some way
           }
           if(targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
-            System.out.println("Model: " + targetEntity.getModel().getEntityID());
             entityRemove.add(targetEntity);
             //myViewManager.removeEntityGroup(targetEntity.getRender()); //TODO: fix so not jut goombas
           }
