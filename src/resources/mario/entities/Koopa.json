@@ -11,17 +11,16 @@
 
   "maxXVel": 500,
   "maxYVel": 500,
-  "height": 40,
-  "width": 40,
-  "scheme": "AI",
+  "height": 45,
+  "width": 41,
+  "scheme": "Pattern",
   "actionBundles": [
     {
       "ID": "50",
       "Control": [
         {
-
           "action": "AccelerateX",
-          "param": "15.0"
+          "param": "10.0"
         },
         {
           "action": "SetXDirection",
@@ -30,16 +29,65 @@
       ]
     },
     {
-      "ID": "50",
+      "ID": "250",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-750.0"
+        }
+      ]
+    },
+    {
+      "ID": "20",
       "Control": [
         {
 
           "action": "AccelerateX",
-          "param": "-15.0"
+          "param": "10.0"
         },
         {
           "action": "SetXDirection",
-          "param": "backwards"
+          "param": "forwards"
+        }
+      ]
+    },
+    {
+      "ID": "150",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-750.0"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "5.0"
+        }
+      ]
+    },
+    {
+      "ID": "20",
+      "Control": [
+        {
+
+          "action": "AccelerateX",
+          "param": "10.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "forwards"
+        }
+      ]
+    },
+    {
+      "ID": "700",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-750.0"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "10.0"
         }
       ]
     }

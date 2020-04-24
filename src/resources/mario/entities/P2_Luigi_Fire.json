@@ -1,7 +1,7 @@
 {
   "image": "fireluigi_walk.gif",
   "yPos": 100,
-  "scheme": "Keybindings",
+  "scheme": "ControllerBindings",
   "permeable": false,
   "health": 1,
   "xPos": 100,
@@ -356,7 +356,7 @@
           "action": "SetXDirection"
         }
       ],
-      "ID": "L"
+      "ID": "LEFT_THUMBSTICK_RIGHT"
     },
     {
       "Control": [
@@ -369,7 +369,7 @@
           "action": "SetXDirection"
         }
       ],
-      "ID": "J"
+      "ID": "LEFT_THUMBSTICK_LEFT"
     },
     {
       "Control": [
@@ -396,7 +396,7 @@
           "action": "Jump"
         }
       ],
-      "ID": "O"
+      "ID": "A_BUTTON"
     },
     {
       "Control": [
@@ -406,7 +406,7 @@
           "coolDown": "1000"
         }
       ],
-      "ID": "U"
+      "ID": "B_BUTTON"
     }
   ],
   "height": 100

@@ -48,6 +48,12 @@ public class Camera {
   public void update(VBox menu){
 //    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+2));
     //note: try to get level width working
+//    if (target.getBoundsInParent().getMaxY() < myStage.getHeight()/2) {
+//      viewPort.setY(boundPosition(target.getBoundsInParent().getMinY() - myStage.getHeight() / 2, -999999, 720));
+//    }
+//    else {
+//      viewPort.setY(0);
+//    }
     viewPort.setX(boundPosition(getCenterOfPlayers()-myStage.getWidth()/2, 0, (999999)));
     menu.setTranslateX(viewPort.getX());
     boundPlayers();
