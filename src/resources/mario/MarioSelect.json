@@ -2,5 +2,8 @@
   "gameName": "Mario",
   "gamePreviewGIF": "mario1-1",
   "savingEnabled": "true",
-  "buttonArrangement": 2
+  "buttonArrangement": [
+    "1 Player",
+    "2 Player"
+  ]
 }

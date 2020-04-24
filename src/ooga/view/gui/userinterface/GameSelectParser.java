@@ -65,7 +65,12 @@ public class GameSelectParser {
   }
 
 
-  public int readButtonArrangement() {
-    return 1; //jsonObject.get("buttonArrangement"))[0]).intValue();
+  public List<String> readButtonArrangement() {
+    List<String> buttonStrings = new ArrayList<>();
+    JSONArray buttonJSONArray = (JSONArray) jsonObject.get("buttonArrangement");
+    for (int i = 0; i < buttonJSONArray.size(); i++) { //TODO: ask if anything else is needed in making buttons (like EventHandlers?)
+      buttonStrings.add(buttonJSONArray.get(i).toString());
+    }
+    return buttonStrings;
   }
 }

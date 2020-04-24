@@ -136,7 +136,7 @@ public class GameCabinet extends Pane {
     }
 
     private void launchTitleScreen(StageManager sm, String gameName) throws Exception {
-        myTitleScreen = new TitleScreen(gameName, newGameParser.readButtonArrangement(), newGameParser.readSaveStatus());
+        myTitleScreen = new TitleScreen(gameName);
         sm.createAndSwitchScenes(myTitleScreen, gameName);
     }
 
