@@ -182,14 +182,14 @@ public class ViewManager implements ViewExternalAPI {
     currentStage.switchScenes("GameSelect");
   }
 
-  public void saveResetScenes(String state) {
-    currentStage.saveResetGameScenes(state, currentStage.getCurrentScene());
-  }
-
-  public void resetLevelScene(String gameName) {
-    currentStage.switchRestartScenes(gameName);
-
-  }
+//  public void saveResetScenes(String state) {
+//    currentStage.saveResetGameScenes(state, currentStage.getCurrentScene());
+//  }
+//
+//  public void resetLevelScene(String gameName) {
+//    currentStage.switchRestartScenes(gameName);
+//
+//  }
 
   public void endGame() {
     //need to reset game;

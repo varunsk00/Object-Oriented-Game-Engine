@@ -98,7 +98,6 @@ public class GameController implements Controller {
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e ->
     {
       try {
-        myViewManager.saveResetScenes(gameName);
         step(SECOND_DELAY);
       } catch (XInputNotLoadedException ex) {
         ex.printStackTrace();

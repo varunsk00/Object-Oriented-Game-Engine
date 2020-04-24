@@ -49,13 +49,13 @@ public class StageManager {
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
     }
 
-    public void switchRestartScenes(String title) {
-        pastScene = stage.getScene();
-        stage.setScene(resetGameScenes.get(title));
-        stage.setTitle(title);
-        currentScene = resetGameScenes.get(title);
-        currentScene.getStylesheets().add("ooga/view/styling/default.css");
-    }
+//    public void switchRestartScenes(String title) {
+//        pastScene = stage.getScene();
+//        stage.setScene(resetGameScenes.get(title));
+//        stage.setTitle(title);
+//        currentScene = resetGameScenes.get(title);
+//        currentScene.getStylesheets().add("ooga/view/styling/default.css");
+//    }
 
     public void switchRoot(Parent parent) {
         stage.getScene().setRoot(parent);
@@ -103,9 +103,9 @@ public class StageManager {
 
     public Stage getStage(){return stage;}
 
-    public void saveResetGameScenes(String title, Scene resetScene) {
-        resetGameScenes.put(title, resetScene);
-    }
+//    public void saveResetGameScenes(String title, Scene resetScene) {
+//        resetGameScenes.put(title, resetScene);
+//    }
 
     public void updateCurrentScene(String title, Scene saveScene) {
         lastScene.put(title, saveScene);
