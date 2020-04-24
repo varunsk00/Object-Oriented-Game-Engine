@@ -132,26 +132,12 @@ public class LevelParser {
 
     tileEntityArray = readEntities(tileArrangement);
     for(EntityWrapper entity : tileEntityArray){
-      //System.out.print(entity+ "   ");
-      //System.out.print(entity.getModel().getHeight()+ "   ");
-      //System.out.println(entity.getModel().getWidth());
-
       entity.getModel().setHeight(tileHeight);
       entity.getModel().setWidth(tileWidth);
-      //System.out.print("After " + entity+ "   ");
-      //System.out.print(entity.getModel().getHeight()+ "   ");
-      //System.out.println(entity.getModel().getWidth());
 
     }
 
     return tileEntityArray;
-  }
-
-  public List<EntityWrapper> parsePlayerEntities() {
-    JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
-    List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
-    playerEntityArray = readEntities(playerArrangement);
-    return playerEntityArray;
   }
 
   public List<EntityWrapper> parseEnemyEntities() {

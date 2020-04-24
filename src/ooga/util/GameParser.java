@@ -41,6 +41,9 @@ public class GameParser {
   private int selectedPlayers;
   private List<EntityWrapper> playerList;
   private boolean loadedGame;
+  private int scrollingStatusX;
+  private int scrollingStatusY;
+
 
 
   private JSONObject jsonObject;
@@ -51,7 +54,7 @@ public class GameParser {
     this.gameName = gameName;
     this.loadedGame = loadedGame;
     fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
+//    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
@@ -60,15 +63,18 @@ public class GameParser {
   public GameParser(String gameName, Controller controller, boolean loadedGame) {
     mainController = controller;
     this.gameName = gameName;
+    this.loadedGame = loadedGame;
     fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
+//    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
     jsonObject = (JSONObject) readJsonFile();
     selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
     playerList = parsePlayerEntities();
-    this.loadedGame = loadedGame;
-//    checkLoadGame(this.loadedGame);
-  }
 
+    this.loadedGame = loadedGame;
+    scrollingStatusX = readScrollingStatusX();
+    scrollingStatusY = readScrollingStatusY();
+  }
+  
 
   private void checkLoadGame(boolean loadedGame) {
     if (loadedGame) {
@@ -165,8 +171,8 @@ public class GameParser {
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
       try {
-        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor(List.class, List.class, List.class, String.class).newInstance(tiles, playerList, enemies, levelName);
-
+        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor
+            (List.class, List.class, List.class, int.class, int.class, String.class).newInstance(tiles, playerList, enemies, scrollingStatusX, scrollingStatusY, levelName);
         levelList.add(newLevel);
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
           throw new InvalidActionException("Level could not be found."); //TODO: change exception heading
@@ -203,5 +209,15 @@ public class GameParser {
     PhysicsProfile gamePhysics = new PhysicsProfile(physicsConstants);
     return gamePhysics;
   }
+
+  public int readScrollingStatusX() {
+    return Integer.parseInt(jsonObject.get("scrollingStatusX").toString());
+  }
+
+  public int readScrollingStatusY() {
+    return Integer.parseInt(jsonObject.get("scrollingStatusY").toString());
+  }
+
+
 
 }

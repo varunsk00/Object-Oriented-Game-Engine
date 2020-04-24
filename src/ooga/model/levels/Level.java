@@ -5,6 +5,7 @@ import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
+import ooga.view.application.Camera;
 
 public abstract class Level {
 
@@ -14,11 +15,15 @@ public abstract class Level {
   private static final int TWO = 2;
   private int currentPlayerInterval = -1;
   private String levelName;
+  private int scrollingStatusX;
+  private int scrollingStatusY;
 
-  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, String name){
+  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, int scrollIntX, int scrollIntY, String name){
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
+    scrollingStatusX = scrollIntX;
+    scrollingStatusY = scrollIntY;
     levelName = name;
   }
 
@@ -56,8 +61,6 @@ public abstract class Level {
   }
 
   public String getLevelName() {
-    //String[] arr = levelName.split("\\.");
-    //return arr[1];
     return levelName;
   }
 

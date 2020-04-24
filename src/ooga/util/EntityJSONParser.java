@@ -48,7 +48,6 @@ public class EntityJSONParser {
   }
 
   public ControlScheme parseControls() {
-   String entityName = (String) jsonObject.get("entityName");
     JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
     List<ActionBundle> controlMap = new ArrayList<ActionBundle>();
     String controlType = (String) jsonObject.get("scheme");
@@ -153,7 +152,6 @@ public class EntityJSONParser {
   private ImageView loadImage(String imageName) {
 //    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
     InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
-//    InputStream is = this.getClass().getClassLoader().getResourceAsStream("resources/mario/images/brick.png");
     Image entityImage = null;
     entityImage = new Image(is);
     return new ImageView(entityImage);

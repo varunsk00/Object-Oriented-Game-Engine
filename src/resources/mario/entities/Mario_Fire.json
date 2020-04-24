@@ -1,433 +1,494 @@
 {
+  "entityName": "Fire_Mario",
   "image": "firemario_walk.gif",
-  "yPos": 100,
-  "scheme": "Keybindings",
-  "permeable": false,
-  "health": 1,
+  "health": 3,
   "xPos": 100,
+  "yPos": 100,
   "xVel": 10,
+  "yVel": 10,
+  "fixed": false,
+  "permeable": false,
+  "maxXVel": 500,
+  "maxYVel": 1000,
+  "height": 50,
+  "width": 51,
+  "scheme": "Keybindings",
+  "actionBundles": [
+    {
+      "ID": "D",
+      "Control": [
+        {
+          "action": "AccelerateX",
+          "param": "300.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "forwards"
+        }
+      ]
+    },
+    {
+      "ID": "A",
+      "Control": [
+        {
+          "action": "AccelerateX",
+          "param": "-300.0"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "backwards"
+        }
+      ]
+    },
+    {
+      "ID": "W",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "-300.0"
+        }
+      ]
+    },
+    {
+      "ID": "S",
+      "Control": [
+        {
+          "action": "AccelerateY",
+          "param": "+300.0"
+        }
+      ]
+    },
+    {
+      "ID": "SPACE",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-750.0"
+        }
+      ]
+    },
+    {
+      "ID": "F",
+      "Control": [
+        {
+          "action": "SpawnRelative",
+          "param": "mario.Mario_Fireball",
+          "coolDown": "1000"
+        }
+      ]
+    },
+    {
+      "ID": "J",
+      "Control": [
+        {
+          "action": "ChangeImage",
+          "param": "mario/images/fireluigi_walk.gif"
+        }
+      ]
+    },
+    {
+      "ID": "K",
+      "Control": [
+        {
+          "action": "ChangeImage",
+          "param": "mario/images/firemario_walk.gif"
+        }
+      ]
+    }
+  ],
   "entityName": "Fire_Mario",
   "collisionBundles": [
     {
+      "ID": "mario.MarioFlagPole",
       "Control": [
         {
-          "orientation": "W",
+          "action": "LevelSwitch",
           "param": "1",
-          "action": "LevelSwitch"
+          "orientation": "W"
         },
         {
-          "orientation": "W",
+          "action": "SetX",
           "param": "100",
-          "action": "SetX"
+          "orientation": "W"
         },
         {
-          "orientation": "W",
+          "action": "SetY",
           "param": "100",
-          "action": "SetY"
+          "orientation": "W"
         },
         {
-          "orientation": "E",
+          "action": "LevelSwitch",
           "param": "1",
-          "action": "LevelSwitch"
+          "orientation": "E"
         },
         {
-          "orientation": "E",
+          "action": "SetX",
           "param": "100",
-          "action": "SetX"
+          "orientation": "E"
         },
         {
-          "orientation": "E",
+          "action": "SetY",
           "param": "100",
-          "action": "SetY"
+          "orientation": "E"
         }
-      ],
-      "ID": "mario.MarioFlagPole"
+      ]
     },
     {
+      "ID": "mario.MarioFlagTop",
       "Control": [
         {
-          "orientation": "W",
+          "action": "LevelSwitch",
           "param": "1",
-          "action": "LevelSwitch"
+          "orientation": "W"
         },
         {
-          "orientation": "W",
+          "action": "SetX",
           "param": "100",
-          "action": "SetX"
+          "orientation": "W"
         },
         {
-          "orientation": "W",
+          "action": "SetY",
           "param": "100",
-          "action": "SetY"
+          "orientation": "W"
         },
         {
-          "orientation": "E",
+          "action": "LevelSwitch",
           "param": "1",
-          "action": "LevelSwitch"
+          "orientation": "E"
         },
         {
-          "orientation": "E",
+          "action": "SetX",
           "param": "100",
-          "action": "SetX"
+          "orientation": "E"
         },
         {
-          "orientation": "E",
+          "action": "SetY",
           "param": "100",
-          "action": "SetY"
+          "orientation": "E"
         }
-      ],
-      "ID": "mario.MarioFlagTop"
+      ]
     },
     {
+      "ID": "mario.Brick",
       "Control": [
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.Brick"
+      ]
     },
     {
+      "ID": "mario.StairBlock",
       "Control": [
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.StairBlock"
+      ]
     },
     {
+      "ID": "mario.BreakableBrick",
       "Control": [
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.BreakableBrick"
+      ]
     },
     {
+      "ID": "mario.ItemBlock",
       "Control": [
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.ItemBlock"
+      ]
     },
     {
+      "ID": "mario.Pipetop",
       "Control": [
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         },
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         }
-      ],
-      "ID": "mario.Pipetop"
+      ]
     },
     {
+      "ID": "mario.Pipebody",
       "Control": [
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.Pipebody"
+      ]
     },
     {
+      "ID": "mario.UndergroundBrick",
       "Control": [
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.UndergroundBrick"
+      ]
     },
     {
+      "ID": "mario.UndergroundStairBlock",
       "Control": [
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.UndergroundStairBlock"
+      ]
     },
     {
+      "ID": "mario.UndergroundBreakableBrick",
       "Control": [
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
         },
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.UndergroundBreakableBrick"
+      ]
     },
     {
+      "ID": "mario.UndergroundItemBlock",
       "Control": [
         {
-          "orientation": "E",
+          "action": "SetBoundedLeft",
           "param": "true",
-          "action": "SetBoundedLeft"
+          "orientation": "E"
         },
         {
-          "orientation": "W",
+          "action": "SetBoundedRight",
           "param": "true",
-          "action": "SetBoundedRight"
+          "orientation": "W"
+
         },
         {
-          "orientation": "N",
+          "action": "SetBoundedBottom",
           "param": "true",
-          "action": "SetBoundedBottom"
+          "orientation": "N"
         },
         {
-          "orientation": "S",
+          "action": "SetBoundedTop",
           "param": "true",
-          "action": "SetBoundedTop"
+          "orientation": "S"
         }
-      ],
-      "ID": "mario.UndergroundItemBlock"
+      ]
     },
     {
+      "ID": "mario.Koopa",
       "Control": [
         {
-          "orientation": "N",
+          "action": "AccelerateY",
           "param": "-750.0",
-          "action": "AccelerateY"
+          "orientation": "N"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "idk",
+          "orientation": "E"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "idk",
+          "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "500.0",
+          "orientation": "E"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "-500.0",
+          "orientation": "W"
         }
-      ],
-      "ID": "mario.Koopa"
+      ]
     },
     {
+      "ID": "mario.Goomba",
       "Control": [
         {
-          "orientation": "N",
+          "action": "AccelerateY",
           "param": "-750.0",
-          "action": "AccelerateY"
+          "orientation": "N"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "idk",
+          "orientation": "E"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "idk",
+          "orientation": "W"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "500.0",
+          "orientation": "E"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "-500.0",
+          "orientation": "W"
         }
-      ],
-      "ID": "mario.Goomba"
+      ]
     },
     {
+      "ID": "DEFAULT",
       "Control": [
         {
-          "orientation": "DEFAULT",
+          "action": "NoAction",
           "param": "false",
-          "action": "NoAction"
+          "orientation": "DEFAULT"
         }
-      ],
-      "ID": "DEFAULT"
+      ]
     }
-  ],
-  "maxXVel": 500,
-  "width": 51,
-  "fixed": false,
-  "maxYVel": 500,
-  "yVel": 10,
-  "actionBundles": [
-    {
-      "Control": [
-        {
-          "param": "300.0",
-          "action": "AccelerateX"
-        },
-        {
-          "param": "forwards",
-          "action": "SetXDirection"
-        }
-      ],
-      "ID": "D"
-    },
-    {
-      "Control": [
-        {
-          "param": "-300.0",
-          "action": "AccelerateX"
-        },
-        {
-          "param": "backwards",
-          "action": "SetXDirection"
-        }
-      ],
-      "ID": "A"
-    },
-    {
-      "Control": [
-        {
-          "param": "-300.0",
-          "action": "AccelerateY"
-        }
-      ],
-      "ID": "W"
-    },
-    {
-      "Control": [
-        {
-          "param": "+300.0",
-          "action": "AccelerateY"
-        }
-      ],
-      "ID": "S"
-    },
-    {
-      "Control": [
-        {
-          "param": "-750.0",
-          "action": "Jump"
-        }
-      ],
-      "ID": "SPACE"
-    },
-    {
-      "Control": [
-        {
-          "param": "mario.Mario_Fireball",
-          "action": "SpawnRelative",
-          "coolDown": "1000"
-        }
-      ],
-      "ID": "F"
-    }
-  ],
-  "height": 50
+  ]
 }
+

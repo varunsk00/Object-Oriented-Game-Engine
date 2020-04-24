@@ -1,8 +1,10 @@
 package ooga.model;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import ooga.controller.EntityWrapper;
 import ooga.model.actions.AbsoluteVelocityX;
@@ -31,6 +33,7 @@ public class EntityModel {
   private boolean boundedRight;
   private boolean boundedTop;
   private boolean isDead;
+  private double MAX_HEALTH;
 
   private double xVel;
   private double yVel;
@@ -64,6 +67,7 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readMaxXVelocity();
     yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
+    MAX_HEALTH = health;
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
     fixedEntity = myEntity.getParser().readFixed();
@@ -113,7 +117,6 @@ public class EntityModel {
 
   public void handleControllerInputPressed(String key) {
     if (key != null) {
-      System.out.println(key);
       controlScheme.handleKeyInput(key);
     }
   }
@@ -126,6 +129,9 @@ public class EntityModel {
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
+    }
+    if(Math.abs(yVel)>yVelMax){
+      setYVelocity(Math.signum(yVel)*yVelMax);
     }
   }
 
@@ -145,11 +151,9 @@ public class EntityModel {
 
   public int getNextLevelIndex(){return nextLevelIndex;}
 
-
   public double getWidth(){return entityWidth;}
 
   public double getHeight(){return entityHeight;}
-
 
   public double getXVelocity(){return xVel;}
 
@@ -227,4 +231,27 @@ public class EntityModel {
   public void setBoundedTop(boolean value) {boundedTop = value;}
 
   public boolean isPermeable(){return permeableEntity;}
+
+  public double getHealth() {
+    return health;
+  }
+
+  public void setHealth() {
+    health = MAX_HEALTH;
+  }
+
+  public void loseHealth() {
+    health--;
+  }
+
+  public void resetPosition() {
+    this.setX(100);
+    this.setY(100);
+    this.setXVelocity(0);
+    this.setYVelocity(0);
+  }
+
+  public void changeImage(String param) {
+    myEntity.changeImage(param);
+  }
 }

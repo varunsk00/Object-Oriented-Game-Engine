@@ -1,11 +1,9 @@
 package ooga.model.levels;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
-import ooga.model.EntityModel;
+
 
 public class FiniteLevel extends Level{
 
@@ -13,12 +11,14 @@ public class FiniteLevel extends Level{
   private List<EntityWrapper> playerEntities;
   private List<EntityWrapper> enemyEntities;
 
-  public FiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, String name){
-    super(tileList, playerList, enemyList, name);
+
+  public FiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, int scrollIntX, int scrollIntY, String name) {
+    super(tileList, playerList, enemyList, scrollIntX, scrollIntY, name);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
   }
+
 
 
   @Override

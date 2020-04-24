@@ -2,6 +2,9 @@ package ooga.controller;
 
 
 import java.util.List;
+
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -9,11 +12,15 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
 
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.util.GameParser;
@@ -28,6 +35,7 @@ public class ViewManager implements ViewExternalAPI {
   private InGameMenu menu;
   private ControlSchemeSwitcher config;
   private int escCounter = 0;
+  private int configCounter = 0;
 
   private StageManager currentStage;
   private BorderPane level;
@@ -39,10 +47,6 @@ public class ViewManager implements ViewExternalAPI {
 
   private Scene testScene;
 
-  /**
-   * NEED TO REFACTOR
-   * @Deprecated fuck
-   */
   public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
     this.menu = new InGameMenu();
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
@@ -52,7 +56,6 @@ public class ViewManager implements ViewExternalAPI {
     testPane = level;
     testScene = currentStage.getCurrentScene();
     testScene.setRoot(testPane);
-
     EntityGroup = new Group();
     level.getChildren().add(EntityGroup);
 
@@ -63,7 +66,7 @@ public class ViewManager implements ViewExternalAPI {
     return level;
   }
 
-  public void setUpCamera(List<EntityWrapper> node) { camera = new Camera(currentStage.getStage(), level, node); }
+  public void setUpCamera(List<EntityWrapper> node, int scrollStatusX, int scrollStatusY) { camera = new Camera(currentStage.getStage(), level, node, scrollStatusX, scrollStatusY); }
 
   public StageManager getCurrentStage() {
     return currentStage;
@@ -166,7 +169,7 @@ public class ViewManager implements ViewExternalAPI {
       handlePressInput(KeyCode.H);
       menu.setExitOff();
     }
-    if (menu.getControlsPressed()){
+    if (menu.getControlsPressed() && configCounter < 1){
       launchConfigMenu(gp);
       menu.setControlsOff();
     }
@@ -182,6 +185,21 @@ public class ViewManager implements ViewExternalAPI {
     currentStage.switchScenes("GameSelect");
   }
 
+//  public void saveResetScenes(String state) {
+//    currentStage.saveResetGameScenes(state, currentStage.getCurrentScene());
+//  }
+//
+//  public void resetLevelScene(String gameName) {
+//    currentStage.switchRestartScenes(gameName);
+//
+//  }
+
+  public void endGame() {
+    //need to reset game;
+    goHome(KeyCode.H.getChar());
+  }
+
+
   private void pauseGame(){
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
@@ -193,6 +211,7 @@ public class ViewManager implements ViewExternalAPI {
   private void launchConfigMenu(GameParser gp){
     config = new ControlSchemeSwitcher(gp);
     menu.getChildren().add(config);
+    configCounter++;
   }
 
   private void unPauseGame(){
@@ -201,7 +220,7 @@ public class ViewManager implements ViewExternalAPI {
     EntityGroup.setEffect(null);
     isGamePaused = false;
     escCounter--;
-
+    configCounter = 0;
   }
 
   public boolean getIsGamePaused() {
