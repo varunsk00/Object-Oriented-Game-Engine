@@ -239,7 +239,7 @@ public class EntityModel {
   public void setBoundedRight(boolean value){boundedRight = value;}
 
   public boolean getFixed(){return fixedEntity;}
-
+  //FIXME Refactor
   public void setIsDead(boolean dead) {
     this.isDead = dead;
   }
@@ -267,6 +267,8 @@ public class EntityModel {
   public void setOpacity(double parseDouble) {myEntity.getRender().setOpacity(parseDouble);}
 
   public void setPermeable(boolean parseBoolean) {permeableEntity = parseBoolean;}
+
+  public void removeSelf(){myEntity.removeSelf();}
 
   public SimpleBooleanProperty getForwardsProperty(){return forwardsProperty;}
 

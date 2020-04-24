@@ -86,4 +86,6 @@ public class EntityWrapper {
   public void updateScore(double newValue){score = newValue;}
 
   public double getScore(){return score;}
+
+  public void removeSelf() {myController.removeEntity(this);}
 }
