@@ -39,10 +39,6 @@ public class ViewManager implements ViewExternalAPI {
 
   private Scene testScene;
 
-  /**
-   * NEED TO REFACTOR
-   * @Deprecated fuck
-   */
   public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
     this.menu = new InGameMenu();
     //TODO: Quick and dirty nodes for testing purpose -- replace with Entity stuff
@@ -63,7 +59,7 @@ public class ViewManager implements ViewExternalAPI {
     return level;
   }
 
-  public void setUpCamera(List<EntityWrapper> node) { camera = new Camera(currentStage.getStage(), level, node); }
+  public void setUpCamera(List<EntityWrapper> node, int scrollStatusX, int scrollStatusY) { camera = new Camera(currentStage.getStage(), level, node, scrollStatusX, scrollStatusY); }
 
   public StageManager getCurrentStage() {
     return currentStage;
