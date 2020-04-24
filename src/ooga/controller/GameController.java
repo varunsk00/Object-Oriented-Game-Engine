@@ -88,7 +88,6 @@ public class GameController implements Controller {
 
     myViewManager.setUpCamera(gameParser.getPlayerList()); //FIXME to be more generalized and done instantly
     levelSelector = new LevelSelector(gameParser.parseLevels());
-    myViewManager.saveResetScenes(gameName);
     setUpTimeline();
 
   }
@@ -98,6 +97,7 @@ public class GameController implements Controller {
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e ->
     {
       try {
+        myViewManager.saveResetScenes(gameName);
         step(SECOND_DELAY);
       } catch (XInputNotLoadedException ex) {
         ex.printStackTrace();
@@ -136,13 +136,14 @@ public class GameController implements Controller {
         for (EntityWrapper targetEntity : entityList) {
           if (!entityRemove.contains(targetEntity)) {
             collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
-            resetLevel();
             handleDeadEntities(targetEntity);
           }
         }
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
       }
+
+      resetLevel();
 
       entityList.addAll(entityBuffer);
       entityBuffer = new ArrayList<>();
@@ -166,18 +167,14 @@ public class GameController implements Controller {
   private void resetLevel() {
     if (entityList.get(0).getModel().getHealth() <= 0) {
       entityList.get(0).getModel().setHealth();
-      System.out.println("here");
+      entityList.get(0).getModel().setLevelAdvancementStatus(true);
 
-      myViewManager.resetLevelScene(gameName);
-      entityList.get(0).getModel().resetPosition();
+      levelSelector.restartLevel(entityList, myViewManager);
+//      myViewManager.resetLevelScene(gameName);
 
-//      entityList.get(0).getModel().setLevelAdvancementStatus(true);
-//      entityList.get(0).getModel().setNextLevelIndex((int) 1);
-
-      //levelSelector = new LevelSelector(gameParser.parseLevels());
-
-      //reset level in some way
     }
+    entityList.get(0).getModel().resetPosition();
+    return;
   }
 
   private void handleSaveGame() {
