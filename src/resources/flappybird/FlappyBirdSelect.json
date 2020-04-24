@@ -2,7 +2,5 @@
   "gameName": "FlappyBird",
   "gamePreviewGIF": "flappybird",
   "savingEnabled": "false",
-  "buttonArrangement": [
-    "1 Player"
-  ]
+  "buttonArrangement": 2
 }
