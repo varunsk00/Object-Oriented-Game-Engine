@@ -32,8 +32,6 @@ public class LevelSelector {
     }
     activeLevel.spawnEntities(currentEntityList, viewManager);
     activeLevel.despawnEntities(currentEntityList, viewManager);
-//    this.despawnEntities(currentEntityList, viewManager);
-
   }
 
   private void switchLevel(int levelIndex){
@@ -68,5 +66,9 @@ public class LevelSelector {
 
   public List<Level> getLevelsToPlay() {
     return parsedLevels.subList(parsedLevels.indexOf(activeLevel), parsedLevels.size());
+  }
+
+  public Level getActiveLevel() {
+    return activeLevel;
   }
 }

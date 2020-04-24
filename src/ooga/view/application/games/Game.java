@@ -28,6 +28,7 @@ public class Game {
     private int numPlayers = 0;
 
 
+
     public Game(StageManager stageManager) {
         this.stageManager = stageManager;
         this.oldScene = stageManager.getPastScene();
