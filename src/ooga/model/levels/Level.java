@@ -5,6 +5,8 @@ import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
+import ooga.util.GameStatusProfile;
+import ooga.view.application.Camera;
 
 public abstract class Level {
 
@@ -14,28 +16,30 @@ public abstract class Level {
   private static final int TWO = 2;
   private int currentPlayerInterval = -1;
   private String levelName;
+  private GameStatusProfile gameStatusProfile;
 
-  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, String name){
+  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name){
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
+    gameStatusProfile = gameProfile;
     levelName = name;
   }
 
-  public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-    for (EntityWrapper player : playerEntities) {
-      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-      for (EntityWrapper targetEntity : currentEntityList) {
-        if (!playerEntities.contains(targetEntity) && !isInRange(player.getModel(), targetEntity.getModel())) {
-          entitiesToDespawn.add(targetEntity);
-        }
-      }
-      for(EntityWrapper despawnedEntity : entitiesToDespawn){
-        currentEntityList.remove(despawnedEntity);
-        viewManager.removeEntityGroup(despawnedEntity.getRender());
-      }
-    }
-  }
+//  public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
+//    for (EntityWrapper player : playerEntities) {
+//      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
+//      for (EntityWrapper targetEntity : currentEntityList) {
+//        if (!playerEntities.contains(targetEntity) && !isInRange(player.getModel(), targetEntity.getModel())) {
+//          entitiesToDespawn.add(targetEntity);
+//        }
+//      }
+//      for(EntityWrapper despawnedEntity : entitiesToDespawn){
+//        currentEntityList.remove(despawnedEntity);
+//        viewManager.removeEntityGroup(despawnedEntity.getRender());
+//      }
+//    }
+//  }
 
 
   public abstract void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager);
@@ -56,8 +60,6 @@ public abstract class Level {
   }
 
   public String getLevelName() {
-    //String[] arr = levelName.split("\\.");
-    //return arr[1];
     return levelName;
   }
 

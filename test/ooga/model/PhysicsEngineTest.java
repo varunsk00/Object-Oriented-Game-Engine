@@ -14,7 +14,7 @@ class PhysicsEngineTest {
   @BeforeEach
   void setUp() {
     myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
-    GameParser gameParser = new GameParser("UnitTest", false);
+    GameParser gameParser = new GameParser("UnitTest", null, false);
     myEngine = new PhysicsEngine(gameParser.parsePhysicsProfile());
 
   }

@@ -12,7 +12,7 @@
   "maxYVel": 500,
   "height": 50,
   "width": 51,
-  "scheme": "Keybindings",
+  "scheme": "Keyboard",
   "actionBundles": [
     {
       "ID": "D",
@@ -97,13 +97,17 @@
           "param": "false"
         },
         {
-          "action": "SpawnRelative",
+          "action": "SpawnAndBind",
           "param": "smash.mario_sidea",
           "coolDown": "1000"
         },
         {
           "action": "SetOpacity",
           "param": "0.0"
+        },
+        {
+          "action": "SetPermeable",
+          "param": "true"
         }
       ]
     },
@@ -111,13 +115,17 @@
       "ID": "UP",
       "Control": [
         {
-          "action":"SpawnRelative",
+          "action":"SpawnAndBind",
           "param": "smash.mario_upa",
           "coolDown": "1000"
         },
         {
           "action": "SetOpacity",
           "param": "0.0"
+        },
+        {
+          "action": "SetPermeable",
+          "param": "true"
         }
       ]
     }
@@ -132,6 +140,7 @@
           "action":"SetOpacity"
         },
         {
+          "orientation": "A",
           "action": "SetPermeable",
           "param": "false"
         }

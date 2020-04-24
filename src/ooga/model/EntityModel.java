@@ -36,12 +36,13 @@ public class EntityModel {
   private boolean boundedRight;
   private boolean boundedTop;
   private boolean collidable;
-  private boolean isDead;
+  private double MAX_HEALTH;
 
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
   private Map<String, Action> myActions;
   private Map<CollisionKey, Action> myCollisions;
+  private boolean conditional;
 
   public EntityModel(EntityWrapper entityWrapper) {
     myEntity = entityWrapper;
@@ -68,8 +69,8 @@ public class EntityModel {
     boundedRight = false;
     boundedTop = false;
     boundedBelow = false;
-    isDead = false;
     collidable = true;
+    conditional = true;
   }
 
   private void loadStats() {
@@ -80,6 +81,7 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readMaxXVelocity();
     yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
+    MAX_HEALTH = health;
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
     fixedEntity = myEntity.getParser().readFixed();
@@ -209,7 +211,8 @@ public class EntityModel {
     EntityWrapper newEntity = spawnEntity(param);
     newEntity.getModel().getxProperty().bind(myEntity.getRender().xProperty());
     newEntity.getModel().getyProperty().bind(myEntity.getRender().yProperty());
-    newEntity.getModel().getForwardsProperty().bindBidirectional(forwardsProperty);
+//    newEntity.getModel().getForwardsProperty().bindBidirectional(forwardsProperty);
+    newEntity.getModel().setForwards(this.getForwards());
   }
 
   public EntityWrapper spawnEntity(String param) {
@@ -217,6 +220,9 @@ public class EntityModel {
     return newEntity;
   }
 
+  public void despawnEntity() {
+    myEntity.despawnEntity();
+  }
 
   public boolean getForwards() {return forwards;}
 
@@ -239,18 +245,29 @@ public class EntityModel {
   public void setBoundedRight(boolean value){boundedRight = value;}
 
   public boolean getFixed(){return fixedEntity;}
-  //FIXME Refactor
-  public void setIsDead(boolean dead) {
-    this.isDead = dead;
-  }
-
-  public boolean getIsDead() {
-    return isDead;
-  }
 
   public void setBoundedTop(boolean value) {boundedTop = value;}
 
   public boolean isPermeable(){return permeableEntity;}
+
+  public double getHealth() {
+    return health;
+  }
+
+  public void setHealth() {
+    health = MAX_HEALTH;
+  }
+
+  public void loseHealth() {
+    health--;
+  }
+
+  public void resetPosition() {
+    this.setX(100);
+    this.setY(100);
+    this.setXVelocity(0);
+    this.setYVelocity(0);
+  }
 
   public void changeImage(String param) {
     myEntity.changeImage(param);
@@ -268,12 +285,12 @@ public class EntityModel {
 
   public void setPermeable(boolean parseBoolean) {permeableEntity = parseBoolean;}
 
-  public void removeSelf(){myEntity.removeSelf();}
-
   public SimpleBooleanProperty getForwardsProperty(){return forwardsProperty;}
 
   public SimpleDoubleProperty getxProperty(){return xProperty;}
 
   public SimpleDoubleProperty getyProperty(){return yProperty;}
+
+  public void setConditional(boolean newvalue){conditional = newvalue;}
 }
 

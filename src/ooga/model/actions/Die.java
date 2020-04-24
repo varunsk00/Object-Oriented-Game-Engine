@@ -10,6 +10,6 @@ public class Die extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    entity.setIsDead(true);
+    entity.despawnEntity();
   }
 }

@@ -1,7 +1,6 @@
 package ooga.view.gui.userinterface;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,37 +9,35 @@ import ooga.util.GameParser;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ResourceBundle;
+import java.util.List;
 
 public class TitleScreen extends BorderPane {
-    private final String IMAGES_PACKAGE = "src/ooga/view/gui/resources/";
-    private final String RESOURCES_PACKAGE = "ooga.view.gui.userinterface.resources.";
-    private final String TITLE_SCREEN = "titleScreenButtons";
-    private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE + TITLE_SCREEN);
+    private final String IMAGES_PACKAGE = "src/resources/";
+    private final String IMAGES = "/images/";
     private final String BG = "_player_select.png";
     private final String LOGO = "_logo.png";
     private final double HUNDRED_PERCENT = 100.0;
     private String gameName;
-    private boolean onePressed;
-    private boolean twoPressed;
-    private boolean threePressed;
-    private Button Button1;
-    private Button Button2;
-    private Button Button3;
+    private List<String> selectOptions;
+    private Button[] allButtons;
     private VBox myButtons;
-    private GameParser myGameParser;
+    private boolean[] playerBooleans;
+    private boolean loadPressed;
+    private int num;
 
-    public TitleScreen() {
-    }
+    public TitleScreen() {} //Empty Constructor for step
 
-    public TitleScreen(String name) throws FileNotFoundException {
+    public TitleScreen(String name, List<String> buttonLabels) throws FileNotFoundException {
         this.gameName = name;
+        this.selectOptions = buttonLabels;
+        this.allButtons = new Button[selectOptions.size()];
+        this.playerBooleans = new boolean[selectOptions.size()];
+        this.myButtons = new VBox();
+        myButtons.setId("titleButtons");
+        this.num = 0;
         setBackground();
         setLogo();
         renderButtons();
-        myButtons.setAlignment(Pos.CENTER);
-        myButtons.setSpacing(10.0); //FIXME: MAGIC NUMBER
-        myButtons.setTranslateY(-100.0); //FIXME: MAGIC NUMBER
         setBottom(myButtons);
     }
 
@@ -60,23 +57,28 @@ public class TitleScreen extends BorderPane {
     }
 
     private Image loadImage(String type) throws FileNotFoundException {
-        return new Image(new FileInputStream(IMAGES_PACKAGE + gameName.toLowerCase() + type));
+        return new Image(new FileInputStream(IMAGES_PACKAGE + gameName.toLowerCase() + IMAGES + gameName.toLowerCase() + type));
     }
 
-    private void renderButtons() { //TODO: REFACTOR
-        myButtons = new VBox();
-        Button1 = makeButton(myResources.getString(gameName + "1"), event -> onePressed = true);
-        if (!(myResources.getString(gameName + "2").equals("NOBUTTON"))){
-            Button2 = makeButton(myResources.getString(gameName + "2"), event -> twoPressed = true);
+    private void renderButtons() { //supports infinite amount of player buttons + Load Button
+        for(int i=0; i< allButtons.length; i++){
+            String label = selectOptions.get(i);
+            int index = i;
+            if (label.contains("Player")){ //FIXME: MAGIC NUMBER?
+                allButtons[i] = makeButton(label, event -> playerBooleans[index] = true); }
+            else{
+                allButtons[i] = makeButton(label, event -> {
+                    playerBooleans[index] = true;
+                    loadPressed = true;
+                });
+            }
+            myButtons.getChildren().add(allButtons[i]);
         }
-        Button3 = makeButton(myResources.getString("LoadSavedGame"), event -> threePressed = true);
-
     }
 
     private Button makeButton(String key, EventHandler e) {
         Button tempButton = new Button(key);
         tempButton.setOnAction(e);
-        myButtons.getChildren().add(tempButton);
         formatButton(tempButton);
         return tempButton;
     }
@@ -85,52 +87,32 @@ public class TitleScreen extends BorderPane {
         myButtons.setVgrow(tempButton, Priority.ALWAYS);
     }
 
-    public boolean getOnePressed() {
-        return onePressed;
-    }
-
-    public void setOneOff() {
-        onePressed = false;
-    }
-
-    public boolean getTwoPressed() {
-        return twoPressed;
-    }
-
-    public void setTwoOff() {
-        twoPressed = false;
-    }
-
-    public boolean getThreePressed() {
-        return threePressed;
-    }
-
-    public void setThreeOff() {
-        threePressed = false;
+    public void setLoadOff() {
+        loadPressed = false;
     }
 
     public boolean isPlayerSelected() {
-        return onePressed || twoPressed || threePressed;
+        boolean ret = false;
+        if(playerBooleans != null){
+            for(int i = 0; i<playerBooleans.length;i++){
+                if(playerBooleans[i]){
+                    this.num = (i +1);
+                    ret = playerBooleans[i]; } } }
+        return ret;
     }
 
-    public boolean isLoadSavedGame() { return threePressed; }
-
-    public int playerNumber() { //FIXME: STREAMLINE
-        if (getTwoPressed()){
-            return 2; }
-        return 1;
-    }
+    public boolean isLoadSavedGame() { return loadPressed; }
 
     public void resetButtons() {
-        setOneOff();
-        setTwoOff();
-        setThreeOff();
+        for(int i = 0; i<playerBooleans.length; i++){
+            playerBooleans[i] = false;
+            loadPressed = false; }
     }
 
     public void handleMultiplayer(String gameName){
-        this.myGameParser = new GameParser(gameName, false);
+        GameParser myGameParser = new GameParser(gameName, null, false);
         if (myGameParser.supportsMultiplayer()){
-            myGameParser.updateJSONValue("players", String.valueOf(playerNumber()));
+            myGameParser.updateJSONValue("playerCount", String.valueOf(num));
         }
     }
 }

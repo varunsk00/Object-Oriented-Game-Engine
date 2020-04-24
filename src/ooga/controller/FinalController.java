@@ -3,6 +3,7 @@ package ooga.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+//FIXME: REMOVE EVENTUALLY; UNUSED
 public class FinalController implements Controller {
   private ViewManager myViewAPI;
   private List<EntityWrapper> entityList;

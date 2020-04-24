@@ -19,8 +19,15 @@ public class Camera {
   private List<EntityWrapper> target;
   private Stage myStage;
   private Pane myLevel;
+  private int scrollingStatusX;
+  private int scrollingStatusY;
+  private double sumY;
+  private double sumX;
 
-  public Camera(Stage stage, Pane level, List<EntityWrapper> focus){
+
+  public Camera(Stage stage, Pane level, List<EntityWrapper> focus, int scrollIntX, int scrollIntY){
+    scrollingStatusX = scrollIntX;
+    scrollingStatusY = scrollIntY;
     xPosition = 0;
     yPosition = 0;
     viewPort = new Rectangle();
@@ -45,17 +52,23 @@ public class Camera {
 
   public Rectangle getViewPort(){return viewPort;}
 
-  public void update(VBox menu){
+  public void update(List<Node> menu){
 //    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+2));
     //note: try to get level width working
+    getCenterOfPlayers();
+    viewPort.setX(boundPosition(scrollingStatusX * (sumX-myStage.getWidth()/2), 0, (999999)));
+    viewPort.setY(boundPosition(scrollingStatusY * (sumY-myStage.getHeight()/2), -999999, 0));
+
 //    if (target.getBoundsInParent().getMaxY() < myStage.getHeight()/2) {
 //      viewPort.setY(boundPosition(target.getBoundsInParent().getMinY() - myStage.getHeight() / 2, -999999, 720));
 //    }
 //    else {
 //      viewPort.setY(0);
 //    }
-    viewPort.setX(boundPosition(getCenterOfPlayers()-myStage.getWidth()/2, 0, (999999)));
-    menu.setTranslateX(viewPort.getX());
+    for(Node item: menu){
+      item.setTranslateX(viewPort.getX());
+      item.setTranslateY(viewPort.getY());
+    }
     boundPlayers();
   }
 
@@ -69,18 +82,15 @@ public class Camera {
     }
   }
 
-//  private boolean withinBounds(){
-//    for(EntityWrapper player : target){
-//      if(player.getRender().getBoundsInParent().getMinX())
-//    }
-//  }
-
-  private double getCenterOfPlayers(){
-    double sum = 0;
+  private void getCenterOfPlayers(){
+    sumY = 0;
+    sumX = 0;
     for(int i = 0; i < target.size(); i++){
-        sum += target.get(i).getRender().getBoundsInParent().getCenterX();
+      sumY += target.get(i).getRender().getBoundsInParent().getCenterY();
+      sumX += target.get(i).getRender().getBoundsInParent().getCenterX();
     }
-    sum /= target.size();
-    return sum;
+    sumY /= target.size();
+    sumX /= target.size();
   }
+
 }

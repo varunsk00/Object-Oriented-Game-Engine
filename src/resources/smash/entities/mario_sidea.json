@@ -44,11 +44,27 @@
   ],
   "collisionBundles": [
     {
+      "ID": "smash.finaldest",
       "Control": [
         {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
           "orientation": "W",
-          "param": "die",
-          "action":"NoAction"
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
         }
       ]
     }

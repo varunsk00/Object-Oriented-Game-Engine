@@ -18,7 +18,7 @@
       "ID": "1",
       "Control": [
         {
-          "action": "SetX",
+          "action": "NoAction",
           "param": "-1000.0"
         }
       ]
@@ -28,9 +28,10 @@
     {
       "Control": [
         {
-          "orientation": "W",
+          "ID": "mario.mario_sidea",
+          "orientation": "A",
           "param": "die",
-          "action":"NoAction"
+          "action":"Die"
         }
       ]
     }

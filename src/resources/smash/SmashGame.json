@@ -1,6 +1,6 @@
 {
   "gameName": "Smash",
-  "players": "1",
+  "playerCount": "1",
   "physicsProfile": [
     {
       "Friction": "20",
@@ -20,6 +20,13 @@
         "X": "100",
         "Y": "100"
       }
+    }
+  ],
+  "gameStatusProfile": [
+    {
+      "scrollingStatusY": "1",
+      "spawningInterval": "0",
+      "scrollingStatusX": "1"
     }
   ]
 }

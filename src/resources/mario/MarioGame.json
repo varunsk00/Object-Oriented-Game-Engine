@@ -1,6 +1,6 @@
 {
   "gameName": "Mario",
-  "players": "2",
+  "playerCount": "1",
   "physicsProfile": [
     {
       "Friction": "20",
@@ -28,6 +28,13 @@
         "X": "0",
         "Y": "100"
       }
+    }
+  ],
+  "gameStatusProfile": [
+    {
+      "scrollingStatusY": "0",
+      "spawningInterval": "0",
+      "scrollingStatusX": "1"
     }
   ]
 }

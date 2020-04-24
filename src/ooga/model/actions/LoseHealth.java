@@ -10,6 +10,6 @@ public class LoseHealth extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-//    entity.loseHealth(Double.parseDouble(param));
+    entity.loseHealth();
   }
 }

@@ -32,14 +32,6 @@ public class EntityWrapper {
     myView = new EntityView(this);
   }
 
-  public EntityWrapper(EntityWrapper copyEntity){
-    myModel = copyEntity.myModel;
-    myView = new EntityView(copyEntity);
-    myController = copyEntity.myController;
-    EntityID = copyEntity.EntityID;
-//    myParser = copyEntity.myParser;
-  }
-
   public void update(double elapsedTime){
     myModel.update(elapsedTime);
     myView.update(myModel.getX(), myModel.getY(), myModel.getForwards());
@@ -68,6 +60,10 @@ public class EntityWrapper {
     return newEntity;
   }
 
+  public void despawnEntity() {
+    myController.removeEntity(this);
+  }
+
   public String getEntityID(){
     return this.EntityID;
   }
@@ -86,6 +82,4 @@ public class EntityWrapper {
   public void updateScore(double newValue){score = newValue;}
 
   public double getScore(){return score;}
-
-  public void removeSelf() {myController.removeEntity(this);}
 }
