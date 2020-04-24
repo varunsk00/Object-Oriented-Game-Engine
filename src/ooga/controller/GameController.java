@@ -60,7 +60,6 @@ public class GameController implements Controller {
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
     entityRemove = new ArrayList<>();
-//    EntityWrapper player = new EntityWrapper("Mario_Fire", this);
 
     for(EntityWrapper player : gameParser.getPlayerList()){
       System.out.println(player);
@@ -83,7 +82,7 @@ public class GameController implements Controller {
       }
     });
 
-    myViewManager.setUpCamera(gameParser.getPlayerList()); //FIXME to be more generalized and done instantly
+    myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.readScrollingStatusX(), gameParser.readScrollingStatusY());
 
 
     levelSelector = new LevelSelector(gameParser.parseLevels());
