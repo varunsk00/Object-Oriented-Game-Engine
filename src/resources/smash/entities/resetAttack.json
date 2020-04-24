@@ -1,0 +1,38 @@
+{
+  "entityName": "resetter",
+  "image": "transparent.png",
+  "health": 1,
+  "xPos": 100,
+  "yPos": 100,
+  "xVel": 10,
+  "yVel": 10,
+  "fixed": false,
+  "permeable": true,
+  "maxXVel": 500,
+  "maxYVel": 500,
+  "height": 5,
+  "width": 5,
+  "scheme": "Pattern",
+  "actionBundles": [
+    {
+      "ID": "1",
+      "Control": [
+        {
+          "action": "SetX",
+          "param": "-1000.0"
+        }
+      ]
+    }
+  ],
+  "collisionBundles": [
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "die",
+          "action":"NoAction"
+        }
+      ]
+    }
+  ]
+}

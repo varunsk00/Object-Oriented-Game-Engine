@@ -1,6 +1,6 @@
 {
   "entityName": "mario",
-  "image": "firemario_walk.gif",
+  "image": "mario_default.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
@@ -53,7 +53,7 @@
       "ID": "S",
       "Control": [
         {
-          "action": "AccelerateY",
+          "action": "NoAction",
           "param": "+100.0"
         }
       ]
@@ -68,12 +68,97 @@
       ]
     },
     {
-      "ID": "F",
+      "ID": "RIGHT",
       "Control": [
         {
-          "action": "SpawnRelative",
-          "param": "mario.Mario_Fireball",
+          "action": "SetXDirection",
+          "param": "true"
+        },
+        {
+          "action": "SpawnAndBind",
+          "param": "smash.mario_sidea",
           "coolDown": "1000"
+        },
+        {
+          "action": "SetOpacity",
+          "param": "0.0"
+        },
+        {
+          "action": "SetPermeable",
+          "param": "true"
+        }
+      ]
+    },
+    {
+      "ID": "LEFT",
+      "Control": [
+        {
+          "action": "SetXDirection",
+          "param": "false"
+        },
+        {
+          "action": "SpawnRelative",
+          "param": "smash.mario_sidea",
+          "coolDown": "1000"
+        },
+        {
+          "action": "SetOpacity",
+          "param": "0.0"
+        }
+      ]
+    },
+    {
+      "ID": "UP",
+      "Control": [
+        {
+          "action":"SpawnRelative",
+          "param": "smash.mario_upa",
+          "coolDown": "1000"
+        },
+        {
+          "action": "SetOpacity",
+          "param": "0.0"
+        }
+      ]
+    }
+  ],
+  "collisionBundles": [
+    {
+      "ID": "smash.resetAttack",
+      "Control": [
+        {
+          "orientation": "A",
+          "param": "100.0",
+          "action":"SetOpacity"
+        },
+        {
+          "action": "SetPermeable",
+          "param": "false"
+        }
+      ]
+    },
+    {
+      "ID": "smash.finaldest",
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
         }
       ]
     }

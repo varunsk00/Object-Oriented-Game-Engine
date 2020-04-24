@@ -1,16 +1,16 @@
 {
-  "gameName": "Mario",
+  "gameName": "Smash",
   "players": "1",
   "physicsProfile": [
     {
-      "Friction": "50",
-      "Drag": "50",
-      "Gravity": "50"
+      "Friction": "20",
+      "Drag": "20",
+      "Gravity": "20"
     }
   ],
   "levelArrangement": [
     {
-      "Level_1": "Final_Destination"
+      "Level_1": "smash.finaldestination"
     }
   ],
   "playerArrangement": [
@@ -18,13 +18,6 @@
       "EntityName": "smash.mario",
       "Arrangement": {
         "X": "100",
-        "Y": "100"
-      }
-    },
-    {
-      "EntityName": "smash.link",
-      "Arrangement": {
-        "X": "0",
         "Y": "100"
       }
     }

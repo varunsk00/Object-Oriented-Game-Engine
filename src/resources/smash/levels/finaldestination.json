@@ -1,0 +1,23 @@
+{
+  "levelType": "FiniteLevel",
+  "levelName": "finaldestination",
+  "players": "2",
+  "tileArrangement": [
+    {
+      "EntityName": "smash.finaldest",
+      "Arrangement": [
+        {
+          "10": [
+            "0-100"
+          ]
+        }
+      ]
+    },
+  ],
+  "playerArrangement": [
+  ],
+  "tileWidth": 50,
+  "enemyArrangement": [
+  ],
+  "tileHeight": 50
+}

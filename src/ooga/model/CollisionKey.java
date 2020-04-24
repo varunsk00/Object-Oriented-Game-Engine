@@ -1,4 +1,4 @@
-package ooga.model.actions;
+package ooga.model;
 
 public class CollisionKey {
 
@@ -21,8 +21,10 @@ public class CollisionKey {
   @Override
   public boolean equals(Object targetCollisionKey) {
     if (targetCollisionKey.getClass().equals(this.getClass())) {
-      return this.ID.equals(((CollisionKey) targetCollisionKey).getID()) &&
-          this.orientation.equals(((CollisionKey) targetCollisionKey).getOrientation());
+      return (this.ID.equals(((CollisionKey) targetCollisionKey).getID()) &&
+          this.orientation.equals(((CollisionKey) targetCollisionKey).getOrientation())
+          || (this.ID.equals(((CollisionKey) targetCollisionKey).getID())) &&
+          ((CollisionKey) targetCollisionKey).getOrientation().equals("A"));
     }
     else {
       return false;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ooga.model.actions.Action;
 import ooga.util.ActionBundle;

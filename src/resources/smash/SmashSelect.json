@@ -1,0 +1,8 @@
+{
+  "gameName": "Smash",
+  "gamePreviewGIF": "smashGif",
+  "savingEnabled": "false",
+  "buttonArrangement": [
+    "1 Player"
+  ]
+}

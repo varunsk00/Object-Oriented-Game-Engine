@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
-import ooga.model.actions.CollisionKey;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

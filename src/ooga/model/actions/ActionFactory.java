@@ -44,7 +44,6 @@ public class ActionFactory {
   public Action makeAction(String action, Class<?>[] classes, Object[] params) throws InvalidActionException {
     //String formalAction = action;
     String formalAction = validateAction(action); //TODO: check if action is valid
-
     return buildAction(formalAction, classes, params);
   }
 
@@ -68,7 +67,7 @@ public class ActionFactory {
     }
     catch
     (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      throw new InvalidActionException("Action could not be found.");
+      throw new InvalidActionException("Action " + formalAction + " could not be found.");
     }
   }
 

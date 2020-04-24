@@ -98,6 +98,7 @@
   "entityName": "Fire_Mario",
   "collisionBundles": [
     {
+      "ID": "mario.MarioFlagPole",
       "Control": [
         {
           "orientation": "W",
@@ -130,7 +131,7 @@
           "action": "SetY"
         }
       ],
-      "ID": "mario.MarioFlagPole"
+
     },
     {
       "Control": [
