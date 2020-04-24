@@ -71,18 +71,18 @@ public class GameController implements Controller {
       myViewManager.updateEntityGroup(player.getRender());
     }
 
-    physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile()); //TODO: add PhysicsProfile object
+    physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile());
     collisionEngine = new CollisionEngine();
     myViewManager.getTestScene().setOnKeyPressed(e -> {
 
       myViewManager.handlePressInput(e.getCode());
       for(EntityWrapper entity : entityList){
-        entity.handleKeyInput(e.getCode().toString());//FIXME i would like to
+        entity.handleKeyInput(e.getCode().toString());
       }
     });
     myViewManager.getTestScene().setOnKeyReleased(e-> {
       for(EntityWrapper entity : entityList){
-        entity.handleKeyReleased(e.getCode().toString());//FIXME i would like to
+        entity.handleKeyReleased(e.getCode().toString());
       }
     });
     myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.readScrollingStatusX(), gameParser.readScrollingStatusY());
@@ -92,7 +92,6 @@ public class GameController implements Controller {
   }
 
   private void setUpTimeline() {
-    //TODO: Timeline Code -- don't remove
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e ->
     {
       try {
@@ -128,8 +127,6 @@ public class GameController implements Controller {
       levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
       handleSaveGame();
       myViewManager.updateValues();
-      //TODO: Consider making one method in Level.java as updateLevel() for the methods above^, although I concern about whether or not spawnEntities would get an up-to-date EntityList
-
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           if (!entityRemove.contains(targetEntity)) {
