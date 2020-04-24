@@ -152,7 +152,6 @@ public class EntityJSONParser {
   private ImageView loadImage(String imageName) {
 //    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
     InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
-//    InputStream is = this.getClass().getClassLoader().getResourceAsStream("resources/mario/images/brick.png");
     Image entityImage = null;
     entityImage = new Image(is);
     return new ImageView(entityImage);
