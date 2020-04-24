@@ -150,11 +150,12 @@ public class GameController implements Controller {
     for (EntityWrapper subjectEntity : entityList) {
       for (EntityWrapper targetEntity : entityList) {
         if (!entityRemove.contains(targetEntity)) {
-          myModelManager.getCollisionEngine().produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+          myModelManager.produceCollisions(subjectEntity, targetEntity);
+//          myModelManager.getCollisionEngine().produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
         }
       }
       subjectEntity.update(elapsedTime);
-      myModelManager.applyEntityPhysics(subjectEntity.getModel());
+      myModelManager.applyEntityPhysics(subjectEntity);
     }
 
     checkIfResetLevel();

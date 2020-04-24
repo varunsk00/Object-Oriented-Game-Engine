@@ -46,8 +46,12 @@ public class ModelManager implements ModelExternalAPI {
     return collisionEngine;
   }
 
-  public void applyEntityPhysics(EntityModel model) {
-      physicsEngine.applyForces(model);
+  public void applyEntityPhysics(EntityWrapper model) {
+      physicsEngine.applyForces(model.getModel());
+  }
+
+  public void produceCollisions(EntityWrapper subjectModel, EntityWrapper targetModel) {
+    collisionEngine.produceCollisionActions(subjectModel.getModel(), targetModel.getModel());
   }
 
   public boolean checkHealthGone(EntityWrapper entity) {
