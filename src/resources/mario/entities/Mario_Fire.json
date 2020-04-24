@@ -16,7 +16,6 @@
   "maxYVel": 1000,
   "height": 50,
   "width": 51,
-  "scheme": "Keybindings",
   "actionBundles": [
     {
       "ID": "D",

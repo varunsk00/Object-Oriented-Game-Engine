@@ -70,7 +70,6 @@ public class InGameMenu extends VBox{
     }
 
     public boolean getControlsPressed() {
-        System.out.println("CHECKED");
         return controlsPressed;
     }
 

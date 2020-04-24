@@ -35,13 +35,13 @@ public class ControlSchemeSwitcher {
     private HBox ret = new HBox();
 
     public ControlSchemeSwitcher(List<EntityWrapper> playerList){
-        System.out.println("SPAWNED");
         this.playerNum = playerList.size();
         populateIDs(playerList);
         createParsers();
         Text config = new Text(myResources.getString("MenuTitle"));
         ret.getChildren().add(config);
         this.actionMap = parseAction2KeyMap();
+        System.out.println(actionMap);
         loadDefaultControls();
         for(VBox box: bindingDisplay){
             for(Node field: box.getChildren()){
@@ -99,6 +99,7 @@ public class ControlSchemeSwitcher {
 
     private void drawActionsOnScreen(){
         for(String s: actions){
+            System.out.println(s);
             Text action = new Text(myResources.getString(s));
             myActions.getChildren().add(action);
         }

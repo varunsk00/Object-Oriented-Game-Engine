@@ -19,6 +19,7 @@ import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.util.GameParser;
 import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
+import ooga.view.entity.EntityView;
 import ooga.view.gui.managers.StageManager;
 
 public class ViewManager implements ViewExternalAPI {
@@ -41,7 +42,7 @@ public class ViewManager implements ViewExternalAPI {
 
   private Scene testScene;
 
-  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder){
+  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, List<EntityWrapper> playerList){
     this.menu = new InGameMenu();
     this.config = new ControlSchemeSwitcher(playerList);
     this.overlay.add(menu);

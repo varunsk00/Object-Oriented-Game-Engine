@@ -407,6 +407,24 @@
         }
       ],
       "ID": "P"
+    },
+    {
+      "ID": "U",
+      "Control": [
+        {
+          "action": "ChangeImage",
+          "param": "mario/images/fireluigi_walk.gif"
+        }
+      ]
+    },
+    {
+      "ID": "Y",
+      "Control": [
+        {
+          "action": "ChangeImage",
+          "param": "mario/images/firemario_walk.gif"
+        }
+      ]
     }
   ],
   "height": 100
