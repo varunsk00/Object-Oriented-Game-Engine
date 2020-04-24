@@ -1,7 +1,7 @@
 {
   "entityName": "Fire_Mario",
   "image": "firemario_walk.gif",
-  "health": 2,
+  "health": 3,
   "xPos": 100,
   "yPos": 100,
   "xVel": 10,

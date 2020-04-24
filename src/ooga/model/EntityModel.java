@@ -31,6 +31,7 @@ public class EntityModel {
   private boolean boundedRight;
   private boolean boundedTop;
   private boolean isDead;
+  private double MAX_HEALTH;
 
   private double xVel;
   private double yVel;
@@ -64,6 +65,7 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readMaxXVelocity();
     yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
+    MAX_HEALTH = health;
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
     fixedEntity = myEntity.getParser().readFixed();
@@ -233,7 +235,7 @@ public class EntityModel {
   }
 
   public void setHealth() {
-    health = 2;
+    health = MAX_HEALTH;
   }
 
   public void loseHealth() {

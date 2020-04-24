@@ -144,7 +144,6 @@ public class GameController implements Controller {
           }
           if (targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
             entityRemove.add(targetEntity);
-//            targetEntity.getModel().setIsDead(false);
           }
         }
         }
