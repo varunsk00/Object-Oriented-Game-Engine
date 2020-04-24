@@ -24,6 +24,7 @@ public class StageManager {
     private AudioVideoManager avManager;
     private String pastTitle;
     private Map<String, Scene> lastScene;
+    private Map<String, Scene> resetGameScenes;
 
 
     public StageManager(Stage primaryStage, AudioVideoManager avManager) throws FileNotFoundException {
@@ -33,7 +34,7 @@ public class StageManager {
         stage.show();
         stage.setResizable(false);
         lastScene = new HashMap<String, Scene>();
-        //stage.setResizable(false);
+        resetGameScenes = new HashMap<String, Scene>();
     }
 
     /**
@@ -45,6 +46,14 @@ public class StageManager {
         stage.setScene(lastScene.get(title));
         stage.setTitle(title);
         currentScene = lastScene.get(title);
+        currentScene.getStylesheets().add("ooga/view/styling/default.css");
+    }
+
+    public void switchRestartScenes(String title) {
+        pastScene = stage.getScene();
+        stage.setScene(resetGameScenes.get(title));
+        stage.setTitle(title);
+        currentScene = resetGameScenes.get(title);
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
     }
 
@@ -71,6 +80,7 @@ public class StageManager {
         });;
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
+//        resetGameScenes.put(title, currentScene);
         stage.setTitle(title);
     }
 
@@ -92,6 +102,10 @@ public class StageManager {
     }
 
     public Stage getStage(){return stage;}
+
+    public void saveResetGameScenes(String title, Scene resetScene) {
+        resetGameScenes.put(title, resetScene);
+    }
 
     public void updateCurrentScene(String title, Scene saveScene) {
         lastScene.put(title, saveScene);

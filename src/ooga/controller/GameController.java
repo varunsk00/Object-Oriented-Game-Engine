@@ -43,6 +43,7 @@ public class GameController implements Controller {
 
   private Timeline animation;
   private InfiniteLevelBuilder builder;
+  private String gameName;
   private ViewManager myViewManager;
   private LevelSelector levelSelector;
   private GamePad g;
@@ -54,7 +55,7 @@ public class GameController implements Controller {
   public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
     builder = new InfiniteLevelBuilder(this);
     g = new GamePad();
-
+    this.gameName = gameName;
 
     myViewManager = new ViewManager(stageManager, builder);
     gameParser = new GameParser(gameName, this, loadedGame);
@@ -86,9 +87,8 @@ public class GameController implements Controller {
     });
 
     myViewManager.setUpCamera(gameParser.getPlayerList()); //FIXME to be more generalized and done instantly
-
-
     levelSelector = new LevelSelector(gameParser.parseLevels());
+    myViewManager.saveResetScenes(gameName);
     setUpTimeline();
 
   }
@@ -135,17 +135,10 @@ public class GameController implements Controller {
       for (EntityWrapper subjectEntity : entityList) {
         for (EntityWrapper targetEntity : entityList) {
           if (!entityRemove.contains(targetEntity)) {
-            collisionEngine
-                .produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
-          if (entityList.get(0).getModel().getHealth() <= 0) {
-            entityList.get(0).getModel().setHealth();
-            entityList.get(0).getModel().resetPosition();
-            //reset level in some way
+            collisionEngine.produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+            resetLevel();
+            handleDeadEntities(targetEntity);
           }
-          if (targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
-            entityRemove.add(targetEntity);
-          }
-        }
         }
         subjectEntity.update(elapsedTime);
         physicsEngine.applyForces(subjectEntity.getModel());
@@ -162,6 +155,29 @@ public class GameController implements Controller {
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
 
+  }
+
+  private void handleDeadEntities(EntityWrapper targetEntity) {
+    if (targetEntity.getModel().getIsDead() && !entityRemove.contains(targetEntity)) {
+      entityRemove.add(targetEntity);
+    }
+  }
+
+  private void resetLevel() {
+    if (entityList.get(0).getModel().getHealth() <= 0) {
+      entityList.get(0).getModel().setHealth();
+      System.out.println("here");
+
+      myViewManager.resetLevelScene(gameName);
+      entityList.get(0).getModel().resetPosition();
+
+//      entityList.get(0).getModel().setLevelAdvancementStatus(true);
+//      entityList.get(0).getModel().setNextLevelIndex((int) 1);
+
+      //levelSelector = new LevelSelector(gameParser.parseLevels());
+
+      //reset level in some way
+    }
   }
 
   private void handleSaveGame() {
