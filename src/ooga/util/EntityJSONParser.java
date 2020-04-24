@@ -147,7 +147,6 @@ public class EntityJSONParser extends Parser {
 
   private ImageView loadImage(String imageName) {
 //    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
-    System.out.println(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
     InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
     Image entityImage = null;
     entityImage = new Image(is);

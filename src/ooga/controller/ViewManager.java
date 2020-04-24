@@ -233,4 +233,8 @@ public class ViewManager implements ViewExternalAPI {
   public boolean getControlSwitcher(){
     return launchControlSwitcher;
   }
+
+  public Camera getCamera(){
+    return camera;
+  }
 }

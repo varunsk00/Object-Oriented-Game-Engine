@@ -101,10 +101,6 @@
     -fx-spacing: 57;
 }
 
-#configMenu{
-    -fx-translate-x: 80;
-}
-
 .text-field{
     -fx-font-family: Pixeboy;
     -fx-font-size: 30px;

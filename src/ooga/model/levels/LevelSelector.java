@@ -7,6 +7,7 @@ import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
 import ooga.util.GameStatusProfile;
+import ooga.view.application.Camera;
 
 public class LevelSelector {
 
@@ -16,11 +17,13 @@ public class LevelSelector {
 
   private int spawningInterval;
   private GameStatusProfile gameStatusProfile;
+  private Camera gameCamera;
 
 
-  public LevelSelector(List<Level> levelList, GameStatusProfile gameProfile){
+  public LevelSelector(List<Level> levelList, GameStatusProfile gameProfile, Camera camera){
     parsedLevels = levelList;
     gameStatusProfile = gameProfile;
+    gameCamera = camera;
     spawningInterval = gameStatusProfile.readSpawningInterval();
     activeLevel = parsedLevels.get(0);
   }
@@ -33,10 +36,6 @@ public class LevelSelector {
       activeLevel.setCurrentPlayerInterval(Math.abs(calculatePlayerInterval(currentEntityList.get(0))));
     }
     activeLevel.spawnEntities(currentEntityList, viewManager);
-//<<<<<<< HEAD
-//    activeLevel.despawnEntities(currentEntityList, viewManager);
-//=======
-//    activeLevel.despawnEntities(currentEntityList, viewManager);
     this.despawnEntities(currentEntityList, viewManager);
 
 //>>>>>>> 5854a31735b775444eaaa1b24aa6a390047d9e73
