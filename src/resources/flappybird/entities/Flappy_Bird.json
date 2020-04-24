@@ -50,6 +50,11 @@
           "orientation": "W",
           "param": "-50",
           "action": "MoveX"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "none",
+          "orientation": "W"
         }
       ],
       "ID": "flappybird.Pipebody"

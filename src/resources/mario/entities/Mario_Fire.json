@@ -429,12 +429,12 @@
         },
         {
           "action": "LoseHealth",
-          "param": "idk",
+          "param": "none",
           "orientation": "E"
         },
         {
           "action": "LoseHealth",
-          "param": "idk",
+          "param": "none",
           "orientation": "W"
         },
         {
