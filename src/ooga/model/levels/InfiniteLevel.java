@@ -6,6 +6,7 @@ import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
+import ooga.util.GameStatusProfile;
 import ooga.view.application.Camera;
 
 public class InfiniteLevel extends Level{
@@ -15,31 +16,32 @@ public class InfiniteLevel extends Level{
   private List<EntityWrapper> enemyEntities;
   private int scrollingStatusX;
   private int scrollingStatusY;
-  private static final int spawningInterval = 500;
+  private int spawningInterval;
+  private GameStatusProfile gameStatusProfile;
 
-  public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, int scrollIntX, int scrollIntY, String name) {
-    super(tileList, playerList, enemyList, scrollIntX, scrollIntY, name);
+  public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name) {
+    super(tileList, playerList, enemyList, gameProfile, name);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
-    scrollingStatusX = scrollIntX;
-    scrollingStatusY = scrollIntY;
+    gameStatusProfile = gameProfile;
+    scrollingStatusX = gameStatusProfile.readScrollingStatusX();
+    scrollingStatusY = gameStatusProfile.readScrollingStatusY();
+    spawningInterval = gameStatusProfile.readSpawningInterval();
   }
 
 
 
   @Override
   public void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
-//    System.out.println(getCurrentPlayerInterval() + "     " + calculatePlayerInterval(currentEntityList.get(0)));
     for (EntityWrapper player : playerEntities) {
       if (calculatePlayerInterval(player) > this.getCurrentPlayerInterval()) {
         this.setCurrentPlayerInterval(calculatePlayerInterval(currentEntityList.get(0)));
         int tileInterval = calculatePlayerInterval(player) + 2; //TODO: find a better way to spawn pipes outwards
 
         for (EntityWrapper tileEntity : tileEntities) {
-            EntityWrapper newSpawn = new EntityWrapper(tileEntity.getEntityID(), tileEntity.getController()); //FIXME: Need a better way to make the new entity
+            EntityWrapper newSpawn = new EntityWrapper(tileEntity.getEntityID(), tileEntity.getController());
             resizeEntity(newSpawn, tileEntity);
-
             setEntityPositions(newSpawn, tileEntity, tileInterval);
             currentEntityList.add(newSpawn);
             viewManager.updateEntityGroup(newSpawn.getRender());
@@ -62,15 +64,15 @@ public class InfiniteLevel extends Level{
   }
 
   private void setEntityPositions(EntityWrapper newSpawn, EntityWrapper copyEntity, int tileInterval) {
-    double spawnCoordinate = tileInterval * spawningInterval;
+    double spawnCoordinate = tileInterval * this.spawningInterval;
     newSpawn.getModel()
         .setX(spawnCoordinate * this.scrollingStatusX + copyEntity.getModel().getX() * this.scrollingStatusY);
     newSpawn.getModel()
-        .setY(spawnCoordinate * this.scrollingStatusY + copyEntity.getModel().getY() * this.scrollingStatusX);
+        .setY(-spawnCoordinate * this.scrollingStatusY + copyEntity.getModel().getY() * this.scrollingStatusX);
   }
 
   private int calculatePlayerInterval(EntityWrapper player) {
-    return (int) (player.getModel().getX() * this.scrollingStatusX + player.getModel().getY() * this.scrollingStatusY)/spawningInterval;
+    return (int) Math.abs((player.getModel().getX() * this.scrollingStatusX + player.getModel().getY() * this.scrollingStatusY)/spawningInterval);
   }
 
 }

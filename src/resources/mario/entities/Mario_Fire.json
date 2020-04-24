@@ -4,6 +4,10 @@
   "health": 3,
   "xPos": 100,
   "yPos": 100,
+  "scheme": "Keyboard",
+  "permeable": false,
+  "health": 3,
+  "xPos": 100,
   "xVel": 10,
   "yVel": 10,
   "fixed": false,
@@ -12,7 +16,6 @@
   "maxYVel": 1000,
   "height": 50,
   "width": 51,
-  "scheme": "Keybindings",
   "actionBundles": [
     {
       "ID": "D",

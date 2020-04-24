@@ -8,12 +8,10 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Node;
 import javafx.util.Duration;
 import ooga.model.CollisionEngine;
 import ooga.model.PhysicsEngine;
-import ooga.model.controlschemes.ControlScheme;
-import ooga.model.controlschemes.GamePad;
+import ooga.util.GamePadListener;
 import ooga.model.levels.InfiniteLevelBuilder;
 
 
@@ -47,7 +45,7 @@ public class GameController implements Controller {
   private String gameName;
   private ViewManager myViewManager;
   private LevelSelector levelSelector;
-  private GamePad g;
+  private GamePadListener g;
   private GameParser gameParser;
   private ControlSchemeSwitcher myControlSchemeSwitcher;
 
@@ -55,12 +53,10 @@ public class GameController implements Controller {
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
     builder = new InfiniteLevelBuilder(this);
-    g = new GamePad();
-    this.gameName = gameName;
+    g = new GamePadListener();
 
-    myViewManager = new ViewManager(stageManager, builder);
     gameParser = new GameParser(gameName, this, loadedGame);
-    myControlSchemeSwitcher = new ControlSchemeSwitcher(gameParser);
+    myViewManager = new ViewManager(stageManager, builder, gameParser.getPlayerList());
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
@@ -85,8 +81,8 @@ public class GameController implements Controller {
         entity.handleKeyReleased(e.getCode().toString());
       }
     });
-    myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.readScrollingStatusX(), gameParser.readScrollingStatusY());
-    levelSelector = new LevelSelector(gameParser.parseLevels());
+    myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.parseGameStatusProfile().readScrollingStatusX(), gameParser.parseGameStatusProfile().readScrollingStatusY());
+    levelSelector = new LevelSelector(gameParser.parseLevels(), gameParser.parseGameStatusProfile());
     setUpTimeline();
 
   }
@@ -111,7 +107,7 @@ public class GameController implements Controller {
 
   private void step (double elapsedTime) throws Exception {
     g.update();
-    myViewManager.handleMenuInput(gameParser);
+    myViewManager.handleMenuInput();
     if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (g.getState() != null) {
         if (!g.getState().getPressed()) {
@@ -178,6 +174,7 @@ public class GameController implements Controller {
 
   }
 
+  //TODO: fix duplicated code if possible?
   private void despawnOldLevel() {
     List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
     for (EntityWrapper targetEntity : entityList) {

@@ -73,7 +73,13 @@ public class EntityJSONParser {
     return myScheme;
   }
 
-  public List<String> updateControls(String param, String newKeyBind, boolean write) { //TODO: REFACTOR
+  public void updateControlScheme(String newScheme) {
+    JSONObject root = jsonObject;
+    root.put("scheme", newScheme);
+    write2JSON(root, "Successfully Updated Control Scheme!");
+  }
+
+  public List<String> updateControls(String param, String newKeyBind, boolean write) {
     List<String> ret = new ArrayList<>();
     JSONObject root = jsonObject;
     JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
@@ -151,6 +157,7 @@ public class EntityJSONParser {
 
   private ImageView loadImage(String imageName) {
 //    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
+    System.out.println(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
     InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
     Image entityImage = null;
     entityImage = new Image(is);

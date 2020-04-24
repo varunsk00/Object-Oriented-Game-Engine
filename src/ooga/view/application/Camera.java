@@ -52,14 +52,23 @@ public class Camera {
 
   public Rectangle getViewPort(){return viewPort;}
 
-  public void update(VBox menu){
+  public void update(List<Node> menu){
 //    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+2));
     //note: try to get level width working
     getCenterOfPlayers();
     viewPort.setX(boundPosition(scrollingStatusX * (sumX-myStage.getWidth()/2), 0, (999999)));
-    menu.setTranslateX(viewPort.getX());
     viewPort.setY(boundPosition(scrollingStatusY * (sumY-myStage.getHeight()/2), -999999, 0));
-    menu.setTranslateY(viewPort.getY());
+
+//    if (target.getBoundsInParent().getMaxY() < myStage.getHeight()/2) {
+//      viewPort.setY(boundPosition(target.getBoundsInParent().getMinY() - myStage.getHeight() / 2, -999999, 720));
+//    }
+//    else {
+//      viewPort.setY(0);
+//    }
+    for(Node item: menu){
+      item.setTranslateX(viewPort.getX());
+      item.setTranslateY(viewPort.getY());
+    }
     boundPlayers();
   }
 
