@@ -28,13 +28,13 @@ public class FiniteLevel extends Level{
       for (EntityWrapper tileEntity : tileEntities) {
         if (!playerEntities.contains(tileEntity) && isInRange(player.getModel(), tileEntity.getModel()) && !currentEntityList.contains(tileEntity)) {
           currentEntityList.add(tileEntity);
-          viewManager.updateEntityGroup(tileEntity.getRender());
+          viewManager.addEntity(tileEntity.getRender());
         }
       }
       for (EntityWrapper enemyEntity : enemyEntities) {
         if (!playerEntities.contains(enemyEntity) && isInRange(player.getModel(), enemyEntity.getModel()) && !currentEntityList.contains(enemyEntity)) {
           currentEntityList.add(enemyEntity);
-          viewManager.updateEntityGroup(enemyEntity.getRender());
+          viewManager.addEntity(enemyEntity.getRender());
         }
       }
     }

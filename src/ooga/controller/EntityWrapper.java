@@ -59,6 +59,10 @@ public class EntityWrapper {
     return newEntity;
   }
 
+  public void despawnEntity() {
+    myController.removeEntity(this);
+  }
+
   public String getEntityID(){
     return this.EntityID;
   }

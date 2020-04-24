@@ -61,7 +61,7 @@ public class LevelSelector {
       }
       for(EntityWrapper despawnedEntity : entitiesToDespawn){
         currentEntityList.remove(despawnedEntity);
-        viewManager.removeEntityGroup(despawnedEntity.getRender());
+        viewManager.removeEntity(despawnedEntity.getRender());
       }
     }
 
