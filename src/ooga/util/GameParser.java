@@ -52,6 +52,9 @@ public class GameParser extends Parser {
     this.gameName = gameName;
     this.myFileName = "";
     fileName = gameName + "Game";
+
+    setMyFileName(fileName);
+
     this.loadedGame = loadedGame;
     checkLoadGame(this.loadedGame);
     jsonObject = (JSONObject) readJsonFile();

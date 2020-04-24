@@ -9,10 +9,7 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import ooga.model.CollisionEngine;
-import ooga.model.PhysicsEngine;
 import ooga.util.GamePadListener;
-import ooga.model.levels.InfiniteLevelBuilder;
 
 
 import ooga.model.levels.LevelSelector;
@@ -38,37 +35,34 @@ public class GameController implements Controller {
   private int nextLevel;
 
   private Timeline animation;
-  private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
   private ModelManager myModelManager;
   private LevelSelector levelSelector;
   private GamePadListener g;
   private GameParser gameParser;
+  private List<EntityWrapper> playerList;
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
-    builder = new InfiniteLevelBuilder(this);
     g = new GamePadListener();
 
     gameParser = new GameParser(gameName, this, loadedGame);
-    myViewManager = new ViewManager(stageManager, builder, gameParser.getPlayerList());
+    myViewManager = new ViewManager(stageManager, gameParser.getPlayerList());
     myModelManager = new ModelManager(gameParser);
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
     entityRemove = new ArrayList<>();
+    playerList = gameParser.getPlayerList();
 
-    for(EntityWrapper player : gameParser.getPlayerList()){
+    for(EntityWrapper player : playerList){
       entityList.add(player);
       myViewManager.addEntity(player.getRender());
     }
 
-//    physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile());
-//    collisionEngine = new CollisionEngine();
-
     setUpKeyInputs();
 
     myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.parseGameStatusProfile().readScrollingStatusX(), gameParser.parseGameStatusProfile().readScrollingStatusY());
-    levelSelector = new LevelSelector(gameParser.parseLevels(), gameParser.parseGameStatusProfile(), myViewManager.getCamera());
+    levelSelector = new LevelSelector(gameParser.parseLevels(), playerList, gameParser.parseGameStatusProfile(), myViewManager.getCamera());
     setUpTimeline();
 
   }

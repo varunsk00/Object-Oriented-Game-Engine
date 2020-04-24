@@ -82,6 +82,7 @@ public class Camera {
     }
   }
 
+
   private void getCenterOfPlayers(){
     sumY = 0;
     sumX = 0;

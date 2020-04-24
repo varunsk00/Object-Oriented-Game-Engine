@@ -3,6 +3,7 @@ package ooga.model.levels;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
@@ -18,10 +19,14 @@ public class LevelSelector {
   private int spawningInterval;
   private GameStatusProfile gameStatusProfile;
   private Camera gameCamera;
+  private List<EntityWrapper> playerList;
+  private static final int cameraBuffer = 200;
 
 
-  public LevelSelector(List<Level> levelList, GameStatusProfile gameProfile, Camera camera){
+
+  public LevelSelector(List<Level> levelList, List<EntityWrapper> players, GameStatusProfile gameProfile, Camera camera){
     parsedLevels = levelList;
+    playerList = players;
     gameStatusProfile = gameProfile;
     gameCamera = camera;
     spawningInterval = gameStatusProfile.readSpawningInterval();
@@ -29,16 +34,16 @@ public class LevelSelector {
   }
 
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager, int nextLevel) {
-//    System.out.println(currentEntityList.size());
-    if (currentEntityList.get(0).getModel().getLevelAdvancementStatus()) {
-      currentEntityList.get(0).getModel().setLevelAdvancementStatus(false);
-      switchLevel(nextLevel);
-      activeLevel.setCurrentPlayerInterval(Math.abs(calculatePlayerInterval(currentEntityList.get(0))));
+    System.out.println(currentEntityList.size());
+    for(EntityWrapper player : playerList) {
+      if (player.getModel().getLevelAdvancementStatus()) {
+        player.getModel().setLevelAdvancementStatus(false);
+        switchLevel(nextLevel);
+        activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
+      }
     }
     activeLevel.spawnEntities(currentEntityList, viewManager);
     this.despawnEntities(currentEntityList, viewManager);
-
-//>>>>>>> 5854a31735b775444eaaa1b24aa6a390047d9e73
   }
 
   private void switchLevel(int levelIndex){
@@ -49,12 +54,10 @@ public class LevelSelector {
     return (int) Math.abs((player.getModel().getX() * gameStatusProfile.readScrollingStatusX() + player.getModel().getY() * gameStatusProfile.readScrollingStatusY())/spawningInterval);
   }
 
-//TODO: decide whether or not to have despawning done by level selector or levels (actually has
-// nothing pertaining to individual levels.
   private void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
       List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
       for (EntityWrapper targetEntity : currentEntityList) {
-        if (!currentEntityList.get(0).equals(targetEntity) && !isInRange(currentEntityList.get(0).getModel(), targetEntity.getModel())) {
+        if (!playerList.contains(targetEntity) && !isInRangeofCamera(targetEntity)) {
           entitiesToDespawn.add(targetEntity);
         }
       }
@@ -64,11 +67,12 @@ public class LevelSelector {
       }
     }
 
-  private boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity){
-    if(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), 2) + Math.pow(subjectEntity.getY() - targetEntity.getY(), 2)) < 1500){
-      return true;
-    }
-    return false;
+  private boolean isInRangeofCamera(EntityWrapper targetEntity){
+
+    return targetEntity.getModel().getX() < gameCamera.getViewPort().getBoundsInParent().getMaxX() + cameraBuffer &&
+        targetEntity.getModel().getX() > gameCamera.getViewPort().getBoundsInParent().getMinX() - cameraBuffer &&
+        targetEntity.getModel().getY() < gameCamera.getViewPort().getBoundsInParent().getMaxY() + cameraBuffer &&
+        targetEntity.getModel().getY() > gameCamera.getViewPort().getBoundsInParent().getMinY() - cameraBuffer;
   }
 
   public List<Level> getLevelsToPlay() {
