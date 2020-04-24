@@ -8,11 +8,12 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.model.levels.InfiniteLevelBuilder;
 import ooga.util.GameParser;
