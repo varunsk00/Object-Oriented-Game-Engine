@@ -28,7 +28,7 @@
     {
       "Control": [
         {
-          "ID": "mario.mario_sidea",
+          "ID": "smash.mario",
           "orientation": "A",
           "param": "die",
           "action":"Die"

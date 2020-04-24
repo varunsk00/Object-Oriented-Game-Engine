@@ -1,6 +1,6 @@
 {
-  "entityName": "mario_upa",
-  "image": "mario_upa.png",
+  "entityName": "link_upa",
+  "image": "link_upa.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
@@ -65,16 +65,6 @@
           "orientation": "S",
           "param": "true",
           "action": "SetBoundedTop"
-        }
-      ]
-    },
-    {
-      "ID": "smash.resetAttack",
-      "Control": [
-        {
-          "orientation": "A",
-          "action": "SetPermeable",
-          "param": "true"
         }
       ]
     }

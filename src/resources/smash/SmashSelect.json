@@ -3,6 +3,7 @@
   "gamePreviewGIF": "smashGif",
   "savingEnabled": "false",
   "buttonArrangement": [
-    "1 Player"
+    "1 Player",
+    "2 Player"
   ]
 }

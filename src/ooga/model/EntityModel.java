@@ -13,7 +13,6 @@ import ooga.model.controlschemes.ControlScheme;
 public class EntityModel {
   private EntityWrapper myEntity;
   private boolean forwards;
-  private SimpleBooleanProperty forwardsProperty;
   private SimpleDoubleProperty xProperty;
   private SimpleDoubleProperty yProperty;
   private double entityWidth;
@@ -35,7 +34,6 @@ public class EntityModel {
   private boolean boundedLeft;
   private boolean boundedRight;
   private boolean boundedTop;
-  private boolean collidable;
   private double MAX_HEALTH;
 
   private ControlScheme controlScheme;
@@ -53,10 +51,6 @@ public class EntityModel {
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
     forwards = true;
-    forwardsProperty = new SimpleBooleanProperty(true);
-    forwardsProperty.addListener(((observable, oldValue, newValue) -> {
-      forwards = newValue;
-    }));
     xProperty = new SimpleDoubleProperty(xPos);
     xProperty.addListener(((observable, oldValue, newValue) -> {
       xPos = (double) newValue;
@@ -69,7 +63,6 @@ public class EntityModel {
     boundedRight = false;
     boundedTop = false;
     boundedBelow = false;
-    collidable = true;
     conditional = true;
   }
 
@@ -94,7 +87,8 @@ public class EntityModel {
       actionStack.push(action);
     }
     while(!actionStack.isEmpty()){
-      actionStack.pop().execute(this);
+      Action action = actionStack.pop();
+      action.execute(this);
     }
     limitSpeed();
     limitBounds();
@@ -211,7 +205,6 @@ public class EntityModel {
     EntityWrapper newEntity = spawnEntity(param);
     newEntity.getModel().getxProperty().bind(myEntity.getRender().xProperty());
     newEntity.getModel().getyProperty().bind(myEntity.getRender().yProperty());
-//    newEntity.getModel().getForwardsProperty().bindBidirectional(forwardsProperty);
     newEntity.getModel().setForwards(this.getForwards());
   }
 
@@ -277,20 +270,16 @@ public class EntityModel {
 
   public double getScore(){return myEntity.getScore();}
 
-  public void setCollidable(boolean parseBoolean) {collidable = parseBoolean;}
-
-  public boolean getCollidable(){return collidable;}
-
   public void setOpacity(double parseDouble) {myEntity.getRender().setOpacity(parseDouble);}
 
   public void setPermeable(boolean parseBoolean) {permeableEntity = parseBoolean;}
-
-  public SimpleBooleanProperty getForwardsProperty(){return forwardsProperty;}
 
   public SimpleDoubleProperty getxProperty(){return xProperty;}
 
   public SimpleDoubleProperty getyProperty(){return yProperty;}
 
   public void setConditional(boolean newvalue){conditional = newvalue;}
+
+  public boolean getConditional(){return conditional;}
 }
 

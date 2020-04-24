@@ -30,7 +30,7 @@ public class Keyboard extends ControlScheme {
   public void handleKeyInput(String key) {
     if(keyBindings.containsKey(key) && !currentAction.containsAll(keyBindings.get(key))) {
       currentAction.addAll(keyBindings.get(key));
-//      System.out.println(key);
+      System.out.println(currentAction);
     }
   }
 

@@ -15,7 +15,7 @@
   "scheme": "Pattern",
   "actionBundles": [
     {
-      "ID": "240",
+      "ID": "30",
       "Control": [
         {
           "action": "NoAction",
@@ -65,6 +65,16 @@
           "orientation": "S",
           "param": "true",
           "action": "SetBoundedTop"
+        }
+      ]
+    },
+    {
+      "ID": "smash.resetAttack",
+      "Control": [
+        {
+          "orientation": "A",
+          "action": "SetPermeable",
+          "param": "true"
         }
       ]
     }

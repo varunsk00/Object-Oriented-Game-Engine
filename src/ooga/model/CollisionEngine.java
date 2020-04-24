@@ -52,8 +52,7 @@ public class CollisionEngine {
       for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
         if (noCollisionKey.equals(collisionMapKey)) {
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
-          subjectEntity.getActionStack().push(collisionAction);//.execute(subjectEntity);
-
+          subjectEntity.getActionStack().push(collisionAction);
         }
       }
     }

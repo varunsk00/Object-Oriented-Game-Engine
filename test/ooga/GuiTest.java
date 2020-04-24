@@ -69,6 +69,5 @@ class GuiTest extends DukeApplicationTest {
     assertTrue(rightArrow != null);
     assertTrue(leftArrow != null);
     assertTrue(selectButton != null);
-
   }
 }

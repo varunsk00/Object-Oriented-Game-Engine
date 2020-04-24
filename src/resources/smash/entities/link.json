@@ -1,6 +1,6 @@
 {
-  "entityName": "mario",
-  "image": "mario_default.png",
+  "entityName": "link",
+  "image": "link_default.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
@@ -15,7 +15,7 @@
   "scheme": "Keyboard",
   "actionBundles": [
     {
-      "ID": "D",
+      "ID": "L",
       "Control": [
         {
           "action": "AccelerateX",
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "ID": "A",
+      "ID": "J",
       "Control": [
         {
           "action": "AccelerateX",
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "ID": "W",
+      "ID": "I",
       "Control": [
         {
           "action": "Jump",
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "ID": "S",
+      "ID": "K",
       "Control": [
         {
           "action": "NoAction",
@@ -59,16 +59,7 @@
       ]
     },
     {
-      "ID": "SPACE",
-      "Control": [
-        {
-          "action": "Jump",
-          "param": "-750.0"
-        }
-      ]
-    },
-    {
-      "ID": "RIGHT",
+      "ID": "NUMPAD6",
       "Control": [
 
         {
@@ -77,7 +68,7 @@
         },
         {
           "action":"SpawnAndBind",
-          "param": "smash.mario_sidea",
+          "param": "smash.link_sidea",
           "coolDown": "1000"
         },
         {
@@ -99,7 +90,7 @@
       ]
     },
     {
-      "ID": "LEFT",
+      "ID": "NUMPAD4",
       "Control": [
         {
           "action": "SetConditional",
@@ -107,7 +98,7 @@
         },
         {
           "action":"SpawnAndBind",
-          "param": "smash.mario_sidea",
+          "param": "smash.link_sidea",
           "coolDown": "1000"
         },
         {
@@ -129,7 +120,7 @@
       ]
     },
     {
-      "ID": "UP",
+      "ID": "NUMPAD8",
       "Control": [
         {
           "action": "SetConditional",
@@ -137,7 +128,7 @@
         },
         {
           "action":"SpawnAndBind",
-          "param": "smash.mario_upa",
+          "param": "smash.link_upa",
           "coolDown": "1000"
         },
         {
