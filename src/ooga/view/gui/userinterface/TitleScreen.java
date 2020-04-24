@@ -63,11 +63,15 @@ public class TitleScreen extends BorderPane {
     private void renderButtons() { //supports infinite amount of player buttons + Load Button
         for(int i=0; i< allButtons.length; i++){
             String label = selectOptions.get(i);
+            int index = i;
             if (label.contains("Player")){ //FIXME: MAGIC NUMBER?
-                int index = i;
                 allButtons[i] = makeButton(label, event -> playerBooleans[index] = true); }
             else{
-                allButtons[i] = makeButton(label, event -> loadPressed = true); }
+                allButtons[i] = makeButton(label, event -> {
+                    playerBooleans[index] = true;
+                    loadPressed = true;
+                });
+            }
             myButtons.getChildren().add(allButtons[i]);
         }
     }
@@ -94,7 +98,7 @@ public class TitleScreen extends BorderPane {
                 if(playerBooleans[i]){
                     this.num = (i +1);
                     ret = playerBooleans[i]; } } }
-        return ret || loadPressed;
+        return ret;
     }
 
     public boolean isLoadSavedGame() { return loadPressed; }
@@ -102,7 +106,7 @@ public class TitleScreen extends BorderPane {
     public void resetButtons() {
         for(int i = 0; i<playerBooleans.length; i++){
             playerBooleans[i] = false;
-        loadPressed = false; }
+            loadPressed = false; }
     }
 
     public void handleMultiplayer(String gameName){
