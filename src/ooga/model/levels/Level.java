@@ -16,8 +16,6 @@ public abstract class Level {
   private static final int TWO = 2;
   private int currentPlayerInterval = -1;
   private String levelName;
-  private int scrollingStatusX;
-  private int scrollingStatusY;
   private GameStatusProfile gameStatusProfile;
 
   public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name){
@@ -25,25 +23,23 @@ public abstract class Level {
     playerEntities = playerList;
     enemyEntities = enemyList;
     gameStatusProfile = gameProfile;
-    scrollingStatusX = gameStatusProfile.readScrollingStatusX();
-    scrollingStatusY = gameStatusProfile.readScrollingStatusY();
     levelName = name;
   }
 
-  public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-    for (EntityWrapper player : playerEntities) {
-      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-      for (EntityWrapper targetEntity : currentEntityList) {
-        if (!playerEntities.contains(targetEntity) && !isInRange(player.getModel(), targetEntity.getModel())) {
-          entitiesToDespawn.add(targetEntity);
-        }
-      }
-      for(EntityWrapper despawnedEntity : entitiesToDespawn){
-        currentEntityList.remove(despawnedEntity);
-        viewManager.removeEntityGroup(despawnedEntity.getRender());
-      }
-    }
-  }
+//  public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
+//    for (EntityWrapper player : playerEntities) {
+//      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
+//      for (EntityWrapper targetEntity : currentEntityList) {
+//        if (!playerEntities.contains(targetEntity) && !isInRange(player.getModel(), targetEntity.getModel())) {
+//          entitiesToDespawn.add(targetEntity);
+//        }
+//      }
+//      for(EntityWrapper despawnedEntity : entitiesToDespawn){
+//        currentEntityList.remove(despawnedEntity);
+//        viewManager.removeEntityGroup(despawnedEntity.getRender());
+//      }
+//    }
+//  }
 
 
   public abstract void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager);

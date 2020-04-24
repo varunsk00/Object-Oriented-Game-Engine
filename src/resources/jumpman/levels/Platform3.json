@@ -1,0 +1,28 @@
+{
+  "levelName": "Platform3",
+  "levelType": "InfiniteLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "jumpman.Platform",
+      "Arrangement": [
+        {
+          "1": ["2-5"]
+        }
+      ]
+    },
+    {
+      "EntityName": "jumpman.ClearBlock",
+      "Arrangement": [
+        {
+          "1": ["1-10"]
+        }
+      ]
+    }
+  ],
+  "enemyArrangement": [
+  ],
+  "playerArrangement": [
+  ]
+}
