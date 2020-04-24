@@ -29,12 +29,16 @@ public class TitleScreen extends BorderPane {
     private Button Button3;
     private VBox myButtons;
     private GameParser myGameParser;
+    private int numPlayers;
+    private boolean saveable;
 
     public TitleScreen() {
     }
 
     public TitleScreen(String name) throws FileNotFoundException {
         this.gameName = name;
+        this.numPlayers = 0; //TODO fix if refactoring game select parser
+        this.saveable = false;  //TODO fix if refactoring game select parser
         setBackground();
         setLogo();
         renderButtons();
@@ -65,12 +69,17 @@ public class TitleScreen extends BorderPane {
 
     private void renderButtons() { //TODO: REFACTOR
         myButtons = new VBox();
+//        for(int i = 1; i <= numPlayers; i++) {
+//            Button tempButton = makeButton("" + i + " Player", event -> onMouseClickedProperty());
+//        }
+//        if(saveable) {
+//            Button tempButton = makeButton("Load Saved Game", event -> onMouseClickedProperty());
+//        }
         Button1 = makeButton(myResources.getString(gameName + "1"), event -> onePressed = true);
         if (!(myResources.getString(gameName + "2").equals("NOBUTTON"))){
             Button2 = makeButton(myResources.getString(gameName + "2"), event -> twoPressed = true);
         }
         Button3 = makeButton(myResources.getString("LoadSavedGame"), event -> threePressed = true);
-
     }
 
     private Button makeButton(String key, EventHandler e) {

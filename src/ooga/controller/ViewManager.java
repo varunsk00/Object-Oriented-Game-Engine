@@ -227,6 +227,10 @@ public class ViewManager implements ViewExternalAPI {
     return isGamePaused;
   }
 
+  public void setGamePaused() {
+    isGamePaused = true;
+  }
+
   public void setSaveGame() {
     saveGame = !saveGame;
   }

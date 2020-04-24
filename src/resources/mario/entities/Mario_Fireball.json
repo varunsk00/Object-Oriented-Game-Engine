@@ -41,5 +41,37 @@
         }
       ]
     }
+  ],
+  "collisionBundles": [
+    {
+      "ID": "mario.Goomba",
+      "Control": [
+        {
+          "action": "NoAction",
+          "param": "false",
+          "orientation": "DEFAULT"
+        }
+      ]
+    },
+    {
+      "ID": "mario.Koopa",
+      "Control": [
+        {
+          "action": "NoAction",
+          "param": "false",
+          "orientation": "DEFAULT"
+        }
+      ]
+    },
+    {
+      "ID": "DEFAULT",
+      "Control": [
+        {
+          "action": "NoAction",
+          "param": "false",
+          "orientation": "DEFAULT"
+        }
+      ]
+    }
   ]
 }

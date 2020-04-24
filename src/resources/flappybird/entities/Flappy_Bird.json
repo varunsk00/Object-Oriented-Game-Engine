@@ -50,9 +50,44 @@
           "orientation": "W",
           "param": "-50",
           "action": "MoveX"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "none",
+          "orientation": "W"
         }
       ],
       "ID": "flappybird.Pipebody"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "-50",
+          "action": "MoveX"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "none",
+          "orientation": "W"
+        }
+      ],
+      "ID": "flappybird.Pipetop"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "-50",
+          "action": "MoveX"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "none",
+          "orientation": "W"
+        }
+      ],
+      "ID": "flappybird.Pipebottom"
     }
   ],
 

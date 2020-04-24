@@ -29,13 +29,14 @@ public class GameCabinet extends Pane {
     private int numPlayers;
     private String currentGame;
     private String gameListFilePath = "src/resources/GameList.json";
+    private GameSelectParser newGameParser;
 
 
   public GameCabinet(StageManager stageManager, AudioVideoManager av) throws Exception { //FIXME ADD ERROR HANDLING
         this.myGames = new ArrayList<>();
         this.avManager = av;
         this.stageManager = stageManager;
-        this.myTitleScreen = new TitleScreen();
+        myTitleScreen = new TitleScreen();
         List<String> gameList = this.readGameList();
         initGameSelect(gameList);
         gameSelector = new GameSelector(myGames);
@@ -70,7 +71,7 @@ public class GameCabinet extends Pane {
 
     private void initGameSelect(List<String> gameList) throws FileNotFoundException { //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
       for(int i = 0; i < gameList.size(); i++){
-        GameSelectParser newGameParser = new GameSelectParser(gameList.get(i));
+        newGameParser = new GameSelectParser(gameList.get(i));
         GamePreview newGame = new GamePreview(Color.BLUE, newGameParser.readGamePreviewGIF());
         newGame.setGameName(newGameParser.readGameName());
         myGames.add(newGame);
