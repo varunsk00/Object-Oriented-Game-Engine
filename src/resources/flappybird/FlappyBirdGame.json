@@ -1,8 +1,13 @@
 {
   "gameName": "FlappyBird",
-  "players": "1",
-  "scrollingStatusX" : "1",
-  "scrollingStatusY" : "0",
+  "playerCount": "1",
+  "gameStatusProfile": [
+    {
+      "scrollingStatusX" : "1",
+      "scrollingStatusY" : "0",
+      "spawningInterval" : "500"
+    }
+  ],
   "physicsProfile": [
     {
       "Friction": "0",

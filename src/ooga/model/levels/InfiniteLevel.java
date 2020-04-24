@@ -6,6 +6,7 @@ import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
+import ooga.util.GameStatusProfile;
 import ooga.view.application.Camera;
 
 public class InfiniteLevel extends Level{
@@ -15,15 +16,18 @@ public class InfiniteLevel extends Level{
   private List<EntityWrapper> enemyEntities;
   private int scrollingStatusX;
   private int scrollingStatusY;
-  private static final int spawningInterval = 500;
+  private int spawningInterval;
+  private GameStatusProfile gameStatusProfile;
 
-  public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, int scrollIntX, int scrollIntY, String name) {
-    super(tileList, playerList, enemyList, scrollIntX, scrollIntY, name);
+  public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name) {
+    super(tileList, playerList, enemyList, gameProfile, name);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
-    scrollingStatusX = scrollIntX;
-    scrollingStatusY = scrollIntY;
+    gameStatusProfile = gameProfile;
+    scrollingStatusX = gameStatusProfile.readScrollingStatusX();
+    scrollingStatusY = gameStatusProfile.readScrollingStatusY();
+    spawningInterval = gameStatusProfile.readSpawningInterval();
   }
 
 

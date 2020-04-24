@@ -5,6 +5,7 @@ import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
+import ooga.util.GameStatusProfile;
 import ooga.view.application.Camera;
 
 public abstract class Level {
@@ -17,13 +18,15 @@ public abstract class Level {
   private String levelName;
   private int scrollingStatusX;
   private int scrollingStatusY;
+  private GameStatusProfile gameStatusProfile;
 
-  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, int scrollIntX, int scrollIntY, String name){
+  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name){
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
-    scrollingStatusX = scrollIntX;
-    scrollingStatusY = scrollIntY;
+    gameStatusProfile = gameProfile;
+    scrollingStatusX = gameStatusProfile.readScrollingStatusX();
+    scrollingStatusY = gameStatusProfile.readScrollingStatusY();
     levelName = name;
   }
 
