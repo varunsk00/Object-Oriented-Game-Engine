@@ -36,7 +36,7 @@ public class LevelSelector {
 
   public void changeCurrentLevel(int nextLevel, EntityWrapper player) {
     switchLevel(nextLevel);
-    activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
+    activeLevel.setCurrentPlayerInterval(activeLevel.calculatePlayerInterval(player));
   }
 
   public void resetLevel(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn) {
@@ -75,10 +75,6 @@ public class LevelSelector {
 
   public List<Level> getParsedLevels() {
     return parsedLevels.subList(parsedLevels.indexOf(activeLevel), parsedLevels.size());
-  }
-
-  private int calculatePlayerInterval(EntityWrapper player) {
-    return (int) Math.abs((player.getModel().getX() * gameStatusProfile.readScrollingStatusX() + player.getModel().getY() * gameStatusProfile.readScrollingStatusY())/spawningInterval);
   }
 
   private boolean isInRangeofCamera(EntityWrapper targetEntity){

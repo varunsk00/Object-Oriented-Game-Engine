@@ -46,8 +46,6 @@ public class GameController {
           throws XInputNotLoadedException { //FIXME add exception stuff
 
     g = new GamePadListener();
-
-    g = new GamePadListener();
     gameParser = new GameParser(gameName, this, loadedGame);
     myViewManager = new ViewManager(stageManager, gameParser.getPlayerList());
     myModelManager = new ModelManager(gameParser);
@@ -71,10 +69,6 @@ public class GameController {
         gameParser.parseGameStatusProfile(), myViewManager.getCamera());
     setUpTimeline();
 
-  }
-
-  public List<EntityWrapper> getEntityList() {
-    return entityList;
   }
 
   private void setUpKeyInputs() {
@@ -138,12 +132,13 @@ public class GameController {
   }
 
   private void handleGamePadPlayer() {
-    if (gameParser.getPlayerList().size() > 1 && g.getState() != null && g.getState().getControl() != null) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+    if (gameParser.getPlayerList().size() > 1 && g.getState() != null && g.getState().getControl() != null) {
       if (!g.getState().getPressed()) {
         gameParser.getPlayerList().get(1).handleKeyInput(g.getState().getControl());
       } else {
         gameParser.getPlayerList().get(1)
             .handleKeyReleased(g.getState().getControl());
+
       }
     }
   }
