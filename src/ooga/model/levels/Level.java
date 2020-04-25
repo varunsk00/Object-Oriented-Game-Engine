@@ -16,18 +16,17 @@ public abstract class Level {
   private static final int TWO = 2;
   private int currentPlayerInterval = -1;
   private String levelName;
-  private GameStatusProfile gameStatusProfile;
   protected int scrollingStatusX;
   protected int scrollingStatusY;
   protected int spawningInterval;
   protected int levelSpawnOffset;
 
-  public Level(String name){
+  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name){
     levelName = name;
-    scrollingStatusX = gameStatusProfile.readScrollingStatusX();
-    scrollingStatusY = gameStatusProfile.readScrollingStatusY();
-    spawningInterval = gameStatusProfile.readSpawningInterval();
-    levelSpawnOffset = gameStatusProfile.readLevelSpawnOffset();
+    scrollingStatusX = gameProfile.readScrollingStatusX();
+    scrollingStatusY = gameProfile.readScrollingStatusY();
+    spawningInterval = gameProfile.readSpawningInterval();
+    levelSpawnOffset = gameProfile.readLevelSpawnOffset();
   }
 
   public abstract void spawnEntities(List<EntityWrapper> currentEntityList);
