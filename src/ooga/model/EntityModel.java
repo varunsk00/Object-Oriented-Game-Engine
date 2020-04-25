@@ -1,9 +1,7 @@
 package ooga.model;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import ooga.controller.EntityWrapper;
 import ooga.model.actions.AbsoluteVelocityX;
@@ -25,8 +23,6 @@ public class EntityModel {
   private double health;
   private double xVelMax;
   private double yVelMax;
-  private boolean levelAdvancementStatus;
-  private int nextLevelIndex;
   private String entityID;
   private boolean fixedEntity;
   private boolean permeableEntity;
@@ -37,7 +33,6 @@ public class EntityModel {
 
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
-  private Map<String, Action> myActions;
   private Map<CollisionKey, Action> myCollisions;
   private boolean conditional;
 
@@ -48,7 +43,6 @@ public class EntityModel {
     myCollisions = myEntity.getParser().parseCollisions();
     loadStats();
     actionStack = new Stack<>();
-    myActions = new HashMap<String, Action>();
     forwards = true;
     xProperty = new SimpleDoubleProperty(xPos);
     xProperty.addListener(((observable, oldValue, newValue) -> {
@@ -65,7 +59,7 @@ public class EntityModel {
     conditional = true;
   }
 
-  private void loadStats() {
+  public void loadStats() {
     entityWidth = myEntity.getParser().readWidth();
     entityHeight = myEntity.getParser().readHeight();
     xPos = myEntity.getParser().readXPosition();
@@ -78,7 +72,6 @@ public class EntityModel {
   }
 
   public void update(double elapsedTime){
-    //TODO: change this ground status checker to be implemented in collisions with the top of a block
     for (Action action : controlScheme.getCurrentAction()) {
       actionStack.push(action);
     }
@@ -149,14 +142,6 @@ public class EntityModel {
 
   public void changeLevel(int levelIndex){myEntity.changeLevel(levelIndex);}
 
-  public void setLevelAdvancementStatus(boolean newStatus){levelAdvancementStatus = newStatus;}
-
-  public void setNextLevelIndex(int levelIndex){nextLevelIndex = levelIndex;}
-
-  public boolean getLevelAdvancementStatus(){return levelAdvancementStatus;}
-
-  public int getNextLevelIndex(){return nextLevelIndex;}
-
   public double getWidth(){return entityWidth;}
 
   public double getHeight(){return entityHeight;}
@@ -201,8 +186,8 @@ public class EntityModel {
 
   public void spawnAndBind(String param) {
     EntityWrapper newEntity = spawnEntity(param);
-    newEntity.getModel().getxProperty().bind(myEntity.getRender().xProperty());
-    newEntity.getModel().getyProperty().bind(myEntity.getRender().yProperty());
+    newEntity.getModel().getXProperty().bind(myEntity.getRender().xProperty());
+    newEntity.getModel().getYProperty().bind(myEntity.getRender().yProperty());
     newEntity.getModel().setForwards(this.getForwards());
   }
 
@@ -253,13 +238,6 @@ public class EntityModel {
     health-=loss;
   }
 
-  public void resetPosition() {
-    this.setX(100);
-    this.setY(100);
-    this.setXVelocity(0);
-    this.setYVelocity(0);
-  }
-
   public void changeImage(String param) {
     myEntity.changeImage(param);
   }
@@ -272,9 +250,9 @@ public class EntityModel {
 
   public void setPermeable(boolean parseBoolean) {permeableEntity = parseBoolean;}
 
-  public SimpleDoubleProperty getxProperty(){return xProperty;}
+  public SimpleDoubleProperty getXProperty(){return xProperty;}
 
-  public SimpleDoubleProperty getyProperty(){return yProperty;}
+  public SimpleDoubleProperty getYProperty(){return yProperty;}
 
   public void setConditional(boolean newvalue){conditional = newvalue;}
 

@@ -33,8 +33,6 @@ public class GameController {
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private final String LOSS_RESULT = "You Lost! Restart the Level by resuming or choose a new game by restarting the game. Thanks for playing!";
 
-  private int nextLevel;
-
   private Timeline animation;
   private ViewManager myViewManager;
   private ModelManager myModelManager;
@@ -133,7 +131,6 @@ public class GameController {
       addToEntityList();
 
       removeEntities(entityRemove);
-      nextLevel = entityList.get(0).getModel().getNextLevelIndex();
     }
     addToEntityList();
   }

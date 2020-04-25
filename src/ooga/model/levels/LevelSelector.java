@@ -54,9 +54,8 @@ public class LevelSelector {
 
   public void resetLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
     for(EntityWrapper player : playerList) {
-      player.getModel().setHealth();
-      player.getModel().setLevelAdvancementStatus(true);
-      player.getModel().resetPosition();
+      player.getModel().setHealth(); //fixme removed "setNextLevel(false)" method because refactoring to remove the boolean entirely
+      player.getModel().loadStats();
     }
 
     despawnAllEntities(currentEntityList, viewManager);
