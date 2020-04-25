@@ -151,36 +151,8 @@ public class GameController implements Controller {
     if (myModelManager.checkHealthGone(entityList.get(0))) {
       myViewManager.updateMenu(LOSS_RESULT);
       myViewManager.pauseGame();
-      resetLevel();
+      levelSelector.resetLevel(entityList, myViewManager);
       return;
-    }
-  }
-
-  private void resetLevel() {
-    nextLevel = 0;
-    entityList.get(0).getModel().setHealth();
-    entityList.get(0).getModel().setLevelAdvancementStatus(true);
-
-    despawnOldLevel();
-
-    entityList.get(0).getModel().resetPosition();
-    levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
-    for(Level level : levelSelector.getLevelsToPlay()){
-      level.setCurrentPlayerInterval(-1);
-    }
-  }
-
-  //TODO: fix duplicated code if possible?
-  private void despawnOldLevel() {
-    List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-    for (EntityWrapper targetEntity : entityList) {
-      if (!gameParser.getPlayerList().contains(targetEntity)) {
-        entitiesToDespawn.add(targetEntity);
-      }
-    }
-    for(EntityWrapper despawnedEntity : entitiesToDespawn){
-      entityList.remove(despawnedEntity);
-      myViewManager.removeEntity(despawnedEntity.getRender());
     }
   }
 
@@ -188,8 +160,8 @@ public class GameController implements Controller {
     if(myViewManager.getSaveGame()) {
       JSONArray saveGame = new JSONArray();
       JSONObject obj = new JSONObject();
-      for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
-        obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
+      for(int i = 0; i < levelSelector.getParsedLevels().size(); i++) {
+        obj.put("Level_" + (i+1), levelSelector.getParsedLevels().get(i).getLevelName());
       }
       saveGame.add(obj);
       gameParser.saveGame("levelArrangement", saveGame);

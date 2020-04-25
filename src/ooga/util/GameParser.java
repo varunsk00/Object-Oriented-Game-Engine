@@ -1,5 +1,6 @@
 package ooga.util;
 
+import com.thoughtworks.xstream.mapper.Mapper.Null;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -137,11 +138,9 @@ public class GameParser extends Parser {
     JSONArray levelArrangement = (JSONArray) jsonObject.get("levelArrangement");
     JSONObject levels = (JSONObject) levelArrangement.get(0);
     List<String> sortedLevelKeys = sortLevelKeySet(levels.keySet());
-
-
     for(String levelNumber : sortedLevelKeys){
       String levelName = (String) levels.get(levelNumber);
-      LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
+      LevelParser parsedLevel = new LevelParser(levelName, mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
