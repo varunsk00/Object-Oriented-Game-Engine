@@ -21,7 +21,7 @@ public class ConsoleSkin extends BorderPane {
     private final String CONSOLE_ABBREV = myResources.getString("consoleAbbrev");
     private final int VENT_WIDTH = 150;
     private final int VENT_HEIGHT = 15;
-    private final int LID_WIDTH = 100;
+    private final int LID_WIDTH = 150;
     private final int LID_HEIGHT = 63;
     private final int GAMENAME_DISPLAY_WIDTH = 600;
     private final int GAMENAME_DISPLAY_HEIGHT = 100;
