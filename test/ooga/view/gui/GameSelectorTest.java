@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 class GameSelectorTest extends DukeApplicationTest {
-  private Button playButton;
-  private Button selectButton;
+  Button playButton;
+  Button selectButton;
 
   @BeforeEach
   void setUp() throws Exception{
