@@ -12,8 +12,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import javax.imageio.ImageIO;
+import java.util.ResourceBundle;
 
 public class ConsoleSkin extends BorderPane {
+    private final String RESOURCES_PACKAGE = "resources.guiText";
+    private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
+    private final String CONSOLE_NAME = myResources.getString("consoleName");
     private VBox menuTop;
     private VBox menuBottom;
     private Button selectGameButton;
@@ -94,7 +98,7 @@ public class ConsoleSkin extends BorderPane {
         VBox logoBox = new VBox();
         logoBox.setId("logoBox");
         Text logoAbbreviated = new Text("BOOGA");
-        Text logo = new Text("Bob's Object Oriented Game Arcade");
+        Text logo = new Text(CONSOLE_NAME);
         logoAbbreviated.setId("logoAbbreviationText");
         logo.setId("logoText");
         logoBox.getChildren().addAll(logoAbbreviated, logo);

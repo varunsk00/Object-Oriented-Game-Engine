@@ -37,7 +37,6 @@ public class CollisionEngine {
       String targetEntityID = targetEntity.getEntityID();
       String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity,
           targetEntity);
-
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID,
           targetEntityCollisionSide);
       for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {

@@ -1,22 +1,20 @@
-package ooga.controller;
+package ooga.view.application.menu;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import ooga.controller.EntityWrapper;
 import ooga.util.EntityJSONParser;
 
 import java.util.*;
 
-public class ControlSchemeSwitcher extends HBox{
-    private final String RESOURCES_PACKAGE = "resources.params";
+public class ConfigurationMenu extends HBox{
+    private final String RESOURCES_PACKAGE = "resources.guiText";
     private final String PARAM_START = "param\":\"";
     private final String PARAM_END = "\",\"a";
     private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
@@ -33,16 +31,18 @@ public class ControlSchemeSwitcher extends HBox{
     private Multimap<String,String> actionMap;
     private Button exitButton;
     private boolean exitPressed;
+    private VolumeSliders sliders;
     private List<TextField> input = new ArrayList<>();
     private VBox myActions = new VBox();
     private Alert updateAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
-    public ControlSchemeSwitcher(List<EntityWrapper> playerList){
+    public ConfigurationMenu(List<EntityWrapper> playerList){
         this.setId("configMenu");
         populateIDs(playerList);
         createParsers();
         this.playerNum = playerList.size();
         this.actionMap = parseAction2KeyMap();
+        this.sliders = new VolumeSliders(2);
         loadTitle();
         loadDefaultControls();
         for(VBox box: bindingDisplay){
@@ -50,13 +50,9 @@ public class ControlSchemeSwitcher extends HBox{
                 if(box.getChildren().indexOf(field) > 0) {
                     TextField updatedField = (TextField) field;
                     String oldBind = updatedField.getText();
-                    updatedField.setOnAction(e -> updateControls(bindingDisplay.indexOf(box), oldBind, updatedField.getText()));
-                }
-            }
-        }
+                    updatedField.setOnAction(e -> updateControls(bindingDisplay.indexOf(box), oldBind, updatedField.getText())); } } }
         for(ComboBox cb: dropDowns){
-            cb.setOnAction(e-> updateControlType(dropDowns.indexOf(cb), (String) cb.getValue()));
-        }
+            cb.setOnAction(e-> updateControlType(dropDowns.indexOf(cb), (String) cb.getValue())); }
     }
 
     public boolean getExitPressed(){
@@ -65,6 +61,14 @@ public class ControlSchemeSwitcher extends HBox{
 
     public void setExitOff(){
         this.exitPressed = false;
+    }
+
+    public double getMusicVolume(){
+        return sliders.getSliders()[0].getValue();
+    }
+
+    public double getFXVolume(){
+        return sliders.getSliders()[1].getValue();
     }
 
     private void populateIDs(List<EntityWrapper> characters){
@@ -83,7 +87,7 @@ public class ControlSchemeSwitcher extends HBox{
         VBox configTitle = new VBox();
         Text configMessage = new Text(myResources.getString("MenuTitle"));
         this.exitButton = makeButton("Exit", e-> exitPressed = true);
-        configTitle.getChildren().addAll(configMessage, exitButton);
+        configTitle.getChildren().addAll(configMessage, this.exitButton, this.sliders);
         configTitle.setId("configTitle");
         getChildren().add(configTitle);
     }
@@ -95,8 +99,7 @@ public class ControlSchemeSwitcher extends HBox{
             if(playerNum > 1){
                 generateMultiplayerBindings(entryList, mapIndex); }
             else{
-                playerBindings.get(0).add(entryList.get(mapIndex).getValue()); }
-        }
+                playerBindings.get(0).add(entryList.get(mapIndex).getValue()); } }
         drawActionsOnScreen();
         for(int playerIndex = 0; playerIndex < playerNum; playerIndex++){
             setVBoxes(playerIndex);
@@ -107,9 +110,7 @@ public class ControlSchemeSwitcher extends HBox{
     private void updateControls(int playerIndex, String oldBind, String newBind){
         for (Map.Entry<String,String> entry : actionMap.entries()){
             if(entry.getValue().equals(oldBind)) {
-                parsers.get(playerIndex).updateControls(entry.getKey(), newBind, true);
-            }
-        }
+                parsers.get(playerIndex).updateControls(entry.getKey(), newBind, true); } }
         updateAlert.setContentText(myResources.getString("UpdateBind"));
         updateAlert.show();
     }
@@ -131,8 +132,7 @@ public class ControlSchemeSwitcher extends HBox{
         for(String s : playerBindings.get(index)){
             TextField bind = new TextField(s);
             input.add(bind);
-            bindingDisplay.get(index).getChildren().add(bind);
-        }
+            bindingDisplay.get(index).getChildren().add(bind); }
     }
 
     private void drawActionsOnScreen(){
@@ -140,9 +140,7 @@ public class ControlSchemeSwitcher extends HBox{
             if(myResources.containsKey(s)){
                 Text action = new Text(myResources.getString(s));
                 action.setId("actionList");
-                myActions.getChildren().add(action);
-            }
-        }
+                myActions.getChildren().add(action); } }
         myActions.setId("actionVBox");
         getChildren().add(myActions);
     }
