@@ -20,7 +20,6 @@ class EntityJSONParserTest {
   void setUp() {
     entityJSONParser = new EntityJSONParser("unittest", "UnitTestEntity");
     filePath = "resources/images/mario_fire.png";
-
   }
 
   @Test
