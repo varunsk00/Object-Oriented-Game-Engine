@@ -64,7 +64,7 @@ public class TitleScreen extends BorderPane {
         for(int i=0; i< allButtons.length; i++){
             String label = selectOptions.get(i);
             int index = i;
-            if (label.contains("Player")){ //FIXME: MAGIC NUMBER?
+            if (label.contains("Player")){ //JSON Parsing
                 allButtons[i] = makeButton(label, event -> playerBooleans[index] = true); }
             else{
                 allButtons[i] = makeButton(label, event -> {

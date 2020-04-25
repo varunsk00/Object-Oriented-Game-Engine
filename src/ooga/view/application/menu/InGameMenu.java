@@ -12,7 +12,12 @@ import javafx.event.EventHandler;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.ResourceBundle;
+
 public class InGameMenu extends VBox{
+    private final String RESOURCES_PACKAGE = "resources.guiText";
+    private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
+    private final String DEFAULT_MENU_TEXT = myResources.getString("defaultStatus");
     private final int SCENE_WIDTH = 1280;
     private final int SCROLL_DURATION = 10;
     private boolean savePressed;
@@ -22,7 +27,6 @@ public class InGameMenu extends VBox{
     private boolean rebootPressed;
     private VBox myButtons;
     private Text gameResult;
-    private final String DEFAULT_MENU_TEXT = "Game in Progress";
 
     public InGameMenu() {
         this.savePressed = false;
@@ -77,13 +81,13 @@ public class InGameMenu extends VBox{
         controlsPressed = false;
     }
 
-    private void renderButtons() { //FIXME: MAGIC STRINGS
+    private void renderButtons() {
         myButtons = new VBox();
-        Button ResumeButton = makeButton("Play Game", event -> resumePressed = true);
-        Button SaveButton = makeButton("Save Game", event -> savePressed = true);
-        Button ControlsButton = makeButton("Configuration", event -> controlsPressed = true);
-        Button ExitButton = makeButton("Game Select", event -> exitPressed = true);
-        Button RestartButton = makeButton("Reboot System", event -> rebootPressed = true);
+        Button ResumeButton = makeButton(myResources.getString("Play"), event -> resumePressed = true);
+        Button SaveButton = makeButton(myResources.getString("Save"), event -> savePressed = true);
+        Button ControlsButton = makeButton(myResources.getString("Config"), event -> controlsPressed = true);
+        Button ExitButton = makeButton(myResources.getString("Exit"), event -> exitPressed = true);
+        Button RestartButton = makeButton(myResources.getString("Reboot"), event -> rebootPressed = true);
         myButtons.getChildren().addAll(ResumeButton, SaveButton, ControlsButton, ExitButton, RestartButton);
         formatButton(ResumeButton);
         formatButton(SaveButton);
@@ -105,8 +109,16 @@ public class InGameMenu extends VBox{
     public void updateGameResult(String status) {
         this.gameResult = new Text(status);
         this.gameResult.setId("status");
+        if(!getStatus().equals(DEFAULT_MENU_TEXT)) {
+            this.gameResult = moveToCenter(gameResult); }
         scrollText(this.gameResult);
         getChildren().set(getChildren().size() - 1, this.gameResult);
+    }
+
+    private Text moveToCenter(Text oldMessage){
+        Text newMessage = new Text(oldMessage.getText());
+        newMessage.setId("centerStatus");
+        return newMessage;
     }
 
     public String getStatus() {

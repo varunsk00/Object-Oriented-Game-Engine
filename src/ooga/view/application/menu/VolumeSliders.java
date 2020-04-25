@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import java.util.ResourceBundle;
 
 public class VolumeSliders extends VBox {
-    private final String RESOURCES_PACKAGE = "resources.params";
+    private final String RESOURCES_PACKAGE = "resources.guiText";
     private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
     private static final int MIN_MUSIC = 0;
     private static final int DEFAULT_MUSIC = 2;
@@ -28,8 +28,8 @@ public class VolumeSliders extends VBox {
 
     private void renderSliders() {
         HBox allLabels = new HBox();
-        addLabel("SongSlider", allLabels);
-        addLabel("EffectsSlider", allLabels);
+        addLabel(myResources.getString("SongSlider"), allLabels);
+        addLabel(myResources.getString("EffectsSlider"), allLabels);
         HBox allSliders = new HBox();
         for(int index = 0; index < volumeSliders.length; index++){
             volumeSliders[index] = addAndReturnSlider(MIN_MUSIC, MAX_MUSIC, DEFAULT_MUSIC, allSliders);
@@ -39,7 +39,7 @@ public class VolumeSliders extends VBox {
     }
 
     private void addLabel(String key, HBox text) {
-        Label tempLabel = new Label(myResources.getString(key));
+        Label tempLabel = new Label(key);
         tempLabel.setMaxWidth(Double.MAX_VALUE);
         tempLabel.setAlignment(Pos.CENTER);
         HBox.setHgrow(tempLabel, Priority.ALWAYS);

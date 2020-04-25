@@ -14,7 +14,7 @@ import ooga.util.EntityJSONParser;
 import java.util.*;
 
 public class ConfigurationMenu extends HBox{
-    private final String RESOURCES_PACKAGE = "resources.params";
+    private final String RESOURCES_PACKAGE = "resources.guiText";
     private final String PARAM_START = "param\":\"";
     private final String PARAM_END = "\",\"a";
     private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
