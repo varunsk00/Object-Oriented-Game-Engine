@@ -32,9 +32,9 @@ public class EntityWrapper {
 
   public void handleKeyInput(String key) {myModel.handleKeyInput(key); }
 
-  public void handleControllerInputPressed(String key) {myModel.handleControllerInputPressed(key); }
-
-  public void handleControllerInputReleased(String key) { myModel.handleControllerInputReleased(key);}
+//  public void handleControllerInputPressed(String key) {myModel.handleControllerInputPressed(key); }
+//
+//  public void handleControllerInputReleased(String key) { myModel.handleControllerInputReleased(key);}
 
   public EntityJSONParser getParser(){return myParser;}
 

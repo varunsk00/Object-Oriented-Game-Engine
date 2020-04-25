@@ -93,17 +93,17 @@ public class EntityModel {
   }
 
   private void limitBounds() {
-    if(boundedRight){
-      if(xVel>0){xVel=0;}
+    if(boundedRight && xVel > 0){
+      xVel=0;
     }
-    if(boundedLeft){
-      if(xVel<0){xVel=0;}
+    if(boundedLeft && xVel < 0){
+      xVel=0;
     }
-    if(boundedBelow){
-      if (yVel > 0) {yVel=0;}
+    if(boundedBelow && yVel > 0){
+      yVel=0;
     }
-    if(boundedTop){
-      if (yVel < 0) {yVel = 0;}
+    if(boundedTop && yVel < 0){
+      yVel = 0;
     }
   }
 
@@ -115,16 +115,16 @@ public class EntityModel {
     controlScheme.handleKeyReleased(key);
   }
 
-  public void handleControllerInputPressed(String key) {
-    if (key != null) {
-      controlScheme.handleKeyInput(key);
-    }
-  }
-  public void handleControllerInputReleased(String key) {
-    if (key != null) {
-      controlScheme.handleKeyReleased(key);
-    }
-  }
+//  public void handleControllerInputPressed(String key) {
+//    if (key != null) {
+//      controlScheme.handleKeyInput(key);
+//    }
+//  }
+//  public void handleControllerInputReleased(String key) {
+//    if (key != null) {
+//      controlScheme.handleKeyReleased(key);
+//    }
+//  }
 
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
@@ -194,14 +194,9 @@ public class EntityModel {
     newEntity.getModel().setForwards(this.getForwards());
   }
 
-  public EntityWrapper spawnEntity(String param) {
-    EntityWrapper newEntity = myEntity.spawnEntity(param);
-    return newEntity;
-  }
+  public EntityWrapper spawnEntity(String param) {return myEntity.spawnEntity(param);}
 
-  public void despawnEntity() {
-    myEntity.despawnEntity();
-  }
+  public void despawnEntity() {myEntity.despawnEntity();}
 
   public boolean getForwards() {return forwards;}
 

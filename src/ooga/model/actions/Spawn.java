@@ -3,13 +3,14 @@ package ooga.model.actions;
 import ooga.model.EntityModel;
 
 public class Spawn extends Action {
+    private static final long DEFAULT_COOLDOWN = 100;
     protected long pasttime;
     protected long cooldown;
 
     public Spawn(String parameter) {
         super(parameter);
         pasttime = System.currentTimeMillis();
-        cooldown = 100;
+        cooldown = DEFAULT_COOLDOWN;
     }
 
     public Spawn(String parameter, String cdown) {

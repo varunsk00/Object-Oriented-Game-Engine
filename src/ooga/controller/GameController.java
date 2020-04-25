@@ -147,12 +147,12 @@ public class GameController {
   }
 
   private void handleGamePadPlayer() {
-    if (gameParser.getPlayerList().size() > 1 && g.getState() != null) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+    if (gameParser.getPlayerList().size() > 1 && g.getState() != null && g.getState().getControl() != null) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (!g.getState().getPressed()) {
-        gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
+        gameParser.getPlayerList().get(1).handleKeyInput(g.getState().getControl());
       } else {
         gameParser.getPlayerList().get(1)
-            .handleControllerInputReleased(g.getState().getControl());
+            .handleKeyReleased(g.getState().getControl());
       }
     }
   }

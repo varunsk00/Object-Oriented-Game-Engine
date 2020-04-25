@@ -20,7 +20,7 @@ public class CollisionKey {
 
   @Override
   public boolean equals(Object targetCollisionKey) {
-    return(targetCollisionKey instanceof CollisionKey &&
+    return(targetCollisionKey.getClass()==this.getClass() &&
         (this.ID.equals(((CollisionKey) targetCollisionKey).getID()) &&
           (this.orientation.equals(((CollisionKey) targetCollisionKey).getOrientation()) ||
               ((CollisionKey) targetCollisionKey).getOrientation().equals("A"))));
