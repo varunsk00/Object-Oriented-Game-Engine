@@ -53,7 +53,7 @@
         },
         {
           "action": "LoseHealth",
-          "param": "0",
+          "param": "1",
           "orientation": "W"
         }
       ],
@@ -68,7 +68,7 @@
         },
         {
           "action": "LoseHealth",
-          "param": "0",
+          "param": "1",
           "orientation": "W"
         }
       ],
@@ -83,7 +83,7 @@
         },
         {
           "action": "LoseHealth",
-          "param": "0",
+          "param": "1",
           "orientation": "W"
         }
       ],
