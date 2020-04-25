@@ -77,6 +77,5 @@ public class GameSelectParser extends Parser {
       buttonStrings.add(myResources.getString("defaultPlayer")); //default
       return buttonStrings;
     }
-
   }
 }

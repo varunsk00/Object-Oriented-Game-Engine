@@ -213,7 +213,6 @@ public class EntityJSONParser extends Parser {
     }
   }
 
-//<<<<<<< HEAD
   public String readImage() { return (String) jsonObject.get("image"); }
 
   public double readWidth() {
@@ -228,7 +227,6 @@ public class EntityJSONParser extends Parser {
     }
     return 50; //default
   }
-//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
 
   public double readHeight() {
     try {
@@ -298,8 +296,6 @@ public class EntityJSONParser extends Parser {
     return 500;
   }
 
-//<<<<<<< HEAD
-//=======
   public double readHealth() {
     try {
       return Double.parseDouble(jsonObject.get("health").toString());

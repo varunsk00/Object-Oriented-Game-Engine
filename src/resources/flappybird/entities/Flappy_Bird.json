@@ -99,8 +99,8 @@
           "action": "MoveX"
         },
         {
-          "param": "forwards",
-          "action": "SetXDirection"
+          "param": "true",
+          "action": "SetForwards"
         }
       ],
       "ID": "D"
@@ -112,8 +112,8 @@
           "action": "MoveX"
         },
         {
-          "param": "backwards",
-          "action": "SetXDirection"
+          "param": "false",
+          "action": "SetForwards"
         }
       ],
       "ID": "A"
