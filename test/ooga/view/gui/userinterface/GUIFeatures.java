@@ -1,19 +1,19 @@
-package ooga.view.gui;
-
-import static org.junit.jupiter.api.Assertions.*;
+package ooga.view.gui.userinterface;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import ooga.Main;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-class InGameMenuTest extends DukeApplicationTest {
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class GUIFeatures extends DukeApplicationTest {
     private Button playButton;
     private Button selectButton;
+
     @BeforeEach
     void launchGame() throws Exception{
         launch(Main.class);
@@ -30,38 +30,32 @@ class InGameMenuTest extends DukeApplicationTest {
     }
 
     @Test
-    void testPauseandResume() {
-        press(KeyCode.ESCAPE);
-        Node resume = lookup("#playgame").queryLabeled();
-        assertTrue(resume!=null);
-        clickOn(resume);
-        press(KeyCode.ESCAPE);
-        press(KeyCode.Q);
-    }
-
-    @Test
-    void testMenuCameraTranslate() {
+    void testGameOver() {
         for(int i = 0; i < 15; i++){
             press(KeyCode.D);
         }
-        press(KeyCode.SPACE);
-        press(KeyCode.ESCAPE);
     }
 
     @Test
-    void testRestartfromMenu() {
-        for(int i = 0; i < 15; i++){
-            press(KeyCode.D);
-        }
-        press(KeyCode.Q);
+    void testSuspendPointPauseMenu() throws InterruptedException {
+        press(KeyCode.ESCAPE);
+        Node home = lookup("#gameselect").queryLabeled();
+        assertTrue(home!=null);
+        clickOn(home);
+        selectButton = (Button) lookup("#selectGameButton").queryLabeled();
+        assertTrue(selectButton!=null);
+        clickOn(selectButton);
+        Node play = lookup("#playgame").queryLabeled();
+        assertTrue(play!=null);
+        clickOn(play);
+        Thread.sleep(1000);
     }
 
     @Test
-    void testConfigMenu() {
+    void testResetSystem() {
         press(KeyCode.ESCAPE);
-        Node configMenu = lookup("#configuration").queryLabeled();
-        assertTrue(configMenu!=null);
-        clickOn(configMenu);
+        Node reset = lookup("#rebootsystem").queryLabeled();
+        assertTrue(reset!=null);
+        clickOn(reset);
     }
-
 }

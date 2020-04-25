@@ -46,7 +46,10 @@ public class ProgramLauncher {
             try {
                 step(); }
             catch (Exception ex) {
-                new MissingFileException(ex, "resourceFile"); } });
+//                animation.stop();
+//                stageManager.createAndSwitchScenes(welcomeScreen);
+                new MissingFileException(ex, "resourceFile");
+            } });
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);

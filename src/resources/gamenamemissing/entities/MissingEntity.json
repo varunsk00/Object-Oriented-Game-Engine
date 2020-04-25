@@ -1,6 +1,6 @@
 {
   "entityName": "MissingEntity",
-  "image": "missing_texture.jpg",
+  "image": "missing_texture.png",
   "health": 10,
   "fixed": true,
   "permeable": false,
