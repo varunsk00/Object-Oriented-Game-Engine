@@ -16,14 +16,14 @@ class GuiTest extends DukeApplicationTest {
   @BeforeEach
   void setUp() throws Exception{
     launch(Main.class);
-    playButton = (Button) lookup("#Play").queryLabeled();
+    playButton = (Button) lookup("#play").queryLabeled();
   }
 
   @Test
   void testSelectGame() {
     assertTrue(playButton != null);
     clickOn(playButton);
-    selectButton = (Button) lookup("#start").queryLabeled();
+    selectButton = (Button) lookup("#selectGameButton").queryLabeled();
     assertTrue(selectButton != null);
     clickOn(selectButton);
   }
@@ -31,7 +31,7 @@ class GuiTest extends DukeApplicationTest {
   @Test
   void testPlayGame() throws InterruptedException {
     clickOn(playButton);
-    selectButton = (Button) lookup("#start").queryLabeled();
+    selectButton = (Button) lookup("#selectGameButton").queryLabeled();
     clickOn(selectButton);
     press(KeyCode.SPACE);
     press(KeyCode.D);
@@ -40,8 +40,8 @@ class GuiTest extends DukeApplicationTest {
   @Test
   void testMenuArrows() throws InterruptedException {
     clickOn(playButton);
-    Node leftArrow = lookup("#LeftArrow").query();
-    Node rightArrow = lookup("#RightArrow").query();
+    Node leftArrow = lookup("#leftArrow").query();
+    Node rightArrow = lookup("#rightArrow").query();
     assertTrue(rightArrow != null);
     assertTrue(leftArrow != null);
     for(int i = 0; i < 10; i++){
@@ -52,16 +52,16 @@ class GuiTest extends DukeApplicationTest {
       clickOn(rightArrow);
       Thread.sleep(800);
     }
-    selectButton = (Button) lookup("#start").queryLabeled();
+    selectButton = (Button) lookup("#selectGameButton").queryLabeled();
     clickOn(selectButton);
   }
 
   @Test
   void testHome(){
     clickOn(playButton);
-    Node leftArrow = lookup("#LeftArrow").query();
-    Node rightArrow = lookup("#RightArrow").query();
-    selectButton = (Button) lookup("#start").queryLabeled();
+    Node leftArrow = lookup("#leftArrow").query();
+    Node rightArrow = lookup("#rightArrow").query();
+    selectButton = (Button) lookup("#selectGameButton").queryLabeled();
     assertTrue(rightArrow != null);
     assertTrue(leftArrow != null);
     clickOn(selectButton);
