@@ -17,6 +17,9 @@ import ooga.view.application.menu.ConfigurationMenu;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
+/**
+ * This class handles the front end views needed by the controller
+ */
 public class ViewManager implements ViewExternalAPI {
   private final String RESOURCES_PACKAGE = "resources.guiText";
   private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
@@ -35,6 +38,11 @@ public class ViewManager implements ViewExternalAPI {
   private boolean saveGame = false;
   private boolean isGamePaused = false;
 
+  /**
+   * Construcotr for view managers
+   * @param stageManager : stage manager
+   * @param playerList : list of players
+   */
   public ViewManager(StageManager stageManager, List<EntityWrapper> playerList){
     menu = new InGameMenu();
     config = new ConfigurationMenu(playerList);
@@ -51,43 +59,68 @@ public class ViewManager implements ViewExternalAPI {
     testScene = stageManager.getCurrentScene();
   }
 
-  private void setUpPane(){
-    level = new BorderPane();
-    testPane = level;
-    testScene = currentStage.getCurrentScene();
-    testScene.setRoot(testPane);
-    EntityGroup = new Group();
-    level.getChildren().add(EntityGroup);
-  }
 
+  /**
+   * returns level
+   * @return level
+   */
   public Pane getLevel() {
     return level;
   }
 
+  /**
+   * sets up scrolling camera
+   * @param node entity list
+   * @param scrollStatusX : whether x scroll is enabled
+   * @param scrollStatusY : whether y scroll is enabled
+   */
   public void setUpCamera(List<EntityWrapper> node, int scrollStatusX, int scrollStatusY) { camera = new Camera(currentStage.getStage(), level, node, scrollStatusX, scrollStatusY); }
 
+  /**
+   * returns the scene
+   * @return testSCene
+   */
   public Scene getTestScene() {
     return testScene;
   }
 
+  /**
+   * sets the new level
+   * @param levelBuilt new level built
+   */
   public void setLevel(BorderPane levelBuilt) {
     this.level = levelBuilt;
   }
 
+  /**
+   * updates camera values
+   */
   public void updateValues() {
     camera.update(overlay);
   }
 
+  /**
+   * remove entity from view
+   * @param node - the entity to be removed
+   */
   @Override
   public void removeEntity(Node node) {
     EntityGroup.getChildren().remove(node);
   }
 
+  /**
+   * add entity to view
+   * @param node
+   */
   @Override
   public void addEntity(Node node) {
     EntityGroup.getChildren().add(node);
   }
 
+  /**
+   * handle key inputs
+   * @param code
+   */
   public void handlePressInput (KeyCode code) {
     if (code == KeyCode.ESCAPE && escCounter < 1) {
       pauseGame(); }
@@ -100,10 +133,18 @@ public class ViewManager implements ViewExternalAPI {
       saveGame = true; }
   }
 
+  /**
+   * returns if game should be save
+   * @return true if game should be played
+   */
   public boolean getSaveGame() {
     return saveGame;
   }
 
+  /**
+   * handles inputs from pause menu
+   * @throws Exception
+   */
   public void handleMenuInput() throws Exception {
     resumeGame();
     saveGame();
@@ -163,6 +204,9 @@ public class ViewManager implements ViewExternalAPI {
     goHome(KeyCode.H.getChar());
   }
 
+  /**
+   * pauses the game
+   */
   public void pauseGame(){
     BoxBlur bb = new BoxBlur();
     EntityGroup.setEffect(bb);
@@ -171,11 +215,17 @@ public class ViewManager implements ViewExternalAPI {
     escCounter++;
   }
 
+  /**
+   * launches config menu for user to change configs
+   */
   private void launchConfigMenu(){
     testPane.setCenter(config);
     configCounter++;
   }
 
+  /**
+   * unpauses the game
+   */
   private void unPauseGame(){
     updateMenu(DEFAULT_MENU_TEXT);
     testPane.getChildren().remove(config);
@@ -186,23 +236,54 @@ public class ViewManager implements ViewExternalAPI {
     configCounter = 0;
   }
 
+  /**
+   * updates the menu with results
+   * @param text result
+   */
   public void updateMenu(String text) {
     menu.updateGameResult(text);
   }
 
+  /**
+   * returns if game should be paused
+   * @return if game is paused
+   */
   public boolean getIsGamePaused() {
     return isGamePaused;
   }
 
+  /**
+   * sets game should be paused
+   */
   public void setGamePaused() {
     isGamePaused = true;
   }
 
+  /**
+   * sets whether game should be saved
+   */
   public void setSaveGame() {
     saveGame = !saveGame;
   }
 
+  /**
+   * returns camera
+   * @return camera
+   */
   public Camera getCamera(){
     return camera;
   }
+
+  /**
+   * sets up level pane
+   */
+  private void setUpPane(){
+    level = new BorderPane();
+    testPane = level;
+    testScene = currentStage.getCurrentScene();
+    testScene.setRoot(testPane);
+    EntityGroup = new Group();
+    level.getChildren().add(EntityGroup);
+  }
+
 }
