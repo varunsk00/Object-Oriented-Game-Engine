@@ -37,8 +37,6 @@ public class LevelSelector {
     }
     activeLevel.spawnEntities(currentEntityList, viewManager);
     this.despawnEntities(currentEntityList, viewManager);
-
-//>>>>>>> 5854a31735b775444eaaa1b24aa6a390047d9e73
   }
 
   private void switchLevel(int levelIndex){
