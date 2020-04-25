@@ -1,0 +1,90 @@
+{
+  "levelType": "FiniteLevel",
+  "players": "2",
+  "tileArrangement": [
+    {
+      "EntityName": "mario.MarioFlagPole",
+      "Arrangement": [
+        {
+          "11": [
+            "199"
+          ]
+        },
+        {
+          "10": [
+            "199"
+          ]
+        },
+        {
+          "9": [
+            "199"
+          ]
+        },
+        {
+          "8": [
+            "199"
+          ]
+        },
+        {
+          "7": [
+            "199"
+          ]
+        },
+        {
+          "6": [
+            "199"
+          ]
+        },
+        {
+          "5": [
+            "199"
+          ]
+        },
+        {
+          "4": [
+            "199"
+          ]
+        }
+      ]
+    },
+    {
+      "EntityName": "mario.MarioFlagTop",
+      "Arrangement": [
+        {
+          "3": [
+            "199"
+          ]
+        }
+      ]
+    }
+  ],
+  "levelName": "SampleLevel",
+  "playerArrangement": [
+  ],
+  "tileWidth": 50,
+  "enemyArrangement": [
+    {
+      "EntityName": "mario.Goomba",
+      "Arrangement": [
+        {
+          "12": [
+            "20",
+            "39",
+            "134"
+          ]
+        }
+      ]
+    },
+    {
+      "EntityName": "mario.Koopa",
+      "Arrangement": [
+        {
+          "12": [
+            "5"
+          ]
+        }
+      ]
+    }
+  ],
+  "tileHeight": 50
+}

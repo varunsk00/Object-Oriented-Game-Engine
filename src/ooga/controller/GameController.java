@@ -23,8 +23,6 @@ import org.json.simple.JSONObject;
 
 public class GameController implements Controller {
 
-//  private PhysicsEngine physicsEngine;
-//  private CollisionEngine collisionEngine;
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entityBuffer;
   private List<EntityWrapper> entityRemove;
@@ -195,18 +193,6 @@ public class GameController implements Controller {
     despawnOldLevel();
     levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
     myModelManager.resetPlayerPositions(gameParser.getPlayerList());
-//=======
-//    entityList.get(0).getModel().setHealth();
-//    entityList.get(0).getModel().setLevelAdvancementStatus(true);
-//
-//    despawnOldLevel();
-//
-//    entityList.get(0).getModel().resetPosition();
-//    levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
-//    for(Level level : levelSelector.getLevelsToPlay()){
-//      level.setCurrentPlayerInterval(-1);
-//    }
-//>>>>>>> 19cc3bfad511d7e566910e33ebb5954bbc216473
   }
 
   //TODO: fix duplicated code if possible?

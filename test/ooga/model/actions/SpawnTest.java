@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import javafx.stage.Stage;
 import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
-import ooga.controller.FinalController;
 import ooga.view.gui.managers.StageManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
