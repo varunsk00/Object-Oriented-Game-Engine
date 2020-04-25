@@ -20,6 +20,10 @@ public abstract class Level {
   private int currentPlayerInterval = -1;
   private String levelName;
   private GameStatusProfile gameStatusProfile;
+  protected int scrollingStatusX;
+  protected int scrollingStatusY;
+  protected int spawningInterval;
+  protected int levelSpawnOffset;
 
   public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name){
     tileEntities = tileList;
@@ -27,6 +31,10 @@ public abstract class Level {
     enemyEntities = enemyList;
     gameStatusProfile = gameProfile;
     levelName = name;
+    scrollingStatusX = gameStatusProfile.readScrollingStatusX();
+    scrollingStatusY = gameStatusProfile.readScrollingStatusY();
+    spawningInterval = gameStatusProfile.readSpawningInterval();
+    levelSpawnOffset = gameStatusProfile.readLevelSpawnOffset();
   }
 
 
@@ -48,10 +56,12 @@ public abstract class Level {
     return levelName;
   }
 
-  public void addEntityToListAndViewManager(EntityWrapper entity, List<EntityWrapper> currentEntityList){
+  public void addEntity(EntityWrapper entity, List<EntityWrapper> currentEntityList){
     currentEntityList.add(entity);
-//    viewManager.addEntity(entity.getRender());
   }
 
+  public int calculatePlayerInterval(EntityWrapper player) {
+    return (int) Math.abs((player.getModel().getX() * this.scrollingStatusX + player.getModel().getY() * this.scrollingStatusY)/spawningInterval);
+  }
 
 }

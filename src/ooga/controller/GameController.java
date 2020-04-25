@@ -45,9 +45,6 @@ public class GameController {
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame)
           throws XInputNotLoadedException { //FIXME add exception stuff
-
-    g = new GamePadListener();
-
     g = new GamePadListener();
     gameParser = new GameParser(gameName, this, loadedGame);
     myViewManager = new ViewManager(stageManager, gameParser.getPlayerList());
@@ -72,10 +69,6 @@ public class GameController {
         gameParser.parseGameStatusProfile(), myViewManager.getCamera());
     setUpTimeline();
 
-  }
-
-  public List<EntityWrapper> getEntityList() {
-    return entityList;
   }
 
   private void setUpKeyInputs() {
@@ -156,7 +149,6 @@ public class GameController {
       for (EntityWrapper targetEntity : entityList) {
         if (!entityDespawnBuffer.contains(targetEntity)) {
           myModelManager.produceCollisions(subjectEntity, targetEntity);
-//          myModelManager.getCollisionEngine().produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
         }
       }
       subjectEntity.update(elapsedTime);

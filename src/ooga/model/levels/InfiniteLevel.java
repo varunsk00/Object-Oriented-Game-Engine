@@ -2,7 +2,6 @@ package ooga.model.levels;
 
 import java.util.List;
 import ooga.controller.EntityWrapper;
-import ooga.controller.ViewManager;
 import ooga.util.GameStatusProfile;
 
 public class InfiniteLevel extends Level{
@@ -10,22 +9,12 @@ public class InfiniteLevel extends Level{
   private List<EntityWrapper> tileEntities;
   private List<EntityWrapper> playerEntities;
   private List<EntityWrapper> enemyEntities;
-  private int scrollingStatusX;
-  private int scrollingStatusY;
-  private int spawningInterval;
-  private int levelSpawnOffset;
-  private GameStatusProfile gameStatusProfile;
 
   public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name) {
     super(tileList, playerList, enemyList, gameProfile, name);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
-    gameStatusProfile = gameProfile;
-    scrollingStatusX = gameStatusProfile.readScrollingStatusX();
-    scrollingStatusY = gameStatusProfile.readScrollingStatusY();
-    spawningInterval = gameStatusProfile.readSpawningInterval();
-    levelSpawnOffset = gameStatusProfile.readLevelSpawnOffset();
   }
 
   @Override
@@ -39,12 +28,12 @@ public class InfiniteLevel extends Level{
             EntityWrapper newSpawn = new EntityWrapper(tileEntity.getEntityID(), tileEntity.getController());
             resizeEntity(newSpawn, tileEntity);
             setEntityPositions(newSpawn, tileEntity, tileInterval);
-            addEntityToListAndViewManager(newSpawn, currentEntityList);
+            addEntity(newSpawn, currentEntityList);
           }
         for (EntityWrapper enemyEntity : enemyEntities) {
             EntityWrapper newSpawn = new EntityWrapper(enemyEntity.getEntityID(), enemyEntity.getController());
             setEntityPositions(newSpawn, enemyEntity, tileInterval);
-            addEntityToListAndViewManager(newSpawn, currentEntityList);
+            addEntity(newSpawn, currentEntityList);
         }
       }
     }
@@ -65,8 +54,5 @@ public class InfiniteLevel extends Level{
         .setY(-spawnCoordinate * this.scrollingStatusY + copyEntity.getModel().getY() * this.scrollingStatusX);
   }
 
-  private int calculatePlayerInterval(EntityWrapper player) {
-    return (int) Math.abs((player.getModel().getX() * this.scrollingStatusX + player.getModel().getY() * this.scrollingStatusY)/spawningInterval);
-  }
 
 }
