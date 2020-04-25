@@ -45,8 +45,8 @@ public class GameController implements Controller {
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
     builder = new InfiniteLevelBuilder(this);
-    g = new GamePadListener();
 
+    g = new GamePadListener();
     gameParser = new GameParser(gameName, this, loadedGame);
     myViewManager = new ViewManager(stageManager, builder, gameParser.getPlayerList());
     myModelManager = new ModelManager(gameParser);
@@ -55,13 +55,12 @@ public class GameController implements Controller {
     entityBuffer = new ArrayList<>();
     entityRemove = new ArrayList<>();
 
+
+    //TODO: refactor this more if time
     for(EntityWrapper player : gameParser.getPlayerList()){
       entityList.add(player);
       myViewManager.addEntity(player.getRender());
     }
-
-//    physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile());
-//    collisionEngine = new CollisionEngine();
 
     setUpKeyInputs();
 
@@ -69,6 +68,23 @@ public class GameController implements Controller {
     levelSelector = new LevelSelector(gameParser.parseLevels(), gameParser.parseGameStatusProfile());
     setUpTimeline();
 
+  }
+
+  @Override
+  public void removeEntity(EntityWrapper node) {
+    entityRemove.add(node);
+    myViewManager.removeEntity(node.getRender());
+  }
+
+  @Override
+  public void addEntity(EntityWrapper newEntity) {
+    entityBuffer.add(newEntity);
+    myViewManager.addEntity(newEntity.getRender());
+  }
+
+  @Override
+  public List<EntityWrapper> getEntityList() {
+    return entityList;
   }
 
   private void setUpKeyInputs() {
@@ -204,20 +220,5 @@ public class GameController implements Controller {
     }
   }
 
-  @Override
-  public void removeEntity(EntityWrapper node) {
-    entityRemove.add(node);
-    myViewManager.removeEntity(node.getRender());
-  }
 
-  @Override
-  public void addEntity(EntityWrapper newEntity) {
-    entityBuffer.add(newEntity);
-    myViewManager.addEntity(newEntity.getRender());
-  }
-
-  @Override
-  public List<EntityWrapper> getEntityList() {
-    return entityList;
-  }
 }
