@@ -1,5 +1,6 @@
 package ooga.util;
 
+import com.thoughtworks.xstream.mapper.Mapper.Null;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,20 +22,33 @@ import org.json.simple.parser.ParseException;
 public class PhysicsProfile {
 
   private JSONObject physicsArray;
+  private final static int DEFAULT_ZERO = 0;
 
   public PhysicsProfile(JSONObject parsedProfile) {
     physicsArray = parsedProfile;
   }
 
-  public double readFriction(){
-    return Double.parseDouble(physicsArray.get("Friction").toString());
+  public double readFriction() {
+    try {
+      return Double.parseDouble(physicsArray.get("Friction").toString());
+    } catch (NullPointerException e) {
+      return DEFAULT_ZERO;
+    }
   }
 
-  public double readDrag(){
-    return Double.parseDouble(physicsArray.get("Drag").toString());
+  public double readDrag() {
+    try {
+      return Double.parseDouble(physicsArray.get("Drag").toString());
+    } catch (NullPointerException e) {
+      return DEFAULT_ZERO;
+    }
   }
 
-  public double readGravity(){
-    return Double.parseDouble(physicsArray.get("Gravity").toString());
+  public double readGravity() {
+    try {
+      return Double.parseDouble(physicsArray.get("Gravity").toString());
+    } catch (NullPointerException e) {
+      return DEFAULT_ZERO;
+    }
   }
 }

@@ -184,7 +184,7 @@ public class GameController implements Controller {
 
   private void checkIfResetLevel() {
     for (EntityWrapper player : gameParser.getPlayerList()) {
-      if (myModelManager.checkHealthGone(entityList.get(0))) {
+      if (myModelManager.checkHealthGone(player)) {
         myViewManager.updateMenu(LOSS_RESULT);
         myViewManager.pauseGame();
         levelSelector.resetLevel(entityList, myViewManager);

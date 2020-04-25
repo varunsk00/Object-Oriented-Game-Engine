@@ -32,8 +32,6 @@ public class InfiniteLevel extends Level{
     levelSpawnOffset = gameStatusProfile.readLevelSpawnOffset();
   }
 
-
-
   @Override
   public void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
     for (EntityWrapper player : playerEntities) {
