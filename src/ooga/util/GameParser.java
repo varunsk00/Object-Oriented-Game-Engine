@@ -171,7 +171,7 @@ public class GameParser extends Parser {
     return gameVariables;
   }
 
-  private int readPlayerCount() {
+  public int readPlayerCount() {
     return Integer.parseInt(jsonObject.get("playerCount").toString());
   }
 
