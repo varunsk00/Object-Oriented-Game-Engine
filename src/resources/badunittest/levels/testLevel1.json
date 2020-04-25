@@ -1,0 +1,17 @@
+{
+  "levelType": "FiniteLevel",
+  "players": "2",
+  "tileArrangement": [
+    {
+    }
+  ],
+  "levelName": "testLevel1",
+  "playerArrangement": [
+  ],
+  "tileWidth": 50,
+  "tileHeight": 50,
+  "enemyArrangement": [
+    {
+    }
+  ]
+}

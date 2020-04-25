@@ -1,18 +1,14 @@
 package ooga.view.gui.managers;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.scene.Node;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import ooga.view.application.games.Game;
+import ooga.exceptions.MissingFileException;
 import ooga.view.gui.ProgramLauncher;
-import ooga.view.gui.userinterface.Welcome;
 
 //TODO: REFACTOR, CLEAN UP MAGIC, REMOVE UNNECESSARY METHODS
 public class StageManager {
@@ -29,7 +25,7 @@ public class StageManager {
     private Map<String, Scene> resetGameScenes;
 
 
-    public StageManager(Stage primaryStage, AudioVideoManager avManager) throws FileNotFoundException {
+    public StageManager(Stage primaryStage, AudioVideoManager avManager) {
         this.stage = primaryStage;
         this.avManager = avManager;
         stage.setTitle(DEFAULT_TITLE);
@@ -65,9 +61,7 @@ public class StageManager {
             try {
                 handleKeyInput(e.getCode());
             } catch (Exception fileNotFoundException) {
-                fileNotFoundException.printStackTrace();//FIXME: TO AVOID FAILING CLASS
-            }
-        });;
+                new MissingFileException(fileNotFoundException, "resourceFile"); } });
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);

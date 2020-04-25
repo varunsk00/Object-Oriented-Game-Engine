@@ -1,8 +1,9 @@
-package ooga.view.entity;
+package ooga.view;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import ooga.controller.EntityWrapper;
+import ooga.view.entity.EntityView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

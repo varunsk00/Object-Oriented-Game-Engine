@@ -43,12 +43,11 @@ public class EntityJSONParser extends Parser {
 
     controlMap = readControlMap(actionBundlesArray);
 
-
     Class controlClass = null;
     try{
       controlClass = Class.forName(CONTROLS_PREFIX + controlType);
-    } catch (ClassNotFoundException e) {
-      //FIXME add error handling
+    } catch (ClassNotFoundException | NullPointerException e) {
+      new ParameterMissingException(e, controlClass.toString());
     }
 
     ControlScheme myScheme = null;
@@ -57,7 +56,7 @@ public class EntityJSONParser extends Parser {
       myScheme = (ControlScheme) (controlClass.getConstructor(List.class)
           .newInstance(controlMap));
     } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace(); //FIXME to not fail the class
+      new ParameterMissingException(e, controlClass.toString());
     }
     return myScheme;
   }
@@ -203,10 +202,14 @@ public class EntityJSONParser extends Parser {
       file.write(root.toString());
       System.out.println(message);
     } catch (IOException e) {
-      e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+      new ParameterInvalidException(e, root.toString());
     }
   }
 
+//<<<<<<< HEAD
+  public String readImage() { return (String) jsonObject.get("image"); }
+//  public double readWidth() { return Double.parseDouble(jsonObject.get("width").toString()); }
+//=======
   public double readWidth() {
     try {
       return Double.parseDouble(jsonObject.get("width").toString());
@@ -219,6 +222,7 @@ public class EntityJSONParser extends Parser {
     }
     return 50; //default
   }
+//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
 
   public double readHeight() {
     try {
@@ -288,6 +292,8 @@ public class EntityJSONParser extends Parser {
     return 500;
   }
 
+//<<<<<<< HEAD
+//=======
   public double readHealth() {
     try {
       return Double.parseDouble(jsonObject.get("health").toString());
@@ -320,5 +326,9 @@ public class EntityJSONParser extends Parser {
       new ParameterMissingException(e, "permeable");
       return false;
     }
+  }
+
+  public JSONObject getJSONObject() {
+    return jsonObject;
   }
 }

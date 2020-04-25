@@ -1,6 +1,5 @@
 {
-  "entityName": "UnitTestEntity",
-  "image": "mario_fire.png",
+  "entityName": "BadUnitTestEntity",
   "health": 1,
   "xPos": 0,
   "yPos": 0,
@@ -24,8 +23,8 @@
           "param": "300.0"
         },
         {
-          "action": "SetForwards",
-          "param": "true"
+          "action": "SetXDirection",
+          "param": "forwards"
         }
       ]
     },
@@ -38,8 +37,8 @@
           "param": "-300.0"
         },
         {
-          "action": "SetForwards",
-          "param": "false"
+          "action": "SetXDirection",
+          "param": "backwards"
         }
       ]
     },
@@ -427,4 +426,3 @@
     }
   ]
 }
-
