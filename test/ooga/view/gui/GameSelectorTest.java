@@ -1,15 +1,16 @@
-package ooga;
+package ooga.view.gui;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import ooga.Main;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-class GuiTest extends DukeApplicationTest {
+class GameSelectorTest extends DukeApplicationTest {
   private Button playButton;
   private Button selectButton;
 
