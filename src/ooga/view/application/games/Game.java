@@ -12,8 +12,6 @@ public class Game {
     private Scene currentScene;
     private GameController mainController;
 
-
-
     public Game(StageManager stageManager) {
         this.stageManager = stageManager;
         this.currentScene = stageManager.getCurrentScene();
