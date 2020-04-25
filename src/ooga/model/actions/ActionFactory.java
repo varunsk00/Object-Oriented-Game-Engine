@@ -57,12 +57,6 @@ public class ActionFactory {
 
   private Action buildAction(String formalAction, Class<?> classTypes[], Object param[]) {
     try {
-//      Class<?> params[] = {String.class, String.class};
-//      Class<?> paramsSingle[] = {String.class};
-//      Object fields[] = {"15.0", "test"};
-//      Object fieldsSingle[] = {"15.0"};
-//      Action oneParams = (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(paramsSingle).newInstance(fieldsSingle);
-//      Action twoParams = (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(params).newInstance(fields);
       return (Action) Class.forName(ACTIONS_PREFIX + formalAction).getDeclaredConstructor(classTypes).newInstance(param);
     }
     catch
