@@ -18,7 +18,7 @@ class EntityModelTest {
 
   @Test
   void testLimitSpeed(){
-    double xVelMax = myEntity.getParser().readXVelMax();
+    double xVelMax = myEntity.getParser().readMaxXVelocity();
     myEntity.getModel().setXVelocity(xVelMax + 100);
     myEntity.getModel().update(1000);
     assertEquals(xVelMax, myEntity.getModel().getXVelocity());
