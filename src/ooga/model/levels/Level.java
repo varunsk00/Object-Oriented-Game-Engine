@@ -26,21 +26,6 @@ public abstract class Level {
     levelName = name;
   }
 
-//  public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-//    for (EntityWrapper player : playerEntities) {
-//      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-//      for (EntityWrapper targetEntity : currentEntityList) {
-//        if (!playerEntities.contains(targetEntity) && !isInRange(player.getModel(), targetEntity.getModel())) {
-//          entitiesToDespawn.add(targetEntity);
-//        }
-//      }
-//      for(EntityWrapper despawnedEntity : entitiesToDespawn){
-//        currentEntityList.remove(despawnedEntity);
-//        viewManager.removeEntityGroup(despawnedEntity.getRender());
-//      }
-//    }
-//  }
-
 
   public abstract void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager);
 

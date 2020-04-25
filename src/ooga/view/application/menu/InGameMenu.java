@@ -1,11 +1,16 @@
 package ooga.view.application.menu;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class InGameMenu extends VBox{
     private boolean savePressed;
@@ -14,7 +19,7 @@ public class InGameMenu extends VBox{
     private boolean exitPressed;
     private boolean rebootPressed;
     private VBox myButtons;
-    private TextField gameResult;
+    private Text gameResult;
     private final String DEFAULT_MENU_TEXT = "Game in Progress";
 
     public InGameMenu() {
@@ -23,7 +28,9 @@ public class InGameMenu extends VBox{
         this.exitPressed = false;
         this.resumePressed = false;
         this.rebootPressed = false;
-        this.gameResult = new TextField(DEFAULT_MENU_TEXT);
+        this.gameResult = new Text(DEFAULT_MENU_TEXT);
+        this.gameResult.setId("status");
+        scrollText(this.gameResult);
         renderButtons();
         getChildren().addAll(myButtons, gameResult);
     }
@@ -94,9 +101,25 @@ public class InGameMenu extends VBox{
     }
 
     public void updateGameResult(String gameResult) {
-        TextField textField = new TextField(gameResult);
-        textField.setEditable(false);
-        getChildren().set(getChildren().size() - 1, textField);
+        Text status = new Text(gameResult);
+        this.gameResult = status;
+        status.setId("updatedStatus");
+        scrollText(status);
+        getChildren().set(getChildren().size() - 1, status);
+    }
+
+    public String getStatus() {
+        return gameResult.getText();
+    }
+
+    private void scrollText(Text status){
+        KeyValue initKeyValue = new KeyValue(status.translateXProperty(), 1280);
+        KeyFrame initFrame = new KeyFrame(Duration.ZERO, initKeyValue);
+        KeyValue endKeyValue = new KeyValue(status.translateXProperty(), -2.5*status.getLayoutBounds().getWidth());
+        KeyFrame endFrame = new KeyFrame(Duration.seconds(10), endKeyValue);
+        Timeline timeline = new Timeline(initFrame, endFrame);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
 

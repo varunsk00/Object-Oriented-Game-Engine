@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
-import ooga.model.actions.CollisionKey;
+import ooga.model.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.util.config.Parser;
@@ -147,7 +147,6 @@ public class EntityJSONParser extends Parser {
 
   private ImageView loadImage(String imageName) {
 //    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
-    System.out.println(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
     InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
     Image entityImage = null;
     entityImage = new Image(is);

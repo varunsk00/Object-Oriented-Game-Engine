@@ -1,23 +1,18 @@
 {
   "gameName": "Mario",
-  "gameStatusProfile": [
+
+  "playerCount": "1",
+  "physicsProfile": [
     {
-      "scrollingStatusY": "0",
-      "spawningInterval": "0",
-      "scrollingStatusX": "1"
+      "Friction": "20",
+      "Drag": "1",
+      "Gravity": "20"
     }
   ],
   "levelArrangement": [
     {
       "Level_2": "mario.Level2",
       "Level_1": "mario.MarioLevel"
-    }
-  ],
-  "physicsProfile": [
-    {
-      "Friction": "20",
-      "Drag": "1",
-      "Gravity": "20"
     }
   ],
   "playerArrangement": [
@@ -36,6 +31,12 @@
       }
     }
   ],
-  "playerCount": "2",
-  "players": "2"
+
+  "gameStatusProfile": [
+    {
+      "scrollingStatusY": "0",
+      "spawningInterval": "0",
+      "scrollingStatusX": "1"
+    }
+  ]
 }

@@ -9,8 +9,9 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+
+import ooga.model.levels.Level;
 import ooga.util.GamePadListener;
-import ooga.model.levels.InfiniteLevelBuilder;
 
 
 import ooga.model.levels.LevelSelector;
@@ -30,34 +31,34 @@ public class GameController implements Controller {
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  private final String LOSS_RESULT = "You Lost! Restart the Level by resuming" + "\n"
-      + "or choose a new game by restarting the game. Thanks for playing!";
+  private final String LOSS_RESULT = "You Lost! Restart the Level by resuming or choose a new game by restarting the game. Thanks for playing!";
 
   private int nextLevel;
 
   private Timeline animation;
-  private InfiniteLevelBuilder builder;
   private ViewManager myViewManager;
   private ModelManager myModelManager;
   private LevelSelector levelSelector;
   private GamePadListener g;
   private GameParser gameParser;
+  private List<EntityWrapper> playerList;
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
-    builder = new InfiniteLevelBuilder(this);
+
+    g = new GamePadListener();
 
     g = new GamePadListener();
     gameParser = new GameParser(gameName, this, loadedGame);
-    myViewManager = new ViewManager(stageManager, builder, gameParser.getPlayerList());
+    myViewManager = new ViewManager(stageManager, gameParser.getPlayerList());
     myModelManager = new ModelManager(gameParser);
 
     entityList = new ArrayList<>();
     entityBuffer = new ArrayList<>();
     entityRemove = new ArrayList<>();
+    playerList = gameParser.getPlayerList();
 
 
-    //TODO: refactor this more if time
-    for(EntityWrapper player : gameParser.getPlayerList()){
+    for(EntityWrapper player : playerList){
       entityList.add(player);
       myViewManager.addEntity(player.getRender());
     }
@@ -65,7 +66,7 @@ public class GameController implements Controller {
     setUpKeyInputs();
 
     myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.parseGameStatusProfile().readScrollingStatusX(), gameParser.parseGameStatusProfile().readScrollingStatusY());
-    levelSelector = new LevelSelector(gameParser.parseLevels(), gameParser.parseGameStatusProfile());
+    levelSelector = new LevelSelector(gameParser.parseLevels(), playerList, gameParser.parseGameStatusProfile(), myViewManager.getCamera());
     setUpTimeline();
 
   }
@@ -194,6 +195,18 @@ public class GameController implements Controller {
     despawnOldLevel();
     levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
     myModelManager.resetPlayerPositions(gameParser.getPlayerList());
+//=======
+//    entityList.get(0).getModel().setHealth();
+//    entityList.get(0).getModel().setLevelAdvancementStatus(true);
+//
+//    despawnOldLevel();
+//
+//    entityList.get(0).getModel().resetPosition();
+//    levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
+//    for(Level level : levelSelector.getLevelsToPlay()){
+//      level.setCurrentPlayerInterval(-1);
+//    }
+//>>>>>>> 19cc3bfad511d7e566910e33ebb5954bbc216473
   }
 
   //TODO: fix duplicated code if possible?

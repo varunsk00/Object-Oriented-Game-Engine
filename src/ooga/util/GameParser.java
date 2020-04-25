@@ -52,6 +52,9 @@ public class GameParser extends Parser {
     this.gameName = gameName;
     this.myFileName = "";
     fileName = gameName + "Game";
+
+    setMyFileName(fileName);
+
     this.loadedGame = loadedGame;
     checkLoadGame(this.loadedGame);
     jsonObject = (JSONObject) readJsonFile();
@@ -78,7 +81,7 @@ public class GameParser extends Parser {
   public void saveGame(String key, JSONArray newValue){
     JSONObject root = jsonObject;
     root.put(key, newValue);
-    root.put("players", jsonObject.get("playerCount"));
+    root.put("playerCount", jsonObject.get("playerCount"));
 
 //    updateJSONValue(key, newValue);
 
