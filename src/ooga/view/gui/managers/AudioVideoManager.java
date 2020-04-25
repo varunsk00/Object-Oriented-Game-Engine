@@ -4,6 +4,7 @@ import java.util.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import ooga.exceptions.ParameterMissingException;
 import ooga.view.application.games.Game;
 
 import java.io.File;
@@ -43,8 +44,15 @@ public class AudioVideoManager {
     public void switchMusic(StageManager sm){
         if (currentSong != null) {
             currentSong.stop(); }
-        this.currentSong = new MediaPlayer
-                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sm.getCurrentTitle()) + MUSIC_EXTENSION).toURI().toString()));
+        try {
+            this.currentSong = new MediaPlayer
+                    (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sm.getCurrentTitle()) + MUSIC_EXTENSION).toURI().toString()));
+        }
+        catch (MissingResourceException e) {
+            new ParameterMissingException(e, "myMusicPropertiesKey");
+            this.currentSong = new MediaPlayer
+                    (new Media(new File(RESOURCES_PACKAGE + "default_sound" + MUSIC_EXTENSION).toURI().toString()));
+        }
         if(!destroyed) {
             playSong(currentSong); }
     }

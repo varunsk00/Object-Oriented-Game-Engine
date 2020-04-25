@@ -14,12 +14,12 @@ public class EntityWrapper {
   private EntityJSONParser myParser;
   private double score;
 
-  private Controller myController;
+  private GameController myController;
 
   private String EntityID;
 
 
-  public EntityWrapper(String entityName, Controller controller) {
+  public EntityWrapper(String entityName, GameController controller) {
     if(controller == null){
       System.out.println("Controller null");
     }
@@ -48,7 +48,7 @@ public class EntityWrapper {
   public EntityModel getModel(){return myModel;}
 
 
-  public Controller getController(){return myController;}
+  public GameController getController(){return myController;}
 
   public ImageView getRender(){return myView.getRender();}
 
@@ -82,4 +82,6 @@ public class EntityWrapper {
   public void updateScore(double newValue){score = newValue;}
 
   public double getScore(){return score;}
+
+  public void changeLevel(int levelIndex) {myController.changeLevel(levelIndex, this);}
 }
