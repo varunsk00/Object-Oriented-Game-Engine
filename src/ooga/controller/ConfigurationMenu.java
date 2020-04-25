@@ -3,19 +3,21 @@ package ooga.controller;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ooga.util.EntityJSONParser;
 
 import java.util.*;
 
-public class ControlSchemeSwitcher extends HBox{
+public class ConfigurationMenu extends HBox{
+    private static final int MIN_MUSIC = 0;
+    private static final int DEFAULT_MUSIC = 2;
+    private static final int MAX_MUSIC = 4;
     private final String RESOURCES_PACKAGE = "resources.params";
     private final String PARAM_START = "param\":\"";
     private final String PARAM_END = "\",\"a";
@@ -31,13 +33,14 @@ public class ControlSchemeSwitcher extends HBox{
     private List<ComboBox> dropDowns = new ArrayList<>(
             Arrays.asList(new ComboBox(), new ComboBox()));
     private Multimap<String,String> actionMap;
+    private Slider[] volumeSliders = new Slider[2];
     private Button exitButton;
     private boolean exitPressed;
     private List<TextField> input = new ArrayList<>();
     private VBox myActions = new VBox();
     private Alert updateAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
-    public ControlSchemeSwitcher(List<EntityWrapper> playerList){
+    public ConfigurationMenu(List<EntityWrapper> playerList){
         this.setId("configMenu");
         populateIDs(playerList);
         createParsers();
@@ -50,13 +53,9 @@ public class ControlSchemeSwitcher extends HBox{
                 if(box.getChildren().indexOf(field) > 0) {
                     TextField updatedField = (TextField) field;
                     String oldBind = updatedField.getText();
-                    updatedField.setOnAction(e -> updateControls(bindingDisplay.indexOf(box), oldBind, updatedField.getText()));
-                }
-            }
-        }
+                    updatedField.setOnAction(e -> updateControls(bindingDisplay.indexOf(box), oldBind, updatedField.getText())); } } }
         for(ComboBox cb: dropDowns){
-            cb.setOnAction(e-> updateControlType(dropDowns.indexOf(cb), (String) cb.getValue()));
-        }
+            cb.setOnAction(e-> updateControlType(dropDowns.indexOf(cb), (String) cb.getValue())); }
     }
 
     public boolean getExitPressed(){
@@ -65,6 +64,14 @@ public class ControlSchemeSwitcher extends HBox{
 
     public void setExitOff(){
         this.exitPressed = false;
+    }
+
+    public double getMusicVolume(){
+        return volumeSliders[0].getValue();
+    }
+
+    public double getFXVolume(){
+        return volumeSliders[1].getValue();
     }
 
     private void populateIDs(List<EntityWrapper> characters){
@@ -83,7 +90,8 @@ public class ControlSchemeSwitcher extends HBox{
         VBox configTitle = new VBox();
         Text configMessage = new Text(myResources.getString("MenuTitle"));
         this.exitButton = makeButton("Exit", e-> exitPressed = true);
-        configTitle.getChildren().addAll(configMessage, exitButton);
+        VBox sliders = renderSliders();
+        configTitle.getChildren().addAll(configMessage, exitButton, sliders);
         configTitle.setId("configTitle");
         getChildren().add(configTitle);
     }
@@ -185,5 +193,43 @@ public class ControlSchemeSwitcher extends HBox{
         Button tempButton = new Button(key);
         tempButton.setOnAction(e);
         return tempButton;
+    }
+
+    private VBox renderSliders() {
+        VBox sliders = new VBox();
+        HBox allLabels = new HBox();
+        addLabel("SongSlider", allLabels);
+        addLabel("EffectsSlider", allLabels);
+        HBox allSliders = new HBox();
+        for(int index = 0; index < volumeSliders.length; index++){
+            volumeSliders[index] = addAndReturnSlider(MIN_MUSIC, MAX_MUSIC, DEFAULT_MUSIC, allSliders);
+        }
+        sliders.getChildren().add(allLabels);
+        sliders.getChildren().add(allSliders);
+        return sliders;
+    }
+
+    private void addLabel(String key, HBox text) {
+        Label tempLabel = new Label(myResources.getString(key));
+        tempLabel.setMaxWidth(Double.MAX_VALUE);
+        tempLabel.setAlignment(Pos.CENTER);
+        HBox.setHgrow(tempLabel, Priority.ALWAYS);
+        text.getChildren().add(tempLabel);
+    }
+
+    private Slider addAndReturnSlider(int min, int max, int def, HBox sliders) {
+        Slider tempSlider = new Slider(min, max, def);
+        HBox.setHgrow(tempSlider, Priority.ALWAYS);
+        setSliderTicks(tempSlider);
+        sliders.getChildren().add(tempSlider);
+        return tempSlider;
+    }
+
+    private void setSliderTicks(Slider slider) {
+        slider.setBlockIncrement(1);
+        slider.setMajorTickUnit(1);
+        slider.setMinorTickCount(0);
+        slider.setShowTickLabels(true);
+        slider.setSnapToTicks(true);
     }
 }
