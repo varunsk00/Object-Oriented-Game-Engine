@@ -25,9 +25,5 @@ class FiniteLevelTest {
 //    myEngine.produceCollisionActions(myEntity2.getModel(), myEntity1.getModel());
 //    myEntity2.update(1000);
 //    assertTrue(e2Y != myEntity2.getModel().getY());
-//  }
-//}
-
   }
 }
-
