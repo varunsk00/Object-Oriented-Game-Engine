@@ -12,9 +12,12 @@ import javafx.scene.text.TextFlow;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ResourceBundle;
 
 
 public class Welcome extends VBox {
+    private final String RESOURCES_PACKAGE = "resources.guiText";
+    private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
     private final String TITLE_SCREEN_IMAGE = "src/resources/title.gif";
     private TextFlow welcome;
     private Text message;
@@ -27,7 +30,7 @@ public class Welcome extends VBox {
         this.setId("welcome");
         welcomeImage = new ImageView(new Image(new FileInputStream(TITLE_SCREEN_IMAGE)));
         this.welcome = new TextFlow();
-        this.message = new Text("Welcome to \uD83C\uDD71ob's Object Oriented Arcade!");
+        this.message = new Text(myResources.getString("welcomeMessage"));
         this.playPressed = false;
         welcome.setId("welcomeBanner");
         message.setId("welcomeMessage");
@@ -44,7 +47,7 @@ public class Welcome extends VBox {
     private void renderButton() {
         myButton = new VBox();
         myButton.setId("welcomeButton");
-        Button playButton = makeButton("Play", event -> playPressed = true);
+        Button playButton = makeButton(myResources.getString("Start"), event -> playPressed = true);
         playButton.setId("play");
         myButton.getChildren().add(playButton);
         formatButton(playButton);

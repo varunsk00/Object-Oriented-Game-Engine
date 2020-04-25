@@ -1,34 +1,21 @@
 package ooga.util;
 
-import com.thoughtworks.xstream.mapper.Mapper.Null;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Array;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.regex.Pattern;
-import javax.swing.text.html.parser.Entity;
+
 import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
-import ooga.model.actions.Action;
 import ooga.model.actions.actionExceptions.InvalidActionException;
-import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.model.levels.Level;
-import ooga.util.config.ParameterMissingException;
+import ooga.exceptions.ParameterMissingException;
 import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class GameParser extends Parser {
 
