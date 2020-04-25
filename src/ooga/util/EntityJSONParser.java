@@ -27,6 +27,10 @@ public class EntityJSONParser extends Parser {
   private static final String IMAGE_PACKAGE = "/images/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
+  private static final int DEFAULT_DIMENSION = 50;
+  private static final int DEFAULT_POSITION = 100;
+  private static final int DEFAULT_MAX_VELOCITY = 500;
+  private static final int DEFAULT_HEALTH = 10;
 
   private JSONObject jsonObject;
 
@@ -225,7 +229,7 @@ public class EntityJSONParser extends Parser {
     catch (NumberFormatException e) {
       new ParameterInvalidException(e, "width");
     }
-    return 50; //default
+    return DEFAULT_DIMENSION;
   }
 
   public double readHeight() {
@@ -238,7 +242,7 @@ public class EntityJSONParser extends Parser {
     catch (NumberFormatException e) {
       new ParameterInvalidException(e, "height");
     }
-    return 50; //default
+    return DEFAULT_DIMENSION;
   }
 
   public double readXPosition() {
@@ -251,7 +255,7 @@ public class EntityJSONParser extends Parser {
     catch (NumberFormatException e) {
       new ParameterInvalidException(e, "xPos");
     }
-    return 100;
+    return DEFAULT_POSITION;
   }
 
   public double readYPosition(){
@@ -265,7 +269,7 @@ public class EntityJSONParser extends Parser {
     catch (NumberFormatException e) {
       new ParameterInvalidException(e, "yPos");
     }
-    return 100;
+    return DEFAULT_DIMENSION;
   }
 
   public double readMaxXVelocity(){
@@ -278,7 +282,7 @@ public class EntityJSONParser extends Parser {
     }
     catch (NumberFormatException e) {
       new ParameterInvalidException(e, "maxXVel");
-    } return 500;
+    } return DEFAULT_MAX_VELOCITY;
 
   }
 
@@ -292,7 +296,7 @@ public class EntityJSONParser extends Parser {
     } catch (NumberFormatException e) {
       throw new ParameterInvalidException(e, "maxYVel");
     } finally {
-      return 500;
+      return DEFAULT_MAX_VELOCITY;
     }
   }
 
@@ -307,7 +311,7 @@ public class EntityJSONParser extends Parser {
     catch (NumberFormatException e) {
       new ParameterInvalidException(e, "health");
     }
-    return 10;
+    return DEFAULT_HEALTH;
   }
 
   public boolean readFixed() {
