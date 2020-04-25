@@ -28,18 +28,15 @@ public class GamePad extends ControlScheme {
     public void handleKeyInput(String key) {
         if(controllerBindings.containsKey(key) && !currentAction.containsAll(controllerBindings.get(key))) {
             currentAction.addAll(controllerBindings.get(key));
-      System.out.println(key);
         }
     }
 
     @Override
     public void handleKeyReleased(String key) {
-        //System.out.println(key);
         if (controllerBindings.containsKey(key) && currentAction
                 .containsAll(controllerBindings.get(key))) {
             System.out.println("BINDINGS");
             currentAction.removeAll(controllerBindings.get(key));
-            //System.out.println(keyEvent.getCode().toString());
         }
     }
 }
