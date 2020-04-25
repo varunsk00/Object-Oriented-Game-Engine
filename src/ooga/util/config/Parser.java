@@ -15,7 +15,6 @@ public abstract class Parser {
 
   public Object readJsonFile() {
     try {
-      System.out.println(myFileName);
       FileReader reader = new FileReader(myFileName);
       JSONParser jsonParser = new JSONParser();
       return jsonParser.parse(reader);
