@@ -23,7 +23,6 @@ public class InfiniteJump extends Jump{
         if(System.currentTimeMillis() - pasttime >= cooldown) {
             soundBoard.playSoundEffect(entity.getEntityID() + "_Jump");
             entity.setYVelocity(yVelocity);
-            entity.setBoundedBelow(false);
         }
     }
 }

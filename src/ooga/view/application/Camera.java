@@ -78,6 +78,10 @@ public class Camera {
         player.getModel().setBoundedLeft(true);
       } else if(player.getRender().getBoundsInParent().getMaxX() >= viewPort.getBoundsInParent().getMaxX()){
         player.getModel().setBoundedRight(true);
+      } else if(player.getRender().getBoundsInParent().getMaxY() >= viewPort.getBoundsInParent().getMaxY()){
+        player.getModel().setBoundedBelow(true);
+      } else if(player.getRender().getBoundsInParent().getMinY() <= viewPort.getBoundsInParent().getMinY()){
+        player.getModel().setBoundedTop(true);
       }
     }
   }

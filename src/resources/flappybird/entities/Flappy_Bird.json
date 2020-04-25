@@ -7,8 +7,8 @@
   "xPos": 100,
   "xVel": 10,
   "maxXVel": 1000,
-  "width": 100,
-  "height": 100,
+  "width": 50,
+  "height": 50,
   "maxYVel": 1000,
   "fixed": false,
   "yVel": 10,
@@ -28,28 +28,8 @@
       "Control": [
         {
           "orientation": "W",
-          "param": "0",
-          "action": "MoveX"
-        }
-      ],
-      "ID": "flappybird.Brick"
-    },
-    {
-      "Control": [
-        {
-          "orientation": "S",
-          "param": "-100.0",
-          "action": "MoveY"
-        }
-      ],
-      "ID": "flappybird.Brick"
-    },
-    {
-      "Control": [
-        {
-          "orientation": "W",
-          "param": "-50",
-          "action": "MoveX"
+          "param": "true",
+          "action": "SetBoundedRight"
         },
         {
           "action": "LoseHealth",
@@ -63,13 +43,23 @@
       "Control": [
         {
           "orientation": "W",
-          "param": "-50",
-          "action": "MoveX"
+          "param": "true",
+          "action": "SetBoundedRight"
         },
         {
           "action": "LoseHealth",
           "param": "1",
           "orientation": "W"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "1",
+          "orientation": "N"
         }
       ],
       "ID": "flappybird.Pipetop"
@@ -78,13 +68,23 @@
       "Control": [
         {
           "orientation": "W",
-          "param": "-50",
-          "action": "MoveX"
+          "param": "true",
+          "action": "SetBoundedRight"
         },
         {
           "action": "LoseHealth",
           "param": "1",
           "orientation": "W"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "1",
+          "orientation": "S"
         }
       ],
       "ID": "flappybird.Pipebottom"
