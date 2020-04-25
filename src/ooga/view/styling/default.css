@@ -182,8 +182,9 @@
 #configTitle{
     -fx-font-family: Pixeboy;
     -fx-alignment: center;
+    -fx-spacing: 30;
     -fx-translate-x: -150;
-    -fx-translate-y: -150;
+    -fx-translate-y: 20;
     -fx-font-size: 28px;
 }
 
@@ -219,6 +220,12 @@
     -fx-alignment: center;
     -fx-translate-x: 1280;
     -fx-translate-y: 180;
+}
+
+.slider{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 20px;
+    -fx-text-fill: #311c09;
 }
 
 .text-field{

@@ -1,23 +1,19 @@
-package ooga.controller;
+package ooga.view.application.menu;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import ooga.controller.EntityWrapper;
 import ooga.util.EntityJSONParser;
 
 import java.util.*;
 
 public class ConfigurationMenu extends HBox{
-    private static final int MIN_MUSIC = 0;
-    private static final int DEFAULT_MUSIC = 2;
-    private static final int MAX_MUSIC = 4;
     private final String RESOURCES_PACKAGE = "resources.params";
     private final String PARAM_START = "param\":\"";
     private final String PARAM_END = "\",\"a";
@@ -33,9 +29,9 @@ public class ConfigurationMenu extends HBox{
     private List<ComboBox> dropDowns = new ArrayList<>(
             Arrays.asList(new ComboBox(), new ComboBox()));
     private Multimap<String,String> actionMap;
-    private Slider[] volumeSliders = new Slider[2];
     private Button exitButton;
     private boolean exitPressed;
+    private VolumeSliders sliders;
     private List<TextField> input = new ArrayList<>();
     private VBox myActions = new VBox();
     private Alert updateAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -46,6 +42,7 @@ public class ConfigurationMenu extends HBox{
         createParsers();
         this.playerNum = playerList.size();
         this.actionMap = parseAction2KeyMap();
+        this.sliders = new VolumeSliders(2);
         loadTitle();
         loadDefaultControls();
         for(VBox box: bindingDisplay){
@@ -67,11 +64,11 @@ public class ConfigurationMenu extends HBox{
     }
 
     public double getMusicVolume(){
-        return volumeSliders[0].getValue();
+        return sliders.getSliders()[0].getValue();
     }
 
     public double getFXVolume(){
-        return volumeSliders[1].getValue();
+        return sliders.getSliders()[1].getValue();
     }
 
     private void populateIDs(List<EntityWrapper> characters){
@@ -90,8 +87,7 @@ public class ConfigurationMenu extends HBox{
         VBox configTitle = new VBox();
         Text configMessage = new Text(myResources.getString("MenuTitle"));
         this.exitButton = makeButton("Exit", e-> exitPressed = true);
-        VBox sliders = renderSliders();
-        configTitle.getChildren().addAll(configMessage, exitButton, sliders);
+        configTitle.getChildren().addAll(configMessage, this.exitButton, this.sliders);
         configTitle.setId("configTitle");
         getChildren().add(configTitle);
     }
@@ -103,8 +99,7 @@ public class ConfigurationMenu extends HBox{
             if(playerNum > 1){
                 generateMultiplayerBindings(entryList, mapIndex); }
             else{
-                playerBindings.get(0).add(entryList.get(mapIndex).getValue()); }
-        }
+                playerBindings.get(0).add(entryList.get(mapIndex).getValue()); } }
         drawActionsOnScreen();
         for(int playerIndex = 0; playerIndex < playerNum; playerIndex++){
             setVBoxes(playerIndex);
@@ -115,9 +110,7 @@ public class ConfigurationMenu extends HBox{
     private void updateControls(int playerIndex, String oldBind, String newBind){
         for (Map.Entry<String,String> entry : actionMap.entries()){
             if(entry.getValue().equals(oldBind)) {
-                parsers.get(playerIndex).updateControls(entry.getKey(), newBind, true);
-            }
-        }
+                parsers.get(playerIndex).updateControls(entry.getKey(), newBind, true); } }
         updateAlert.setContentText(myResources.getString("UpdateBind"));
         updateAlert.show();
     }
@@ -139,8 +132,7 @@ public class ConfigurationMenu extends HBox{
         for(String s : playerBindings.get(index)){
             TextField bind = new TextField(s);
             input.add(bind);
-            bindingDisplay.get(index).getChildren().add(bind);
-        }
+            bindingDisplay.get(index).getChildren().add(bind); }
     }
 
     private void drawActionsOnScreen(){
@@ -148,9 +140,7 @@ public class ConfigurationMenu extends HBox{
             if(myResources.containsKey(s)){
                 Text action = new Text(myResources.getString(s));
                 action.setId("actionList");
-                myActions.getChildren().add(action);
-            }
-        }
+                myActions.getChildren().add(action); } }
         myActions.setId("actionVBox");
         getChildren().add(myActions);
     }
@@ -193,43 +183,5 @@ public class ConfigurationMenu extends HBox{
         Button tempButton = new Button(key);
         tempButton.setOnAction(e);
         return tempButton;
-    }
-
-    private VBox renderSliders() {
-        VBox sliders = new VBox();
-        HBox allLabels = new HBox();
-        addLabel("SongSlider", allLabels);
-        addLabel("EffectsSlider", allLabels);
-        HBox allSliders = new HBox();
-        for(int index = 0; index < volumeSliders.length; index++){
-            volumeSliders[index] = addAndReturnSlider(MIN_MUSIC, MAX_MUSIC, DEFAULT_MUSIC, allSliders);
-        }
-        sliders.getChildren().add(allLabels);
-        sliders.getChildren().add(allSliders);
-        return sliders;
-    }
-
-    private void addLabel(String key, HBox text) {
-        Label tempLabel = new Label(myResources.getString(key));
-        tempLabel.setMaxWidth(Double.MAX_VALUE);
-        tempLabel.setAlignment(Pos.CENTER);
-        HBox.setHgrow(tempLabel, Priority.ALWAYS);
-        text.getChildren().add(tempLabel);
-    }
-
-    private Slider addAndReturnSlider(int min, int max, int def, HBox sliders) {
-        Slider tempSlider = new Slider(min, max, def);
-        HBox.setHgrow(tempSlider, Priority.ALWAYS);
-        setSliderTicks(tempSlider);
-        sliders.getChildren().add(tempSlider);
-        return tempSlider;
-    }
-
-    private void setSliderTicks(Slider slider) {
-        slider.setBlockIncrement(1);
-        slider.setMajorTickUnit(1);
-        slider.setMinorTickCount(0);
-        slider.setShowTickLabels(true);
-        slider.setSnapToTicks(true);
     }
 }

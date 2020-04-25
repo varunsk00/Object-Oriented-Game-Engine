@@ -101,6 +101,10 @@ public class StageManager {
         stage.setTitle(gameName);
     }
 
+    public AudioVideoManager getAvManager() {
+        return avManager;
+    }
+
     public Stage getStage(){return stage;}
 
 //    public void saveResetGameScenes(String title, Scene resetScene) {

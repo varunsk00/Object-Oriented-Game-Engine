@@ -8,18 +8,13 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
 
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.view.application.Camera;
+import ooga.view.application.menu.ConfigurationMenu;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
@@ -29,7 +24,7 @@ public class ViewManager implements ViewExternalAPI {
 
   private List<Node> overlay = new ArrayList<>();
   private InGameMenu menu;
-  private ControlSchemeSwitcher config;
+  private ConfigurationMenu config;
   private int escCounter = 0;
   private int configCounter = 0;
 
@@ -46,7 +41,7 @@ public class ViewManager implements ViewExternalAPI {
 
   public ViewManager(StageManager stageManager, List<EntityWrapper> playerList){
     this.menu = new InGameMenu();
-    this.config = new ControlSchemeSwitcher(playerList);
+    this.config = new ConfigurationMenu(playerList);
     this.overlay.add(menu);
     this.overlay.add(config);
 
@@ -137,6 +132,12 @@ public class ViewManager implements ViewExternalAPI {
     exitGame();
     editControls();
     rebootGame();
+    editVolume();
+  }
+
+  private void editVolume() {
+    currentStage.getAvManager().setMusicVolume(config.getMusicVolume());
+    currentStage.getAvManager().setFXVolume(config.getFXVolume());
   }
 
   private void rebootGame() throws Exception {
