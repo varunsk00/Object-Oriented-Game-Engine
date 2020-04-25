@@ -153,7 +153,6 @@ public class GameController {
       for (EntityWrapper targetEntity : entityList) {
         if (!entityDespawnBuffer.contains(targetEntity)) {
           myModelManager.produceCollisions(subjectEntity, targetEntity);
-//          myModelManager.getCollisionEngine().produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
         }
       }
       subjectEntity.update(elapsedTime);
