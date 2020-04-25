@@ -115,17 +115,6 @@ public class EntityModel {
     controlScheme.handleKeyReleased(key);
   }
 
-//  public void handleControllerInputPressed(String key) {
-//    if (key != null) {
-//      controlScheme.handleKeyInput(key);
-//    }
-//  }
-//  public void handleControllerInputReleased(String key) {
-//    if (key != null) {
-//      controlScheme.handleKeyReleased(key);
-//    }
-//  }
-
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
