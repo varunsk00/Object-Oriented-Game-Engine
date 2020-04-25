@@ -48,7 +48,6 @@ public class GameController {
   public GameController(StageManager stageManager, String gameName, boolean loadedGame)
           throws XInputNotLoadedException { //FIXME add exception stuff
 
-    g = new GamePadListener();
 
     g = new GamePadListener();
     gameParser = new GameParser(gameName, this, loadedGame);
@@ -152,7 +151,9 @@ public class GameController {
 
   private void handleGamePadPlayer() {
     if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+      System.out.println("HERE");
       if (g.getState() != null) {
+        System.out.println("NOTNUL");
         if (!g.getState().getPressed()) {
           gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
         } else if (g.getState().getPressed()) {

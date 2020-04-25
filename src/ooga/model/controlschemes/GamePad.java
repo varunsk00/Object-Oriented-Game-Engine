@@ -28,7 +28,7 @@ public class GamePad extends ControlScheme {
     public void handleKeyInput(String key) {
         if(controllerBindings.containsKey(key) && !currentAction.containsAll(controllerBindings.get(key))) {
             currentAction.addAll(controllerBindings.get(key));
-//      System.out.println(key);
+      System.out.println(key);
         }
     }
 
