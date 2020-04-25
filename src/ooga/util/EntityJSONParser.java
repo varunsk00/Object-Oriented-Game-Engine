@@ -134,7 +134,7 @@ public class EntityJSONParser extends Parser {
   }
 
   public ImageView generateImage() {
-    String imageName = (String) jsonObject.get("image");
+    String imageName = readImage();
     ImageView output = null;
 
     output = loadImage(imageName);
@@ -197,6 +197,7 @@ public class EntityJSONParser extends Parser {
     }
   }
 
+  public String readImage() { return (String) jsonObject.get("image"); }
   public double readWidth() { return Double.parseDouble(jsonObject.get("width").toString()); }
 
   public double readHeight() {
@@ -221,14 +222,6 @@ public class EntityJSONParser extends Parser {
 
   public double readHealth() {
     return Double.parseDouble(jsonObject.get("health").toString());
-  }
-
-  public double readXVelMax() {
-    return Double.parseDouble(jsonObject.get("maxXVel").toString());
-  }
-
-  public double readYVelMax() {
-    return Double.parseDouble(jsonObject.get("maxYVel").toString());
   }
 
   public boolean readFixed() {
