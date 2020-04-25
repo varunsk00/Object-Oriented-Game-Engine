@@ -1,13 +1,9 @@
 package ooga.model.levels;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
-import ooga.model.EntityModel;
 import ooga.util.GameStatusProfile;
-import ooga.view.application.Camera;
 
 public class InfiniteLevel extends Level{
 
@@ -33,24 +29,22 @@ public class InfiniteLevel extends Level{
   }
 
   @Override
-  public void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
+  public void spawnEntities(List<EntityWrapper> currentEntityList) {
     for (EntityWrapper player : playerEntities) {
       if (calculatePlayerInterval(player) > this.getCurrentPlayerInterval()) {
-        this.setCurrentPlayerInterval(calculatePlayerInterval(currentEntityList.get(0)));
+        this.setCurrentPlayerInterval(calculatePlayerInterval(player));
         int tileInterval = calculatePlayerInterval(player) + levelSpawnOffset;
 
         for (EntityWrapper tileEntity : tileEntities) {
             EntityWrapper newSpawn = new EntityWrapper(tileEntity.getEntityID(), tileEntity.getController());
             resizeEntity(newSpawn, tileEntity);
             setEntityPositions(newSpawn, tileEntity, tileInterval);
-            currentEntityList.add(newSpawn);
-            viewManager.addEntity(newSpawn.getRender());
+            addEntityToListAndViewManager(newSpawn, currentEntityList);
           }
         for (EntityWrapper enemyEntity : enemyEntities) {
             EntityWrapper newSpawn = new EntityWrapper(enemyEntity.getEntityID(), enemyEntity.getController());
             setEntityPositions(newSpawn, enemyEntity, tileInterval);
-            currentEntityList.add(newSpawn);
-            viewManager.addEntity(newSpawn.getRender());
+            addEntityToListAndViewManager(newSpawn, currentEntityList);
         }
       }
     }

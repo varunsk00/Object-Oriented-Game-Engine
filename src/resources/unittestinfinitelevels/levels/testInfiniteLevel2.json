@@ -1,0 +1,25 @@
+{
+  "levelType": "InfiniteLevel",
+  "players": "2",
+  "tileArrangement": [
+    {
+      "EntityName": "unittest.FixedTestEntity3",
+      "Arrangement": [
+        {
+          "1": ["1"],
+          "2": ["1"],
+          "5": ["1"],
+          "7": ["1"],
+          "8": ["1"]
+        }
+      ]
+    }
+  ],
+  "levelName": "testInfiniteLevel2",
+  "playerArrangement": [
+  ],
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "enemyArrangement": [
+  ]
+}
