@@ -4,8 +4,11 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 public class MissingFileException extends RuntimeException {
+
     // for serialization
     private static final long serialVersionUID = 1L;
+    public static final String NOT_FOUND_IN_RESOURCE_DIRECTORY = " not found in resource directory! \n";
+    public static final String CHECK_RESOURCES = "Check your Resource Files to make sure all image and sound files are present!";
     private String alertMessage;
 
     /**
@@ -13,17 +16,17 @@ public class MissingFileException extends RuntimeException {
      */
     public MissingFileException(String message, Object ... values) {
         super(String.format(message, values));
-        alertMessage = message + " not found in resource directory! \n" +
-            "Check your Resource Files to make sure all image and sound files are present!";
+        alertMessage = message + NOT_FOUND_IN_RESOURCE_DIRECTORY +
+            CHECK_RESOURCES;
     }
 
     /**
      * Create an exception based on a caught exception with a different message.
      */
     public MissingFileException(Throwable cause, String message, Object ... values) {
-        alertMessage = message + " not found in resource directory! \n" +
+        alertMessage = message + NOT_FOUND_IN_RESOURCE_DIRECTORY +
                 cause + " was caught.\n" +
-                "Check your Resource Files to make sure all image and sound files are present!";
+                CHECK_RESOURCES;
     }
 
     /**
@@ -32,7 +35,7 @@ public class MissingFileException extends RuntimeException {
     public MissingFileException(Throwable cause) {
         super(cause);
         alertMessage = "Some image or audio resources missing from resources. \n" +
-            "Check your Resource Files to make sure all image and sound files are present!";
+            CHECK_RESOURCES;
     }
 
     public void displayAlert(){
