@@ -23,22 +23,22 @@ public class FiniteLevel extends Level{
 
 
   @Override
-  public void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
+  public void spawnEntities(List<EntityWrapper> currentEntityList){
     for (EntityWrapper player : playerEntities) {
       for (EntityWrapper tileEntity : tileEntities) {
         if (!playerEntities.contains(tileEntity) && isInRange(player.getModel(), tileEntity.getModel()) && !currentEntityList.contains(tileEntity)) {
-          currentEntityList.add(tileEntity);
-          viewManager.addEntity(tileEntity.getRender());
+          addEntityToListAndViewManager(tileEntity, currentEntityList);
         }
       }
       for (EntityWrapper enemyEntity : enemyEntities) {
         if (!playerEntities.contains(enemyEntity) && isInRange(player.getModel(), enemyEntity.getModel()) && !currentEntityList.contains(enemyEntity)) {
-          currentEntityList.add(enemyEntity);
-          viewManager.addEntity(enemyEntity.getRender());
+          addEntityToListAndViewManager(enemyEntity, currentEntityList);
         }
       }
     }
   }
+
+
 
 
 }

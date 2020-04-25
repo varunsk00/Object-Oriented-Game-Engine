@@ -1,6 +1,6 @@
 {
-  "gameName": "UnitTest",
-  "playerCount": 2,
+  "gameName": "UnitTestInfiniteLevels",
+  "playerCount": 1,
   "physicsProfile": [
     {
       "gravity": "20",
@@ -10,8 +10,8 @@
   ],
   "levelArrangement": [
     {
-      "Level_2": "unittest.testLevel2",
-      "Level_1": "unittest.testLevel1"
+      "Level_2": "unittest.testInfiniteLevel2",
+      "Level_1": "unittest.testInfiniteLevel1"
     }
   ],
   "playerArrangement": [
@@ -21,21 +21,14 @@
         "X": "100",
         "Y": "100"
       }
-    },
-    {
-      "EntityName": "unittest.UnitTestEntity2",
-      "Arrangement": {
-        "X": "0",
-        "Y": "100"
-      }
     }
   ],
   "gameStatusProfile": [
     {
-      "scrollingStatusY": "1",
-      "spawningInterval": "0",
+      "scrollingStatusY": "0",
+      "spawningInterval": "500",
       "scrollingStatusX": "1",
-      "levelSpawnOffset": "0"
+      "levelSpawnOffset": "2"
     }
   ]
 }

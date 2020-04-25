@@ -26,6 +26,7 @@ public class ParameterMissingException extends RuntimeException {
         alertMessage = message + " parameter not found in respective GameSelect.json file! \n" +
                 cause + " was caught.\n" +
                 "Loaded default " + message + " instead.";
+//        displayAlert();
     }
 
     /**
