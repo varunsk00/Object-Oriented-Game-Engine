@@ -23,7 +23,9 @@ public class LevelSelector {
     gameStatusProfile = gameProfile;
     gameCamera = camera;
     spawningInterval = gameStatusProfile.readSpawningInterval();
-    activeLevel = parsedLevels.get(0);
+    int startingLevelIndex = gameStatusProfile.readStartingLevelIndex();
+    activeLevel = parsedLevels.get(startingLevelIndex);
+
   }
 // FIXME removed by ALex. Not deleting just in case but pretty sure we can delete this now
 

@@ -6,14 +6,15 @@
       "scrollingStatusX" : "1",
       "scrollingStatusY" : "0",
       "spawningInterval" : "500",
-      "levelSpawnOffset": "2"
+      "levelSpawnOffset": "2",
+      "startingLevelIndex": "0"
     }
   ],
   "physicsProfile": [
     {
-      "Friction": "0",
-      "Drag": "0",
-      "Gravity": "20"
+      "friction": "0",
+      "drag": "0",
+      "gravity": "20"
     }
   ],
   "levelArrangement": [

@@ -124,10 +124,6 @@ public class GameController {
     g.update();
     myViewManager.handleMenuInput();
     handleGamePadPlayer();
-    for(int i = 0; i < entityList.size(); i ++) {
-      System.out.println(entityList.get(i));
-      System.out.println(entityList.get(i).getModel().getEntityID());
-    }
     if (!myViewManager.getIsGamePaused()) {
       levelSelector.updateCurrentLevel(entityList, myViewManager);
       handleSaveGame();
@@ -184,7 +180,7 @@ public class GameController {
 
   private void checkIfResetLevel() {
     for (EntityWrapper player : gameParser.getPlayerList()) {
-      if (myModelManager.checkHealthGone(entityList.get(0))) {
+      if (myModelManager.checkHealthGone(player)) {
         myViewManager.updateMenu(LOSS_RESULT);
         myViewManager.pauseGame();
         levelSelector.resetLevel(entityList, myViewManager);

@@ -25,7 +25,6 @@ public class GamePreview extends StackPane {
     public GamePreview(String name) throws FileNotFoundException {
         this.setId("GamePreview");
         this.setWidth(100);
-        System.out.println("HERE");
         cart = new Rectangle(100, 100);
         this.setLayoutY(275);
         this.setOnMouseClicked(e -> handleClick());

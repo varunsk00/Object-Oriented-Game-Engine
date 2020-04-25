@@ -18,6 +18,8 @@ import org.json.simple.parser.ParseException;
 
 public class GameCabinet extends Pane {
     private final String GAME_LIST_FILEPATH = "src/resources/GameList.json";
+    private final String HOME_SCREEN_TITLE = "BOOGA";
+    private final String GAME_SELECT_TITLE = "GameSelect";
     private GameSelector gameSelector;
     private List<GamePreview> myGames;
     private AudioVideoManager avManager;
@@ -63,7 +65,7 @@ public class GameCabinet extends Pane {
         this.myGames.add(newGamePreview);
     }
 
-    private void initGameSelect(List<String> gameList) throws FileNotFoundException { //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
+    private void initGameSelect(List<String> gameList) throws FileNotFoundException {
       for(int i = 0; i < gameList.size(); i++){
         GameSelectParser newGameParser = new GameSelectParser(gameList.get(i));
         GamePreview newGame = new GamePreview(newGameParser.readGamePreviewGIF());
@@ -82,7 +84,7 @@ public class GameCabinet extends Pane {
     public void updateCurrentGame() throws Exception {
         if(isHomePressed()){
             avManager.switchMusic(stageManager);
-            stageManager.setCurrentTitle("BOOGA");
+            stageManager.setCurrentTitle(HOME_SCREEN_TITLE);
         }
         for(GamePreview game: myGames){
             if(game.isGamePressed()) {
@@ -121,7 +123,7 @@ public class GameCabinet extends Pane {
     }
 
     private boolean isHomePressed(){
-        return stageManager.getCurrentTitle().equals("GameSelect");
+        return stageManager.getCurrentTitle().equals(GAME_SELECT_TITLE);
     }
 
     private void launchTitleScreen(StageManager sm, String gameName) throws Exception {
