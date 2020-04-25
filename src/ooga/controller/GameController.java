@@ -21,7 +21,7 @@ import ooga.view.gui.managers.StageManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class GameController implements Controller {
+public class GameController {
 
   //  private PhysicsEngine physicsEngine;
 //  private CollisionEngine collisionEngine;
@@ -74,19 +74,16 @@ public class GameController implements Controller {
 
   }
 
-  @Override
   public void removeEntity(EntityWrapper node) {
     entityRemove.add(node);
     myViewManager.removeEntity(node.getRender());
   }
 
-  @Override
   public void addEntity(EntityWrapper newEntity) {
     entityBuffer.add(newEntity);
     myViewManager.addEntity(newEntity.getRender());
   }
 
-  @Override
   public List<EntityWrapper> getEntityList() {
     return entityList;
   }
@@ -132,7 +129,7 @@ public class GameController implements Controller {
       System.out.println(entityList.get(i).getModel().getEntityID());
     }
     if (!myViewManager.getIsGamePaused()) {
-      levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
+      levelSelector.updateCurrentLevel(entityList, myViewManager);
       handleSaveGame();
       myViewManager.updateValues();
       applyActions(elapsedTime);
@@ -208,5 +205,7 @@ public class GameController implements Controller {
         myViewManager.setSaveGame();
       }
     }
-  }
+
+  public void changeLevel(int levelIndex, EntityWrapper player) {levelSelector.changeCurrentLevel(levelIndex, player); }
+}
 

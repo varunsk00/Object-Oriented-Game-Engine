@@ -1,7 +1,5 @@
 package ooga.util;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,29 +8,25 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
-import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.controller.GameController;
 import ooga.util.config.Parser;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import java.io.FileReader;
 
 public class LevelParser extends Parser {
 
   private List<Entry<String, Pattern>> mySymbols;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
-  private Controller mainController;
+  private GameController mainController;
   private double tileHeight;
   private double tileWidth;
 
   private JSONObject jsonObject;
 
-  public LevelParser(String fileName, Controller controller) {
+  public LevelParser(String fileName, GameController controller) {
     String[] gameAndName = fileName.split("\\.");
     mainController = controller;
     setMyFileName(TXT_FILEPATH + gameAndName[0] + "/levels/" + gameAndName[1] + ".json");
