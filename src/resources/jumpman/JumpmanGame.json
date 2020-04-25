@@ -5,7 +5,8 @@
     {
       "scrollingStatusX" : "0",
       "scrollingStatusY" : "1",
-      "spawningInterval" : "300"
+      "spawningInterval" : "300",
+      "levelSpawnOffset": "2"
     }
   ],
   "physicsProfile": [
