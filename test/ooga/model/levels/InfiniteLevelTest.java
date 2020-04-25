@@ -6,15 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import ooga.controller.EntityWrapper;
-import ooga.controller.ViewManager;
 import ooga.util.GameParser;
 import ooga.util.LevelParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.DukeApplicationTest;
 
-class FiniteLevelTest {
-  private FiniteLevel testLevel;
+class InfiniteLevelTest {
+  private Level testLevel;
   private List<EntityWrapper> testEntityList;
   private List<EntityWrapper> testPlayers;
   private List<EntityWrapper> testTiles;
@@ -23,45 +21,57 @@ class FiniteLevelTest {
 
   @BeforeEach
   void setUp(){
-    String gameName = "unittest";
+    String gameName = "unittestinfinitelevels";
     testEntityList = new ArrayList<>();
     GameParser testGameParser = new GameParser(gameName, null, false);
-    LevelParser testLevelParser = new LevelParser(gameName + ".testLevel1",null);
+    LevelParser testLevelParser = new LevelParser(gameName + ".testInfiniteLevel1",null);
 
     testPlayers = testGameParser.getPlayerList();
     testTiles = testLevelParser.parseTileEntities();
     testEnemies = testLevelParser.parseEnemyEntities();
-    testLevel = new FiniteLevel(testTiles, testPlayers, testEnemies, testGameParser.parseGameStatusProfile(), gameName);
+    testLevel = new InfiniteLevel(testTiles, testPlayers, testEnemies, testGameParser.parseGameStatusProfile(), gameName);
     testEntityList.addAll(testPlayers);
   }
 
   @Test
   void testSpawnEntitiesOne() {
-
-    double xPosition = 250;
+    double xPosition = 0;
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
     testLevel.spawnEntities(testEntityList);
-    assertTrue(testEntityList.size() - testPlayers.size() == 1);
+    assertTrue(testEntityList.size() - testPlayers.size() == 4);
   }
 
   @Test
   void testSpawnEntitiesTwo() {
-
-    double xPosition = 5000;
-    double yPosition = 5000;
+    double xPosition = 600;
+    double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
     testLevel.spawnEntities(testEntityList);
-    assertTrue(testEntityList.size() - testPlayers.size() == 0);
+    assertTrue(testEntityList.size() - testPlayers.size() == 4);
   }
 
   @Test
   void testSpawnEntitiesThree() {
-    double xPosition = 50000;
-    double yPosition = 600;
+    double xPosition = 1100;
+    double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
     testLevel.spawnEntities(testEntityList);
-    assertTrue(testEntityList.size() - testPlayers.size() == 2);
+    assertTrue(testEntityList.size() - testPlayers.size() == 4);
+  }
+
+  @Test
+  void testSpawnEntitiesFour() {
+    double xPosition = 100;
+    double yPosition = 150;
+    setPlayersLocation(xPosition, yPosition);
+    testLevel.spawnEntities(testEntityList);
+    assertTrue(testEntityList.size() - testPlayers.size() == 4);
+    xPosition = 600;
+    yPosition = 150;
+    setPlayersLocation(xPosition, yPosition);
+    testLevel.spawnEntities(testEntityList);
+    assertTrue(testEntityList.size() - testPlayers.size() == 8);
   }
 
   void setPlayersLocation(double xPosition, double yPosition){

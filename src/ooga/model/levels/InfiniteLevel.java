@@ -31,8 +31,6 @@ public class InfiniteLevel extends Level{
   @Override
   public void spawnEntities(List<EntityWrapper> currentEntityList) {
     for (EntityWrapper player : playerEntities) {
-      System.out.print(calculatePlayerInterval(player));
-      System.out.println("      " + this.getCurrentPlayerInterval());
       if (calculatePlayerInterval(player) > this.getCurrentPlayerInterval()) {
         this.setCurrentPlayerInterval(calculatePlayerInterval(player));
         int tileInterval = calculatePlayerInterval(player) + levelSpawnOffset;
@@ -42,7 +40,6 @@ public class InfiniteLevel extends Level{
             resizeEntity(newSpawn, tileEntity);
             setEntityPositions(newSpawn, tileEntity, tileInterval);
             addEntityToListAndViewManager(newSpawn, currentEntityList);
-          System.out.println(newSpawn.getModel().getX());
           }
         for (EntityWrapper enemyEntity : enemyEntities) {
             EntityWrapper newSpawn = new EntityWrapper(enemyEntity.getEntityID(), enemyEntity.getController());

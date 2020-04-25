@@ -20,6 +20,8 @@ public class CollisionKey {
 
   @Override
   public boolean equals(Object targetCollisionKey) {
+    System.out.print(targetCollisionKey.hashCode());
+    System.out.println("      " + this.hashCode());
     if (targetCollisionKey.getClass().equals(this.getClass())) {
       return (this.ID.equals(((CollisionKey) targetCollisionKey).getID()) &&
           (this.orientation.equals(((CollisionKey) targetCollisionKey).getOrientation())||((CollisionKey) targetCollisionKey).getOrientation().equals("A")));

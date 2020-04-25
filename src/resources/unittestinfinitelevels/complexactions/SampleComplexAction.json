@@ -1,0 +1,12 @@
+{
+  "actionList": [
+    {
+      "action": "SetX",
+      "param": "10"
+    },
+    {
+      "action": "VelocityX",
+      "param": "10"
+    }
+  ]
+}
