@@ -224,7 +224,7 @@ public class GamePadListener {
         return myState;
     }
 
-    public class GamePadState {
+    public static class GamePadState {
         private String control;
         private boolean pressed;
         public GamePadState(String s, boolean b) {
