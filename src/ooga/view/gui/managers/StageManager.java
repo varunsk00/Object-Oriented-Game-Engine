@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import ooga.util.config.MissingFileException;
 import ooga.view.application.games.Game;
 import ooga.view.gui.ProgramLauncher;
 import ooga.view.gui.userinterface.Welcome;
@@ -29,7 +30,7 @@ public class StageManager {
     private Map<String, Scene> resetGameScenes;
 
 
-    public StageManager(Stage primaryStage, AudioVideoManager avManager) throws FileNotFoundException {
+    public StageManager(Stage primaryStage, AudioVideoManager avManager) {
         this.stage = primaryStage;
         this.avManager = avManager;
         stage.setTitle(DEFAULT_TITLE);
@@ -65,9 +66,7 @@ public class StageManager {
             try {
                 handleKeyInput(e.getCode());
             } catch (Exception fileNotFoundException) {
-                fileNotFoundException.printStackTrace();//FIXME: TO AVOID FAILING CLASS
-            }
-        });;
+                new MissingFileException(fileNotFoundException, "resourceFile"); } });
         currentScene.getStylesheets().add("ooga/view/styling/default.css");
         stage.setScene(currentScene);
         stage.setTitle(title);

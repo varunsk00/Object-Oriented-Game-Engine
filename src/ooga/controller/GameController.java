@@ -10,6 +10,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.model.levels.Level;
 import ooga.util.GamePadListener;
 
@@ -17,6 +18,7 @@ import ooga.util.GamePadListener;
 import ooga.model.levels.LevelSelector;
 import ooga.util.GameParser;
 
+import ooga.util.config.ParameterMissingException;
 import ooga.view.gui.managers.StageManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -44,7 +46,7 @@ public class GameController implements Controller {
   private List<EntityWrapper> playerList;
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame)
-      throws XInputNotLoadedException { //FIXME add exception stuff
+          throws XInputNotLoadedException { //FIXME add exception stuff
 
     g = new GamePadListener();
 
@@ -109,13 +111,11 @@ public class GameController implements Controller {
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e ->
     {
       try {
-        step(SECOND_DELAY);
-      } catch (XInputNotLoadedException ex) {
-        ex.printStackTrace();
-      } catch (Exception exception) {
-        exception.printStackTrace(); //FIXME: REPLACE TO AVOID FAIL CASE
-      }
-    });
+        step(SECOND_DELAY); }
+      catch (XInputNotLoadedException ex) {
+        new InvalidControlSchemeException(ex); }
+      catch (Exception exception) {
+        new ParameterMissingException(exception, "resourceFile"); } });
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
@@ -158,8 +158,7 @@ public class GameController implements Controller {
   }
 
   private void handleGamePadPlayer() {
-    if (gameParser.getPlayerList().size()
-        > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (g.getState() != null) {
         if (!g.getState().getPressed()) {
           gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
