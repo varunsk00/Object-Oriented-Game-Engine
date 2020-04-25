@@ -23,7 +23,7 @@ import org.json.simple.JSONObject;
 
 public class GameController implements Controller {
 
-//  private PhysicsEngine physicsEngine;
+  //  private PhysicsEngine physicsEngine;
 //  private CollisionEngine collisionEngine;
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entityBuffer;
@@ -43,7 +43,8 @@ public class GameController implements Controller {
   private GameParser gameParser;
   private List<EntityWrapper> playerList;
 
-  public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
+  public GameController(StageManager stageManager, String gameName, boolean loadedGame)
+      throws XInputNotLoadedException { //FIXME add exception stuff
 
     g = new GamePadListener();
 
@@ -57,16 +58,18 @@ public class GameController implements Controller {
     entityRemove = new ArrayList<>();
     playerList = gameParser.getPlayerList();
 
-
-    for(EntityWrapper player : playerList){
+    for (EntityWrapper player : playerList) {
       entityList.add(player);
       myViewManager.addEntity(player.getRender());
     }
 
     setUpKeyInputs();
 
-    myViewManager.setUpCamera(gameParser.getPlayerList(), gameParser.parseGameStatusProfile().readScrollingStatusX(), gameParser.parseGameStatusProfile().readScrollingStatusY());
-    levelSelector = new LevelSelector(gameParser.parseLevels(), playerList, gameParser.parseGameStatusProfile(), myViewManager.getCamera());
+    myViewManager.setUpCamera(gameParser.getPlayerList(),
+        gameParser.parseGameStatusProfile().readScrollingStatusX(),
+        gameParser.parseGameStatusProfile().readScrollingStatusY());
+    levelSelector = new LevelSelector(gameParser.parseLevels(), playerList,
+        gameParser.parseGameStatusProfile(), myViewManager.getCamera());
     setUpTimeline();
 
   }
@@ -91,12 +94,12 @@ public class GameController implements Controller {
   private void setUpKeyInputs() {
     myViewManager.getTestScene().setOnKeyPressed(e -> {
       myViewManager.handlePressInput(e.getCode());
-      for(EntityWrapper entity : entityList){
+      for (EntityWrapper entity : entityList) {
         entity.handleKeyInput(e.getCode().toString());
       }
     });
-    myViewManager.getTestScene().setOnKeyReleased(e-> {
-      for(EntityWrapper entity : entityList){
+    myViewManager.getTestScene().setOnKeyReleased(e -> {
+      for (EntityWrapper entity : entityList) {
         entity.handleKeyReleased(e.getCode().toString());
       }
     });
@@ -120,7 +123,7 @@ public class GameController implements Controller {
 
   }
 
-  private void step (double elapsedTime) throws Exception {
+  private void step(double elapsedTime) throws Exception {
     g.update();
     myViewManager.handleMenuInput();
     handleGamePadPlayer();
@@ -140,7 +143,7 @@ public class GameController implements Controller {
   }
 
   private void removeEntities(List<EntityWrapper> entities) {
-    for(EntityWrapper despawnedEntity : entities){
+    for (EntityWrapper despawnedEntity : entities) {
       myViewManager.removeEntity(despawnedEntity.getRender());
       entityList.remove(despawnedEntity);
     }
@@ -152,12 +155,14 @@ public class GameController implements Controller {
   }
 
   private void handleGamePadPlayer() {
-    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+    if (gameParser.getPlayerList().size()
+        > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (g.getState() != null) {
         if (!g.getState().getPressed()) {
           gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
         } else if (g.getState().getPressed()) {
-          gameParser.getPlayerList().get(1).handleControllerInputReleased(g.getState().getControl());
+          gameParser.getPlayerList().get(1)
+              .handleControllerInputReleased(g.getState().getControl());
         }
       }
     }
@@ -174,64 +179,31 @@ public class GameController implements Controller {
       subjectEntity.update(elapsedTime);
       myModelManager.applyEntityPhysics(subjectEntity);
     }
-
     checkIfResetLevel();
   }
 
   private void checkIfResetLevel() {
-    for(EntityWrapper player : gameParser.getPlayerList()) {
-      if (myModelManager.checkHealthGone(player)) {
+    for (EntityWrapper player : gameParser.getPlayerList()) {
+      if (myModelManager.checkHealthGone(entityList.get(0))) {
         myViewManager.updateMenu(LOSS_RESULT);
         myViewManager.pauseGame();
-        resetLevel();
+        levelSelector.resetLevel(entityList, myViewManager);
         return;
       }
     }
   }
 
-  private void resetLevel() {
-    nextLevel = 0;
-    myModelManager.resetPlayerValues(gameParser.getPlayerList());
-    despawnOldLevel();
-    levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
-    myModelManager.resetPlayerPositions(gameParser.getPlayerList());
-//=======
-//    entityList.get(0).getModel().setHealth();
-//    entityList.get(0).getModel().setLevelAdvancementStatus(true);
-//
-//    despawnOldLevel();
-//
-//    entityList.get(0).getModel().resetPosition();
-//    levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
-//    for(Level level : levelSelector.getLevelsToPlay()){
-//      level.setCurrentPlayerInterval(-1);
-//    }
-//>>>>>>> 19cc3bfad511d7e566910e33ebb5954bbc216473
-  }
-
-  //TODO: fix duplicated code if possible?
-  private void despawnOldLevel() {
-    List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-    for (EntityWrapper targetEntity : entityList) {
-      if (!gameParser.getPlayerList().contains(targetEntity)) {
-        entitiesToDespawn.add(targetEntity);
+    private void handleSaveGame(){
+      if (myViewManager.getSaveGame()) {
+        JSONArray saveGame = new JSONArray();
+        JSONObject obj = new JSONObject();
+        for (int i = 0; i < levelSelector.getParsedLevels().size(); i++) {
+          obj.put("Level_" + (i + 1), levelSelector.getParsedLevels().get(i).getLevelName());
+        }
+        saveGame.add(obj);
+        gameParser.saveGame("levelArrangement", saveGame);
+        myViewManager.setSaveGame();
       }
     }
-    removeEntities(entitiesToDespawn);
   }
 
-  private void handleSaveGame() {
-    if(myViewManager.getSaveGame()) {
-      JSONArray saveGame = new JSONArray();
-      JSONObject obj = new JSONObject();
-      for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
-        obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
-      }
-      saveGame.add(obj);
-      gameParser.saveGame("levelArrangement", saveGame);
-      myViewManager.setSaveGame();
-    }
-  }
-
-
-}
