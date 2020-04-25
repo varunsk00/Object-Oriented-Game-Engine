@@ -12,8 +12,8 @@ public class FiniteLevel extends Level{
   private List<EntityWrapper> enemyEntities;
 
 
-  public FiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameStatusProfile, String name) {
-    super(name);
+  public FiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name) {
+    super(tileList, playerList, enemyList, gameProfile, name);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;

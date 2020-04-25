@@ -11,7 +11,7 @@ public class InfiniteLevel extends Level{
   private List<EntityWrapper> enemyEntities;
 
   public InfiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name) {
-    super(name);
+    super(tileList, playerList, enemyList, gameProfile, name);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
