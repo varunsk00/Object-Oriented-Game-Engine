@@ -147,6 +147,8 @@ public class EntityModel {
 
   public void setY(double newY){yPos = newY;}
 
+  public void changeLevel(int levelIndex){myEntity.changeLevel(levelIndex);}
+
   public void setLevelAdvancementStatus(boolean newStatus){levelAdvancementStatus = newStatus;}
 
   public void setNextLevelIndex(int levelIndex){nextLevelIndex = levelIndex;}

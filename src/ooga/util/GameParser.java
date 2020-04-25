@@ -8,8 +8,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
+
+import ooga.controller.GameController;
+
 import ooga.model.actions.actionExceptions.InvalidActionException;
 import ooga.model.levels.Level;
 import ooga.exceptions.ParameterMissingException;
@@ -26,7 +28,7 @@ public class GameParser extends Parser {
   private static final String LEVELS_PREFIX = PACKAGE_PREFIX_NAME + "levels.";
   private String fileName;
   private String gameName;
-  private Controller mainController;
+  private GameController mainController;
   private int maxPlayers;
   private int selectedPlayers;
   private List<EntityWrapper> playerList;
@@ -36,7 +38,7 @@ public class GameParser extends Parser {
 
   private JSONObject jsonObject;
 
-  public GameParser(String gameName, Controller controller, boolean loadedGame) {
+  public GameParser(String gameName, GameController controller, boolean loadedGame) {
     mainController = controller;
     this.gameName = gameName;
     this.myFileName = "";

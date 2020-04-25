@@ -23,17 +23,31 @@ public class LevelSelector {
     gameStatusProfile = gameProfile;
     gameCamera = camera;
     spawningInterval = gameStatusProfile.readSpawningInterval();
-    activeLevel = parsedLevels.get(0);
-  }
+    int startingLevelIndex = gameStatusProfile.readStartingLevelIndex();
+    activeLevel = parsedLevels.get(startingLevelIndex);
 
-  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager, int nextLevel) {
-    for(EntityWrapper player : playerList) {
-      if (player.getModel().getLevelAdvancementStatus()) {
-        player.getModel().setLevelAdvancementStatus(false);
-        switchLevel(nextLevel);
-        activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
-      }
-    }
+  }
+// FIXME removed by ALex. Not deleting just in case but pretty sure we can delete this now
+
+//  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager, int nextLevel) {
+//    for(EntityWrapper player : playerList) {
+//      if (player.getModel().getLevelAdvancementStatus()) {
+//        player.getModel().setLevelAdvancementStatus(false);
+//        switchLevel(nextLevel);
+//        activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
+//      }
+//    }
+//    activeLevel.spawnEntities(currentEntityList, viewManager);
+//    this.despawnEntities(currentEntityList, viewManager);
+//  }
+
+  //TODO Refactored "changelevel" method added by alex. Called by Controller when the action "LevelSwitcH" is executed
+  public void changeCurrentLevel(int nextLevel, EntityWrapper player) {
+    switchLevel(nextLevel);
+    activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
+  }
+  //TODO refactored by alex. Called in each update step of the main controller.
+  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager){
     activeLevel.spawnEntities(currentEntityList, viewManager);
     this.despawnEntities(currentEntityList, viewManager);
   }
@@ -46,7 +60,7 @@ public class LevelSelector {
     }
 
     despawnAllEntities(currentEntityList, viewManager);
-    this.updateCurrentLevel(currentEntityList, viewManager, 0);
+    this.updateCurrentLevel(currentEntityList, viewManager);
     for(Level level : parsedLevels){
       level.setCurrentPlayerInterval(-1);
     }
@@ -91,7 +105,6 @@ public class LevelSelector {
       }
     }
     removeDespawnedEntities(currentEntityList, viewManager, entitiesToDespawn);
-
   }
 
   private void removeDespawnedEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager, List<EntityWrapper> entitiesToDespawn){
