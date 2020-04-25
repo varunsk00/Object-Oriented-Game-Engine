@@ -139,7 +139,7 @@ public class EntityJSONParser extends Parser {
   }
 
   public ImageView generateImage() {
-    String imageName = "missing_texture.jpg";
+    String imageName = "missing_texture.png";
     try {
       imageName = (String) jsonObject.get("image");
     }
@@ -287,13 +287,13 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get("maxYVel").toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "maxYVel");
+      throw new ParameterMissingException(e, "maxYVel");
 
+    } catch (NumberFormatException e) {
+      throw new ParameterInvalidException(e, "maxYVel");
+    } finally {
+      return 500;
     }
-    catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "maxYVel");
-    }
-    return 500;
   }
 
   public double readHealth() {

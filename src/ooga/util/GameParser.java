@@ -35,6 +35,8 @@ public class GameParser extends Parser {
   private List<EntityWrapper> playerList;
   private boolean loadedGame;
   private GameStatusProfile gameStatusProfile;
+  private final String DEFAULT_GAME_PATH = "src/resources/gamenamemissing/GameNameMissingGame.json";
+  private JSONObject defaultObj;
 
 
   private JSONObject jsonObject;
@@ -42,12 +44,13 @@ public class GameParser extends Parser {
   public GameParser(String gameName, GameController controller, boolean loadedGame) {
     mainController = controller;
     this.gameName = gameName;
-    this.myFileName = "";
+    this.myFileName = DEFAULT_GAME_PATH;
+    defaultObj = (JSONObject) readJsonFile();
     fileName = gameName + "Game";
 
     setMyFileName(fileName);
-
     this.loadedGame = loadedGame;
+
     checkLoadGame(this.loadedGame);
     jsonObject = (JSONObject) readJsonFile();
     gameStatusProfile = parseGameStatusProfile();
@@ -79,7 +82,7 @@ public class GameParser extends Parser {
       file.write(root.toString());
       System.out.println("Successfully updated json object to file"); }
     catch (IOException e) {
-      new ParameterInvalidException(e, filepath); }
+      new ParameterInvalidException(e, filepath);   }
   }
 
   public void updateJSONValue(String key, Object newValue){
@@ -121,6 +124,13 @@ public class GameParser extends Parser {
       levels.put("Level_1", "gamenamemissing.MissingLevel");
       sortedLevelKeys = sortLevelKeySet(levels.keySet());
     }
+    createLevels(levelList, sortedLevelKeys, levels);
+
+    return levelList;
+  }
+
+  private void createLevels(List<Level> levelList, List<String> sortedLevelKeys,
+      JSONObject levels) {
     for(String levelNumber : sortedLevelKeys){
       String levelName = (String) levels.get(levelNumber);
       LevelParser parsedLevel = new LevelParser(levelName, mainController);
@@ -135,8 +145,6 @@ public class GameParser extends Parser {
           throw new InvalidActionException("Level could not be found."); //TODO: change exception heading
       }
     }
-
-    return levelList;
   }
 
   private List<EntityWrapper> parsePlayerEntities() {
@@ -144,6 +152,12 @@ public class GameParser extends Parser {
     this.maxPlayers = playerArrangement.size();
     List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
 
+    createPlayers(playerArrangement, playerEntityArray);
+
+    return playerEntityArray;
+  }
+
+  private void createPlayers(JSONArray playerArrangement, List<EntityWrapper> playerEntityArray) {
     for(int i = 0; i < selectedPlayers; i++){ //TODO: DISCUSS TREATING SINGLEPLAYER MARIO AND MULTIPLAYER MARIO AS DIFF GAMES WITH DIFF DATA FILES
       JSONObject playerInfo = (JSONObject) playerArrangement.get(i);
       String entityName = playerInfo.get("EntityName").toString();
@@ -153,8 +167,6 @@ public class GameParser extends Parser {
       newPlayer.getModel().setY(Double.parseDouble(playerLocation.get("Y").toString()));
       playerEntityArray.add(newPlayer);
     }
-
-    return playerEntityArray;
   }
 
   public PhysicsProfile parsePhysicsProfile() {
