@@ -67,7 +67,7 @@ public class ActionFactory {
     }
     catch
     (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-      throw new InvalidActionException("Action " + formalAction + " could not be found.");
+      throw new InvalidActionException("Action " + formalAction + " could not be found with the following constructors:\n" + classTypes + "\n" + param);
     }
   }
 
