@@ -1,5 +1,6 @@
 package ooga.util;
 
+import com.thoughtworks.xstream.mapper.Mapper.Null;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import ooga.model.actions.Action;
 import ooga.model.actions.actionExceptions.InvalidActionException;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.model.levels.Level;
+import ooga.util.config.ParameterMissingException;
 import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -125,14 +127,22 @@ public class GameParser extends Parser {
 
   public List<Level> parseLevels() {
     List<Level> levelList = new ArrayList<>();
-    JSONArray levelArrangement = (JSONArray) jsonObject.get("levelArrangement");
-    JSONObject levels = (JSONObject) levelArrangement.get(0);
-    List<String> sortedLevelKeys = sortLevelKeySet(levels.keySet());
-
-
+    List<String> sortedLevelKeys;
+    JSONObject levels;
+    try {
+      JSONArray levelArrangement = (JSONArray) jsonObject.get("levelArrangement");
+      levels = (JSONObject) levelArrangement.get(0);
+      sortedLevelKeys = sortLevelKeySet(levels.keySet());
+    }
+    catch(NullPointerException e){
+      new ParameterMissingException(e, "levelArrangement");
+      levels = new JSONObject();
+      levels.put("Level_1", "gamenamemissing.MissingLevel");
+      sortedLevelKeys = sortLevelKeySet(levels.keySet());
+    }
     for(String levelNumber : sortedLevelKeys){
       String levelName = (String) levels.get(levelNumber);
-      LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
+      LevelParser parsedLevel = new LevelParser(levelName, mainController);
       String levelType = parsedLevel.readLevelType();
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();

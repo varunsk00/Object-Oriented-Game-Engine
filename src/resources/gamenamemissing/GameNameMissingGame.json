@@ -1,5 +1,5 @@
 {
-  "gameName": "Mario",
+  "gameName": "GameNameMissing",
   "playerCount": "1",
   "physicsProfile": [
     {
@@ -10,22 +10,14 @@
   ],
   "levelArrangement": [
     {
-      "Level_2": "mario.UnderwaterLevel",
-      "Level_1": "mario.OverworldLevel"
+      "Level_1": "gamenamemissing.MissingLevel"
     }
   ],
   "playerArrangement": [
     {
-      "EntityName": "mario.Mario_Fire",
+      "EntityName": "gamenamemissing.MissingEntity",
       "Arrangement": {
         "X": "100",
-        "Y": "100"
-      }
-    },
-    {
-      "EntityName": "mario.P2_Luigi_Fire",
-      "Arrangement": {
-        "X": "0",
         "Y": "100"
       }
     }
