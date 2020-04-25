@@ -39,7 +39,7 @@ public class GameCabinet extends Pane {
         List<String> gameList = this.readGameList();
         initGameSelect(gameList);
         gameSelector = new GameSelector(myGames);
-        this.getChildren().add(gameSelector);
+        this.getChildren().add(gameSelector.getSelectionScreenVisuals());
         this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         updateCurrentGame();
     }
