@@ -30,10 +30,7 @@ public abstract class Level {
   public abstract void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager);
 
   public boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity){
-    if(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), TWO) + Math.pow(subjectEntity.getY() - targetEntity.getY(), TWO)) < 1500){
-      return true;
-    }
-    return false;
+    return(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), TWO) + Math.pow(subjectEntity.getY() - targetEntity.getY(), TWO)) < 1500);
   }
 
   public void setCurrentPlayerInterval(int newInterval){
