@@ -9,6 +9,7 @@ import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+
 import ooga.model.levels.Level;
 import ooga.util.GamePadListener;
 
@@ -43,8 +44,10 @@ public class GameController implements Controller {
   private List<EntityWrapper> playerList;
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame) throws XInputNotLoadedException { //FIXME add exception stuff
+
     g = new GamePadListener();
 
+    g = new GamePadListener();
     gameParser = new GameParser(gameName, this, loadedGame);
     myViewManager = new ViewManager(stageManager, gameParser.getPlayerList());
     myModelManager = new ModelManager(gameParser);
@@ -53,6 +56,7 @@ public class GameController implements Controller {
     entityBuffer = new ArrayList<>();
     entityRemove = new ArrayList<>();
     playerList = gameParser.getPlayerList();
+
 
     for(EntityWrapper player : playerList){
       entityList.add(player);
@@ -65,6 +69,23 @@ public class GameController implements Controller {
     levelSelector = new LevelSelector(gameParser.parseLevels(), playerList, gameParser.parseGameStatusProfile(), myViewManager.getCamera());
     setUpTimeline();
 
+  }
+
+  @Override
+  public void removeEntity(EntityWrapper node) {
+    entityRemove.add(node);
+    myViewManager.removeEntity(node.getRender());
+  }
+
+  @Override
+  public void addEntity(EntityWrapper newEntity) {
+    entityBuffer.add(newEntity);
+    myViewManager.addEntity(newEntity.getRender());
+  }
+
+  @Override
+  public List<EntityWrapper> getEntityList() {
+    return entityList;
   }
 
   private void setUpKeyInputs() {
@@ -110,18 +131,24 @@ public class GameController implements Controller {
       myViewManager.updateValues();
       applyActions(elapsedTime);
 
-      entityList.addAll(entityBuffer);
-      entityBuffer = new ArrayList<>();
+      addToEntityList();
 
-      for(EntityWrapper despawnedEntity : entityRemove){
-        myViewManager.removeEntity(despawnedEntity.getRender());
-        entityList.remove(despawnedEntity);
-      }
+      removeEntities(entityRemove);
       nextLevel = entityList.get(0).getModel().getNextLevelIndex();
     }
+    addToEntityList();
+  }
+
+  private void removeEntities(List<EntityWrapper> entities) {
+    for(EntityWrapper despawnedEntity : entities){
+      myViewManager.removeEntity(despawnedEntity.getRender());
+      entityList.remove(despawnedEntity);
+    }
+  }
+
+  private void addToEntityList() {
     entityList.addAll(entityBuffer);
     entityBuffer = new ArrayList<>();
-
   }
 
   private void handleGamePadPlayer() {
@@ -140,33 +167,46 @@ public class GameController implements Controller {
     for (EntityWrapper subjectEntity : entityList) {
       for (EntityWrapper targetEntity : entityList) {
         if (!entityRemove.contains(targetEntity)) {
-          myModelManager.getCollisionEngine().produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
+          myModelManager.produceCollisions(subjectEntity, targetEntity);
+//          myModelManager.getCollisionEngine().produceCollisionActions(subjectEntity.getModel(), targetEntity.getModel());
         }
       }
       subjectEntity.update(elapsedTime);
-      myModelManager.applyEntityPhysics(subjectEntity.getModel());
+      myModelManager.applyEntityPhysics(subjectEntity);
     }
 
-    if (myModelManager.checkHealthGone(entityList.get(0))) {
-      myViewManager.updateMenu(LOSS_RESULT);
-      myViewManager.pauseGame();
-      resetLevel();
-      return;
+    checkIfResetLevel();
+  }
+
+  private void checkIfResetLevel() {
+    for(EntityWrapper player : gameParser.getPlayerList()) {
+      if (myModelManager.checkHealthGone(player)) {
+        myViewManager.updateMenu(LOSS_RESULT);
+        myViewManager.pauseGame();
+        resetLevel();
+        return;
+      }
     }
   }
 
   private void resetLevel() {
     nextLevel = 0;
-    entityList.get(0).getModel().setHealth();
-    entityList.get(0).getModel().setLevelAdvancementStatus(true);
-
+    myModelManager.resetPlayerValues(gameParser.getPlayerList());
     despawnOldLevel();
-
-    entityList.get(0).getModel().resetPosition();
-    levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
-    for(Level level : levelSelector.getLevelsToPlay()){
-      level.setCurrentPlayerInterval(-1);
-    }
+    levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
+    myModelManager.resetPlayerPositions(gameParser.getPlayerList());
+//=======
+//    entityList.get(0).getModel().setHealth();
+//    entityList.get(0).getModel().setLevelAdvancementStatus(true);
+//
+//    despawnOldLevel();
+//
+//    entityList.get(0).getModel().resetPosition();
+//    levelSelector.updateCurrentLevel(entityList, myViewManager, 0);
+//    for(Level level : levelSelector.getLevelsToPlay()){
+//      level.setCurrentPlayerInterval(-1);
+//    }
+//>>>>>>> 19cc3bfad511d7e566910e33ebb5954bbc216473
   }
 
   //TODO: fix duplicated code if possible?
@@ -177,10 +217,7 @@ public class GameController implements Controller {
         entitiesToDespawn.add(targetEntity);
       }
     }
-    for(EntityWrapper despawnedEntity : entitiesToDespawn){
-      entityList.remove(despawnedEntity);
-      myViewManager.removeEntity(despawnedEntity.getRender());
-    }
+    removeEntities(entitiesToDespawn);
   }
 
   private void handleSaveGame() {
@@ -196,20 +233,5 @@ public class GameController implements Controller {
     }
   }
 
-  @Override
-  public void removeEntity(EntityWrapper node) {
-    entityRemove.add(node);
-    myViewManager.removeEntity(node.getRender());
-  }
 
-  @Override
-  public void addEntity(EntityWrapper newEntity) {
-    entityBuffer.add(newEntity);
-    myViewManager.addEntity(newEntity.getRender());
-  }
-
-  @Override
-  public List<EntityWrapper> getEntityList() {
-    return entityList;
-  }
 }

@@ -80,14 +80,10 @@ public class GameParser extends Parser {
 
   public void saveGame(String key, JSONArray newValue){
     JSONObject root = jsonObject;
-    JSONArray new_val = newValue;
     root.put(key, newValue);
-    root.put("players", jsonObject.get("players"));
-//    String old_val = root.get(key).toString();
-//
-//    if(!new_val.equals(old_val))
-//    {
-//      root.put(key,new_val);
+    root.put("playerCount", jsonObject.get("playerCount"));
+
+//    updateJSONValue(key, newValue);
 
       try (FileWriter file = new FileWriter(TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json", false))
       {
@@ -100,22 +96,17 @@ public class GameParser extends Parser {
   }
 
   public void updateJSONValue(String key, Object newValue){
-    JSONObject root = jsonObject;
-    Object new_val = newValue;
-    Object old_val = root.get(key).toString();
+      JSONObject root = jsonObject;
 
-//    if(!new_val.equals(old_val))
-//    {
-      root.put(key,new_val);
+      root.put(key,newValue);
 
-      try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + "/" + fileName + ".json", false))
+      try (FileWriter file = new FileWriter(myFileName, false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
       } catch (IOException e) {
         e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
       }
-    //}
   }
 
   private List<String> sortLevelKeySet(Set keySet){

@@ -77,6 +77,23 @@
       ]
     },
     {
+      "EntityName": "mario.KillBlock",
+      "Arrangement": [
+        {
+          "15": [
+            "69-70",
+            "86-88",
+            "153-155"
+          ],
+          "16": [
+            "69-70",
+            "86-88",
+            "153-155"
+          ]
+        }
+      ]
+    },
+    {
       "EntityName": "mario.BreakableBrick",
       "Arrangement": [
         {

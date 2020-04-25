@@ -1,7 +1,7 @@
 {
   "gameName": "Mario",
+
   "playerCount": "1",
-  "players": null,
   "physicsProfile": [
     {
       "Friction": "20",
@@ -31,6 +31,7 @@
       }
     }
   ],
+
   "gameStatusProfile": [
     {
       "scrollingStatusY": "0",
