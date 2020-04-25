@@ -13,6 +13,8 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class InGameMenu extends VBox{
+    private final int SCENE_WIDTH = 1280;
+    private final int SCROLL_DURATION = 10;
     private boolean savePressed;
     private boolean controlsPressed;
     private boolean resumePressed;
@@ -28,10 +30,10 @@ public class InGameMenu extends VBox{
         this.exitPressed = false;
         this.resumePressed = false;
         this.rebootPressed = false;
+        renderButtons();
         this.gameResult = new Text(DEFAULT_MENU_TEXT);
         this.gameResult.setId("status");
         scrollText(this.gameResult);
-        renderButtons();
         getChildren().addAll(myButtons, gameResult);
     }
 
@@ -100,12 +102,11 @@ public class InGameMenu extends VBox{
         myButtons.setVgrow(tempButton, Priority.ALWAYS);
     }
 
-    public void updateGameResult(String gameResult) {
-        Text status = new Text(gameResult);
-        this.gameResult = status;
-        status.setId("updatedStatus");
-        scrollText(status);
-        getChildren().set(getChildren().size() - 1, status);
+    public void updateGameResult(String status) {
+        this.gameResult = new Text(status);
+        this.gameResult.setId("status");
+        scrollText(this.gameResult);
+        getChildren().set(getChildren().size() - 1, this.gameResult);
     }
 
     public String getStatus() {
@@ -113,10 +114,10 @@ public class InGameMenu extends VBox{
     }
 
     private void scrollText(Text status){
-        KeyValue initKeyValue = new KeyValue(status.translateXProperty(), 1280);
+        KeyValue initKeyValue = new KeyValue(status.translateXProperty(), SCENE_WIDTH);
         KeyFrame initFrame = new KeyFrame(Duration.ZERO, initKeyValue);
         KeyValue endKeyValue = new KeyValue(status.translateXProperty(), -2.5*status.getLayoutBounds().getWidth());
-        KeyFrame endFrame = new KeyFrame(Duration.seconds(10), endKeyValue);
+        KeyFrame endFrame = new KeyFrame(Duration.seconds(SCROLL_DURATION), endKeyValue);
         Timeline timeline = new Timeline(initFrame, endFrame);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();

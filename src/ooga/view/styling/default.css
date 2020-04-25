@@ -217,15 +217,7 @@
     -fx-stroke: red;
     -fx-border-color: blue;
     -fx-alignment: center;
-    -fx-translate-y: 180;
-}
-
-#updatedStatus{
-    -fx-font-family: Pixeboy;
-    -fx-font-size: 30px;
-    -fx-stroke: red;
-    -fx-border-color: blue;
-    -fx-alignment: center;
+    -fx-translate-x: 1280;
     -fx-translate-y: 180;
 }
 
