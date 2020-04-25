@@ -10,8 +10,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import javax.swing.text.html.parser.Entity;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
-import ooga.model.levels.Level;
 import ooga.util.GamePadListener;
 
 
@@ -28,14 +28,12 @@ public class GameController {
   //  private PhysicsEngine physicsEngine;
 //  private CollisionEngine collisionEngine;
   private List<EntityWrapper> entityList;
-  private List<EntityWrapper> entityBuffer;
-  private List<EntityWrapper> entityRemove;
+  private List<EntityWrapper> entitySpawnBuffer;
+  private List<EntityWrapper> entityDespawnBuffer;
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
   private final String LOSS_RESULT = "You Lost! Restart the Level by resuming or choose a new game by restarting the game. Thanks for playing!";
-
-  private int nextLevel;
 
   private Timeline animation;
   private ViewManager myViewManager;
@@ -55,8 +53,8 @@ public class GameController {
     myModelManager = new ModelManager(gameParser);
 
     entityList = new ArrayList<>();
-    entityBuffer = new ArrayList<>();
-    entityRemove = new ArrayList<>();
+    entitySpawnBuffer = new ArrayList<>();
+    entityDespawnBuffer = new ArrayList<>();
     playerList = gameParser.getPlayerList();
 
     for (EntityWrapper player : playerList) {
@@ -73,16 +71,6 @@ public class GameController {
         gameParser.parseGameStatusProfile(), myViewManager.getCamera());
     setUpTimeline();
 
-  }
-
-  public void removeEntity(EntityWrapper node) {
-    entityRemove.add(node);
-    myViewManager.removeEntity(node.getRender());
-  }
-
-  public void addEntity(EntityWrapper newEntity) {
-    entityBuffer.add(newEntity);
-    myViewManager.addEntity(newEntity.getRender());
   }
 
   public List<EntityWrapper> getEntityList() {
@@ -124,29 +112,29 @@ public class GameController {
     myViewManager.handleMenuInput();
     handleGamePadPlayer();
     if (!myViewManager.getIsGamePaused()) {
-      levelSelector.updateCurrentLevel(entityList, myViewManager);
-      handleSaveGame();
-      myViewManager.updateValues();
+      levelSelector.updateCurrentLevel(entityList, entityDespawnBuffer);
+      this.handleSaveGame();
+      myViewManager.updateCamera();
+      myViewManager.updateEntityRenders(entityList, entityDespawnBuffer);
       applyActions(elapsedTime);
-
-      addToEntityList();
-
-      removeEntities(entityRemove);
-      nextLevel = entityList.get(0).getModel().getNextLevelIndex();
-    }
-    addToEntityList();
-  }
-
-  private void removeEntities(List<EntityWrapper> entities) {
-    for (EntityWrapper despawnedEntity : entities) {
-      myViewManager.removeEntity(despawnedEntity.getRender());
-      entityList.remove(despawnedEntity);
+      entityList.addAll(entitySpawnBuffer);
+      entityList.removeAll(entityDespawnBuffer);
+      this.resetEntityBufferLists();
     }
   }
 
-  private void addToEntityList() {
-    entityList.addAll(entityBuffer);
-    entityBuffer = new ArrayList<>();
+  public void removeEntity(EntityWrapper node) {
+    entityDespawnBuffer.add(node);
+  }
+
+  public void addEntity(EntityWrapper newEntity) {
+    entitySpawnBuffer.add(newEntity);
+  }
+
+  private void resetEntityBufferLists(){
+    entitySpawnBuffer = new ArrayList<>();
+    entityDespawnBuffer = new ArrayList<>();
+
   }
 
   private void handleGamePadPlayer() {
@@ -167,7 +155,7 @@ public class GameController {
   private void applyActions(double elapsedTime) {
     for (EntityWrapper subjectEntity : entityList) {
       for (EntityWrapper targetEntity : entityList) {
-        if (!entityRemove.contains(targetEntity)) {
+        if (!entityDespawnBuffer.contains(targetEntity)) {
           myModelManager.produceCollisions(subjectEntity, targetEntity);
         }
       }
@@ -182,7 +170,7 @@ public class GameController {
       if (myModelManager.checkHealthGone(player)) {
         myViewManager.updateMenu(LOSS_RESULT);
         myViewManager.pauseGame();
-        levelSelector.resetLevel(entityList, myViewManager);
+        levelSelector.resetLevel(entityList, entityDespawnBuffer);
         return;
       }
     }

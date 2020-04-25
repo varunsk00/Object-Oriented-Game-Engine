@@ -23,8 +23,8 @@
           "param": "10.0"
         },
         {
-          "action": "SetXDirection",
-          "param": "forwards"
+          "action": "SetForwards",
+          "param": "true"
         }
       ]
     },
@@ -46,8 +46,8 @@
           "param": "10.0"
         },
         {
-          "action": "SetXDirection",
-          "param": "forwards"
+          "action": "SetForwards",
+          "param": "true"
         }
       ]
     },
@@ -73,8 +73,8 @@
           "param": "10.0"
         },
         {
-          "action": "SetXDirection",
-          "param": "forwards"
+          "action": "SetForwards",
+          "param": "true"
         }
       ]
     },

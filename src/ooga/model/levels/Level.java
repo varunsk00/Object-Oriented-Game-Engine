@@ -1,9 +1,12 @@
 package ooga.model.levels;
 
+import com.thoughtworks.xstream.mapper.Mapper.Null;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
+import ooga.exceptions.ParameterInvalidException;
 import ooga.model.EntityModel;
 import ooga.util.GameStatusProfile;
 import ooga.view.application.Camera;
@@ -27,13 +30,10 @@ public abstract class Level {
   }
 
 
-  public abstract void spawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager);
+  public abstract void spawnEntities(List<EntityWrapper> currentEntityList);
 
   public boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity){
-    if(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), TWO) + Math.pow(subjectEntity.getY() - targetEntity.getY(), TWO)) < 1500){
-      return true;
-    }
-    return false;
+    return(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), TWO) + Math.pow(subjectEntity.getY() - targetEntity.getY(), TWO)) < 1500);
   }
 
   public void setCurrentPlayerInterval(int newInterval){
@@ -46,6 +46,11 @@ public abstract class Level {
 
   public String getLevelName() {
     return levelName;
+  }
+
+  public void addEntityToListAndViewManager(EntityWrapper entity, List<EntityWrapper> currentEntityList){
+    currentEntityList.add(entity);
+//    viewManager.addEntity(entity.getRender());
   }
 
 

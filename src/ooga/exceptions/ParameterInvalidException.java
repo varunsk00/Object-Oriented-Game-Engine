@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 public class ParameterInvalidException extends RuntimeException {
     // for serialization
     private static final long serialVersionUID = 1L;
+    private String alertMessage;
 
 
     /**
@@ -13,20 +14,19 @@ public class ParameterInvalidException extends RuntimeException {
      */
     public ParameterInvalidException(String message, Object ... values) {
         super(String.format(message, values));
+        alertMessage = "The value for the " + message + " parameter was invalid! \n" +
+            "Check your game JSON files. \n" +
+            "Loaded default " + message + " instead.";
     }
 
     /**
      * Create an exception based on a caught exception with a different message.
      */
     public ParameterInvalidException(Throwable cause, String message, Object ... values) {
-        String errorMessage = "The value for the " + message + " parameter was invalid! \n" +
+        alertMessage = "The value for the " + message + " parameter was invalid! \n" +
                 "Check your game JSON files. \n" +
                 cause + " was caught.\n" +
                 "Loaded default " + message + " instead.";
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Parameter Invalid Error");
-        alert.setHeaderText(errorMessage);
-        alert.show();
     }
 
     /**
@@ -34,6 +34,16 @@ public class ParameterInvalidException extends RuntimeException {
      */
     public ParameterInvalidException(Throwable cause) {
         super(cause);
+        alertMessage = alertMessage = "The value for a parameter was invalid! \n" +
+            "Check your game JSON files. \n" +
+            cause + " was caught.\n" +
+            "Loaded default value instead.";;
     }
 
+    public void displayAlert(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Parameter Invalid Error");
+        alert.setHeaderText(alertMessage);
+        alert.show();
+    }
 }

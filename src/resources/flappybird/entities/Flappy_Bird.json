@@ -3,7 +3,7 @@
   "yPos": 100,
   "scheme": "Keyboard",
   "permeable": false,
-  "health": 1,
+  "health": 100,
   "xPos": 100,
   "xVel": 10,
   "maxXVel": 1000,
@@ -99,8 +99,8 @@
           "action": "MoveX"
         },
         {
-          "param": "forwards",
-          "action": "SetXDirection"
+          "param": "true",
+          "action": "SetForwards"
         }
       ],
       "ID": "D"
@@ -112,8 +112,8 @@
           "action": "MoveX"
         },
         {
-          "param": "backwards",
-          "action": "SetXDirection"
+          "param": "false",
+          "action": "SetForwards"
         }
       ],
       "ID": "A"

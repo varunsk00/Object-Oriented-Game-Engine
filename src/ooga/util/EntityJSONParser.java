@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+import java.util.Map.Entry;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ooga.model.actions.Action;
@@ -90,17 +91,23 @@ public class EntityJSONParser extends Parser {
           if(match){
             keybind.setValue(newKeyBind);
             match = false; } }
-        if(keybind.getKey().equals("Control")){
-          JSONArray controlArray = (JSONArray) keybind.getValue();
-          ret.add(controlArray.toString());
-          Iterator itr3 = controlArray.iterator();
-          while(itr3.hasNext()){
-            Iterator<Map.Entry> itr4 = ((Map) itr3.next()).entrySet().iterator();
-            while(itr4.hasNext()){
-              Map.Entry action = itr4.next();
-              if(action.getKey().equals("param")){
-                if(action.getValue().equals(param)){
-                  match = true; } } } } } } }
+        match = isMatch(param, ret, match, keybind);
+      } }
+  }
+
+  private boolean isMatch(String param, List<String> ret, boolean match, Entry keybind) {
+    if(keybind.getKey().equals("Control")){
+      JSONArray controlArray = (JSONArray) keybind.getValue();
+      ret.add(controlArray.toString());
+      Iterator itr3 = controlArray.iterator();
+      while(itr3.hasNext()){
+        Iterator<Entry> itr4 = ((Map) itr3.next()).entrySet().iterator();
+        while(itr4.hasNext()){
+          Entry action = itr4.next();
+          if(action.getKey().equals("param")){
+            if(action.getValue().equals(param)){
+              match = true; } } } } }
+    return match;
   }
 
   public Map<CollisionKey, Action> parseCollisions() {
@@ -132,7 +139,7 @@ public class EntityJSONParser extends Parser {
   }
 
   public ImageView generateImage() {
-    String imageName = "missing_texture.jpg";
+    String imageName = "missing_texture.png";
     try {
       imageName = (String) jsonObject.get("image");
     }
@@ -206,10 +213,8 @@ public class EntityJSONParser extends Parser {
     }
   }
 
-//<<<<<<< HEAD
   public String readImage() { return (String) jsonObject.get("image"); }
-//  public double readWidth() { return Double.parseDouble(jsonObject.get("width").toString()); }
-//=======
+
   public double readWidth() {
     try {
       return Double.parseDouble(jsonObject.get("width").toString());
@@ -222,7 +227,6 @@ public class EntityJSONParser extends Parser {
     }
     return 50; //default
   }
-//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
 
   public double readHeight() {
     try {
@@ -283,17 +287,15 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get("maxYVel").toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "maxYVel");
+      throw new ParameterMissingException(e, "maxYVel");
 
+    } catch (NumberFormatException e) {
+      throw new ParameterInvalidException(e, "maxYVel");
+    } finally {
+      return 500;
     }
-    catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "maxYVel");
-    }
-    return 500;
   }
 
-//<<<<<<< HEAD
-//=======
   public double readHealth() {
     try {
       return Double.parseDouble(jsonObject.get("health").toString());

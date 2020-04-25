@@ -26,7 +26,7 @@ class PermeableTest {
   @Test
   void testNonPermeable() {
     EntityWrapper mySecondEntity = new EntityWrapper("unittest.UnitTestEntity2", null);
-    mySecondEntity.setX(mySecondEntity.getModel().getX()+10);
+    mySecondEntity.getModel().setX(mySecondEntity.getModel().getX()+10);
     double oldX = mySecondEntity.getModel().getX();
     myEngine.produceCollisionActions(mySecondEntity.getModel(), myEntity.getModel());
     assertTrue(oldX != mySecondEntity.getModel().getX());
@@ -36,7 +36,7 @@ class PermeableTest {
   void testPermeable() {
     myAction.execute(myEntity.getModel());
     EntityWrapper mySecondEntity = new EntityWrapper("unittest.UnitTestEntity2", null);
-    mySecondEntity.setX(mySecondEntity.getModel().getX()+10);
+    mySecondEntity.getModel().setX(mySecondEntity.getModel().getX()+10);
     double oldX = mySecondEntity.getModel().getX();
     myEngine.produceCollisionActions(mySecondEntity.getModel(), myEntity.getModel());
     assertTrue(oldX == mySecondEntity.getModel().getX());
