@@ -5,7 +5,6 @@ import ooga.model.EntityModel;
 public class SpawnAndBind extends Spawn {
   public SpawnAndBind(String parameter) {
     super(parameter);
-    cooldown = 100;
   }
 
   public SpawnAndBind(String parameter, String cdown){

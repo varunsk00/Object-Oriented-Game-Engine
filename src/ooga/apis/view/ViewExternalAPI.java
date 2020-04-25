@@ -13,6 +13,8 @@ public interface ViewExternalAPI {
 
 
   /**
+   * @deprecated: removeEntity takes in an EntityWrapper allowing us to
+   * remove both the rendering and the object representing it.
    * Removes an entity from rendering.
    * Called by model in cases such as a character dying, block being destroyed,
    * etc
@@ -21,6 +23,8 @@ public interface ViewExternalAPI {
   void removeEntity(Node node);
 
   /**
+   * @deprecated: replaced by spawnEntity() in MainController class, which takes
+   * in an EntityWrapper to be added instead of just a JFX node.
    * Adds an entity to rendering. Called
    * when a new entity is added to the game
    * (called in parallel to the model)

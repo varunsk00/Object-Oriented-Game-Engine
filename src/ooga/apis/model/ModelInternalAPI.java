@@ -11,6 +11,8 @@ import ooga.model.actions.Action;
 public interface ModelInternalAPI {
 
   /**
+   * @deprecated: unnecessary action as most of the time we access
+   * lists rather than single actions.
    * Called by an entity when seeing how it should act in the current
    * moment
    * @return an Action object specifying how the entity should act
@@ -18,7 +20,9 @@ public interface ModelInternalAPI {
   Action getCurrentAction();
 
   /**
-   * Called by an entity to execute
+   * @deprecated: parameter has been changed to entitymodel
+   * due to refactoring in the project
+   * Called by an entity to execute an action:
    */
   void execute(Entity e);
 }

@@ -19,7 +19,7 @@ import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
 public class ViewManager implements ViewExternalAPI {
-  private final String RESOURCES_PACKAGE = "resources.guiText";
+  private static final String RESOURCES_PACKAGE = "resources.guiText";
   private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
   private final String DEFAULT_MENU_TEXT = myResources.getString("defaultStatus");
   private BorderPane testPane;
