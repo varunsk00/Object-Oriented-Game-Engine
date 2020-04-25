@@ -1,19 +1,14 @@
 package ooga.view.gui.managers;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.scene.Node;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import ooga.util.config.MissingFileException;
-import ooga.view.application.games.Game;
+import ooga.exceptions.MissingFileException;
 import ooga.view.gui.ProgramLauncher;
-import ooga.view.gui.userinterface.Welcome;
 
 //TODO: REFACTOR, CLEAN UP MAGIC, REMOVE UNNECESSARY METHODS
 public class StageManager {

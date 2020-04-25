@@ -1,4 +1,4 @@
-package ooga.util.config;
+package ooga.exceptions;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

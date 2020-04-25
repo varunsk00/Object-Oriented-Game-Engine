@@ -2,11 +2,9 @@ package ooga.view.gui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ooga.util.config.MissingFileException;
-import ooga.util.config.ParameterMissingException;
+import ooga.exceptions.MissingFileException;
 import ooga.view.gui.managers.AudioVideoManager;
 import ooga.view.gui.managers.StageManager;
 import ooga.view.gui.userinterface.GameCabinet;
