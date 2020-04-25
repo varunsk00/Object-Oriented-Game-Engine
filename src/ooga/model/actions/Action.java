@@ -14,7 +14,7 @@ public abstract class Action {
 
   @Override
   public boolean equals(Object o){
-    return(o instanceof Action && o.getClass().toString().equals(this.getClass().toString()) && ((Action)o).getParam().equals(this.param));
+    return(o.getClass()==this.getClass() && o.getClass().toString().equals(this.getClass().toString()) && ((Action)o).getParam().equals(this.param));
   }
 
   public String getParam(){return param;}

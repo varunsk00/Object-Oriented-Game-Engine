@@ -16,10 +16,6 @@ import org.json.simple.parser.ParseException;
 
 public class ComplexActionParser extends Parser {
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String IMG_FILEPATH = "resources/";
-  private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
-  private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
-  private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
 
   private JSONObject jsonObject;
 
@@ -39,10 +35,16 @@ public class ComplexActionParser extends Parser {
         ActionFactory actionFactory = new ActionFactory();
         String actionName = (String) actionEntry.get("action");
         String paramName = (String) actionEntry.get("param");
-        String orientation = (String) actionEntry.get("duration");
+        String duration = (String) actionEntry.get("duration");
+        Action newAction = null;
+        if(duration != null){
+          newAction = actionFactory
+              .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName, duration});
+        } else {
+          newAction = actionFactory
+              .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
+        }
 
-        Action newAction = actionFactory
-            .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
         output.add(newAction);
       }
     }

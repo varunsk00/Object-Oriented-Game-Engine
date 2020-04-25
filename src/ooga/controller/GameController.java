@@ -33,9 +33,8 @@ public class GameController {
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  private final String LOSS_RESULT = "You Lost! Restart the Level by resuming or choose a new game by restarting the game. Thanks for playing!";
+  private static final String LOSS_RESULT = "You Lost! Restart the Level by resuming or choose a new game by restarting the game. Thanks for playing!";
 
-  private Timeline animation;
   private ViewManager myViewManager;
   private ModelManager myModelManager;
   private LevelSelector levelSelector;
@@ -45,7 +44,6 @@ public class GameController {
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame)
           throws XInputNotLoadedException { //FIXME add exception stuff
-
 
     g = new GamePadListener();
     gameParser = new GameParser(gameName, this, loadedGame);
@@ -73,10 +71,6 @@ public class GameController {
 
   }
 
-  public List<EntityWrapper> getEntityList() {
-    return entityList;
-  }
-
   private void setUpKeyInputs() {
     myViewManager.getTestScene().setOnKeyPressed(e -> {
       myViewManager.handlePressInput(e.getCode());
@@ -100,7 +94,7 @@ public class GameController {
         new InvalidControlSchemeException(ex); }
       catch (Exception exception) {
         new ParameterMissingException(exception, "resourceFile"); } });
-    animation = new Timeline();
+    Timeline animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
@@ -138,16 +132,13 @@ public class GameController {
   }
 
   private void handleGamePadPlayer() {
-    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
-      System.out.println("HERE");
-      if (g.getState() != null) {
-        System.out.println("NOTNUL");
-        if (!g.getState().getPressed()) {
-          gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
-        } else if (g.getState().getPressed()) {
-          gameParser.getPlayerList().get(1)
-              .handleControllerInputReleased(g.getState().getControl());
-        }
+    if (gameParser.getPlayerList().size() > 1 && g.getState() != null && g.getState().getControl() != null) {
+      if (!g.getState().getPressed()) {
+        gameParser.getPlayerList().get(1).handleKeyInput(g.getState().getControl());
+      } else {
+        gameParser.getPlayerList().get(1)
+            .handleKeyReleased(g.getState().getControl());
+
       }
     }
   }

@@ -27,8 +27,7 @@ public class CollisionEngine {
       Map.entry(THREE, TOP)
       );
 
-  public CollisionEngine() {
-  }
+  public CollisionEngine() {}
 
   public void produceCollisionActions(EntityModel subjectEntity, EntityModel targetEntity) {
     Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();

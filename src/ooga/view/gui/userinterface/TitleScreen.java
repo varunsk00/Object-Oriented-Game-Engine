@@ -65,7 +65,9 @@ public class TitleScreen extends BorderPane {
             String label = selectOptions.get(i);
             int index = i;
             if (label.contains("Player")){ //JSON Parsing
-                allButtons[i] = makeButton(label, event -> playerBooleans[index] = true); }
+                allButtons[i] = makeButton(label, event -> playerBooleans[index] = true);
+                allButtons[i].setId("player" + (index+1));
+            }
             else{
                 allButtons[i] = makeButton(label, event -> {
                     playerBooleans[index] = true;

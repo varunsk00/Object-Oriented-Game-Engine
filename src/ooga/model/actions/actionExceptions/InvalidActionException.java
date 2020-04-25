@@ -1,7 +1,7 @@
 package ooga.model.actions.actionExceptions;
 
 public class InvalidActionException extends RuntimeException {
-  public final String CLASS_NOT_FOUND = "Control Scheme not valid";
+  public static final String CLASS_NOT_FOUND = "Control Scheme not valid";
   /**
    * Create an Exception based on an issue during parsing
    *
