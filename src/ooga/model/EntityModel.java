@@ -151,10 +151,6 @@ public class EntityModel {
 
   public void setLevelAdvancementStatus(boolean newStatus){levelAdvancementStatus = newStatus;}
 
-  public void setNextLevelIndex(int levelIndex){nextLevelIndex = levelIndex;}
-
-  public boolean getLevelAdvancementStatus(){return levelAdvancementStatus;}
-
   public int getNextLevelIndex(){return nextLevelIndex;}
 
   public double getWidth(){return entityWidth;}
