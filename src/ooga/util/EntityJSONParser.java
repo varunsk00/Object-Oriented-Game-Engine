@@ -135,9 +135,7 @@ public class EntityJSONParser extends Parser {
 
   public ImageView generateImage() {
     String imageName = (String) jsonObject.get("image");
-    ImageView output = null;
-
-    output = loadImage(imageName);
+    ImageView output = loadImage(imageName);
     output.setX(Double.parseDouble(jsonObject.get("xPos").toString()));
     output.setY(Double.parseDouble(jsonObject.get("yPos").toString()));
     output.setFitHeight(Double.parseDouble(jsonObject.get("height").toString()));
@@ -147,9 +145,9 @@ public class EntityJSONParser extends Parser {
 
   private ImageView loadImage(String imageName) {
 //    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
+
     InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
-    Image entityImage = null;
-    entityImage = new Image(is);
+    Image entityImage = new Image(is);
     return new ImageView(entityImage);
   }
 
