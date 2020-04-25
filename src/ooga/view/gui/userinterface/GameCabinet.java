@@ -116,10 +116,8 @@ public class GameCabinet extends Pane {
             gameLaunchCount.put(game, count + 1); }
     }
 
-    private boolean isRelaunched(String game){ //FIXME: IS THIS A FAIL CASE? I'M CHECKING FOR NULL, SO IDK
-        if(gameLaunchCount.get(game) != null){
-            return gameLaunchCount.get(game) > 0; }
-        return false;
+    private boolean isRelaunched(String game){
+        return(gameLaunchCount.get(game) != null && gameLaunchCount.get(game)>0);
     }
 
     private boolean isHomePressed(){
