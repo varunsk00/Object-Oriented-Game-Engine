@@ -2,69 +2,111 @@ package ooga.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import ooga.model.actions.Action;
+import ooga.model.controlschemes.*;
+import org.json.simple.JSONArray;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 class EntityJSONParserTest {
+  EntityJSONParser entityJSONParser;
+  String filePath;
 
-  @org.junit.jupiter.api.Test
-  void parseControls() {
+  @BeforeEach
+  void setUp() {
+    entityJSONParser = new EntityJSONParser("unittest", "UnitTestEntity");
+    filePath = "resources/images/mario_fire.png";
   }
 
-  @org.junit.jupiter.api.Test
-  void updateControlScheme() {
+  @Test
+  void testParseControls() {
+    assertEquals(Keyboard.class, entityJSONParser.parseControls().getClass());
   }
 
-  @org.junit.jupiter.api.Test
-  void updateControls() {
+  @Test
+  void testUpdateControlScheme() {
+    entityJSONParser.updateControlScheme("Pattern");
+    entityJSONParser.readJsonFile();
+    assertEquals(Pattern.class, entityJSONParser.parseControls().getClass());
+    entityJSONParser.updateControlScheme("Keyboard");
   }
 
-  @org.junit.jupiter.api.Test
-  void parseCollisions() {
+  @Test
+  void testUpdateControls() {
+    assertTrue(entityJSONParser.updateControls("Jump", "G", true) != null
+      && entityJSONParser.updateControls("Jump", "G", true).size() > 0);
+
   }
 
-  @org.junit.jupiter.api.Test
-  void generateImage() {
+  @Test
+  void testParseCollisions() {
+    assertTrue(entityJSONParser.parseCollisions() != null
+      && entityJSONParser.parseCollisions().size() > 0);
   }
 
-  @org.junit.jupiter.api.Test
-  void readWidth() {
+  @Test
+  void testGenerateImage() {
+    ImageView output = new ImageView(new Image(entityJSONParser.getClass().getClassLoader().getResourceAsStream(filePath)));
+    output.setX(0);
+    output.setY(0);
+    output.setFitHeight(100);
+    output.setFitWidth(100);
+
+    assertEquals(output.getX(), entityJSONParser.generateImage().getX());
+    assertEquals(output.getY(), entityJSONParser.generateImage().getY());
+    assertEquals(output.getFitHeight(), entityJSONParser.generateImage().getFitHeight());
+    assertEquals(output.getFitWidth(), entityJSONParser.generateImage().getFitWidth());
+    assertEquals("mario_fire.png", entityJSONParser.readImage());
+
   }
 
-  @org.junit.jupiter.api.Test
-  void readHeight() {
+  @Test
+  void testReadWidth() {
+    assertEquals(100, entityJSONParser.readWidth());
   }
 
-  @org.junit.jupiter.api.Test
-  void readXPosition() {
+  @Test
+  void testReadHeight() {
+    assertEquals(100, entityJSONParser.readHeight());
   }
 
-  @org.junit.jupiter.api.Test
-  void readYPosition() {
+  @Test
+  void testReadXPosition() {
+    assertEquals(0, entityJSONParser.readXPosition());
   }
 
-  @org.junit.jupiter.api.Test
-  void readMaxXVelocity() {
+  @Test
+  void testReadYPosition() {
+    assertEquals(0, entityJSONParser.readYPosition());
   }
 
-  @org.junit.jupiter.api.Test
+  @Test
+  void testReadMaxXVelocity() {
+    assertEquals(1000, entityJSONParser.readMaxXVelocity());
+
+  }
+
+  @Test
   void readMaxYVelocity() {
+    assertEquals(1000, entityJSONParser.readMaxYVelocity());
   }
 
-  @org.junit.jupiter.api.Test
+  @Test
   void readHealth() {
+    assertEquals(1, entityJSONParser.readHealth());
   }
 
-  @org.junit.jupiter.api.Test
-  void readXVelMax() {
-  }
-
-  @org.junit.jupiter.api.Test
-  void readYVelMax() {
-  }
-
-  @org.junit.jupiter.api.Test
+  @Test
   void readFixed() {
+    assertEquals(false, entityJSONParser.readFixed());
   }
 
-  @org.junit.jupiter.api.Test
+  @Test
   void readPermeable() {
+    assertEquals(true, entityJSONParser.readPermeable());
   }
 }

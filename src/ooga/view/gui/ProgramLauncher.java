@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ooga.exceptions.MissingFileException;
 import ooga.view.gui.managers.AudioVideoManager;
 import ooga.view.gui.managers.StageManager;
 import ooga.view.gui.userinterface.GameCabinet;
@@ -26,7 +27,7 @@ public class ProgramLauncher {
     public ProgramLauncher(Stage primaryStage) throws FileNotFoundException {
         this.welcomeScreen = new Welcome();
         this.audioVideoManager = new AudioVideoManager();
-        this.stageManager = new StageManager(primaryStage, audioVideoManager);
+        this.stageManager = new StageManager(primaryStage, audioVideoManager);;
     }
 
     public void start() throws Exception {
@@ -43,11 +44,9 @@ public class ProgramLauncher {
     private void startAnimationLoop() {
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
             try {
-                step();
-            } catch (Exception ex) { //FIXME: REPLACE WITH STRING
-                ex.printStackTrace();
-            }
-        });
+                step(); }
+            catch (Exception ex) {
+                new MissingFileException(ex, "resourceFile"); } });
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
