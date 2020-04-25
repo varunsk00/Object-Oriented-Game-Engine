@@ -1,9 +1,16 @@
 package ooga.view.application.menu;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class InGameMenu extends VBox{
     private boolean savePressed;
@@ -12,28 +19,20 @@ public class InGameMenu extends VBox{
     private boolean exitPressed;
     private boolean rebootPressed;
     private VBox myButtons;
+    private Text gameResult;
+    private final String DEFAULT_MENU_TEXT = "Game in Progress";
 
-    /**
-     * Constructor that sets Resource Bundle and initializes all initial states of buttons      *
-     * * Button states are initially False; ComboBox states have a defined initial String      *
-     * * @param language the current language passed in from ParserController      * @throws
-     * FileNotFoundException in case the File does not exist
-     */
     public InGameMenu() {
         this.savePressed = false;
         this.controlsPressed = false;
         this.exitPressed = false;
         this.resumePressed = false;
         this.rebootPressed = false;
+        this.gameResult = new Text(DEFAULT_MENU_TEXT);
+        this.gameResult.setId("status");
+        scrollText(this.gameResult);
         renderButtons();
-        getChildren().add(myButtons);
-    }
-
-    /**
-     * @return the JavaFX HBox that contains all the buttons
-     */
-    public VBox getVBox() {
-        return myButtons;
+        getChildren().addAll(myButtons, gameResult);
     }
 
     public boolean getResumePressed() {
@@ -43,7 +42,6 @@ public class InGameMenu extends VBox{
     public void setResumeOff() {
         resumePressed = false;
     }
-
 
     public boolean getExitPressed() {
         return exitPressed;
@@ -77,18 +75,13 @@ public class InGameMenu extends VBox{
         controlsPressed = false;
     }
 
-    /**
-     * Creates and initializes all Buttons based on Regex Values
-     */
-    private void renderButtons() {
+    private void renderButtons() { //FIXME: MAGIC STRINGS
         myButtons = new VBox();
         Button ResumeButton = makeButton("Play Game", event -> resumePressed = true);
         Button SaveButton = makeButton("Save Game", event -> savePressed = true);
         Button ControlsButton = makeButton("Configuration", event -> controlsPressed = true);
         Button ExitButton = makeButton("Game Select", event -> exitPressed = true);
         Button RestartButton = makeButton("Reboot System", event -> rebootPressed = true);
-        //myButtons.setTranslateX(590);
-        //myButtons.setSpacing(70); //FIXME: MAGIC NUMBER
         myButtons.getChildren().addAll(ResumeButton, SaveButton, ControlsButton, ExitButton, RestartButton);
         formatButton(ResumeButton);
         formatButton(SaveButton);
@@ -99,7 +92,6 @@ public class InGameMenu extends VBox{
 
     private Button makeButton(String key, EventHandler e) {
         Button tempButton = new Button(key);
-        //tempButton.setMaxWidth(Double.MAX_VALUE);
         tempButton.setOnAction(e);
         return tempButton;
     }
@@ -107,4 +99,30 @@ public class InGameMenu extends VBox{
     private void formatButton(Button tempButton) {
         myButtons.setVgrow(tempButton, Priority.ALWAYS);
     }
+
+    public void updateGameResult(String gameResult) {
+        Text status = new Text(gameResult);
+        this.gameResult = status;
+        status.setId("updatedStatus");
+        scrollText(status);
+        getChildren().set(getChildren().size() - 1, status);
+    }
+
+    public String getStatus() {
+        return gameResult.getText();
+    }
+
+    private void scrollText(Text status){
+        KeyValue initKeyValue = new KeyValue(status.translateXProperty(), 1280);
+        KeyFrame initFrame = new KeyFrame(Duration.ZERO, initKeyValue);
+        KeyValue endKeyValue = new KeyValue(status.translateXProperty(), -2.5*status.getLayoutBounds().getWidth());
+        KeyFrame endFrame = new KeyFrame(Duration.seconds(10), endKeyValue);
+        Timeline timeline = new Timeline(initFrame, endFrame);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+
+
+
 }

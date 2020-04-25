@@ -8,9 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
-import ooga.model.actions.CollisionKey;
+import ooga.model.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,9 +19,8 @@ import org.json.simple.parser.ParseException;
 //import org.json.JSONParser;
 //import org.json.simple.parser.ParseException;
 
-public class EntityJSONParser {
+public class EntityJSONParser extends Parser {
 
-  private String myFileName;
   private String myGame;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String RESOURCES = "resources/";
@@ -31,21 +31,11 @@ public class EntityJSONParser {
   private JSONObject jsonObject;
 
   public EntityJSONParser(String game, String fileName) {
-    myFileName = TXT_FILEPATH + game + "/entities/" + fileName + ".json";
+    setMyFileName(TXT_FILEPATH + game + "/entities/" + fileName + ".json");
     myGame = game;
     jsonObject = (JSONObject) readJsonFile();
   }
 
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e){
-      throw new InvalidControlSchemeException(e);
-    }
-  }
 
   public ControlScheme parseControls() {
     JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
@@ -73,7 +63,13 @@ public class EntityJSONParser {
     return myScheme;
   }
 
-  public List<String> updateControls(String param, String newKeyBind, boolean write) { //TODO: REFACTOR
+  public void updateControlScheme(String newScheme) {
+    JSONObject root = jsonObject;
+    root.put("scheme", newScheme);
+    write2JSON(root, "Successfully Updated Control Scheme!");
+  }
+
+  public List<String> updateControls(String param, String newKeyBind, boolean write) {
     List<String> ret = new ArrayList<>();
     JSONObject root = jsonObject;
     JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");

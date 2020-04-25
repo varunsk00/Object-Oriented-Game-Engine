@@ -22,14 +22,15 @@ import ooga.model.actions.Action;
 import ooga.model.actions.actionExceptions.InvalidActionException;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.model.levels.Level;
+import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class GameParser {
+public class GameParser extends Parser {
 
-  private String myFileName;
+//  private String myFileName;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
@@ -41,62 +42,36 @@ public class GameParser {
   private int selectedPlayers;
   private List<EntityWrapper> playerList;
   private boolean loadedGame;
-  private int scrollingStatusX;
-  private int scrollingStatusY;
-
+  private GameStatusProfile gameStatusProfile;
 
 
   private JSONObject jsonObject;
 
-
-
-  public GameParser(String gameName, boolean loadedGame) {
-    this.gameName = gameName;
-    this.loadedGame = loadedGame;
-    fileName = gameName + "Game";
-//    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
-    jsonObject = (JSONObject) readJsonFile();
-    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-    playerList = parsePlayerEntities();
-  }
-
   public GameParser(String gameName, Controller controller, boolean loadedGame) {
     mainController = controller;
     this.gameName = gameName;
-    this.loadedGame = loadedGame;
+    this.myFileName = "";
     fileName = gameName + "Game";
-//    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
-    jsonObject = (JSONObject) readJsonFile();
-    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
-    playerList = parsePlayerEntities();
+
+    setMyFileName(fileName);
 
     this.loadedGame = loadedGame;
-    scrollingStatusX = readScrollingStatusX();
-    scrollingStatusY = readScrollingStatusY();
+    checkLoadGame(this.loadedGame);
+    jsonObject = (JSONObject) readJsonFile();
+    gameStatusProfile = parseGameStatusProfile();
+    selectedPlayers = readPlayerCount();
+    playerList = parsePlayerEntities();
   }
   
 
   private void checkLoadGame(boolean loadedGame) {
     if (loadedGame) {
-      myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json";
+      setMyFileName(TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json");
     } else {
-      myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json";
+      setMyFileName(TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json");
     }
   }
 
-
-
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      checkLoadGame(this.loadedGame);
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e) {
-      throw new InvalidControlSchemeException(e);
-    }
-  }
 
   public List<EntityWrapper> getPlayerList(){
     return playerList;
@@ -105,14 +80,10 @@ public class GameParser {
 
   public void saveGame(String key, JSONArray newValue){
     JSONObject root = jsonObject;
-    JSONArray new_val = newValue;
     root.put(key, newValue);
-    root.put("players", jsonObject.get("players"));
-//    String old_val = root.get(key).toString();
-//
-//    if(!new_val.equals(old_val))
-//    {
-//      root.put(key,new_val);
+    root.put("playerCount", jsonObject.get("playerCount"));
+
+//    updateJSONValue(key, newValue);
 
       try (FileWriter file = new FileWriter(TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json", false))
       {
@@ -125,22 +96,17 @@ public class GameParser {
   }
 
   public void updateJSONValue(String key, Object newValue){
-    JSONObject root = jsonObject;
-    Object new_val = newValue;
-    Object old_val = root.get(key).toString();
+      JSONObject root = jsonObject;
 
-//    if(!new_val.equals(old_val))
-//    {
-      root.put(key,new_val);
+      root.put(key,newValue);
 
-      try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + "/" + fileName + ".json", false))
+      try (FileWriter file = new FileWriter(myFileName, false))
       {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file");
       } catch (IOException e) {
         e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
       }
-    //}
   }
 
   private List<String> sortLevelKeySet(Set keySet){
@@ -172,7 +138,7 @@ public class GameParser {
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
       try {
         Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor
-            (List.class, List.class, List.class, int.class, int.class, String.class).newInstance(tiles, playerList, enemies, scrollingStatusX, scrollingStatusY, levelName);
+            (List.class, List.class, List.class, GameStatusProfile.class, String.class).newInstance(tiles, playerList, enemies, gameStatusProfile, levelName);
         levelList.add(newLevel);
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
           throw new InvalidActionException("Level could not be found."); //TODO: change exception heading
@@ -210,14 +176,15 @@ public class GameParser {
     return gamePhysics;
   }
 
-  public int readScrollingStatusX() {
-    return Integer.parseInt(jsonObject.get("scrollingStatusX").toString());
+  public GameStatusProfile parseGameStatusProfile() {
+    JSONArray gameStatusArray = (JSONArray) jsonObject.get("gameStatusProfile");
+    JSONObject gameStatusVariables = (JSONObject) gameStatusArray.get(0);
+    GameStatusProfile gameVariables = new GameStatusProfile(gameStatusVariables);
+    return gameVariables;
   }
 
-  public int readScrollingStatusY() {
-    return Integer.parseInt(jsonObject.get("scrollingStatusY").toString());
+  private int readPlayerCount() {
+    return Integer.parseInt(jsonObject.get("playerCount").toString());
   }
-
-
 
 }

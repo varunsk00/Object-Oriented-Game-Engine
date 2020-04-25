@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Pixeboy';
+    font-family: Pixeboy ;
     font-weight: 900;
     src: url("Pixeboy-z8XGD.ttf");
 }
@@ -33,6 +33,7 @@
     -fx-max-width: 600px;
     -fx-max-height: 100px;
 }
+
 #menuFrame {
     -fx-spacing: 40px;
     -fx-translate-x: -175px;
@@ -117,7 +118,7 @@
     -fx-background-color: #d3d3d3;
     -fx-font-size: 15px;
     -fx-background-radius: 0;
-    -fx-font-family: "Ariel";
+    -fx-font-family: Ariel;
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.5) , 2, 0.0 , 0 , 1);
     -fx-translate-y: 15px;
     -fx-translate-x: -165px;
@@ -125,6 +126,7 @@
 #selectGameButton:hover {
     -fx-background-color: #c0c0c0;
 }
+
 #leftArrow {
     -fx-fill: #ff0000;
     -fx-stroke: #8b0000;
@@ -137,6 +139,101 @@
     -fx-translate-x: 850px;
     -fx-translate-y: 275px;
 }
+
+
+#welcomeButton{
+    -fx-alignment: center;
+}
+
+#welcome{
+    -fx-spacing: 100;
+    -fx-text-alignment: center;
+    -fx-background-color: lightgrey;
+}
+
+#welcomeBanner{
+    -fx-text-alignment: center;
+    -fx-font-family: Pixeboy;
+}
+
+#play{
+    -fx-background-color: red;
+    -fx-scale-x: 3.0;
+    -fx-scale-y: 3.0;
+}
+
+#play:hover{
+    -fx-effect: dropshadow( three-pass-box , rgb(0, 0, 255), 5, 0.0 , 0 , 1 );
+}
+
+#welcomeMessage{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 70;
+    -fx-stroke: blue;
+    -fx-border-color: red;
+}
+
+#titleButtons{
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-translate-y: -100.0;
+}
+
+#configTitle{
+    -fx-font-family: Pixeboy;
+    -fx-alignment: center;
+    -fx-translate-x: -150;
+    -fx-translate-y: -150;
+    -fx-font-size: 28px;
+}
+
+#player1VBox{
+    -fx-spacing: 30;
+    -fx-alignment: center;
+    -fx-translate-x: -80.0;
+}
+
+#player2VBox{
+    -fx-spacing: 30;
+    -fx-alignment: center;
+    -fx-translate-x: -80.0;
+}
+
+#actionList{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 20px;
+}
+
+#actionVBox{
+    -fx-alignment: center-left;
+    -fx-translate-y: 30.0;
+    -fx-translate-x: -90.0;
+    -fx-spacing: 57;
+}
+
+#status{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 30px;
+    -fx-stroke: red;
+    -fx-border-color: blue;
+    -fx-alignment: center;
+    -fx-translate-y: 180;
+}
+
+#updatedStatus{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 30px;
+    -fx-stroke: red;
+    -fx-border-color: blue;
+    -fx-alignment: center;
+    -fx-translate-y: 180;
+}
+
+.text-field{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 30px;
+    -fx-alignment: center;
+}
 .button {
     -fx-background-color:
         #ecebe9,
@@ -145,12 +242,46 @@
         linear-gradient(#f9f2d6 0%, #f4e5bc 20%, #e6c75d 80%, #e2c045 100%),
         linear-gradient(#f6ebbe, #e6c34d);
     -fx-background-radius: 50;
-    -fx-font-family: "Ariel";
-    -fx-font-size: 18px;
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 20px;
+    -fx-text-fill: #311c09;
+    -fx-spacing: 100;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
+}
+
+.button:hover {
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+            linear-gradient(#f6ebbe, #e6c34d),
+            linear-gradient(#f9f2d6 0%, #f4e5bc 20%, #e6c75d 80%, #e2c045 100%),
+            linear-gradient(#dcca8a, #c7a740);
+}
+
+.combo-box-base {
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+            linear-gradient(#dcca8a, #c7a740),
+            linear-gradient(#f9f2d6 0%, #f4e5bc 20%, #e6c75d 80%, #e2c045 100%),
+            linear-gradient(#f6ebbe, #e6c34d);
+    -fx-background-radius: 50;
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 20px;
     -fx-text-fill: #311c09;
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
 }
+
+.combo-box-base:hover {
+    -fx-background-color:
+            #ecebe9,
+            rgba(0,0,0,0.05),
+            linear-gradient(#f6ebbe, #e6c34d),
+            linear-gradient(#f9f2d6 0%, #f4e5bc 20%, #e6c75d 80%, #e2c045 100%),
+            linear-gradient(#dcca8a, #c7a740);
+}
+
 .label {
     -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);
-    -fx-font-family: "Ariel";
+    -fx-font-family: Pixeboy;
 }

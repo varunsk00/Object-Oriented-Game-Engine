@@ -1,0 +1,82 @@
+{
+  "entityName": "mario_sidea",
+  "image": "mario_sidea.png",
+  "health": 1,
+  "xPos": 100,
+  "yPos": 100,
+  "xVel": 10,
+  "yVel": 10,
+  "fixed": false,
+  "permeable": false,
+  "maxXVel": 500,
+  "maxYVel": 500,
+  "height": 50,
+  "width": 51,
+  "scheme": "Pattern",
+  "actionBundles": [
+    {
+      "ID": "30",
+      "Control": [
+        {
+          "action": "NoAction",
+          "param": "300.0"
+        }
+      ]
+    },
+    {
+      "ID": "1",
+      "Control": [
+        {
+          "action": "SpawnRelative",
+          "param": "smash.resetAttack"
+        }
+      ]
+    },
+    {
+      "ID": "1",
+      "Control": [
+        {
+          "action": "Die",
+          "param":"true"
+        }
+      ]
+    }
+  ],
+  "collisionBundles": [
+    {
+      "ID": "smash.finaldest",
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        }
+      ]
+    },
+    {
+      "ID": "smash.resetAttack",
+      "Control": [
+        {
+          "orientation": "A",
+          "action": "SetPermeable",
+          "param": "true"
+        }
+      ]
+    }
+  ]
+}

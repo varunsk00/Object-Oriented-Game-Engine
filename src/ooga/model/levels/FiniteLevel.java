@@ -3,6 +3,7 @@ package ooga.model.levels;
 import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
+import ooga.util.GameStatusProfile;
 
 
 public class FiniteLevel extends Level{
@@ -12,8 +13,8 @@ public class FiniteLevel extends Level{
   private List<EntityWrapper> enemyEntities;
 
 
-  public FiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, int scrollIntX, int scrollIntY, String name) {
-    super(tileList, playerList, enemyList, scrollIntX, scrollIntY, name);
+  public FiniteLevel(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name) {
+    super(tileList, playerList, enemyList, gameProfile, name);
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
@@ -27,13 +28,13 @@ public class FiniteLevel extends Level{
       for (EntityWrapper tileEntity : tileEntities) {
         if (!playerEntities.contains(tileEntity) && isInRange(player.getModel(), tileEntity.getModel()) && !currentEntityList.contains(tileEntity)) {
           currentEntityList.add(tileEntity);
-          viewManager.updateEntityGroup(tileEntity.getRender());
+          viewManager.addEntity(tileEntity.getRender());
         }
       }
       for (EntityWrapper enemyEntity : enemyEntities) {
         if (!playerEntities.contains(enemyEntity) && isInRange(player.getModel(), enemyEntity.getModel()) && !currentEntityList.contains(enemyEntity)) {
           currentEntityList.add(enemyEntity);
-          viewManager.updateEntityGroup(enemyEntity.getRender());
+          viewManager.addEntity(enemyEntity.getRender());
         }
       }
     }

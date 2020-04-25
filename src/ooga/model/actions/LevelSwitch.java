@@ -7,7 +7,7 @@ public class LevelSwitch extends Action {
 
   public LevelSwitch(String parameter){
     super(parameter);
-    System.out.println("Level Switch Param: " + parameter);
+    //System.out.println("Level Switch Param: " + parameter);
     nextLevelIndex = Double.parseDouble(param);
   }
 

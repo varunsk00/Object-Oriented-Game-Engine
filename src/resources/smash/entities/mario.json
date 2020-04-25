@@ -1,6 +1,6 @@
 {
   "entityName": "mario",
-  "image": "firemario_walk.gif",
+  "image": "mario_default.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
@@ -12,7 +12,7 @@
   "maxYVel": 500,
   "height": 50,
   "width": 51,
-  "scheme": "Keybindings",
+  "scheme": "Keyboard",
   "actionBundles": [
     {
       "ID": "D",
@@ -53,7 +53,7 @@
       "ID": "S",
       "Control": [
         {
-          "action": "AccelerateY",
+          "action": "NoAction",
           "param": "+100.0"
         }
       ]
@@ -68,12 +68,137 @@
       ]
     },
     {
-      "ID": "F",
+      "ID": "RIGHT",
+      "Control": [
+
+        {
+          "action": "SetConditional",
+          "param": "false"
+        },
+        {
+          "action":"SpawnAndBind",
+          "param": "smash.mario_sidea",
+          "coolDown": "1000"
+        },
+        {
+          "action": "ExecuteConditional",
+          "param": "none"
+        },
+        {
+          "action": "SetOpacity",
+          "param": "0.0"
+        },
+        {
+          "action": "SetPermeable",
+          "param": "true"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "Forwards"
+        }
+      ]
+    },
+    {
+      "ID": "LEFT",
       "Control": [
         {
-          "action": "SpawnRelative",
-          "param": "mario.Mario_Fireball",
+          "action": "SetConditional",
+          "param": "false"
+        },
+        {
+          "action":"SpawnAndBind",
+          "param": "smash.mario_sidea",
           "coolDown": "1000"
+        },
+        {
+          "action": "ExecuteConditional",
+          "param": "none"
+        },
+        {
+          "action": "SetOpacity",
+          "param": "0.0"
+        },
+        {
+          "action": "SetPermeable",
+          "param": "true"
+        },
+        {
+          "action": "SetXDirection",
+          "param": "false"
+        }
+      ]
+    },
+    {
+      "ID": "UP",
+      "Control": [
+        {
+          "action": "SetConditional",
+          "param": "false"
+        },
+        {
+          "action":"SpawnAndBind",
+          "param": "smash.mario_upa",
+          "coolDown": "1000"
+        },
+        {
+          "action": "ExecuteConditional",
+          "param": "none"
+        },
+        {
+          "action": "SetOpacity",
+          "param": "0.0"
+        },
+        {
+          "action": "SetPermeable",
+          "param": "true"
+        },
+
+      ]
+    }
+  ],
+  "collisionBundles": [
+    {
+      "ID": "smash.resetAttack",
+      "Control": [
+        {
+          "orientation": "A",
+          "param": "100.0",
+          "action":"SetOpacity"
+        },
+        {
+          "orientation": "A",
+          "action": "SetPermeable",
+          "param": "false"
+        },
+        {
+          "orientation": "A",
+          "action": "SetConditional",
+          "param": "true"
+        }
+      ]
+    },
+    {
+      "ID": "smash.finaldest",
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
         }
       ]
     }

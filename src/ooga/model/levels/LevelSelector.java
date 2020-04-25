@@ -3,9 +3,12 @@ package ooga.model.levels;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
+import ooga.util.GameStatusProfile;
+import ooga.view.application.Camera;
 
 public class LevelSelector {
 
@@ -13,26 +16,33 @@ public class LevelSelector {
   private Level activeLevel;
 
 
-  private static final int spawningInterval = 500;
-  private int currentPlayerInterval = -1;
+  private int spawningInterval;
+  private GameStatusProfile gameStatusProfile;
+  private Camera gameCamera;
+  private List<EntityWrapper> playerList;
+  private static final int cameraBuffer = 500;
 
 
-  public LevelSelector(List<Level> levelList){
+
+  public LevelSelector(List<Level> levelList, List<EntityWrapper> players, GameStatusProfile gameProfile, Camera camera){
     parsedLevels = levelList;
+    playerList = players;
+    gameStatusProfile = gameProfile;
+    gameCamera = camera;
+    spawningInterval = gameStatusProfile.readSpawningInterval();
     activeLevel = parsedLevels.get(0);
   }
 
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager, int nextLevel) {
-//    System.out.println(currentEntityList.size());
-    if (currentEntityList.get(0).getModel().getLevelAdvancementStatus()) {
-      currentEntityList.get(0).getModel().setLevelAdvancementStatus(false);
-      switchLevel(nextLevel);
-      activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(currentEntityList.get(0)));
+    for(EntityWrapper player : playerList) {
+      if (player.getModel().getLevelAdvancementStatus()) {
+        player.getModel().setLevelAdvancementStatus(false);
+        switchLevel(nextLevel);
+        activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
+      }
     }
     activeLevel.spawnEntities(currentEntityList, viewManager);
-    activeLevel.despawnEntities(currentEntityList, viewManager);
-//    this.despawnEntities(currentEntityList, viewManager);
-
+    this.despawnEntities(currentEntityList, viewManager);
   }
 
   private void switchLevel(int levelIndex){
@@ -40,32 +50,34 @@ public class LevelSelector {
   }
 
   private int calculatePlayerInterval(EntityWrapper player) {
-    return (int) player.getModel().getX()
-        / spawningInterval; //TODO: generalize for X and Y scrollers
+    return (int) Math.abs((player.getModel().getX() * gameStatusProfile.readScrollingStatusX() + player.getModel().getY() * gameStatusProfile.readScrollingStatusY())/spawningInterval);
   }
-//TODO: decide whether or not to have despawning done by level selector or levels (actually has
-// nothing pertaining to individual levels.
+
   private void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
       List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
       for (EntityWrapper targetEntity : currentEntityList) {
-        if (!currentEntityList.get(0).equals(targetEntity) && !isInRange(currentEntityList.get(0).getModel(), targetEntity.getModel())) {
+        if (!playerList.contains(targetEntity) && !isInRangeofCamera(targetEntity)) {
           entitiesToDespawn.add(targetEntity);
         }
       }
       for(EntityWrapper despawnedEntity : entitiesToDespawn){
         currentEntityList.remove(despawnedEntity);
-        viewManager.removeEntityGroup(despawnedEntity.getRender());
+        viewManager.removeEntity(despawnedEntity.getRender());
       }
     }
 
-  private boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity){
-    if(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), 2) + Math.pow(subjectEntity.getY() - targetEntity.getY(), 2)) < 1500){
-      return true;
-    }
-    return false;
+  private boolean isInRangeofCamera(EntityWrapper targetEntity){
+    return targetEntity.getModel().getX() < gameCamera.getViewPort().getBoundsInParent().getMaxX() + cameraBuffer &&
+        targetEntity.getModel().getX() > gameCamera.getViewPort().getBoundsInParent().getMinX() - cameraBuffer &&
+        targetEntity.getModel().getY() < gameCamera.getViewPort().getBoundsInParent().getMaxY() + cameraBuffer &&
+        targetEntity.getModel().getY() > gameCamera.getViewPort().getBoundsInParent().getMinY() - cameraBuffer;
   }
 
   public List<Level> getLevelsToPlay() {
     return parsedLevels.subList(parsedLevels.indexOf(activeLevel), parsedLevels.size());
+  }
+
+  public Level getActiveLevel() {
+    return activeLevel;
   }
 }

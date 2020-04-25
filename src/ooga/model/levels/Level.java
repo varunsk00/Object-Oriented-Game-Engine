@@ -5,6 +5,7 @@ import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.model.EntityModel;
+import ooga.util.GameStatusProfile;
 import ooga.view.application.Camera;
 
 public abstract class Level {
@@ -15,31 +16,14 @@ public abstract class Level {
   private static final int TWO = 2;
   private int currentPlayerInterval = -1;
   private String levelName;
-  private int scrollingStatusX;
-  private int scrollingStatusY;
+  private GameStatusProfile gameStatusProfile;
 
-  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, int scrollIntX, int scrollIntY, String name){
+  public Level(List<EntityWrapper> tileList, List<EntityWrapper> playerList, List<EntityWrapper> enemyList, GameStatusProfile gameProfile, String name){
     tileEntities = tileList;
     playerEntities = playerList;
     enemyEntities = enemyList;
-    scrollingStatusX = scrollIntX;
-    scrollingStatusY = scrollIntY;
+    gameStatusProfile = gameProfile;
     levelName = name;
-  }
-
-  public void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-    for (EntityWrapper player : playerEntities) {
-      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-      for (EntityWrapper targetEntity : currentEntityList) {
-        if (!playerEntities.contains(targetEntity) && !isInRange(player.getModel(), targetEntity.getModel())) {
-          entitiesToDespawn.add(targetEntity);
-        }
-      }
-      for(EntityWrapper despawnedEntity : entitiesToDespawn){
-        currentEntityList.remove(despawnedEntity);
-        viewManager.removeEntityGroup(despawnedEntity.getRender());
-      }
-    }
   }
 
 

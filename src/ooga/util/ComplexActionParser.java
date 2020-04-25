@@ -6,16 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
-import ooga.model.actions.CollisionKey;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
-public class ComplexActionParser {
-  private String myFileName;
+public class ComplexActionParser extends Parser {
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
@@ -25,20 +24,10 @@ public class ComplexActionParser {
   private JSONObject jsonObject;
 
   public ComplexActionParser(String gameName, String fileName) {
-    myFileName = TXT_FILEPATH + gameName + "/" + "complexactions/" + fileName + ".json";
+    setMyFileName(TXT_FILEPATH + gameName + "/" + "complexactions/" + fileName + ".json");
     jsonObject = (JSONObject) readJsonFile();
   }
 
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e){
-      throw new InvalidControlSchemeException(e);
-    }
-  }
 
   public List<Action> createComplexAction(){
     List<Action> output = new ArrayList<Action>();
