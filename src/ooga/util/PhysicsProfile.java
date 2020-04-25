@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.ParameterMissingException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,25 +30,31 @@ public class PhysicsProfile {
   }
 
   public double readFriction() {
+    String friction = "friction";
     try {
-      return Double.parseDouble(physicsArray.get("Friction").toString());
+      return Integer.parseInt(physicsArray.get(friction).toString());
     } catch (NullPointerException e) {
+      new ParameterMissingException(e, friction);
       return DEFAULT_ZERO;
     }
   }
 
   public double readDrag() {
+    String drag = "drag";
     try {
-      return Double.parseDouble(physicsArray.get("Drag").toString());
+      return Integer.parseInt(physicsArray.get(drag).toString());
     } catch (NullPointerException e) {
+      new ParameterMissingException(e, drag);
       return DEFAULT_ZERO;
     }
   }
 
   public double readGravity() {
+    String gravity = "gravity";
     try {
-      return Double.parseDouble(physicsArray.get("Gravity").toString());
+      return Integer.parseInt(physicsArray.get(gravity).toString());
     } catch (NullPointerException e) {
+      new ParameterMissingException(e, gravity);
       return DEFAULT_ZERO;
     }
   }

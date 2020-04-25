@@ -1,5 +1,6 @@
 package ooga.util;
 
+import ooga.util.config.ParameterMissingException;
 import org.json.simple.JSONObject;
 
 public class GameStatusProfile {
@@ -14,41 +15,52 @@ public class GameStatusProfile {
 
 
   public int readScrollingStatusX() {
+    String scrollingStatusX = "scrollingStatusX";
     try {
-      return Integer.parseInt(gameStatusArray.get("scrollingStatusX").toString());
+      return Integer.parseInt(gameStatusArray.get(scrollingStatusX).toString());
     } catch (NullPointerException e) {
+      new ParameterMissingException(e, scrollingStatusX);
       return DEFAULT_ONE;
     }
   }
 
   public int readScrollingStatusY() {
+    String scrollingStatusY = "scrollingStatusY";
     try {
-      return Integer.parseInt(gameStatusArray.get("scrollingStatusY").toString());
+      return Integer.parseInt(gameStatusArray.get(scrollingStatusY).toString());
     } catch (NullPointerException e) {
+      new ParameterMissingException(e, scrollingStatusY);
       return DEFAULT_ONE;
     }
   }
 
   public int readSpawningInterval() {
+    String spawningInterval = "spawningInterval";
     try {
-      return Integer.parseInt(gameStatusArray.get("spawningInterval").toString());
+      return Integer.parseInt(gameStatusArray.get(spawningInterval).toString());
     } catch (NullPointerException e) {
+      new ParameterMissingException(e, spawningInterval);
       return DEFAULT_ZERO;
     }
   }
 
   public int readLevelSpawnOffset() {
-    return Integer.parseInt(gameStatusArray.get("levelSpawnOffset").toString());
-  } catch (NullPointerException e) {
-    return DEFAULT_ZERO;
-  }
-  }
-
-  public int readStartingLevelIndex() {
-    return Integer.parseInt(gameStatusArray.get("startingLevelIndex").toString());
-  } catch (NullPointerException e) {
-    return DEFAULT_ZERO;
+    String levelSpawnOffset = "levelSpawnOffset";
+    try {
+      return Integer.parseInt(gameStatusArray.get(levelSpawnOffset).toString());
+    } catch (NullPointerException e) {
+      new ParameterMissingException(e, levelSpawnOffset);
+      return DEFAULT_ZERO;
     }
   }
 
+  public int readStartingLevelIndex() {
+    String startingLevelIndex = "startingLevelIndex";
+    try {
+      return Integer.parseInt(gameStatusArray.get(startingLevelIndex).toString());
+    } catch (NullPointerException e) {
+      new ParameterMissingException(e, startingLevelIndex);
+      return DEFAULT_ZERO;
+    }
+  }
 }

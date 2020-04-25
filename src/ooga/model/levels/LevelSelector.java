@@ -24,12 +24,8 @@ public class LevelSelector {
     gameCamera = camera;
     spawningInterval = gameStatusProfile.readSpawningInterval();
     int startingLevelIndex = gameStatusProfile.readStartingLevelIndex();
-    try {
-      activeLevel = parsedLevels.get(startingLevelIndex);
-    }
-    catch(NullPointerException e){
-      activeLevel = parsedLevels.get(0);
-    }
+    activeLevel = parsedLevels.get(startingLevelIndex);
+
   }
 
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager, int nextLevel) {
