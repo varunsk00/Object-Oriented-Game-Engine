@@ -12,6 +12,7 @@ import ooga.controller.EntityWrapper;
 
 import ooga.controller.GameController;
 
+import ooga.exceptions.ParameterInvalidException;
 import ooga.model.actions.actionExceptions.InvalidActionException;
 import ooga.model.levels.Level;
 import ooga.exceptions.ParameterMissingException;
@@ -73,31 +74,22 @@ public class GameParser extends Parser {
     JSONObject root = jsonObject;
     root.put(key, newValue);
     root.put("playerCount", jsonObject.get("playerCount"));
-
-//    updateJSONValue(key, newValue);
-
-      try (FileWriter file = new FileWriter(TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json", false))
-      {
-        file.write(root.toString());
-        System.out.println("Successfully updated json object to file");
-      } catch (IOException e) {
-        e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
-      }
-
+    String filepath = TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json";
+    try (FileWriter file = new FileWriter(filepath, false)) {
+      file.write(root.toString());
+      System.out.println("Successfully updated json object to file"); }
+    catch (IOException e) {
+      new ParameterInvalidException(e, filepath); }
   }
 
   public void updateJSONValue(String key, Object newValue){
       JSONObject root = jsonObject;
-
       root.put(key,newValue);
-
-      try (FileWriter file = new FileWriter(myFileName, false))
-      {
+      try (FileWriter file = new FileWriter(myFileName, false)) {
         file.write(root.toString());
-        System.out.println("Successfully updated json object to file");
-      } catch (IOException e) {
-        e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
-      }
+        System.out.println("Successfully updated json object to file"); }
+      catch (IOException e) {
+        new ParameterInvalidException(e, root.toString()); }
   }
 
   private List<String> sortLevelKeySet(Set keySet){
@@ -116,14 +108,6 @@ public class GameParser extends Parser {
 
   public List<Level> parseLevels() {
     List<Level> levelList = new ArrayList<>();
-//<<<<<<< HEAD
-//    JSONArray levelArrangement = (JSONArray) jsonObject.get("levelArrangement");
-//    JSONObject levels = (JSONObject) levelArrangement.get(0);
-//    List<String> sortedLevelKeys = sortLevelKeySet(levels.keySet());
-//
-//
-//    for(String levelNumber : sortedLevelKeys) {
-//=======
     List<String> sortedLevelKeys;
     JSONObject levels;
     try {
@@ -138,7 +122,6 @@ public class GameParser extends Parser {
       sortedLevelKeys = sortLevelKeySet(levels.keySet());
     }
     for(String levelNumber : sortedLevelKeys){
-//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
       String levelName = (String) levels.get(levelNumber);
       LevelParser parsedLevel = new LevelParser(levelName, mainController);
       String levelType = parsedLevel.readLevelType();
@@ -188,7 +171,7 @@ public class GameParser extends Parser {
     return gameVariables;
   }
 
-  public int readPlayerCount() {
+  private int readPlayerCount() {
     return Integer.parseInt(jsonObject.get("playerCount").toString());
   }
 

@@ -10,6 +10,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.model.levels.Level;
 import ooga.util.GamePadListener;
 
@@ -17,13 +18,15 @@ import ooga.util.GamePadListener;
 import ooga.model.levels.LevelSelector;
 import ooga.util.GameParser;
 
+import ooga.exceptions.ParameterMissingException;
 import ooga.view.gui.managers.StageManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class GameController {
 
-
+  //  private PhysicsEngine physicsEngine;
+//  private CollisionEngine collisionEngine;
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entityBuffer;
   private List<EntityWrapper> entityRemove;
@@ -43,7 +46,7 @@ public class GameController {
   private List<EntityWrapper> playerList;
 
   public GameController(StageManager stageManager, String gameName, boolean loadedGame)
-      throws XInputNotLoadedException { //FIXME add exception stuff
+          throws XInputNotLoadedException { //FIXME add exception stuff
 
     g = new GamePadListener();
 
@@ -105,13 +108,11 @@ public class GameController {
     KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e ->
     {
       try {
-        step(SECOND_DELAY);
-      } catch (XInputNotLoadedException ex) {
-        ex.printStackTrace();
-      } catch (Exception exception) {
-        exception.printStackTrace(); //FIXME: REPLACE TO AVOID FAIL CASE
-      }
-    });
+        step(SECOND_DELAY); }
+      catch (XInputNotLoadedException ex) {
+        new InvalidControlSchemeException(ex); }
+      catch (Exception exception) {
+        new ParameterMissingException(exception, "resourceFile"); } });
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
@@ -150,8 +151,7 @@ public class GameController {
   }
 
   private void handleGamePadPlayer() {
-    if (gameParser.getPlayerList().size()
-        > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
       if (g.getState() != null) {
         if (!g.getState().getPressed()) {
           gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
@@ -188,33 +188,6 @@ public class GameController {
     }
   }
 
-//<<<<<<< HEAD
-//  private void resetLevel() {
-//    nextLevel = 0;
-//    myModelManager.resetPlayerValues(gameParser.getPlayerList());
-//    despawnOldLevel();
-//    levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
-//    myModelManager.resetPlayerPositions(gameParser.getPlayerList());
-//  }
-//
-//  //TODO: fix duplicated code if possible?
-//  private void despawnOldLevel() {
-//    List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-//    for (EntityWrapper targetEntity : entityList) {
-//      if (!gameParser.getPlayerList().contains(targetEntity)) {
-//        entitiesToDespawn.add(targetEntity);
-//      }
-//    }
-//    removeEntities(entitiesToDespawn);
-//  }
-//
-//  private void handleSaveGame() {
-//    if(myViewManager.getSaveGame()) {
-//      JSONArray saveGame = new JSONArray();
-//      JSONObject obj = new JSONObject();
-//      for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
-//        obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
-//=======
     private void handleSaveGame(){
       if (myViewManager.getSaveGame()) {
         JSONArray saveGame = new JSONArray();
@@ -225,7 +198,6 @@ public class GameController {
         saveGame.add(obj);
         gameParser.saveGame("levelArrangement", saveGame);
         myViewManager.setSaveGame();
-//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
       }
     }
 

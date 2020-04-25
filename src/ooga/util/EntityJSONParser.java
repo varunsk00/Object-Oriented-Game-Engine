@@ -57,7 +57,7 @@ public class EntityJSONParser extends Parser {
       myScheme = (ControlScheme) (controlClass.getConstructor(List.class)
           .newInstance(controlMap));
     } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace(); //FIXME to not fail the class
+      new ParameterMissingException(e, controlClass.toString());
     }
     return myScheme;
   }
@@ -207,7 +207,7 @@ public class EntityJSONParser extends Parser {
       file.write(root.toString());
       System.out.println(message);
     } catch (IOException e) {
-      e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
+      new ParameterInvalidException(e, root.toString());
     }
   }
 
