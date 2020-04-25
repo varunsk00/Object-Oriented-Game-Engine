@@ -124,7 +124,10 @@ public class GameController implements Controller {
     g.update();
     myViewManager.handleMenuInput();
     handleGamePadPlayer();
-
+    for(int i = 0; i < entityList.size(); i ++) {
+      System.out.println(entityList.get(i));
+      System.out.println(entityList.get(i).getModel().getEntityID());
+    }
     if (!myViewManager.getIsGamePaused()) {
       levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
       handleSaveGame();

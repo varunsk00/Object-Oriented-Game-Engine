@@ -1,7 +1,9 @@
 package ooga.view.gui.userinterface;
 
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.ParameterMissingException;
 import ooga.util.config.Parser;
+import ooga.view.gui.ProgramLauncher;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -36,22 +38,48 @@ public class GameSelectParser extends Parser {
 
 
   public String readGameName() {
-    return jsonObject.get("gameName").toString();
+    try {
+      return jsonObject.get("gameName").toString();
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "gameName");
+      return "GameNameMissing";
+    }
   }
   public String readGamePreviewGIF() {
-    return jsonObject.get("gamePreviewGIF").toString();
+    try {
+      return jsonObject.get("gamePreviewGIF").toString();
+    }
+    catch (NullPointerException e){
+     new ParameterMissingException(e, "gamePreviewGif");
+     return "defaultGif";
+    }
   }
 
   public boolean readSaveStatus() {
-    return Boolean.parseBoolean(jsonObject.get("savingEnabled").toString());
+    try {
+      return Boolean.parseBoolean(jsonObject.get("savingEnabled").toString());
+    }
+    catch (NullPointerException e){
+      new ParameterMissingException(e, "savingEnabled");
+      return false;
+    }
   }
 
   public List<String> readButtonArrangement() {
     List<String> buttonStrings = new ArrayList<>();
-    JSONArray buttonJSONArray = (JSONArray) jsonObject.get("buttonArrangement");
-    for (int i = 0; i < buttonJSONArray.size(); i++) { //TODO: ask if anything else is needed in making buttons (like EventHandlers?)
-      buttonStrings.add(buttonJSONArray.get(i).toString());
+    try {
+      JSONArray buttonJSONArray = (JSONArray) jsonObject.get("buttonArrangement");
+      for (int i = 0; i < buttonJSONArray.size(); i++) { //TODO: ask if anything else is needed in making buttons (like EventHandlers?)
+        buttonStrings.add(buttonJSONArray.get(i).toString());
+      }
+      return buttonStrings;
     }
-    return buttonStrings;
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "buttonArrangement");
+      buttonStrings.add("1 Player"); //default
+      return buttonStrings;
+    }
+
   }
 }
