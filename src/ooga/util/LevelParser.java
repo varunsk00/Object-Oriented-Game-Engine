@@ -16,10 +16,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class LevelParser extends Parser {
-
+  private static final String ERROR = "NO MATCH";
   private List<Entry<String, Pattern>> mySymbols;
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private GameController mainController;
   private double tileHeight;
   private double tileWidth;
@@ -38,7 +37,7 @@ public class LevelParser extends Parser {
 
 
   private List<EntityWrapper> readEntities(JSONArray entitiesArray) {
-    List<EntityWrapper> entitiesParsed = new ArrayList<EntityWrapper>();
+    List<EntityWrapper> entitiesParsed = new ArrayList<>();
 
     for (int i = 0; i < entitiesArray.size(); i++) {
       JSONObject entityEntry = (JSONObject) entitiesArray.get(i);
@@ -47,9 +46,7 @@ public class LevelParser extends Parser {
 
       for (int j = 0; j < entityArrangement.size(); j++) {
         JSONObject entityCoordinates = (JSONObject) entityArrangement.get(j);
-
         setCoordinates(entitiesParsed, entityName, entityCoordinates);
-
       }
     }
     return entitiesParsed;
@@ -95,7 +92,7 @@ public class LevelParser extends Parser {
 
   public List<EntityWrapper> parseTileEntities() {
     JSONArray tileArrangement = (JSONArray) jsonObject.get("tileArrangement");
-    List<EntityWrapper> tileEntityArray = new ArrayList<EntityWrapper>();
+    List<EntityWrapper> tileEntityArray;
 
     tileEntityArray = readEntities(tileArrangement);
     for(EntityWrapper entity : tileEntityArray){
@@ -109,7 +106,7 @@ public class LevelParser extends Parser {
 
   public List<EntityWrapper> parseEnemyEntities() {
     JSONArray enemyArrangement = (JSONArray) jsonObject.get("enemyArrangement");
-    List<EntityWrapper> enemyEntityArray = new ArrayList<EntityWrapper>();
+    List<EntityWrapper> enemyEntityArray;
 
     enemyEntityArray = readEntities(enemyArrangement);
 
@@ -137,7 +134,6 @@ public class LevelParser extends Parser {
    * Returns language's type associated with the given text if one exists
    */
   private String getSymbol (String text) {
-    final String ERROR = "NO MATCH";
     for (Entry<String, Pattern> e : mySymbols) {
       if (match(text, e.getValue())) {
         return e.getKey();
