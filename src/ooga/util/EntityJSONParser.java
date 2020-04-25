@@ -20,7 +20,6 @@ import org.json.simple.JSONObject;
 //import org.json.simple.parser.ParseException;
 
 public class EntityJSONParser extends Parser {
-
   public static final String ACTION_BUNDLES = "actionBundles";
   public static final String CONTROL_FIELD = "Control";
   public static final String PARAM_FIELD = "param";
@@ -35,6 +34,11 @@ public class EntityJSONParser extends Parser {
   public static final String HEIGHT_FIELD = "height";
   public static final String XPOS_FIELD = "xPos";
   public static final String YPOS_FIELD = "yPos";
+  public static final String MAX_X_VEL_FIELD = "maxXVel";
+  public static final String MAX_Y_VEL_FIELD = "maxYVel";
+  public static final String HEALTH_FIELD = "health";
+  public static final String FIXED_FIELD = "fixed";
+  public static final String PERMEABLE_FIELD = "permeable";
   private String myGame;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String RESOURCES = "resources/";
@@ -281,34 +285,34 @@ public class EntityJSONParser extends Parser {
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "yPos");
+      new ParameterInvalidException(e, YPOS_FIELD);
     }
     return DEFAULT_DIMENSION;
   }
 
   public double readMaxXVelocity(){
     try {
-      return Double.parseDouble(jsonObject.get("maxXVel").toString());
+      return Double.parseDouble(jsonObject.get(MAX_X_VEL_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "maxXVel");
+      new ParameterMissingException(e, MAX_X_VEL_FIELD);
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "maxXVel");
+      new ParameterInvalidException(e, MAX_X_VEL_FIELD);
     } return DEFAULT_MAX_VELOCITY;
 
   }
 
   public double readMaxYVelocity(){
     try {
-      return Double.parseDouble(jsonObject.get("maxYVel").toString());
+      return Double.parseDouble(jsonObject.get(MAX_Y_VEL_FIELD).toString());
     }
     catch (NullPointerException e) {
-      throw new ParameterMissingException(e, "maxYVel");
+      throw new ParameterMissingException(e, MAX_Y_VEL_FIELD);
 
     } catch (NumberFormatException e) {
-      throw new ParameterInvalidException(e, "maxYVel");
+      throw new ParameterInvalidException(e, MAX_Y_VEL_FIELD);
     } finally {
       return DEFAULT_MAX_VELOCITY;
     }
@@ -316,34 +320,34 @@ public class EntityJSONParser extends Parser {
 
   public double readHealth() {
     try {
-      return Double.parseDouble(jsonObject.get("health").toString());
+      return Double.parseDouble(jsonObject.get(HEALTH_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "health");
+      new ParameterMissingException(e, HEALTH_FIELD);
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "health");
+      new ParameterInvalidException(e, HEIGHT_FIELD);
     }
     return DEFAULT_HEALTH;
   }
 
   public boolean readFixed() {
     try {
-      return Boolean.parseBoolean(jsonObject.get("fixed").toString());
+      return Boolean.parseBoolean(jsonObject.get(FIXED_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "fixed");
+      new ParameterMissingException(e, FIXED_FIELD);
       return false;
     }
   }
 
   public boolean readPermeable() {
     try {
-      return Boolean.parseBoolean(jsonObject.get("permeable").toString());
+      return Boolean.parseBoolean(jsonObject.get(PERMEABLE_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "permeable");
+      new ParameterMissingException(e, PERMEABLE_FIELD);
       return false;
     }
   }
