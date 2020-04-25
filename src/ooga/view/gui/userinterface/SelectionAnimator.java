@@ -45,11 +45,11 @@ public class SelectionAnimator {
         fadeTransition.setDuration(Duration.millis(duration));
         fadeTransition.play();
     }
-    public void playPathTransition(Node node, MoveTo pathBeginning, LineTo l) {
+    public void playPathTransition(Node node, MoveTo pathBeginning, LineTo pathEnd) {
         PathTransition p = new PathTransition();
         Path path = new Path();
         path.getElements().add(pathBeginning);
-        path.getElements().add(l);
+        path.getElements().add(pathEnd);
         p.setNode(node);
         p.setDuration(Duration.millis(MEDIUM_DURATION));
         p.setPath(path);

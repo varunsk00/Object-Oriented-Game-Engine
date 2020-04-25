@@ -13,8 +13,6 @@ public class LevelSwitch extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    System.out.println("here");
-    entity.setLevelAdvancementStatus(true);
-    entity.setNextLevelIndex((int) nextLevelIndex);
+    entity.changeLevel((int) nextLevelIndex);
   }
 }

@@ -10,14 +10,11 @@ import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
 import ooga.model.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
-import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
-import ooga.util.config.ParameterInvalidException;
-import ooga.util.config.ParameterMissingException;
+import ooga.exceptions.ParameterInvalidException;
+import ooga.exceptions.ParameterMissingException;
 import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 //import org.json.JSONParser;
 //import org.json.simple.parser.ParseException;
 

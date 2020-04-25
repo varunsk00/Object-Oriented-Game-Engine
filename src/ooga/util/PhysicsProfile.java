@@ -1,24 +1,8 @@
 package ooga.util;
 
-import com.thoughtworks.xstream.mapper.Mapper.Null;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.ResourceBundle;
-import java.util.regex.Pattern;
-import ooga.controller.Controller;
-import ooga.controller.EntityWrapper;
-import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
-import ooga.util.config.ParameterMissingException;
-import org.json.simple.JSONArray;
+
+import ooga.exceptions.ParameterMissingException;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class PhysicsProfile {
 
@@ -30,7 +14,7 @@ public class PhysicsProfile {
   }
 
   public double readFriction() {
-    String friction = "Friction";
+    String friction = "friction";
     try {
       return Integer.parseInt(physicsArray.get(friction).toString());
     } catch (NullPointerException e) {
@@ -40,7 +24,7 @@ public class PhysicsProfile {
   }
 
   public double readDrag() {
-    String drag = "Drag";
+    String drag = "drag";
     try {
       return Integer.parseInt(physicsArray.get(drag).toString());
     } catch (NullPointerException e) {
@@ -50,7 +34,7 @@ public class PhysicsProfile {
   }
 
   public double readGravity() {
-    String gravity = "Gravity";
+    String gravity = "gravity";
     try {
       return Integer.parseInt(physicsArray.get(gravity).toString());
     } catch (NullPointerException e) {

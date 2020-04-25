@@ -18,6 +18,7 @@ public class ConsoleSkin extends BorderPane {
     private final String RESOURCES_PACKAGE = "resources.guiText";
     private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
     private final String CONSOLE_NAME = myResources.getString("consoleName");
+    private final String CONSOLE_ABBREV = myResources.getString("consoleAbbrev");
     private VBox menuTop;
     private VBox menuBottom;
     private Button selectGameButton;
@@ -97,7 +98,7 @@ public class ConsoleSkin extends BorderPane {
     private VBox createLogoArt() {
         VBox logoBox = new VBox();
         logoBox.setId("logoBox");
-        Text logoAbbreviated = new Text("BOOGA");
+        Text logoAbbreviated = new Text(CONSOLE_ABBREV);
         Text logo = new Text(CONSOLE_NAME);
         logoAbbreviated.setId("logoAbbreviationText");
         logo.setId("logoText");
