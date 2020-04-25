@@ -3,7 +3,6 @@
   "players": "2",
   "tileArrangement": [
     {
-      "EntityName": "mario.MarioFlagPole",
       "Arrangement": [
         {
           "11": [

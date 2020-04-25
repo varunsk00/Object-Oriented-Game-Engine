@@ -83,22 +83,25 @@ public class InGameMenu extends VBox{
 
     private void renderButtons() {
         myButtons = new VBox();
-        Button ResumeButton = makeButton(myResources.getString("Play"), event -> resumePressed = true);
-        Button SaveButton = makeButton(myResources.getString("Save"), event -> savePressed = true);
-        Button ControlsButton = makeButton(myResources.getString("Config"), event -> controlsPressed = true);
-        Button ExitButton = makeButton(myResources.getString("Exit"), event -> exitPressed = true);
-        Button RestartButton = makeButton(myResources.getString("Reboot"), event -> rebootPressed = true);
-        myButtons.getChildren().addAll(ResumeButton, SaveButton, ControlsButton, ExitButton, RestartButton);
-        formatButton(ResumeButton);
-        formatButton(SaveButton);
-        formatButton(ControlsButton);
-        formatButton(ExitButton);
-        formatButton(RestartButton);
+        Button resumeButton = makeButton(myResources.getString("Play"), event -> resumePressed = true);
+
+        Button saveButton = makeButton(myResources.getString("Save"), event -> savePressed = true);
+        Button controlsButton = makeButton(myResources.getString("Config"), event -> controlsPressed = true);
+        Button exitButton = makeButton(myResources.getString("Exit"), event -> exitPressed = true);
+        Button restartButton = makeButton(myResources.getString("Reboot"), event -> rebootPressed = true);
+        myButtons.getChildren().addAll(resumeButton, saveButton, controlsButton, exitButton, restartButton);
+        formatButton(resumeButton);
+        formatButton(saveButton);
+        formatButton(controlsButton);
+        formatButton(exitButton);
+        formatButton(restartButton);
     }
 
     private Button makeButton(String key, EventHandler e) {
         Button tempButton = new Button(key);
         tempButton.setOnAction(e);
+        String id = key.toLowerCase().replace(" ", "");
+        tempButton.setId(id);
         return tempButton;
     }
 

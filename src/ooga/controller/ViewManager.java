@@ -11,6 +11,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
 
 import javafx.scene.layout.*;
+import javax.swing.text.html.parser.Entity;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.view.application.Camera;
 import ooga.view.application.menu.ConfigurationMenu;
@@ -21,11 +22,11 @@ import ooga.view.gui.managers.StageManager;
  * This class handles the front end views needed by the controller
  */
 public class ViewManager implements ViewExternalAPI {
-  private final String RESOURCES_PACKAGE = "resources.guiText";
+  private static final String RESOURCES_PACKAGE = "resources.guiText";
   private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
   private final String DEFAULT_MENU_TEXT = myResources.getString("defaultStatus");
   private BorderPane testPane;
-  private Group EntityGroup;
+  private Group entityGroup;
   private List<Node> overlay = new ArrayList<>();
   private InGameMenu menu;
   private ConfigurationMenu config;
@@ -53,10 +54,39 @@ public class ViewManager implements ViewExternalAPI {
     testPane = level;
     testScene = currentStage.getCurrentScene();
     testScene.setRoot(testPane);
-    EntityGroup = new Group();
-    level.getChildren().add(EntityGroup);
+    entityGroup = new Group();
+    level.getChildren().add(entityGroup);
     setUpPane();
     testScene = stageManager.getCurrentScene();
+  }
+
+
+
+  public void updateCamera() {
+    camera.update(overlay);
+  }
+
+  public void updateEntityRenders(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn){
+    for(EntityWrapper targetEntity : currentEntityList){
+      if(!entityGroup.getChildren().contains(targetEntity.getRender())){
+        addEntity(targetEntity.getRender());
+      }
+    }
+    for(EntityWrapper despawnedEntity : entitiesToDespawn){
+      removeEntity(despawnedEntity.getRender());
+    }
+  }
+
+
+
+
+  private void setUpPane(){
+    level = new BorderPane();
+    testPane = level;
+    testScene = currentStage.getCurrentScene();
+    testScene.setRoot(testPane);
+    entityGroup = new Group();
+    level.getChildren().add(entityGroup);
   }
 
 
@@ -105,7 +135,7 @@ public class ViewManager implements ViewExternalAPI {
    */
   @Override
   public void removeEntity(Node node) {
-    EntityGroup.getChildren().remove(node);
+    entityGroup.getChildren().remove(node);
   }
 
   /**
@@ -114,7 +144,7 @@ public class ViewManager implements ViewExternalAPI {
    */
   @Override
   public void addEntity(Node node) {
-    EntityGroup.getChildren().add(node);
+    entityGroup.getChildren().add(node);
   }
 
   /**
@@ -209,7 +239,7 @@ public class ViewManager implements ViewExternalAPI {
    */
   public void pauseGame(){
     BoxBlur bb = new BoxBlur();
-    EntityGroup.setEffect(bb);
+    entityGroup.setEffect(bb);
     isGamePaused = true;
     testPane.setLeft(menu);
     escCounter++;
@@ -230,7 +260,7 @@ public class ViewManager implements ViewExternalAPI {
     updateMenu(DEFAULT_MENU_TEXT);
     testPane.getChildren().remove(config);
     testPane.getChildren().remove(menu);
-    EntityGroup.setEffect(null);
+    entityGroup.setEffect(null);
     isGamePaused = false;
     escCounter--;
     configCounter = 0;
@@ -274,16 +304,16 @@ public class ViewManager implements ViewExternalAPI {
     return camera;
   }
 
-  /**
-   * sets up level pane
-   */
-  private void setUpPane(){
-    level = new BorderPane();
-    testPane = level;
-    testScene = currentStage.getCurrentScene();
-    testScene.setRoot(testPane);
-    EntityGroup = new Group();
-    level.getChildren().add(EntityGroup);
-  }
+//  /**
+//   * sets up level pane
+//   */
+//  private void setUpPane(){
+//    level = new BorderPane();
+//    testPane = level;
+//    testScene = currentStage.getCurrentScene();
+//    testScene.setRoot(testPane);
+//    EntityGroup = new Group();
+//    level.getChildren().add(EntityGroup);
+//  }
 
 }

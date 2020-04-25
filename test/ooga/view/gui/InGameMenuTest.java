@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import ooga.Main;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +14,6 @@ import util.DukeApplicationTest;
 class InGameMenuTest extends DukeApplicationTest {
     private Button playButton;
     private Button selectButton;
-    private Button player1;
-
     @BeforeEach
     void launchGame() throws Exception{
         launch(Main.class);
@@ -31,35 +30,38 @@ class InGameMenuTest extends DukeApplicationTest {
     }
 
     @Test
-    void testPause() throws InterruptedException {
+    void testPauseandResume() {
         press(KeyCode.ESCAPE);
-        Thread.sleep(2000);
-    }
-
-    @Test
-    void testResume() throws InterruptedException {
+        Node resume = lookup("#playgame").queryLabeled();
+        assertTrue(resume!=null);
+        clickOn(resume);
         press(KeyCode.ESCAPE);
-        Thread.sleep(1000);
         press(KeyCode.Q);
-        Thread.sleep(1000);
     }
 
     @Test
-    void testEscapeCounter() throws InterruptedException {
-        for(int i=0; i< 15; i++){
-            press(KeyCode.ESCAPE);
-            press(KeyCode.Q);
-        }
-    }
-
-    @Test
-    void testMenuCameraTranslate() throws InterruptedException {
+    void testMenuCameraTranslate() {
         for(int i = 0; i < 15; i++){
             press(KeyCode.D);
         }
         press(KeyCode.SPACE);
-        Thread.sleep(4000);
         press(KeyCode.ESCAPE);
+    }
+
+    @Test
+    void testRestartfromMenu() {
+        for(int i = 0; i < 15; i++){
+            press(KeyCode.D);
+        }
+        press(KeyCode.Q);
+    }
+
+    @Test
+    void testConfigMenu() {
+        press(KeyCode.ESCAPE);
+        Node configMenu = lookup("#configuration").queryLabeled();
+        assertTrue(configMenu!=null);
+        clickOn(configMenu);
     }
 
 }

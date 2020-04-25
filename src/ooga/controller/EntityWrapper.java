@@ -48,22 +48,25 @@ public class EntityWrapper {
    */
   public void handleKeyInput(String key) {myModel.handleKeyInput(key); }
 
-  /**
-   * handles controller input
-   * @param key : button on controller pressed
-   */
-  public void handleControllerInputPressed(String key) {myModel.handleControllerInputPressed(key); }
-
-  /**
-   * handles controller input
-   * @param key : button on controller pressed
-   */
-  public void handleControllerInputReleased(String key) { myModel.handleControllerInputReleased(key);}
-
-  /**
-   * get EntityJSONParser
-   * @return json parser
-   */
+//<<<<<<< HEAD
+//  /**
+//   * handles controller input
+//   * @param key : button on controller pressed
+//   */
+//  public void handleControllerInputPressed(String key) {myModel.handleControllerInputPressed(key); }
+//
+//  /**
+//   * handles controller input
+//   * @param key : button on controller pressed
+//   */
+//  public void handleControllerInputReleased(String key) { myModel.handleControllerInputReleased(key);}
+//
+//  /**
+//   * get EntityJSONParser
+//   * @return json parser
+//   */
+//=======
+//>>>>>>> f9e42f026c2b2cc0c74cc24e57b3795dfad85066
   public EntityJSONParser getParser(){return myParser;}
 
   /**

@@ -1,17 +1,15 @@
 package ooga.controller;
 
-import java.util.List;
-import javax.swing.text.html.parser.Entity;
-import ooga.apis.model.ModelExternalAPI;
 import ooga.model.CollisionEngine;
-import ooga.model.EntityModel;
 import ooga.model.PhysicsEngine;
 import ooga.util.GameParser;
 
 /**
  * This class handles the back end models needed by the controller
  */
-public class ModelManager implements ModelExternalAPI {
+
+public class ModelManager {
+
   private PhysicsEngine physicsEngine;
   private CollisionEngine collisionEngine;
 
@@ -23,41 +21,6 @@ public class ModelManager implements ModelExternalAPI {
 
     physicsEngine = new PhysicsEngine(gameParser.parsePhysicsProfile());
     collisionEngine = new CollisionEngine();
-  }
-
-  /**
-   * add entity to list
-   */
-  @Override
-  public void addEntity() {
-  }
-
-  /**
-   * sets up game model for selected game
-   * @param gameSelect : game selected
-   */
-  @Override
-  public void setUpGameModel(String gameSelect) {
-
-  }
-
-  /**
-   * sends data
-   * @return data
-   */
-  @Override
-  public String sendUserData() {
-    return null;
-  }
-
-  /**
-   * checks collisions
-   * @param e - one of the Entities colliding
-   * @param j - the other Entity colliding
-   */
-  @Override
-  public void collide(EntityWrapper e, EntityWrapper j) {
-
   }
 
   /**
@@ -81,7 +44,7 @@ public class ModelManager implements ModelExternalAPI {
    * @param model
    */
   public void applyEntityPhysics(EntityWrapper model) {
-      physicsEngine.applyForces(model.getModel());
+    physicsEngine.applyForces(model.getModel());
   }
 
   /**
