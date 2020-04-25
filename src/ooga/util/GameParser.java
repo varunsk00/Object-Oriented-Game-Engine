@@ -21,10 +21,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class GameParser extends Parser {
-
-//  private String myFileName;
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String LEVELS_PREFIX = PACKAGE_PREFIX_NAME + "levels.";
   private String fileName;
@@ -150,7 +147,7 @@ public class GameParser extends Parser {
   private List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
     this.maxPlayers = playerArrangement.size();
-    List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
+    List<EntityWrapper> playerEntityArray = new ArrayList<>();
 
     createPlayers(playerArrangement, playerEntityArray);
 

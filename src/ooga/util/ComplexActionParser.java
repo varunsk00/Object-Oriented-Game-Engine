@@ -26,7 +26,7 @@ public class ComplexActionParser extends Parser {
 
 
   public List<Action> createComplexAction(){
-    List<Action> output = new ArrayList<Action>();
+    List<Action> output = new ArrayList<>();
     JSONArray actionArray = (JSONArray) jsonObject.get("actionList");
     if(actionArray != null) {
 
@@ -44,7 +44,6 @@ public class ComplexActionParser extends Parser {
           newAction = actionFactory
               .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
         }
-
         output.add(newAction);
       }
     }
