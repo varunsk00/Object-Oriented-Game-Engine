@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import ooga.controller.EntityWrapper;
 import ooga.controller.GameController;
+import ooga.exceptions.ParameterMissingException;
 import ooga.util.config.Parser;
 
 import org.json.simple.JSONArray;
@@ -42,7 +43,16 @@ public class LevelParser extends Parser {
 
     for (int i = 0; i < entitiesArray.size(); i++) {
       JSONObject entityEntry = (JSONObject) entitiesArray.get(i);
-      String entityName = (String) entityEntry.get("EntityName");
+      String entityName;
+      try {
+         entityName = (String) entityEntry.get("EntityName");
+      }
+      catch (NullPointerException e) {
+        new ParameterMissingException(e, "EntityName").displayAlert();
+        entityName = "gamenamemissing.MissingEntity";
+        EntityWrapper levelEntity = new EntityWrapper(entityName, mainController);
+          break;
+      }
       JSONArray entityArrangement = (JSONArray) entityEntry.get("Arrangement");
 
       for (int j = 0; j < entityArrangement.size(); j++) {
