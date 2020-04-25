@@ -10,10 +10,8 @@ public class ExecuteConditional extends Action {
 
   @Override
   public void execute(EntityModel entity) {
-    Action action = entity.getActionStack().pop();
-    System.out.println(entity.getConditional());
     if(entity.getConditional()){
-      action.execute(entity);
+      entity.getActionStack().pop().execute(entity);
     }
   }
 }

@@ -13,21 +13,14 @@ public class EntityWrapper {
   private EntityView myView;
   private EntityJSONParser myParser;
   private double score;
-
   private GameController myController;
-
   private String EntityID;
 
-
   public EntityWrapper(String entityName, GameController controller) {
-    if(controller == null){
-      System.out.println("Controller null");
-    }
     myController = controller;
     EntityID = entityName;
     String[] gameAndName = entityName.split("\\.");
     myParser = new EntityJSONParser(gameAndName[0], gameAndName[1]);
-
     myModel = new EntityModel(this);
     myView = new EntityView(this);
   }
@@ -46,7 +39,6 @@ public class EntityWrapper {
   public EntityJSONParser getParser(){return myParser;}
 
   public EntityModel getModel(){return myModel;}
-
 
   public GameController getController(){return myController;}
 
@@ -68,7 +60,6 @@ public class EntityWrapper {
     return this.EntityID;
   }
 
-  public void setX(double newX){myModel.setX(newX);}
   public void setWidth(double newWidth) {
     myView.setWidth(newWidth);
   }
