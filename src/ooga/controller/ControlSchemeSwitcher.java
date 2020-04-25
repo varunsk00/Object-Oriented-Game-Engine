@@ -2,8 +2,10 @@ package ooga.controller;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -13,7 +15,7 @@ import ooga.util.EntityJSONParser;
 
 import java.util.*;
 
-public class ControlSchemeSwitcher {
+public class ControlSchemeSwitcher extends HBox{
     private final String RESOURCES_PACKAGE = "resources.params";
     private final String PARAM_START = "param\":\"";
     private final String PARAM_END = "\",\"a";
@@ -29,13 +31,14 @@ public class ControlSchemeSwitcher {
     private List<ComboBox> dropDowns = new ArrayList<>(
             Arrays.asList(new ComboBox(), new ComboBox()));
     private Multimap<String,String> actionMap;
+    private Button exitButton;
+    private boolean exitPressed;
     private List<TextField> input = new ArrayList<>();
     private VBox myActions = new VBox();
     private Alert updateAlert = new Alert(Alert.AlertType.CONFIRMATION);
-    private HBox ret = new HBox();
 
     public ControlSchemeSwitcher(List<EntityWrapper> playerList){
-        this.ret.setId("configMenu");
+        this.setId("configMenu");
         populateIDs(playerList);
         createParsers();
         this.playerNum = playerList.size();
@@ -56,8 +59,12 @@ public class ControlSchemeSwitcher {
         }
     }
 
-    public HBox getMenu(){ //TODO: Hide with CSS
-        return ret;
+    public boolean getExitPressed(){
+        return this.exitPressed;
+    }
+
+    public void setExitOff(){
+        this.exitPressed = false;
     }
 
     private void populateIDs(List<EntityWrapper> characters){
@@ -73,9 +80,12 @@ public class ControlSchemeSwitcher {
     }
 
     private void loadTitle(){
-        Text config = new Text(myResources.getString("MenuTitle"));
-        config.setId("configTitle");
-        ret.getChildren().add(config);
+        VBox configTitle = new VBox();
+        Text configMessage = new Text(myResources.getString("MenuTitle"));
+        this.exitButton = makeButton("Exit", e-> exitPressed = true);
+        configTitle.getChildren().addAll(configMessage, exitButton);
+        configTitle.setId("configTitle");
+        getChildren().add(configTitle);
     }
 
     private void loadDefaultControls(){
@@ -134,13 +144,13 @@ public class ControlSchemeSwitcher {
             }
         }
         myActions.setId("actionVBox");
-        ret.getChildren().add(myActions);
+        getChildren().add(myActions);
     }
 
     private void setVBoxes(int index){
         bindingDisplay.get(index).setId("player" + (index+1) + "VBox");
         bindingDisplay.get(index).getChildren().add(dropDowns.get(index));
-        ret.getChildren().add(bindingDisplay.get(index));
+        getChildren().add(bindingDisplay.get(index));
     }
 
     private void setControlSchemeDropDowns(int index){
@@ -169,5 +179,11 @@ public class ControlSchemeSwitcher {
     private String findJSONParam(String controlString){
         String param = controlString.substring(controlString.lastIndexOf(PARAM_START), controlString.lastIndexOf(PARAM_END));
         return param.substring(param.lastIndexOf("\"")+1);
+    }
+
+    private Button makeButton(String key, EventHandler e) {
+        Button tempButton = new Button(key);
+        tempButton.setOnAction(e);
+        return tempButton;
     }
 }

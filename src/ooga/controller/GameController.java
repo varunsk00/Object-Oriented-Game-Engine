@@ -32,8 +32,7 @@ public class GameController implements Controller {
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  private final String LOSS_RESULT = "You Lost! Restart the Level by resuming" + "\n"
-      + "or choose a new game by restarting the game. Thanks for playing!";
+  private final String LOSS_RESULT = "You Lost! Restart the Level by resuming or choose a new game by restarting the game. Thanks for playing!";
 
   private int nextLevel;
 

@@ -72,8 +72,8 @@
 #configTitle{
     -fx-font-family: Pixeboy;
     -fx-alignment: center;
-    -fx-translate-y: 360;
-    -fx-translate-x: -200;
+    -fx-translate-x: -150;
+    -fx-translate-y: -150;
     -fx-font-size: 28px;
 }
 
@@ -99,6 +99,24 @@
     -fx-translate-y: 30.0;
     -fx-translate-x: -90.0;
     -fx-spacing: 57;
+}
+
+#status{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 30px;
+    -fx-stroke: red;
+    -fx-border-color: blue;
+    -fx-alignment: center;
+    -fx-translate-y: 180;
+}
+
+#updatedStatus{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 30px;
+    -fx-stroke: red;
+    -fx-border-color: blue;
+    -fx-alignment: center;
+    -fx-translate-y: 180;
 }
 
 .text-field{

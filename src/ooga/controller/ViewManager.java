@@ -47,7 +47,7 @@ public class ViewManager implements ViewExternalAPI {
     this.menu = new InGameMenu();
     this.config = new ControlSchemeSwitcher(playerList);
     this.overlay.add(menu);
-    this.overlay.add(config.getMenu());
+    this.overlay.add(config);
 
     currentStage = stageManager;
     setUpScene(builder);
@@ -142,14 +142,15 @@ public class ViewManager implements ViewExternalAPI {
   private void editControls() {
     if (menu.getControlsPressed()){
       menu.setControlsOff();
-      if(configCounter < 1){
-        launchConfigMenu();
-      }
-    }
+      if(configCounter < 1 && menu.getStatus().equals(DEFAULT_MENU_TEXT)){
+        launchConfigMenu(); } }
+    if(config.getExitPressed()){
+      config.setExitOff();
+      handlePressInput(KeyCode.Q); }
   }
 
   private void exitGame() {
-    if (menu.getExitPressed()) { //FIXME: FIX THIS BUT I DIDN'T WANT TO BREAK SHRUTHI'S SAVE POINTS, ideally should independently go home
+    if (menu.getExitPressed()) {
       handlePressInput(KeyCode.H);
       menu.setExitOff();
     }
@@ -200,13 +201,13 @@ public class ViewManager implements ViewExternalAPI {
   }
 
   private void launchConfigMenu(){
-    testPane.setCenter(config.getMenu());
+    testPane.setCenter(config);
     configCounter++;
   }
 
   private void unPauseGame(){
     updateMenu(DEFAULT_MENU_TEXT);
-    testPane.getChildren().remove(config.getMenu());
+    testPane.getChildren().remove(config);
     testPane.getChildren().remove(menu);
     EntityGroup.setEffect(null);
     isGamePaused = false;
