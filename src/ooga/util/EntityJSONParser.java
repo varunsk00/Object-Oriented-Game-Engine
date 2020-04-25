@@ -43,12 +43,11 @@ public class EntityJSONParser extends Parser {
 
     controlMap = readControlMap(actionBundlesArray);
 
-
     Class controlClass = null;
     try{
       controlClass = Class.forName(CONTROLS_PREFIX + controlType);
-    } catch (ClassNotFoundException e) {
-      //FIXME add error handling
+    } catch (ClassNotFoundException | NullPointerException e) {
+      new ParameterMissingException(e, controlClass.toString());
     }
 
     ControlScheme myScheme = null;
@@ -133,9 +132,6 @@ public class EntityJSONParser extends Parser {
   }
 
   public ImageView generateImage() {
-//<<<<<<< HEAD
-//    String imageName = readImage();
-//=======
     String imageName = "missing_texture.jpg";
     try {
       imageName = (String) jsonObject.get("image");
@@ -143,7 +139,6 @@ public class EntityJSONParser extends Parser {
     catch (NullPointerException e) {
       new ParameterMissingException(e, "image");
     }
-//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
     ImageView output = null;
 
     output = loadImage(imageName);
@@ -313,7 +308,6 @@ public class EntityJSONParser extends Parser {
     return 10;
   }
 
-//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
   public boolean readFixed() {
     try {
       return Boolean.parseBoolean(jsonObject.get("fixed").toString());
@@ -332,5 +326,9 @@ public class EntityJSONParser extends Parser {
       new ParameterMissingException(e, "permeable");
       return false;
     }
+  }
+
+  public JSONObject getJSONObject() {
+    return jsonObject;
   }
 }
