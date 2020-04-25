@@ -130,7 +130,7 @@ public class GamePadListener {
         return this.released;
     }
 
-    public class GamePadState {
+    public static class GamePadState {
         private String control;
         private boolean pressed;
         public GamePadState(String s, boolean b) {
