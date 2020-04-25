@@ -139,9 +139,6 @@ public class GameParser extends Parser {
     return levelList;
   }
 
-
-
-
   private List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
     this.maxPlayers = playerArrangement.size();
