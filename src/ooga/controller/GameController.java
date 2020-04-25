@@ -33,9 +33,8 @@ public class GameController {
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-  private final String LOSS_RESULT = "You Lost! Restart the Level by resuming or choose a new game by restarting the game. Thanks for playing!";
+  private static final String LOSS_RESULT = "You Lost! Restart the Level by resuming or choose a new game by restarting the game. Thanks for playing!";
 
-  private Timeline animation;
   private ViewManager myViewManager;
   private ModelManager myModelManager;
   private LevelSelector levelSelector;
@@ -111,7 +110,7 @@ public class GameController {
         new InvalidControlSchemeException(ex); }
       catch (Exception exception) {
         new ParameterMissingException(exception, "resourceFile"); } });
-    animation = new Timeline();
+    Timeline animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
     animation.play();
@@ -148,14 +147,12 @@ public class GameController {
   }
 
   private void handleGamePadPlayer() {
-    if (gameParser.getPlayerList().size() > 1) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
-      if (g.getState() != null) {
-        if (!g.getState().getPressed()) {
-          gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
-        } else if (g.getState().getPressed()) {
-          gameParser.getPlayerList().get(1)
-              .handleControllerInputReleased(g.getState().getControl());
-        }
+    if (gameParser.getPlayerList().size() > 1 && g.getState() != null) { //FIXME: TESTCODE FOR CONTROLLER EVENTUALLY SUPPORT SIMUL CONTROLSCHEMES
+      if (!g.getState().getPressed()) {
+        gameParser.getPlayerList().get(1).handleControllerInputPressed(g.getState().getControl());
+      } else {
+        gameParser.getPlayerList().get(1)
+            .handleControllerInputReleased(g.getState().getControl());
       }
     }
   }
