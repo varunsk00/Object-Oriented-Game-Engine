@@ -12,19 +12,16 @@ import org.junit.jupiter.api.Test;
 class GameParserTest {
   GameParser gameParser;
 
-
-
   @BeforeEach
   void setUp() throws XInputNotLoadedException {
     gameParser = new GameParser("UnitTest", null, false);
-
   }
 
   @Test
   void testGetPlayerList() {
     assertTrue(gameParser.getPlayerList().size() == 2);
     assertEquals("unittest.UnitTestEntity", gameParser.getPlayerList().get(0).getEntityID());
-    assertEquals("unittest.UnitTestEntity", gameParser.getPlayerList().get(1).getEntityID());
+    assertEquals("unittest.UnitTestEntity2", gameParser.getPlayerList().get(1).getEntityID());
     assertEquals(100, gameParser.getPlayerList().get(0).getModel().getX());
     assertEquals(100, gameParser.getPlayerList().get(0).getModel().getY());
     assertEquals(0, gameParser.getPlayerList().get(1).getModel().getX());
@@ -36,7 +33,7 @@ class GameParserTest {
     assertEquals(2, gameParser.parseLevels().size());
     JSONArray arr = new JSONArray();
     JSONObject obj = new JSONObject();
-    obj.put("Level_1", "unittest.UnderwaterLevel");
+    obj.put("Level_1", "unittest.testLevel1");
     arr.add(obj);
     gameParser.saveGame("levelArrangement", arr);
     assertEquals(1, gameParser.parseLevels().size());
@@ -48,7 +45,6 @@ class GameParserTest {
     gameParser.updateJSONValue("playerCount", 1);
     assertEquals(1, gameParser.readPlayerCount());
     gameParser.updateJSONValue("playerCount", 2);
-
   }
 
   @Test
@@ -58,8 +54,8 @@ class GameParserTest {
 
   @Test
   void parseLevels() {
-    assertEquals("unittest.OverworldLevel", gameParser.parseLevels().get(0).getLevelName());
-    assertEquals("unittest.UnderwaterLevel", gameParser.parseLevels().get(1).getLevelName());
+    assertEquals("unittest.testLevel1", gameParser.parseLevels().get(0).getLevelName());
+    assertEquals("unittest.testLevel2", gameParser.parseLevels().get(1).getLevelName());
     assertEquals(2, gameParser.parseLevels().size());
   }
 
