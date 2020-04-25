@@ -34,7 +34,6 @@ public class EntityModel {
   private boolean boundedLeft;
   private boolean boundedRight;
   private boolean boundedTop;
-  private double MAX_HEALTH;
 
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
@@ -74,7 +73,6 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readMaxXVelocity();
     yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
-    MAX_HEALTH = health;
     xVelMax = myEntity.getParser().readXVelMax();
     yVelMax = myEntity.getParser().readYVelMax();
     fixedEntity = myEntity.getParser().readFixed();
@@ -248,11 +246,11 @@ public class EntityModel {
   }
 
   public void setHealth() {
-    health = MAX_HEALTH;
+    health = myEntity.getParser().readHealth();
   }
 
-  public void loseHealth() {
-    health--;
+  public void loseHealth(int loss) {
+    health-=loss;
   }
 
   public void resetPosition() {
