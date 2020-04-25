@@ -66,7 +66,7 @@ public class AudioVideoManager {
             sm.switchScenes(gameName); }
     }
 
-    public String playerParser(String id){ //FIXME: MAGIC NUMBERS? IT'S PARSING P2_, so idk
+    public String playerParser(String id){ // PARSING P2_, using universal format of JSON files
         if(id.indexOf('_') == 2){
             return id.substring(3); }
         return id;
