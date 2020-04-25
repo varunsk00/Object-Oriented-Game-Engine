@@ -131,6 +131,7 @@ public class ConfigurationMenu extends HBox{
     private void setTextFields(int index) {
         for(String s : playerBindings.get(index)){
             TextField bind = new TextField(s);
+            bind.setId(s.toLowerCase());
             input.add(bind);
             bindingDisplay.get(index).getChildren().add(bind); }
     }
