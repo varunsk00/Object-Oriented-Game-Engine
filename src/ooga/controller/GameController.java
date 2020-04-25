@@ -23,8 +23,7 @@ import org.json.simple.JSONObject;
 
 public class GameController {
 
-  //  private PhysicsEngine physicsEngine;
-//  private CollisionEngine collisionEngine;
+
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entityBuffer;
   private List<EntityWrapper> entityRemove;
@@ -189,6 +188,33 @@ public class GameController {
     }
   }
 
+//<<<<<<< HEAD
+//  private void resetLevel() {
+//    nextLevel = 0;
+//    myModelManager.resetPlayerValues(gameParser.getPlayerList());
+//    despawnOldLevel();
+//    levelSelector.updateCurrentLevel(entityList, myViewManager, nextLevel);
+//    myModelManager.resetPlayerPositions(gameParser.getPlayerList());
+//  }
+//
+//  //TODO: fix duplicated code if possible?
+//  private void despawnOldLevel() {
+//    List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
+//    for (EntityWrapper targetEntity : entityList) {
+//      if (!gameParser.getPlayerList().contains(targetEntity)) {
+//        entitiesToDespawn.add(targetEntity);
+//      }
+//    }
+//    removeEntities(entitiesToDespawn);
+//  }
+//
+//  private void handleSaveGame() {
+//    if(myViewManager.getSaveGame()) {
+//      JSONArray saveGame = new JSONArray();
+//      JSONObject obj = new JSONObject();
+//      for(int i = 0; i < levelSelector.getLevelsToPlay().size(); i++) {
+//        obj.put("Level_" + (i+1), levelSelector.getLevelsToPlay().get(i).getLevelName());
+//=======
     private void handleSaveGame(){
       if (myViewManager.getSaveGame()) {
         JSONArray saveGame = new JSONArray();
@@ -199,6 +225,7 @@ public class GameController {
         saveGame.add(obj);
         gameParser.saveGame("levelArrangement", saveGame);
         myViewManager.setSaveGame();
+//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
       }
     }
 

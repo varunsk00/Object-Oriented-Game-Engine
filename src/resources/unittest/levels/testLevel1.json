@@ -3,6 +3,14 @@
   "players": "2",
   "tileArrangement": [
     {
+      "EntityName": "mario.MarioFlagTop",
+      "Arrangement": [
+        {
+          "3": [
+            "199"
+          ]
+        }
+      ]
     }
   ],
   "levelName": "testLevel1",
@@ -12,6 +20,16 @@
   "tileHeight": 50,
   "enemyArrangement": [
     {
+      "EntityName": "mario.Goomba",
+      "Arrangement": [
+        {
+          "12": [
+            "20",
+            "39",
+            "134"
+          ]
+        }
+      ]
     }
   ]
 }

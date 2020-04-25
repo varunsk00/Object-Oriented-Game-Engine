@@ -14,7 +14,7 @@ public class PhysicsProfile {
   }
 
   public double readFriction() {
-    String friction = "friction";
+    String friction = "Friction";
     try {
       return Integer.parseInt(physicsArray.get(friction).toString());
     } catch (NullPointerException e) {
@@ -24,7 +24,7 @@ public class PhysicsProfile {
   }
 
   public double readDrag() {
-    String drag = "drag";
+    String drag = "Drag";
     try {
       return Integer.parseInt(physicsArray.get(drag).toString());
     } catch (NullPointerException e) {
@@ -34,7 +34,7 @@ public class PhysicsProfile {
   }
 
   public double readGravity() {
-    String gravity = "gravity";
+    String gravity = "Gravity";
     try {
       return Integer.parseInt(physicsArray.get(gravity).toString());
     } catch (NullPointerException e) {

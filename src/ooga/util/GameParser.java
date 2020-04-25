@@ -83,7 +83,7 @@ public class GameParser extends Parser {
       } catch (IOException e) {
         e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
       }
-//    }
+
   }
 
   public void updateJSONValue(String key, Object newValue){
@@ -116,6 +116,14 @@ public class GameParser extends Parser {
 
   public List<Level> parseLevels() {
     List<Level> levelList = new ArrayList<>();
+//<<<<<<< HEAD
+//    JSONArray levelArrangement = (JSONArray) jsonObject.get("levelArrangement");
+//    JSONObject levels = (JSONObject) levelArrangement.get(0);
+//    List<String> sortedLevelKeys = sortLevelKeySet(levels.keySet());
+//
+//
+//    for(String levelNumber : sortedLevelKeys) {
+//=======
     List<String> sortedLevelKeys;
     JSONObject levels;
     try {
@@ -130,6 +138,7 @@ public class GameParser extends Parser {
       sortedLevelKeys = sortLevelKeySet(levels.keySet());
     }
     for(String levelNumber : sortedLevelKeys){
+//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
       String levelName = (String) levels.get(levelNumber);
       LevelParser parsedLevel = new LevelParser(levelName, mainController);
       String levelType = parsedLevel.readLevelType();
@@ -146,9 +155,6 @@ public class GameParser extends Parser {
 
     return levelList;
   }
-
-
-
 
   private List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
@@ -182,7 +188,7 @@ public class GameParser extends Parser {
     return gameVariables;
   }
 
-  private int readPlayerCount() {
+  public int readPlayerCount() {
     return Integer.parseInt(jsonObject.get("playerCount").toString());
   }
 
