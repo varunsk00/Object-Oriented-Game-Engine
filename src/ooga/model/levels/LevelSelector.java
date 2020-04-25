@@ -2,6 +2,7 @@ package ooga.model.levels;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
 import ooga.util.GameStatusProfile;
@@ -28,23 +29,23 @@ public class LevelSelector {
     activeLevel = parsedLevels.get(startingLevelIndex);
   }
 
+  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn){
+    activeLevel.spawnEntities(currentEntityList);
+    this.despawnEntities(currentEntityList, entitiesToDespawn);
+  }
+
   public void changeCurrentLevel(int nextLevel, EntityWrapper player) {
     switchLevel(nextLevel);
     activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
   }
 
-  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-    activeLevel.spawnEntities(currentEntityList, viewManager);
-    this.despawnEntities(currentEntityList, viewManager);
-  }
-
-  public void resetLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
+  public void resetLevel(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn) {
     for(EntityWrapper player : playerList) {
       player.getModel().setHealth();
       player.getModel().resetPosition();
     }
-    despawnAllEntities(currentEntityList, viewManager);
-    this.updateCurrentLevel(currentEntityList, viewManager);
+    despawnAllEntities(currentEntityList, entitiesToDespawn);
+    this.updateCurrentLevel(currentEntityList, entitiesToDespawn);
     for(Level level : parsedLevels){
       level.setCurrentPlayerInterval(ORIGINAL_LEVEL_INTERVAL);
     }
@@ -53,6 +54,27 @@ public class LevelSelector {
 
   private void switchLevel(int levelIndex){
     activeLevel = parsedLevels.get(levelIndex);
+  }
+
+  private void despawnAllEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn) {
+    for (EntityWrapper targetEntity : currentEntityList) {
+      if (!playerList.contains(targetEntity)) {
+        entitiesToDespawn.add(targetEntity);
+      }
+    }
+
+  }
+
+  private void despawnEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn){
+    for (EntityWrapper targetEntity : currentEntityList) {
+      if (!playerList.contains(targetEntity) && !isInRangeofCamera(targetEntity)) {
+        entitiesToDespawn.add(targetEntity);
+      }
+    }
+  }
+
+  public List<Level> getParsedLevels() {
+    return parsedLevels.subList(parsedLevels.indexOf(activeLevel), parsedLevels.size());
   }
 
   private int calculatePlayerInterval(EntityWrapper player) {
@@ -64,38 +86,6 @@ public class LevelSelector {
         targetEntity.getModel().getX() > gameCamera.getViewPort().getBoundsInParent().getMinX() - CAMERA_BUFFER &&
         targetEntity.getModel().getY() < gameCamera.getViewPort().getBoundsInParent().getMaxY() + CAMERA_BUFFER &&
         targetEntity.getModel().getY() > gameCamera.getViewPort().getBoundsInParent().getMinY() - CAMERA_BUFFER;
-  }
-
-  public List<Level> getParsedLevels() {
-    return parsedLevels.subList(parsedLevels.indexOf(activeLevel), parsedLevels.size());
-  }
-
-
-  private void despawnAllEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
-    List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-    for (EntityWrapper targetEntity : currentEntityList) {
-      if (!playerList.contains(targetEntity)) {
-        entitiesToDespawn.add(targetEntity);
-      }
-    }
-    removeDespawnedEntities(currentEntityList, viewManager, entitiesToDespawn);
-  }
-
-  private void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-    List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-    for (EntityWrapper targetEntity : currentEntityList) {
-      if (!playerList.contains(targetEntity) && !isInRangeofCamera(targetEntity)) {
-        entitiesToDespawn.add(targetEntity);
-      }
-    }
-    removeDespawnedEntities(currentEntityList, viewManager, entitiesToDespawn);
-  }
-
-  private void removeDespawnedEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager, List<EntityWrapper> entitiesToDespawn){
-    for(EntityWrapper despawnedEntity : entitiesToDespawn){
-      currentEntityList.remove(despawnedEntity);
-      viewManager.removeEntity(despawnedEntity.getRender());
-    }
   }
 
 }

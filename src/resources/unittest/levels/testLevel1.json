@@ -3,11 +3,11 @@
   "players": "2",
   "tileArrangement": [
     {
-      "EntityName": "mario.MarioFlagTop",
+      "EntityName": "unittest.FixedTestEntity3",
       "Arrangement": [
         {
           "3": [
-            "199"
+            "0"
           ]
         }
       ]
@@ -20,13 +20,12 @@
   "tileHeight": 50,
   "enemyArrangement": [
     {
-      "EntityName": "mario.Goomba",
+      "EntityName": "unittest.FixedTestEntity2",
       "Arrangement": [
         {
           "12": [
-            "20",
-            "39",
-            "134"
+            "1000",
+            "1100"
           ]
         }
       ]
