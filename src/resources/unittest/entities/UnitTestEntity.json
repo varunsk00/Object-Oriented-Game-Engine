@@ -406,7 +406,7 @@
       ]
     },
     {
-      "ID": "UnitTestEntity",
+      "ID": "unittest.UnitTestEntity",
       "Control": [
         {
           "action": "MoveY",

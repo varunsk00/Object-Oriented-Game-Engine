@@ -1,6 +1,6 @@
 {
   "gameName": "UnitTest",
-  "players": "1",
+  "playerCount": "1",
   "physicsProfile": [
     {
       "Friction": "20",
@@ -21,6 +21,14 @@
         "X": "100",
         "Y": "100"
       }
+    }
+  ],
+  "gameStatusProfile": [
+    {
+      "scrollingStatusY": "0",
+      "spawningInterval": "0",
+      "scrollingStatusX": "1",
+      "levelSpawnOffset": "0"
     }
   ]
 }
