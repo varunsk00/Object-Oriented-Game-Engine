@@ -15,7 +15,8 @@ public class LevelSelector {
   private GameStatusProfile gameStatusProfile;
   private Camera gameCamera;
   private List<EntityWrapper> playerList;
-  private static final int cameraBuffer = 500;
+  private static final int ORIGINAL_LEVEL_INTERVAL = -1;
+  private static final int CAMERA_BUFFER = 500;
 
   public LevelSelector(List<Level> levelList, List<EntityWrapper> players, GameStatusProfile gameProfile, Camera camera){
     parsedLevels = levelList;
@@ -25,28 +26,13 @@ public class LevelSelector {
     spawningInterval = gameStatusProfile.readSpawningInterval();
     int startingLevelIndex = gameStatusProfile.readStartingLevelIndex();
     activeLevel = parsedLevels.get(startingLevelIndex);
-
   }
-// FIXME removed by ALex. Not deleting just in case but pretty sure we can delete this now
 
-//  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager, int nextLevel) {
-//    for(EntityWrapper player : playerList) {
-//      if (player.getModel().getLevelAdvancementStatus()) {
-//        player.getModel().setLevelAdvancementStatus(false);
-//        switchLevel(nextLevel);
-//        activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
-//      }
-//    }
-//    activeLevel.spawnEntities(currentEntityList, viewManager);
-//    this.despawnEntities(currentEntityList, viewManager);
-//  }
-
-  //TODO Refactored "changelevel" method added by alex. Called by Controller when the action "LevelSwitcH" is executed
   public void changeCurrentLevel(int nextLevel, EntityWrapper player) {
     switchLevel(nextLevel);
     activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(player));
   }
-  //TODO refactored by alex. Called in each update step of the main controller.
+
   public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager){
     activeLevel.spawnEntities(currentEntityList, viewManager);
     this.despawnEntities(currentEntityList, viewManager);
@@ -55,14 +41,12 @@ public class LevelSelector {
   public void resetLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
     for(EntityWrapper player : playerList) {
       player.getModel().setHealth();
-      player.getModel().setLevelAdvancementStatus(true);
       player.getModel().resetPosition();
     }
-
     despawnAllEntities(currentEntityList, viewManager);
     this.updateCurrentLevel(currentEntityList, viewManager);
     for(Level level : parsedLevels){
-      level.setCurrentPlayerInterval(-1);
+      level.setCurrentPlayerInterval(ORIGINAL_LEVEL_INTERVAL);
     }
   }
 
@@ -76,10 +60,10 @@ public class LevelSelector {
   }
 
   private boolean isInRangeofCamera(EntityWrapper targetEntity){
-    return targetEntity.getModel().getX() < gameCamera.getViewPort().getBoundsInParent().getMaxX() + cameraBuffer &&
-        targetEntity.getModel().getX() > gameCamera.getViewPort().getBoundsInParent().getMinX() - cameraBuffer &&
-        targetEntity.getModel().getY() < gameCamera.getViewPort().getBoundsInParent().getMaxY() + cameraBuffer &&
-        targetEntity.getModel().getY() > gameCamera.getViewPort().getBoundsInParent().getMinY() - cameraBuffer;
+    return targetEntity.getModel().getX() < gameCamera.getViewPort().getBoundsInParent().getMaxX() + CAMERA_BUFFER &&
+        targetEntity.getModel().getX() > gameCamera.getViewPort().getBoundsInParent().getMinX() - CAMERA_BUFFER &&
+        targetEntity.getModel().getY() < gameCamera.getViewPort().getBoundsInParent().getMaxY() + CAMERA_BUFFER &&
+        targetEntity.getModel().getY() > gameCamera.getViewPort().getBoundsInParent().getMinY() - CAMERA_BUFFER;
   }
 
   public List<Level> getParsedLevels() {
