@@ -3,6 +3,7 @@ package ooga.model.actions;
 import ooga.model.EntityModel;
 
 public class LoseHealth extends Action {
+
   private int health;
 
   public LoseHealth(String parameter) {
@@ -11,7 +12,5 @@ public class LoseHealth extends Action {
   }
 
   @Override
-  public void execute(EntityModel entity) {
-    entity.loseHealth(health);
-  }
+  public void execute(EntityModel entity) {entity.loseHealth(health);}
 }

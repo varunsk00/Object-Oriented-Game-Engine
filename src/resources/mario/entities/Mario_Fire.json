@@ -7,8 +7,8 @@
           "action": "AccelerateX"
         },
         {
-          "param": "forwards",
-          "action": "SetXDirection"
+          "param": "true",
+          "action": "SetForwards"
         }
       ],
       "ID": "D"
@@ -20,8 +20,8 @@
           "action": "AccelerateX"
         },
         {
-          "param": "backwards",
-          "action": "SetXDirection"
+          "param": "false",
+          "action": "SetForwards"
         }
       ],
       "ID": "A"

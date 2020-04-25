@@ -8,6 +8,9 @@ import ooga.model.actions.AbsoluteVelocityX;
 import ooga.model.actions.Action;
 import ooga.model.controlschemes.ControlScheme;
 
+/**
+ *
+ */
 public class EntityModel {
   private EntityWrapper myEntity;
   private boolean forwards;

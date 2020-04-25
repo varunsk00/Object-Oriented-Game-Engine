@@ -6,7 +6,7 @@ import ooga.controller.EntityWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SetXDirectionTest {
+class SetForwardsTest {
   private String param;
   private Action myAction;
   private EntityWrapper myEntity;
@@ -14,7 +14,7 @@ class SetXDirectionTest {
   @BeforeEach
   void setUp() {
     param = "forwards";
-    myAction = new SetXDirection(param);
+    myAction = new SetForwards(param);
     myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
   }
 
