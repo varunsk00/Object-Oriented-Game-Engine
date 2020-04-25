@@ -11,7 +11,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-import javax.imageio.ImageIO;
+
 import java.util.ResourceBundle;
 
 public class ConsoleSkin extends BorderPane {
@@ -19,6 +19,17 @@ public class ConsoleSkin extends BorderPane {
     private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
     private final String CONSOLE_NAME = myResources.getString("consoleName");
     private final String CONSOLE_ABBREV = myResources.getString("consoleAbbrev");
+    private final int VENT_WIDTH = 150;
+    private final int VENT_HEIGHT = 15;
+    private final int LID_WIDTH = 150;
+    private final int LID_HEIGHT = 63;
+    private final int GAMENAME_DISPLAY_WIDTH = 600;
+    private final int GAMENAME_DISPLAY_HEIGHT = 100;
+    private final int MINIVENT_WIDTH = 10;
+    private final double MINIVENT_HEIGHT = 17.5;
+    private final double ZER0 = 0.0;
+    private final double ONEHUNDRED = 100.0;
+    private final double FIFTY = 50.0;
     private VBox menuTop;
     private VBox menuBottom;
     private Button selectGameButton;
@@ -74,7 +85,7 @@ public class ConsoleSkin extends BorderPane {
     private HBox createMenuAccent() {
         HBox menuAccent = new HBox();
         for (int i = 0; i < 11; i++) {
-            Rectangle miniVent = new Rectangle(10, 17.5);
+            Rectangle miniVent = new Rectangle(MINIVENT_WIDTH, MINIVENT_HEIGHT);
             miniVent.setId("vent");
             menuAccent.getChildren().add(miniVent);
         }
@@ -88,8 +99,8 @@ public class ConsoleSkin extends BorderPane {
     }
     private VBox createVentArt() {
         VBox ventArt = new VBox();
-        Rectangle vent1 = new Rectangle(150, 15);
-        Rectangle vent2 = new Rectangle(150, 15);
+        Rectangle vent1 = new Rectangle(VENT_WIDTH, VENT_HEIGHT);
+        Rectangle vent2 = new Rectangle(VENT_WIDTH, VENT_HEIGHT);
         vent1.setId("lidVentArt1");
         vent2.setId("lidVentArt2");
         ventArt.getChildren().addAll(vent1, vent2);
@@ -110,7 +121,7 @@ public class ConsoleSkin extends BorderPane {
         VBox ventArt = createVentArt();
         HBox menuAccent = createMenuAccent();
         VBox logoArt = createLogoArt();
-        Rectangle lidArt = new Rectangle(150, 63);
+        Rectangle lidArt = new Rectangle(LID_WIDTH, LID_HEIGHT);
         lidArt.setId("lidArtBottom");
         ventArt.setId("ventBoxBottom");
         mainSkin.getChildren().add(lidArt);
@@ -126,7 +137,7 @@ public class ConsoleSkin extends BorderPane {
         HBox mainSkin = createMainSkin();
         VBox ventArt = createVentArt();
         HBox menuAccent = createMenuAccent();
-        Rectangle lidArt = new Rectangle(150, 63);
+        Rectangle lidArt = new Rectangle(LID_WIDTH, LID_HEIGHT);
         lidArt.setId("lidArtTop");
         ventArt.setId("ventBoxTop");
         mainSkin.getChildren().add(lidArt);
@@ -138,7 +149,7 @@ public class ConsoleSkin extends BorderPane {
     }
     private void initSelectionUI() {
         createGameSelectButton();
-        Rectangle gameNameBackground = new Rectangle(600, 100);
+        Rectangle gameNameBackground = new Rectangle(GAMENAME_DISPLAY_WIDTH, GAMENAME_DISPLAY_HEIGHT);
         gameNameDisplay.setId("gameNameDisplay");
         gameNameText.setId("gameNameText");
         gameNameBackground.setId("gameNameBackground");
@@ -151,7 +162,7 @@ public class ConsoleSkin extends BorderPane {
     }
     private void initLeftArrow() {
         leftScrollArrow = new Polygon();
-        leftScrollArrow.getPoints().addAll(50.0, 0.0,  50.0, 100.0,0.0, 50.0);
+        leftScrollArrow.getPoints().addAll(FIFTY, ZER0,  FIFTY, ONEHUNDRED,ZER0, FIFTY);
         leftScrollArrow.setOnMousePressed(e -> leftScrollArrow.setFill(Color.DARKRED));
         leftScrollArrow.setOnMouseReleased(e -> leftScrollArrow.setFill(Color.RED));
         leftScrollArrow.setId("leftArrow");
@@ -159,7 +170,7 @@ public class ConsoleSkin extends BorderPane {
     }
     private void initRightArrow() {
         rightScrollArrow = new Polygon();
-        rightScrollArrow.getPoints().addAll(50.0, 0.0,  50.0, 100.0,100.0, 50.0);
+        rightScrollArrow.getPoints().addAll(FIFTY, ZER0,  FIFTY, ONEHUNDRED,ONEHUNDRED, FIFTY);
         rightScrollArrow.setOnMousePressed(e -> rightScrollArrow.setFill(Color.DARKRED));
         rightScrollArrow.setOnMouseReleased(e -> rightScrollArrow.setFill(Color.RED));
         rightScrollArrow.setId("rightArrow");
@@ -169,19 +180,9 @@ public class ConsoleSkin extends BorderPane {
         gameSelectionAndArrowsGroup.getChildren().add(selectedGame);
     }
     private Button makeButton(String property) {
-        // represent all supported image suffixes
-        final String IMAGEFILE_SUFFIXES = String
-                .format(".*\\.(%s)", String.join("|", ImageIO.getReaderFileSuffixes()));
         Button result = new Button();
-        //   String label = resources.getString(property);
         String label = property;
-        //  if (label.matches(IMAGEFILE_SUFFIXES)) {
-        //     result.setGraphic(new ImageView(
-        //             new Image(getClass().getResourceAsStream(DEFAULT_RESOURCE_FOLDER + label))));
-        // } else {
         result.setText(label);
-        //  }
-//        result.setOnAction(handler);
         return result;
     }
 }
