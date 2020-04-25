@@ -18,6 +18,8 @@ import org.json.simple.parser.ParseException;
 
 public class GameCabinet extends Pane {
     private final String GAME_LIST_FILEPATH = "src/resources/GameList.json";
+    private final String HOME_SCREEN_TITLE = "BOOGA";
+    private final String GAME_SELECT_TITLE = "GameSelect";
     private GameSelector gameSelector;
     private List<GamePreview> myGames;
     private AudioVideoManager avManager;
@@ -34,7 +36,7 @@ public class GameCabinet extends Pane {
         List<String> gameList = this.readGameList();
         initGameSelect(gameList);
         gameSelector = new GameSelector(myGames);
-        this.getChildren().add(gameSelector);
+        this.getChildren().add(gameSelector.getSelectionScreenVisuals());
         this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         updateCurrentGame();
     }
@@ -63,10 +65,10 @@ public class GameCabinet extends Pane {
         this.myGames.add(newGamePreview);
     }
 
-    private void initGameSelect(List<String> gameList) throws FileNotFoundException { //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
+    private void initGameSelect(List<String> gameList) throws FileNotFoundException {
       for(int i = 0; i < gameList.size(); i++){
         GameSelectParser newGameParser = new GameSelectParser(gameList.get(i));
-        GamePreview newGame = new GamePreview(Color.BLUE, newGameParser.readGamePreviewGIF());
+        GamePreview newGame = new GamePreview(newGameParser.readGamePreviewGIF());
         newGame.setGameName(newGameParser.readGameName());
         myGames.add(newGame);
       }
@@ -82,7 +84,7 @@ public class GameCabinet extends Pane {
     public void updateCurrentGame() throws Exception {
         if(isHomePressed()){
             avManager.switchMusic(stageManager);
-            stageManager.setCurrentTitle("BOOGA");
+            stageManager.setCurrentTitle(HOME_SCREEN_TITLE);
         }
         for(GamePreview game: myGames){
             if(game.isGamePressed()) {
@@ -121,7 +123,7 @@ public class GameCabinet extends Pane {
     }
 
     private boolean isHomePressed(){
-        return stageManager.getCurrentTitle().equals("GameSelect");
+        return stageManager.getCurrentTitle().equals(GAME_SELECT_TITLE);
     }
 
     private void launchTitleScreen(StageManager sm, String gameName) throws Exception {

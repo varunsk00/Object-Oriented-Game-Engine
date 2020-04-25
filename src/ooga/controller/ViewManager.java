@@ -1,51 +1,46 @@
 package ooga.controller;
 
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
 
-
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import ooga.apis.view.ViewExternalAPI;
 import ooga.view.application.Camera;
+import ooga.view.application.menu.ConfigurationMenu;
 import ooga.view.application.menu.InGameMenu;
 import ooga.view.gui.managers.StageManager;
 
 public class ViewManager implements ViewExternalAPI {
+  private final String RESOURCES_PACKAGE = "resources.guiText";
+  private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
+  private final String DEFAULT_MENU_TEXT = myResources.getString("defaultStatus");
   private BorderPane testPane;
   private Group EntityGroup;
-
   private List<Node> overlay = new ArrayList<>();
   private InGameMenu menu;
-  private ControlSchemeSwitcher config;
-  private int escCounter = 0;
-  private int configCounter = 0;
-
+  private ConfigurationMenu config;
   private StageManager currentStage;
   private BorderPane level;
   private Camera camera;
-  private boolean launchControlSwitcher;
-  private boolean saveGame = false;
-
-  private boolean isGamePaused = false;
-  private final String DEFAULT_MENU_TEXT = "Game in Progress";
-
   private Scene testScene;
+  private int escCounter = 0;
+  private int configCounter = 0;
+  private boolean saveGame = false;
+  private boolean isGamePaused = false;
 
   public ViewManager(StageManager stageManager, List<EntityWrapper> playerList){
-    this.menu = new InGameMenu();
-    this.config = new ControlSchemeSwitcher(playerList);
-    this.overlay.add(menu);
-    this.overlay.add(config);
-
+    menu = new InGameMenu();
+    config = new ConfigurationMenu(playerList);
+    overlay.add(menu);
+    overlay.add(config);
     currentStage = stageManager;
-
     level = new BorderPane();
     testPane = level;
     testScene = currentStage.getCurrentScene();
@@ -53,8 +48,7 @@ public class ViewManager implements ViewExternalAPI {
     EntityGroup = new Group();
     level.getChildren().add(EntityGroup);
     setUpPane();
-
-    this.testScene = stageManager.getCurrentScene();
+    testScene = stageManager.getCurrentScene();
   }
 
   private void setUpPane(){
@@ -72,10 +66,6 @@ public class ViewManager implements ViewExternalAPI {
 
   public void setUpCamera(List<EntityWrapper> node, int scrollStatusX, int scrollStatusY) { camera = new Camera(currentStage.getStage(), level, node, scrollStatusX, scrollStatusY); }
 
-//  public StageManager getCurrentStage() {
-//    return currentStage;
-//  }
-
   public Scene getTestScene() {
     return testScene;
   }
@@ -87,7 +77,6 @@ public class ViewManager implements ViewExternalAPI {
   public void updateValues() {
     camera.update(overlay);
   }
-
 
   @Override
   public void removeEntity(Node node) {
@@ -101,43 +90,38 @@ public class ViewManager implements ViewExternalAPI {
 
   public void handlePressInput (KeyCode code) {
     if (code == KeyCode.ESCAPE && escCounter < 1) {
-      pauseGame();
-    } else if (code == KeyCode.Q && escCounter == 1) {
-      unPauseGame();
-    }
+      pauseGame(); }
+    else if (code == KeyCode.Q && escCounter == 1) {
+      unPauseGame(); }
     else if (code == KeyCode.H) {
       pauseGame();
-      goHome(code.getChar());
-    } else if(code == KeyCode.X) {
-      saveGame = true;
-    }
-
+      goHome(code.getChar()); }
+    else if(code == KeyCode.X) {
+      saveGame = true; }
   }
-
-//  public void addScene(String title) {
-//
-//  }
-//  public void handleReleaseInput (KeyCode code) {
-//  }
 
   public boolean getSaveGame() {
     return saveGame;
   }
 
-
-  public void handleMenuInput() throws Exception { //TODO: REFACTOR
+  public void handleMenuInput() throws Exception {
     resumeGame();
     saveGame();
     exitGame();
     editControls();
     rebootGame();
+    editVolume();
+  }
+
+  private void editVolume() {
+    currentStage.getAvManager().setMusicVolume(config.getMusicVolume());
+    currentStage.getAvManager().setFXVolume(config.getFXVolume());
   }
 
   private void rebootGame() throws Exception {
     if (menu.getRebootPressed()){
       menu.setRebootOff();
-      currentStage.reboot();
-    }
+      currentStage.reboot(); }
   }
 
   private void editControls() {
@@ -153,45 +137,31 @@ public class ViewManager implements ViewExternalAPI {
   private void exitGame() {
     if (menu.getExitPressed()) {
       handlePressInput(KeyCode.H);
-      menu.setExitOff();
-    }
+      menu.setExitOff(); }
   }
 
   private void saveGame() {
     if (menu.getSavePressed()) {
       saveGame=true;
       unPauseGame();
-      menu.setSaveOff();
-    }
+      menu.setSaveOff(); }
   }
 
   private void resumeGame() {
     if (menu.getResumePressed()) {
       unPauseGame();
-      menu.setResumeOff();
-    }
+      menu.setResumeOff(); }
   }
 
   private void goHome(String state){
     currentStage.updateCurrentScene(currentStage.getCurrentTitle(), currentStage.getCurrentScene());
     currentStage.updateCurrentScene(state, currentStage.getPastScene());
-    currentStage.switchScenes("GameSelect");
+    currentStage.switchScenes(myResources.getString("GameSelect"));
   }
-
-//  public void saveResetScenes(String state) {
-//    currentStage.saveResetGameScenes(state, currentStage.getCurrentScene());
-//  }
-//
-//  public void resetLevelScene(String gameName) {
-//    currentStage.switchRestartScenes(gameName);
-//
-//  }
 
   public void endGame() {
-    //need to reset game;
     goHome(KeyCode.H.getChar());
   }
-
 
   public void pauseGame(){
     BoxBlur bb = new BoxBlur();
@@ -230,10 +200,6 @@ public class ViewManager implements ViewExternalAPI {
 
   public void setSaveGame() {
     saveGame = !saveGame;
-  }
-
-  public boolean getControlSwitcher(){
-    return launchControlSwitcher;
   }
 
   public Camera getCamera(){

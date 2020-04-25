@@ -1,0 +1,23 @@
+{
+  "levelType": "FiniteLevel",
+  "players": "1",
+  "tileArrangement": [
+    {
+      "EntityName": "gamenamemissing.MissingEntity",
+      "Arrangement": [
+        {
+          "13": [
+            "1"
+            ]
+        }
+      ]
+    }
+  ],
+  "levelName": "SampleLevel",
+  "playerArrangement": [
+  ],
+  "tileWidth": 50,
+  "enemyArrangement": [
+  ],
+  "tileHeight": 50
+}

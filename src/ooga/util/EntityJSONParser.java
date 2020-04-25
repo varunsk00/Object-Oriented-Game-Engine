@@ -11,6 +11,8 @@ import ooga.model.actions.ActionFactory;
 import ooga.model.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.ParameterInvalidException;
+import ooga.util.config.ParameterMissingException;
 import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -134,7 +136,17 @@ public class EntityJSONParser extends Parser {
   }
 
   public ImageView generateImage() {
-    String imageName = readImage();
+//<<<<<<< HEAD
+//    String imageName = readImage();
+//=======
+    String imageName = "missing_texture.jpg";
+    try {
+      imageName = (String) jsonObject.get("image");
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "image");
+    }
+//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
     ImageView output = null;
 
     output = loadImage(imageName);
@@ -146,10 +158,16 @@ public class EntityJSONParser extends Parser {
   }
 
   private ImageView loadImage(String imageName) {
-//    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + "/"+ imageName);
-    InputStream is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
+    InputStream is;
     Image entityImage = null;
-    entityImage = new Image(is);
+    try {
+       is = this.getClass().getClassLoader().getResourceAsStream(RESOURCES + myGame + IMAGE_PACKAGE + imageName);
+      entityImage = new Image(is);
+    }
+    catch (NullPointerException e) {
+      new ParameterInvalidException(e, "imageName");
+      entityImage = new Image(RESOURCES + imageName);
+    }
     return new ImageView(entityImage);
   }
 
@@ -159,7 +177,6 @@ public class EntityJSONParser extends Parser {
       controlMap.add(readControls((JSONObject) actionBundlesArray.get(i)));
     }
     return controlMap;
-
   }
 
   private ActionBundle readControls(JSONObject bundleElement) {
@@ -197,44 +214,126 @@ public class EntityJSONParser extends Parser {
     }
   }
 
+//<<<<<<< HEAD
   public String readImage() { return (String) jsonObject.get("image"); }
-  public double readWidth() { return Double.parseDouble(jsonObject.get("width").toString()); }
+//  public double readWidth() { return Double.parseDouble(jsonObject.get("width").toString()); }
+//=======
+  public double readWidth() {
+    try {
+      return Double.parseDouble(jsonObject.get("width").toString());
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "width");
+    }
+    catch (NumberFormatException e) {
+      new ParameterInvalidException(e, "width");
+    }
+    return 50; //default
+  }
+//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
 
   public double readHeight() {
-    return Double.parseDouble(jsonObject.get("height").toString());
+    try {
+      return Double.parseDouble(jsonObject.get("height").toString());
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "height");
+    }
+    catch (NumberFormatException e) {
+      new ParameterInvalidException(e, "height");
+    }
+    return 50; //default
   }
 
   public double readXPosition() {
-    return Double.parseDouble(jsonObject.get("xPos").toString());
+    try {
+      return Double.parseDouble(jsonObject.get("xPos").toString());
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "xPos");
+    }
+    catch (NumberFormatException e) {
+      new ParameterInvalidException(e, "xPos");
+    }
+    return 100;
   }
 
   public double readYPosition(){
-    return Double.parseDouble(jsonObject.get("yPos").toString());
+    try {
+      return Double.parseDouble(jsonObject.get("yPos").toString());
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "yPos");
+
+    }
+    catch (NumberFormatException e) {
+      new ParameterInvalidException(e, "yPos");
+    }
+    return 100;
   }
 
   public double readMaxXVelocity(){
-    return Double.parseDouble(jsonObject.get("maxXVel").toString());
+    try {
+      return Double.parseDouble(jsonObject.get("maxXVel").toString());
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "maxXVel");
+
+    }
+    catch (NumberFormatException e) {
+      new ParameterInvalidException(e, "maxXVel");
+    } return 500;
+
   }
 
   public double readMaxYVelocity(){
-    return Double.parseDouble(jsonObject.get("maxYVel").toString());
+    try {
+      return Double.parseDouble(jsonObject.get("maxYVel").toString());
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "maxYVel");
+
+    }
+    catch (NumberFormatException e) {
+      new ParameterInvalidException(e, "maxYVel");
+    }
+    return 500;
   }
 
+//<<<<<<< HEAD
+//=======
   public double readHealth() {
-    return Double.parseDouble(jsonObject.get("health").toString());
+    try {
+      return Double.parseDouble(jsonObject.get("health").toString());
+    }
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "health");
+
+    }
+    catch (NumberFormatException e) {
+      new ParameterInvalidException(e, "health");
+    }
+    return 10;
   }
 
+//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
   public boolean readFixed() {
-    if (jsonObject.get("fixed") != null) {
+    try {
       return Boolean.parseBoolean(jsonObject.get("fixed").toString());
     }
-    return false;
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "fixed");
+      return false;
+    }
   }
 
   public boolean readPermeable() {
-    if (jsonObject.get("permeable") != null) {
+    try {
       return Boolean.parseBoolean(jsonObject.get("permeable").toString());
     }
-    return false;
+    catch (NullPointerException e) {
+      new ParameterMissingException(e, "permeable");
+      return false;
+    }
   }
 }

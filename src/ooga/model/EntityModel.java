@@ -73,8 +73,11 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readMaxXVelocity();
     yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
-    xVelMax = myEntity.getParser().readMaxXVelocity();
-    yVelMax = myEntity.getParser().readMaxYVelocity();
+//<<<<<<< HEAD
+//    xVelMax = myEntity.getParser().readMaxXVelocity();
+//    yVelMax = myEntity.getParser().readMaxYVelocity();
+//=======
+//>>>>>>> c3c36ba4b00f396e0125d39bd184a271aa88ceb6
     fixedEntity = myEntity.getParser().readFixed();
     permeableEntity = myEntity.getParser().readPermeable();
   }

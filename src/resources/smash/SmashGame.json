@@ -1,11 +1,11 @@
 {
   "gameName": "Smash",
-  "playerCount": "2",
+  "playerCount": "1",
   "physicsProfile": [
     {
-      "Friction": "20",
-      "Drag": "20",
-      "Gravity": "20"
+      "friction": "20",
+      "drag": "20",
+      "gravity": "20"
     }
   ],
   "levelArrangement": [
@@ -34,7 +34,8 @@
       "scrollingStatusY": "1",
       "spawningInterval": "0",
       "scrollingStatusX": "1",
-      "levelSpawnOffset": "0"
+      "levelSpawnOffset": "0",
+      "startingLevelIndex": "0"
     }
   ]
 }

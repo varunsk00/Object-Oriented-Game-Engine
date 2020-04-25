@@ -10,9 +10,11 @@ import ooga.view.gui.userinterface.GameCabinet;
 import ooga.view.gui.userinterface.Welcome;
 
 import java.io.FileNotFoundException;
+import java.util.ResourceBundle;
 
 public class ProgramLauncher {
-
+    private final String RESOURCES_PACKAGE = "resources.guiText";
+    private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
     private static final double FRAMES_PER_SECOND = 60;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private Timeline animation;
@@ -55,8 +57,8 @@ public class ProgramLauncher {
     private void step() throws Exception {
         if(welcomeScreen.getPlayPressed()){
             welcomeScreen.setPlayPressedOff();
-            stageManager.createAndSwitchScenes(library, "GameSelect");
-            stageManager.updateCurrentScene("GameSelect", library.getScene());
+            stageManager.createAndSwitchScenes(library, myResources.getString("GameSelect"));
+            stageManager.updateCurrentScene(myResources.getString("GameSelect"), library.getScene());
         }
         library.updateCurrentGame();
     }
