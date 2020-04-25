@@ -127,7 +127,6 @@ public class GameController {
   private void resetEntityBufferLists(){
     entitySpawnBuffer = new ArrayList<>();
     entityDespawnBuffer = new ArrayList<>();
-
   }
 
   private void handleGamePadPlayer() {
