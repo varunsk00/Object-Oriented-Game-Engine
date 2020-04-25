@@ -20,12 +20,9 @@ public class CollisionKey {
 
   @Override
   public boolean equals(Object targetCollisionKey) {
-    if (targetCollisionKey.getClass().equals(this.getClass())) {
-      return (this.ID.equals(((CollisionKey) targetCollisionKey).getID()) &&
-          (this.orientation.equals(((CollisionKey) targetCollisionKey).getOrientation())||((CollisionKey) targetCollisionKey).getOrientation().equals("A")));
-    }
-    else {
-      return false;
-    }
+    return(targetCollisionKey instanceof CollisionKey &&
+        (this.ID.equals(((CollisionKey) targetCollisionKey).getID()) &&
+          (this.orientation.equals(((CollisionKey) targetCollisionKey).getOrientation()) ||
+              ((CollisionKey) targetCollisionKey).getOrientation().equals("A"))));
   }
 }

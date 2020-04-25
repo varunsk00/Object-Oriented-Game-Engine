@@ -14,7 +14,7 @@ import ooga.util.ActionBundle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class KeybindingsTest {
+class KeyboardTest {
 
   private List<ActionBundle> actionBundleList;
   private ControlScheme scheme;
