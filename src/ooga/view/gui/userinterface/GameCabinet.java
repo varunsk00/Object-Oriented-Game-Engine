@@ -34,7 +34,7 @@ public class GameCabinet extends Pane {
         List<String> gameList = this.readGameList();
         initGameSelect(gameList);
         gameSelector = new GameSelector(myGames);
-        this.getChildren().add(gameSelector);
+        this.getChildren().add(gameSelector.getSelectionScreenVisuals());
         this.setOnKeyPressed(e -> handleAltScrollInput(e.getCode()));
         updateCurrentGame();
     }
@@ -66,7 +66,7 @@ public class GameCabinet extends Pane {
     private void initGameSelect(List<String> gameList) throws FileNotFoundException { //FIXME: STREAMLINE INSTANTIATION TO READ FROM A FILE
       for(int i = 0; i < gameList.size(); i++){
         GameSelectParser newGameParser = new GameSelectParser(gameList.get(i));
-        GamePreview newGame = new GamePreview(Color.BLUE, newGameParser.readGamePreviewGIF());
+        GamePreview newGame = new GamePreview(newGameParser.readGamePreviewGIF());
         newGame.setGameName(newGameParser.readGameName());
         myGames.add(newGame);
       }

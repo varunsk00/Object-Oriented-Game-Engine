@@ -22,4 +22,9 @@ public class GameStatusProfile {
   public int readSpawningInterval() {
     return Integer.parseInt(gameStatusArray.get("spawningInterval").toString());
   }
+
+  public int readLevelSpawnOffset() {
+    return Integer.parseInt(gameStatusArray.get("levelSpawnOffset").toString());
+  }
+
 }

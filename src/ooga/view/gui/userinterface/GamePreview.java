@@ -19,27 +19,24 @@ public class GamePreview extends StackPane {
     private Rectangle gif;
     private double xPos;
     private boolean isPressed;
-    private Paint gamePreviewColor;
     private boolean isClickable;
 
 
-    public GamePreview(Paint color, String name) throws FileNotFoundException {
-        this.setHeight(100);
+    public GamePreview(String name) throws FileNotFoundException {
+        this.setId("GamePreview");
         this.setWidth(100);
+        System.out.println("HERE");
         cart = new Rectangle(100, 100);
         this.setLayoutY(275);
-//        this.setY(275);
         this.setOnMouseClicked(e -> handleClick());
         gif = new Rectangle(80, 60);
         gif.setTranslateY(-10);
-        this.gamePreviewColor = color;
         this.gameGif = new ImagePattern((new Image(new FileInputStream("src/resources/" + name + ".gif"))));
         this.frame = new ImagePattern((new Image(new FileInputStream("src/resources/gamecartridge.png"))));
         cart.setFill(frame);
         gif.setFill(gameGif);
         this.getChildren().add(cart);
         this.getChildren().add(gif);
-//        this.setFill(frame);
     }
     private void handleClick() {
         if (isClickable) {
@@ -69,8 +66,5 @@ public class GamePreview extends StackPane {
     }
     public void chooseGame() {
         this.isPressed = true;
-    }
-    public Paint getColor() {
-        return this.gamePreviewColor;
     }
 }

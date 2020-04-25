@@ -1,6 +1,6 @@
 {
   "gameName": "Mario",
-  "playerCount": "2",
+  "playerCount": "1",
   "physicsProfile": [
     {
       "Friction": "20",
@@ -10,8 +10,8 @@
   ],
   "levelArrangement": [
     {
-      "Level_2": "mario.Level2",
-      "Level_1": "mario.MarioLevel"
+      "Level_2": "mario.UnderwaterLevel",
+      "Level_1": "mario.OverworldLevel"
     }
   ],
   "playerArrangement": [
@@ -34,7 +34,8 @@
     {
       "scrollingStatusY": "0",
       "spawningInterval": "0",
-      "scrollingStatusX": "1"
+      "scrollingStatusX": "1",
+      "levelSpawnOffset": "0"
     }
   ]
 }

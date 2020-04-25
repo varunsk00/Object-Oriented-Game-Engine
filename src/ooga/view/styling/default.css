@@ -3,33 +3,143 @@
     font-weight: 900;
     src: url("Pixeboy-z8XGD.ttf");
 }
-#gamename {
-    -fx-font-family: Pixeboy;
+#gameNameText {
+    -fx-font-family: 'Pixeboy';
     -fx-font-size: 75px;
+    -fx-fill: #ffffff;
 }
-
-#gameselectionbox {
+#gameNameBackground {
+    -fx-pref-width: 600px;
+    -fx-pref-height: 100px;
+    -fx-background-color: #000000;
+    -fx-arc-width: 30px;
+    -fx-arc-height: 20px;
+}
+#GamePreview {
+    -fx-min-height: 100px;
+    -fx-pref-width: 100px;
+}
+#gameCartridgeBox {
     -fx-min-height: 300px;
     -fx-alignment: center;
 }
-#buttonandnamebox {
+#gameNameDisplay {
+    -fx-translate-y: -50px;
     -fx-spacing: 15px;
     -fx-padding: 0.0 50.0 0.0 415.0;
+    -fx-pref-width: 600px;
+    -fx-translate-x: -290px;
+    -fx-alignment: center;
+    -fx-max-width: 600px;
+    -fx-max-height: 100px;
 }
 
-#logo {
-    -fx-font-family: Pixeboy;
+#menuFrame {
+    -fx-spacing: 40px;
+    -fx-translate-x: -175px;
+    -fx-translate-y: -118px;
+    -fx-min-height: 520px;
+    -fx-alignment: center_right;
+    -fx-background-color: #191970;
 }
-#start {
+#gameSelector {
+    -fx-translate-x: 175px;
+    -fx-translate-y: 100px;
+}
+#logoText {
+    -fx-font-family: "Pixeboy";
+    -fx-fill: #ff0000;
+    -fx-font-size: 20px;
+}
+#logoAbbreviationText {
+    -fx-font-family: "Pixeboy";
+    -fx-fill: #ff0000;
+    -fx-font-size: 35px;
+}
+#logoBox {
+    -fx-spacing: 5px;
+    -fx-translate-y: 15px;
+    -fx-translate-x: -165px;
+}
+#menuSkin {
+    -fx-translate-x: -175px;
+    -fx-translate-y: -119px;
+}
+#vent {
+    -fx-fill: #000000;
+    -fx-pref-width: 10;
+    -fx-pref-height: 17.5;
+}
+#lidVentArt1 {
+    -fx-stroke: #000000;
+    -fx-stroke-width: 2.5px;
+    -fx-fill: #a9a9a9;
+}
+#lidVentArt2 {
+    -fx-stroke: #000000;
+    -fx-stroke-width: 2.5px;
+    -fx-fill: #a9a9a9;
+    -fx-translate-y: -2.5px;
+}
+#ventBoxBottom {
+    -fx-translate-x: 700px;
+    -fx-translate-y: -18px;
+}
+#ventBoxTop {
+    -fx-translate-x: 700px;
+}
+#lidArtBottom{
+    -fx-translate-x: 945px;
+    -fx-stroke: #000000;
+    -fx-stroke-width: 2.5px;
+    -fx-translate-y: 2px;
+}
+#lidArtTop {
+    -fx-translate-x: 945px;
+    -fx-stroke: #000000;
+    -fx-stroke-width: 2.5px;
+    -fx-translate-y: -2.5px;
+}
+#mainConsoleArea {
+    -fx-spacing: 10px;
+    -fx-padding: 0 0 0 20;
+    -fx-min-height: 65px;
+    -fx-min-width: 1280px;
+    -fx-background-color: #d3d3d3;
+}
+#consoleAccent {
+    -fx-spacing: 5px;
+    -fx-padding: 17.5 0 0 100;
+    -fx-min-height: 35px;
+    -fx-min-width: 1280px;
+    -fx-background-color: #a9a9a9;
+}
+#selectGameButton {
     -fx-background-color: #d3d3d3;
     -fx-font-size: 15px;
     -fx-background-radius: 0;
-    -fx-font-family: Pixeboy;
+    -fx-font-family: Ariel;
     -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.5) , 2, 0.0 , 0 , 1);
+    -fx-translate-y: 15px;
+    -fx-translate-x: -165px;
 }
-#start:hover {
+#selectGameButton:hover {
     -fx-background-color: #c0c0c0;
 }
+
+#leftArrow {
+    -fx-fill: #ff0000;
+    -fx-stroke: #8b0000;
+    -fx-translate-x: 60px;
+    -fx-translate-y: 275px;
+}
+#rightArrow {
+    -fx-fill: #ff0000;
+    -fx-stroke: #8b0000;
+    -fx-translate-x: 850px;
+    -fx-translate-y: 275px;
+}
+
 
 #welcomeButton{
     -fx-alignment: center;
@@ -72,8 +182,8 @@
 #configTitle{
     -fx-font-family: Pixeboy;
     -fx-alignment: center;
-    -fx-translate-y: 360;
-    -fx-translate-x: -200;
+    -fx-translate-x: -150;
+    -fx-translate-y: -150;
     -fx-font-size: 28px;
 }
 
@@ -101,13 +211,21 @@
     -fx-spacing: 57;
 }
 
+#status{
+    -fx-font-family: Pixeboy;
+    -fx-font-size: 30px;
+    -fx-stroke: red;
+    -fx-border-color: blue;
+    -fx-alignment: center;
+    -fx-translate-x: 1280;
+    -fx-translate-y: 180;
+}
+
 .text-field{
     -fx-font-family: Pixeboy;
     -fx-font-size: 30px;
     -fx-alignment: center;
 }
-
-
 .button {
     -fx-background-color:
         #ecebe9,
