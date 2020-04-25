@@ -10,8 +10,8 @@
   ],
   "levelArrangement": [
     {
-      "Level_2": "Level2",
-      "Level_1": "MarioLevel"
+      "Level_2": "testLevel2",
+      "Level_1": "testLevel1"
     }
   ],
   "playerArrangement": [
