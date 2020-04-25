@@ -1,25 +1,27 @@
 package ooga.model;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import ooga.controller.EntityWrapper;
 import ooga.model.actions.AbsoluteVelocityX;
-import ooga.model.actions.AccelerateX;
 import ooga.model.actions.Action;
-import ooga.model.actions.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 
 public class EntityModel {
   private EntityWrapper myEntity;
   private boolean forwards;
+  private SimpleDoubleProperty xProperty;
+  private SimpleDoubleProperty yProperty;
   private double entityWidth;
   private double entityHeight;
   private double xPos;
   private double yPos;
+  private double xVel;
+  private double yVel;
+
   private double health;
   private double xVelMax;
   private double yVelMax;
@@ -34,13 +36,11 @@ public class EntityModel {
   private boolean boundedTop;
   private double MAX_HEALTH;
 
-  private double xVel;
-  private double yVel;
-
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
   private Map<String, Action> myActions;
   private Map<CollisionKey, Action> myCollisions;
+  private boolean conditional;
 
   public EntityModel(EntityWrapper entityWrapper) {
     myEntity = entityWrapper;
@@ -51,10 +51,19 @@ public class EntityModel {
     actionStack = new Stack<>();
     myActions = new HashMap<String, Action>();
     forwards = true;
+    xProperty = new SimpleDoubleProperty(xPos);
+    xProperty.addListener(((observable, oldValue, newValue) -> {
+      xPos = (double) newValue;
+    }));
+    yProperty = new SimpleDoubleProperty(yPos);
+    yProperty.addListener((((observable, oldValue, newValue) -> {
+      yPos = (double) newValue;
+    })));
     boundedLeft = false;
     boundedRight = false;
     boundedTop = false;
     boundedBelow = false;
+    conditional = true;
   }
 
   private void loadStats() {
@@ -78,7 +87,8 @@ public class EntityModel {
       actionStack.push(action);
     }
     while(!actionStack.isEmpty()){
-      actionStack.pop().execute(this);
+      Action action = actionStack.pop();
+      action.execute(this);
     }
     limitSpeed();
     limitBounds();
@@ -190,6 +200,14 @@ public class EntityModel {
     updateVelocity.execute(newEntity.getModel());
   }
 
+
+  public void spawnAndBind(String param) {
+    EntityWrapper newEntity = spawnEntity(param);
+    newEntity.getModel().getxProperty().bind(myEntity.getRender().xProperty());
+    newEntity.getModel().getyProperty().bind(myEntity.getRender().yProperty());
+    newEntity.getModel().setForwards(this.getForwards());
+  }
+
   public EntityWrapper spawnEntity(String param) {
     EntityWrapper newEntity = myEntity.spawnEntity(param);
     return newEntity;
@@ -247,4 +265,21 @@ public class EntityModel {
   public void changeImage(String param) {
     myEntity.changeImage(param);
   }
+
+  public void updateScore(double newScore){myEntity.updateScore(newScore);}
+
+  public double getScore(){return myEntity.getScore();}
+
+  public void setOpacity(double parseDouble) {myEntity.getRender().setOpacity(parseDouble);}
+
+  public void setPermeable(boolean parseBoolean) {permeableEntity = parseBoolean;}
+
+  public SimpleDoubleProperty getxProperty(){return xProperty;}
+
+  public SimpleDoubleProperty getyProperty(){return yProperty;}
+
+  public void setConditional(boolean newvalue){conditional = newvalue;}
+
+  public boolean getConditional(){return conditional;}
 }
+

@@ -3,8 +3,6 @@ package ooga.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,11 +13,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ooga.apis.view.ViewExternalAPI;
-import ooga.model.levels.InfiniteLevelBuilder;
-import ooga.util.GameParser;
 import ooga.view.application.Camera;
 import ooga.view.application.menu.InGameMenu;
-import ooga.view.entity.EntityView;
 import ooga.view.gui.managers.StageManager;
 
 public class ViewManager implements ViewExternalAPI {
@@ -43,24 +38,30 @@ public class ViewManager implements ViewExternalAPI {
 
   private Scene testScene;
 
-  public ViewManager(StageManager stageManager, InfiniteLevelBuilder builder, List<EntityWrapper> playerList){
+  public ViewManager(StageManager stageManager, List<EntityWrapper> playerList){
     this.menu = new InGameMenu();
     this.config = new ControlSchemeSwitcher(playerList);
     this.overlay.add(menu);
     this.overlay.add(config);
 
     currentStage = stageManager;
-    setUpScene(builder);
+
+    level = new BorderPane();
+    testPane = level;
+    testScene = currentStage.getCurrentScene();
+    testScene.setRoot(testPane);
+    EntityGroup = new Group();
+    level.getChildren().add(EntityGroup);
+    setUpPane();
+
     this.testScene = stageManager.getCurrentScene();
   }
 
-  private void setUpScene(InfiniteLevelBuilder builder) {
-    level = builder.generateLevel();
+  private void setUpPane(){
+    level = new BorderPane();
     testPane = level;
-
     testScene = currentStage.getCurrentScene();
     testScene.setRoot(testPane);
-
     EntityGroup = new Group();
     level.getChildren().add(EntityGroup);
   }

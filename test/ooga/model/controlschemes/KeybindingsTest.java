@@ -47,7 +47,7 @@ class KeybindingsTest {
     actionBundleList.add(b);
     actionBundleList.add(c);
     actionBundleList.add(d);
-    scheme = new Keybindings(actionBundleList);
+    scheme = new Keyboard(actionBundleList);
   }
 
   @Test

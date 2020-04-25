@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
-import ooga.model.actions.CollisionKey;
+import ooga.model.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.util.config.Parser;

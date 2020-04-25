@@ -12,6 +12,7 @@ public class EntityWrapper {
   private EntityModel myModel;
   private EntityView myView;
   private EntityJSONParser myParser;
+  private double score;
 
   private Controller myController;
 
@@ -77,4 +78,8 @@ public class EntityWrapper {
   }
 
   public void changeImage(String param) {myView.changeImage(param);}
+
+  public void updateScore(double newValue){score = newValue;}
+
+  public double getScore(){return score;}
 }

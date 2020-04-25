@@ -1,13 +1,8 @@
 package ooga.model;
 
 
-import java.sql.Array;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import javafx.util.Pair;
 import ooga.model.actions.Action;
-import ooga.model.actions.CollisionKey;
 import ooga.model.actions.MoveX;
 import ooga.model.actions.MoveY;
 import ooga.model.actions.NoAction;
@@ -57,8 +52,7 @@ public class CollisionEngine {
       for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
         if (noCollisionKey.equals(collisionMapKey)) {
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
-          subjectEntity.getActionStack().push(collisionAction);//.execute(subjectEntity);
-
+          subjectEntity.getActionStack().push(collisionAction);
         }
       }
     }
