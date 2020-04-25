@@ -1,7 +1,7 @@
 package ooga.util;
 
 
-import ooga.util.config.ParameterMissingException;
+import ooga.exceptions.ParameterMissingException;
 import org.json.simple.JSONObject;
 
 public class PhysicsProfile {

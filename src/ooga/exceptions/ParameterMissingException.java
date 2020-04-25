@@ -1,4 +1,4 @@
-package ooga.util.config;
+package ooga.exceptions;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -12,7 +12,13 @@ public class ParameterMissingException extends RuntimeException {
      * Create an exception based on an issue in our code.
      */
     public ParameterMissingException(String message, Object ... values) {
-        super(String.format(message, values));
+        String errorMessage = message + " parameter not found in respective GameSelect.json file! \n" +
+                "NullPointerException" + " would have been caught.\n" +
+                "Loaded default " + message + " instead.";
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Parameter Missing Error");
+        alert.setHeaderText(errorMessage);
+        alert.show();
     }
 
     /**

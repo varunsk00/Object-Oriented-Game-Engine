@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
 import ooga.controller.EntityWrapper;
+
 import ooga.controller.GameController;
+
 import ooga.model.actions.actionExceptions.InvalidActionException;
 import ooga.model.levels.Level;
-import ooga.util.config.ParameterMissingException;
+import ooga.exceptions.ParameterMissingException;
 import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
