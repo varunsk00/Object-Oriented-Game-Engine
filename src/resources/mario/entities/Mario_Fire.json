@@ -1,87 +1,11 @@
 {
-  "actionBundles": [
-    {
-      "Control": [
-        {
-          "param": "300.0",
-          "action": "AccelerateX"
-        },
-        {
-          "param": "true",
-          "action": "SetForwards"
-        }
-      ],
-      "ID": "D"
-    },
-    {
-      "Control": [
-        {
-          "param": "-300.0",
-          "action": "AccelerateX"
-        },
-        {
-          "param": "false",
-          "action": "SetForwards"
-        }
-      ],
-      "ID": "A"
-    },
-    {
-      "Control": [
-        {
-          "param": "-300.0",
-          "action": "AccelerateY"
-        }
-      ],
-      "ID": "W"
-    },
-    {
-      "Control": [
-        {
-          "param": "+300.0",
-          "action": "AccelerateY"
-        }
-      ],
-      "ID": "S"
-    },
-    {
-      "Control": [
-        {
-          "param": "-750.0",
-          "action": "Jump"
-        }
-      ],
-      "ID": "SPACE"
-    },
-    {
-      "Control": [
-        {
-          "param": "mario.Mario_Fireball",
-          "action": "SpawnRelative",
-          "coolDown": "1000"
-        }
-      ],
-      "ID": "F"
-    },
-    {
-      "Control": [
-        {
-          "param": "mario\/images\/fireluigi_walk.gif",
-          "action": "ChangeImage"
-        }
-      ],
-      "ID": "J"
-    },
-    {
-      "Control": [
-        {
-          "param": "mario\/images\/firemario_walk.gif",
-          "action": "ChangeImage"
-        }
-      ],
-      "ID": "K"
-    }
-  ],
+  "image": "firemario_walk.gif",
+  "yPos": 100,
+  "scheme": "Keyboard",
+  "permeable": false,
+  "health": 3,
+  "xPos": 100,
+  "xVel": 10,
   "collisionBundles": [
     {
       "Control": [
@@ -495,17 +419,93 @@
     }
   ],
   "entityName": "Fire_Mario",
-  "fixed": false,
-  "health": 3,
-  "height": 50,
-  "image": "firemario_walk.gif",
   "maxXVel": 500,
-  "maxYVel": 1000,
-  "permeable": false,
-  "scheme": "Keyboard",
   "width": 51,
-  "xPos": 100,
-  "xVel": 10,
-  "yPos": 100,
-  "yVel": 10
+  "fixed": false,
+  "maxYVel": 1000,
+  "yVel": 10,
+  "actionBundles": [
+    {
+      "Control": [
+        {
+          "param": "300.0",
+          "action": "AccelerateX"
+        },
+        {
+          "param": "true",
+          "action": "SetForwards"
+        }
+      ],
+      "ID": "D"
+    },
+    {
+      "Control": [
+        {
+          "param": "-300.0",
+          "action": "AccelerateX"
+        },
+        {
+          "param": "false",
+          "action": "SetForwards"
+        }
+      ],
+      "ID": "A"
+    },
+    {
+      "Control": [
+        {
+          "param": "-300.0",
+          "action": "AccelerateY"
+        }
+      ],
+      "ID": "W"
+    },
+    {
+      "Control": [
+        {
+          "param": "+300.0",
+          "action": "AccelerateY"
+        }
+      ],
+      "ID": "S"
+    },
+    {
+      "Control": [
+        {
+          "param": "-750.0",
+          "action": "Jump"
+        }
+      ],
+      "ID": "SPACE"
+    },
+    {
+      "Control": [
+        {
+          "param": "mario.Mario_Fireball",
+          "action": "SpawnRelative",
+          "coolDown": "1000"
+        }
+      ],
+      "ID": "F"
+    },
+    {
+      "Control": [
+        {
+          "param": "mario\/images\/fireluigi_walk.gif",
+          "action": "ChangeImage"
+        }
+      ],
+      "ID": "J"
+    },
+    {
+      "Control": [
+        {
+          "param": "mario\/images\/firemario_walk.gif",
+          "action": "ChangeImage"
+        }
+      ],
+      "ID": "K"
+    }
+  ],
+  "height": 50
 }

@@ -1,0 +1,20 @@
+{
+  "entityName": "Door",
+  "image": "Door.png",
+  "health": 1,
+  "fixed": true,
+  "permeable": true,
+
+  "xPos": 300,
+  "yPos": 275,
+  "xVel": 0,
+  "yVel": 0,
+  "maxXVel": 0,
+  "maxYVel": 0,
+  "height": 100,
+  "width": 50,
+  "scheme": "NoControls",
+  "actionBundles": [
+
+  ]
+}

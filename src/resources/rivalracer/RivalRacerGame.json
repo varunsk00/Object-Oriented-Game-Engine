@@ -1,11 +1,11 @@
 {
   "gameName": "RivalRacer",
-  "players": "2",
+  "playerCount": "2",
   "physicsProfile": [
     {
-      "Friction": "20",
-      "Drag": "1",
-      "Gravity": "45"
+      "gravity": "45",
+      "drag": "1",
+      "friction": "20"
     }
   ],
   "levelArrangement": [
@@ -27,6 +27,15 @@
         "X": "50",
         "Y": "330"
       }
+    }
+  ],
+  "gameStatusProfile": [
+    {
+      "scrollingStatusY": "0",
+      "spawningInterval": "0",
+      "scrollingStatusX": "1",
+      "levelSpawnOffset": "0",
+      "startingLevelIndex": "0"
     }
   ]
 }
