@@ -1,96 +1,95 @@
 package ooga.util;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Array;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.regex.Pattern;
-import javax.swing.text.html.parser.Entity;
-import ooga.controller.Controller;
+
 import ooga.controller.EntityWrapper;
-import ooga.model.actions.Action;
+
+import ooga.controller.GameController;
+
+import ooga.exceptions.ParameterInvalidException;
 import ooga.model.actions.actionExceptions.InvalidActionException;
-import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
 import ooga.model.levels.Level;
+import ooga.exceptions.ParameterMissingException;
+import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-public class GameParser {
-
-  private String myFileName;
+public class GameParser extends Parser {
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String IMG_FILEPATH = "resources/";
   private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
   private static final String LEVELS_PREFIX = PACKAGE_PREFIX_NAME + "levels.";
   private String fileName;
   private String gameName;
-  private Controller mainController;
+  private GameController mainController;
   private int maxPlayers;
   private int selectedPlayers;
   private List<EntityWrapper> playerList;
+  private boolean loadedGame;
+  private GameStatusProfile gameStatusProfile;
+  private final String DEFAULT_GAME_PATH = "src/resources/gamenamemissing/GameNameMissingGame.json";
+  private JSONObject defaultObj;
 
 
   private JSONObject jsonObject;
 
-  public GameParser(String gameName) {
+  public GameParser(String gameName, GameController controller, boolean loadedGame) {
+    mainController = controller;
     this.gameName = gameName;
+    this.myFileName = DEFAULT_GAME_PATH;
+    defaultObj = (JSONObject) readJsonFile();
     fileName = gameName + "Game";
-    myFileName = TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json"; //fixme I make it lowercase but we could also
+
+    setMyFileName(fileName);
+    this.loadedGame = loadedGame;
+
+    checkLoadGame(this.loadedGame);
     jsonObject = (JSONObject) readJsonFile();
-    selectedPlayers = Integer.parseInt(jsonObject.get("players").toString());
+    gameStatusProfile = parseGameStatusProfile();
+    selectedPlayers = readPlayerCount();
     playerList = parsePlayerEntities();
   }
+  
 
-
-  public GameParser(String gameName, Controller controller) {
-    this(gameName);
-    mainController = controller;
-  }
-
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e) {
-      throw new InvalidControlSchemeException(e);
+  private void checkLoadGame(boolean loadedGame) {
+    if (loadedGame) {
+      setMyFileName(TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json");
+    } else {
+      setMyFileName(TXT_FILEPATH + gameName.toLowerCase() + "/" + fileName + ".json");
     }
   }
+
 
   public List<EntityWrapper> getPlayerList(){
     return playerList;
   }
 
-  public void updateJSONValue(String key, String newValue){
+
+  public void saveGame(String key, JSONArray newValue){
     JSONObject root = jsonObject;
-    String new_val = newValue;
-    String old_val = root.get(key).toString();
+    root.put(key, newValue);
+    root.put("playerCount", jsonObject.get("playerCount"));
+    String filepath = TXT_FILEPATH + gameName.toLowerCase() + "/" + "saves/" + fileName + "Saved" + ".json";
+    try (FileWriter file = new FileWriter(filepath, false)) {
+      file.write(root.toString());
+      System.out.println("Successfully updated json object to file"); }
+    catch (IOException e) {
+      new ParameterInvalidException(e, filepath);   }
+  }
 
-    if(!new_val.equals(old_val))
-    {
-      root.put(key,new_val);
-
-      try (FileWriter file = new FileWriter("src/resources/" + gameName.toLowerCase() + "/" + fileName + ".json", false))
-      {
+  public void updateJSONValue(String key, Object newValue){
+      JSONObject root = jsonObject;
+      root.put(key,newValue);
+      try (FileWriter file = new FileWriter(myFileName, false)) {
         file.write(root.toString());
-        System.out.println("Successfully updated json object to file");
-      } catch (IOException e) {
-        e.printStackTrace();//FIXME: TO AVOID FAILING CLASS
-      }
-    }
+        System.out.println("Successfully updated json object to file"); }
+      catch (IOException e) {
+        new ParameterInvalidException(e, root.toString()); }
   }
 
   private List<String> sortLevelKeySet(Set keySet){
@@ -109,36 +108,54 @@ public class GameParser {
 
   public List<Level> parseLevels() {
     List<Level> levelList = new ArrayList<>();
-    JSONArray levelArrangement = (JSONArray) jsonObject.get("levelArrangement");
-    JSONObject levels = (JSONObject) levelArrangement.get(0);
-    List<String> sortedLevelKeys = sortLevelKeySet(levels.keySet());
-
-
-    for(String levelNumber : sortedLevelKeys){
-      LevelParser parsedLevel = new LevelParser(levels.get(levelNumber).toString(), mainController);
-      String levelType = parsedLevel.readLevelType();
-      List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
-      List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
-      try {
-        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor(List.class, List.class, List.class).newInstance(tiles, playerList, enemies);
-
-        levelList.add(newLevel);
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-          throw new InvalidActionException("Level could not be found."); //TODO: change exception heading
-      }
+    List<String> sortedLevelKeys;
+    JSONObject levels;
+    try {
+      JSONArray levelArrangement = (JSONArray) jsonObject.get("levelArrangement");
+      levels = (JSONObject) levelArrangement.get(0);
+      sortedLevelKeys = sortLevelKeySet(levels.keySet());
     }
+    catch(NullPointerException e){
+      new ParameterMissingException(e, "levelArrangement");
+      levels = new JSONObject();
+      levels.put("Level_1", "gamenamemissing.MissingLevel");
+      sortedLevelKeys = sortLevelKeySet(levels.keySet());
+    }
+    createLevels(levelList, sortedLevelKeys, levels);
 
     return levelList;
   }
 
-
-
+  private void createLevels(List<Level> levelList, List<String> sortedLevelKeys,
+      JSONObject levels) {
+    for(String levelNumber : sortedLevelKeys){
+      String levelName = (String) levels.get(levelNumber);
+      LevelParser parsedLevel = new LevelParser(levelName, mainController);
+      String levelType = parsedLevel.readLevelType();
+      List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
+      List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
+      try {
+        System.out.println("yeet");
+        Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor
+            (List.class, List.class, List.class, GameStatusProfile.class, String.class).newInstance(tiles, playerList, enemies, gameStatusProfile, levelName);
+        levelList.add(newLevel);
+      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        throw new InvalidActionException("Level could not be found."); //TODO: change exception heading
+      }
+    }
+  }
 
   private List<EntityWrapper> parsePlayerEntities() {
     JSONArray playerArrangement = (JSONArray) jsonObject.get("playerArrangement");
     this.maxPlayers = playerArrangement.size();
-    List<EntityWrapper> playerEntityArray = new ArrayList<EntityWrapper>();
+    List<EntityWrapper> playerEntityArray = new ArrayList<>();
 
+    createPlayers(playerArrangement, playerEntityArray);
+
+    return playerEntityArray;
+  }
+
+  private void createPlayers(JSONArray playerArrangement, List<EntityWrapper> playerEntityArray) {
     for(int i = 0; i < selectedPlayers; i++){ //TODO: DISCUSS TREATING SINGLEPLAYER MARIO AND MULTIPLAYER MARIO AS DIFF GAMES WITH DIFF DATA FILES
       JSONObject playerInfo = (JSONObject) playerArrangement.get(i);
       String entityName = playerInfo.get("EntityName").toString();
@@ -148,8 +165,6 @@ public class GameParser {
       newPlayer.getModel().setY(Double.parseDouble(playerLocation.get("Y").toString()));
       playerEntityArray.add(newPlayer);
     }
-
-    return playerEntityArray;
   }
 
   public PhysicsProfile parsePhysicsProfile() {
@@ -157,6 +172,17 @@ public class GameParser {
     JSONObject physicsConstants = (JSONObject) physicsArray.get(0);
     PhysicsProfile gamePhysics = new PhysicsProfile(physicsConstants);
     return gamePhysics;
+  }
+
+  public GameStatusProfile parseGameStatusProfile() {
+    JSONArray gameStatusArray = (JSONArray) jsonObject.get("gameStatusProfile");
+    JSONObject gameStatusVariables = (JSONObject) gameStatusArray.get(0);
+    GameStatusProfile gameVariables = new GameStatusProfile(gameStatusVariables);
+    return gameVariables;
+  }
+
+  public int readPlayerCount() {
+    return Integer.parseInt(jsonObject.get("playerCount").toString());
   }
 
 }

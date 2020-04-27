@@ -1,35 +1,31 @@
 package ooga.view.application;
 
 import java.util.List;
-import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import jdk.swing.interop.SwingInterOpUtils;
 import ooga.controller.EntityWrapper;
 
 public class Camera {
-  private double xPosition;
-  private double yPosition;
   private Rectangle viewPort;
   private List<EntityWrapper> target;
   private Stage myStage;
-  private Pane myLevel;
+  private int scrollingStatusX;
+  private int scrollingStatusY;
+  private double centerY;
+  private double centerX;
 
-  public Camera(Stage stage, Pane level, List<EntityWrapper> focus){
-    xPosition = 0;
-    yPosition = 0;
+
+  public Camera(Stage stage, Pane level, List<EntityWrapper> focus, int scrollIntX, int scrollIntY){
+    scrollingStatusX = scrollIntX;
+    scrollingStatusY = scrollIntY;
     viewPort = new Rectangle();
     viewPort.widthProperty().bind(stage.widthProperty());
     viewPort.heightProperty().bind(stage.heightProperty());
 
     target = focus;
     myStage = stage;
-    myLevel = level;
 
     level.setClip(viewPort);
 
@@ -45,11 +41,14 @@ public class Camera {
 
   public Rectangle getViewPort(){return viewPort;}
 
-  public void update(VBox menu){
-//    viewPort.setX(boundPosition(target.getBoundsInParent().getMinX()-myStage.getWidth()/2, 0, (-1*myLevel.getTranslateX())+2));
-    //note: try to get level width working
-    viewPort.setX(boundPosition(getCenterOfPlayers()-myStage.getWidth()/2, 0, (999999)));
-    menu.setTranslateX(viewPort.getX());
+  public void update(List<Node> menu){
+    getCenterOfPlayers();
+    viewPort.setX(boundPosition(scrollingStatusX * (centerX -myStage.getWidth()/2), 0, Double.POSITIVE_INFINITY));
+    viewPort.setY(boundPosition(scrollingStatusY * (centerY -myStage.getHeight()/2), Double.NEGATIVE_INFINITY, 0));
+    for(Node item: menu){
+      item.setTranslateX(viewPort.getX());
+      item.setTranslateY(viewPort.getY());
+    }
     boundPlayers();
   }
 
@@ -59,22 +58,24 @@ public class Camera {
         player.getModel().setBoundedLeft(true);
       } else if(player.getRender().getBoundsInParent().getMaxX() >= viewPort.getBoundsInParent().getMaxX()){
         player.getModel().setBoundedRight(true);
+      } else if(player.getRender().getBoundsInParent().getMaxY() >= viewPort.getBoundsInParent().getMaxY()){
+        player.getModel().setBoundedBelow(true);
+      } else if(player.getRender().getBoundsInParent().getMinY() <= viewPort.getBoundsInParent().getMinY()){
+        player.getModel().setBoundedTop(true);
       }
     }
   }
 
-//  private boolean withinBounds(){
-//    for(EntityWrapper player : target){
-//      if(player.getRender().getBoundsInParent().getMinX())
-//    }
-//  }
 
-  private double getCenterOfPlayers(){
-    double sum = 0;
+  private void getCenterOfPlayers(){
+    centerY = 0;
+    centerX = 0;
     for(int i = 0; i < target.size(); i++){
-        sum += target.get(i).getRender().getBoundsInParent().getCenterX();
+      centerY += target.get(i).getRender().getBoundsInParent().getCenterY();
+      centerX += target.get(i).getRender().getBoundsInParent().getCenterX();
     }
-    sum /= target.size();
-    return sum;
+    centerY /= target.size();
+    centerX /= target.size();
   }
+
 }

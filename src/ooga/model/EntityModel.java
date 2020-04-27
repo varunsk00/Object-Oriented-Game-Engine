@@ -1,28 +1,31 @@
 package ooga.model;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import javafx.scene.input.KeyEvent;
+import javafx.beans.property.SimpleDoubleProperty;
 import ooga.controller.EntityWrapper;
 import ooga.model.actions.AbsoluteVelocityX;
-import ooga.model.actions.AccelerateX;
 import ooga.model.actions.Action;
-import ooga.model.actions.CollisionKey;
 import ooga.model.controlschemes.ControlScheme;
 
+/**
+ *
+ */
 public class EntityModel {
   private EntityWrapper myEntity;
   private boolean forwards;
+  private SimpleDoubleProperty xProperty;
+  private SimpleDoubleProperty yProperty;
   private double entityWidth;
   private double entityHeight;
   private double xPos;
   private double yPos;
+  private double xVel;
+  private double yVel;
+
   private double health;
   private double xVelMax;
   private double yVelMax;
-  private boolean levelAdvancementStatus;
-  private int nextLevelIndex;
   private String entityID;
   private boolean fixedEntity;
   private boolean permeableEntity;
@@ -31,13 +34,10 @@ public class EntityModel {
   private boolean boundedRight;
   private boolean boundedTop;
 
-  private double xVel;
-  private double yVel;
-
   private ControlScheme controlScheme;
   private Stack<Action> actionStack;
-  private Map<String, Action> myActions;
   private Map<CollisionKey, Action> myCollisions;
+  private boolean conditional;
 
   public EntityModel(EntityWrapper entityWrapper) {
     myEntity = entityWrapper;
@@ -46,15 +46,23 @@ public class EntityModel {
     myCollisions = myEntity.getParser().parseCollisions();
     loadStats();
     actionStack = new Stack<>();
-    myActions = new HashMap<String, Action>();
     forwards = true;
+    xProperty = new SimpleDoubleProperty(xPos);
+    xProperty.addListener(((observable, oldValue, newValue) -> {
+      xPos = (double) newValue;
+    }));
+    yProperty = new SimpleDoubleProperty(yPos);
+    yProperty.addListener((((observable, oldValue, newValue) -> {
+      yPos = (double) newValue;
+    })));
     boundedLeft = false;
     boundedRight = false;
     boundedTop = false;
     boundedBelow = false;
+    conditional = true;
   }
 
-  private void loadStats() {
+  public void loadStats() {
     entityWidth = myEntity.getParser().readWidth();
     entityHeight = myEntity.getParser().readHeight();
     xPos = myEntity.getParser().readXPosition();
@@ -62,19 +70,17 @@ public class EntityModel {
     xVelMax = myEntity.getParser().readMaxXVelocity();
     yVelMax = myEntity.getParser().readMaxYVelocity();
     health = myEntity.getParser().readHealth();
-    xVelMax = myEntity.getParser().readXVelMax();
-    yVelMax = myEntity.getParser().readYVelMax();
     fixedEntity = myEntity.getParser().readFixed();
     permeableEntity = myEntity.getParser().readPermeable();
   }
 
   public void update(double elapsedTime){
-    //TODO: change this ground status checker to be implemented in collisions with the top of a block
     for (Action action : controlScheme.getCurrentAction()) {
       actionStack.push(action);
     }
     while(!actionStack.isEmpty()){
-      actionStack.pop().execute(this);
+      Action action = actionStack.pop();
+      action.execute(this);
     }
     limitSpeed();
     limitBounds();
@@ -87,17 +93,17 @@ public class EntityModel {
   }
 
   private void limitBounds() {
-    if(boundedRight){
-      if(xVel>0){xVel=0;}
+    if(boundedRight && xVel > 0){
+      xVel=0;
     }
-    if(boundedLeft){
-      if(xVel<0){xVel=0;}
+    if(boundedLeft && xVel < 0){
+      xVel=0;
     }
-    if(boundedBelow){
-      if (yVel > 0) {yVel=0;}
+    if(boundedBelow && yVel > 0){
+      yVel=0;
     }
-    if(boundedTop){
-      if (yVel < 0) {yVel = 0;}
+    if(boundedTop && yVel < 0){
+      yVel = 0;
     }
   }
 
@@ -109,21 +115,12 @@ public class EntityModel {
     controlScheme.handleKeyReleased(key);
   }
 
-  public void handleControllerInputPressed(String key) {
-    if (key != null) {
-      System.out.println(key);
-      controlScheme.handleKeyInput(key);
-    }
-  }
-  public void handleControllerInputReleased(String key) {
-    if (key != null) {
-      controlScheme.handleKeyReleased(key);
-    }
-  }
-
   private void limitSpeed(){
     if(Math.abs(xVel) > xVelMax){
       setXVelocity(Math.signum(xVel) * xVelMax);
+    }
+    if(Math.abs(yVel)>yVelMax){
+      setYVelocity(Math.signum(yVel)*yVelMax);
     }
   }
 
@@ -135,19 +132,11 @@ public class EntityModel {
 
   public void setY(double newY){yPos = newY;}
 
-  public void setLevelAdvancementStatus(boolean newStatus){levelAdvancementStatus = newStatus;}
-
-  public void setNextLevelIndex(int levelIndex){nextLevelIndex = levelIndex;}
-
-  public boolean getLevelAdvancementStatus(){return levelAdvancementStatus;}
-
-  public int getNextLevelIndex(){return nextLevelIndex;}
-
-
+  public void changeLevel(int levelIndex){myEntity.changeLevel(levelIndex);}
+  
   public double getWidth(){return entityWidth;}
 
   public double getHeight(){return entityHeight;}
-
 
   public double getXVelocity(){return xVel;}
 
@@ -186,11 +175,17 @@ public class EntityModel {
     updateVelocity.execute(newEntity.getModel());
   }
 
-  public EntityWrapper spawnEntity(String param) {
-    EntityWrapper newEntity = myEntity.spawnEntity(param);
-    return newEntity;
+
+  public void spawnAndBind(String param) {
+    EntityWrapper newEntity = spawnEntity(param);
+    newEntity.getModel().getXProperty().bind(myEntity.getRender().xProperty());
+    newEntity.getModel().getYProperty().bind(myEntity.getRender().yProperty());
+    newEntity.getModel().setForwards(this.getForwards());
   }
 
+  public EntityWrapper spawnEntity(String param) {return myEntity.spawnEntity(param);}
+
+  public void despawnEntity() {myEntity.despawnEntity();}
 
   public boolean getForwards() {return forwards;}
 
@@ -217,4 +212,37 @@ public class EntityModel {
   public void setBoundedTop(boolean value) {boundedTop = value;}
 
   public boolean isPermeable(){return permeableEntity;}
+
+  public double getHealth() {
+    return health;
+  }
+
+  public void setHealth() {
+    health = myEntity.getParser().readHealth();
+  }
+
+  public void loseHealth(int loss) {
+    health-=loss;
+  }
+
+  public void changeImage(String param) {
+    myEntity.changeImage(param);
+  }
+
+  public void updateScore(double newScore){myEntity.updateScore(newScore);}
+
+  public double getScore(){return myEntity.getScore();}
+
+  public void setOpacity(double parseDouble) {myEntity.getRender().setOpacity(parseDouble);}
+
+  public void setPermeable(boolean parseBoolean) {permeableEntity = parseBoolean;}
+
+  public SimpleDoubleProperty getXProperty(){return xProperty;}
+
+  public SimpleDoubleProperty getYProperty(){return yProperty;}
+
+  public void setConditional(boolean newvalue){conditional = newvalue;}
+
+  public boolean getConditional(){return conditional;}
 }
+

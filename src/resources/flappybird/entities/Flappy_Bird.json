@@ -1,128 +1,154 @@
 {
-  "entityName": "Flappy Bird",
   "image": "flappy_bird.png",
-  "health": 1,
-  "xPos": 100,
   "yPos": 100,
-  "xVel": 10,
-  "yVel": 10,
-  "maxXVel": 1000,
-  "maxYVel": 100,
-  "height": 100,
-  "width": 100,
-  "fixed": false,
+  "scheme": "Keyboard",
   "permeable": false,
-  "scheme": "Keybindings",
-  "actionBundles": [
-    {
-      "ID": "D",
-      "Control": [
-        {
-          "action": "MoveX",
-          "param": "15.0"
-        },
-        {
-          "action": "SetXDirection",
-          "param": "forwards"
-        }
-      ]
-    },
-    {
-      "ID": "A",
-      "Control": [
-        {
-          "action": "MoveX",
-          "param": "-15.0"
-        },
-        {
-          "action": "SetXDirection",
-          "param": "backwards"
-        }
-      ]
-    },
-    {
-      "ID": "W",
-      "Control": [
-        {
-          "action": "MoveY",
-          "param": "-25"
-        }
-      ]
-    },
-    {
-      "ID": "S",
-      "Control": [
-        {
-          "action": "MoveY",
-          "param": "+15.0"
-        }
-      ]
-    },
-    {
-      "ID": "SPACE",
-      "Control": [
-        {
-          "action": "InfiniteJump",
-          "param": "-500.0",
-          "cooldown": "1000.0"
-        },
-        {
-          "action": "VelocityX",
-          "param": "200.0"
-        }
-      ]
-    },
-    {
-      "ID": "F",
-      "Control": [
-        {
-          "action": "SpawnRelative",
-          "param": "Mario_Fireball",
-          "coolDown": "1000"
-        }
-      ]
-    }
-  ],
+  "health": 100,
+  "xPos": 100,
+  "xVel": 10,
+  "maxXVel": 1000,
+  "width": 50,
+  "height": 50,
+  "maxYVel": 1000,
+  "fixed": false,
+  "yVel": 10,
+  "entityName": "Flappy Bird",
   "collisionBundles": [
     {
-      "ID": "flappybird.ClearLevelSwitchBlock",
       "Control": [
         {
-          "action": "RandomLevelSwitch",
+          "orientation": "E",
           "param": "5",
-          "orientation": "E"
+          "action": "RandomLevelSwitch"
         }
-      ]
+      ],
+      "ID": "flappybird.ClearLevelSwitchBlock"
     },
     {
-      "ID": "flappybird.Brick",
       "Control": [
         {
-          "action": "MoveX",
-          "param": "0",
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "1",
           "orientation": "W"
         }
-      ]
+      ],
+      "ID": "flappybird.Pipebody"
     },
     {
-      "ID": "flappybird.Brick",
       "Control": [
         {
-          "action": "MoveY",
-          "param": "-100.0",
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "1",
+          "orientation": "W"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "1",
+          "orientation": "N"
+        }
+      ],
+      "ID": "flappybird.Pipetop"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "1",
+          "orientation": "W"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "action": "LoseHealth",
+          "param": "1",
           "orientation": "S"
         }
-      ]
-    },
+      ],
+      "ID": "flappybird.Pipebottom"
+    }
+  ],
+
+  "actionBundles": [
     {
-      "ID": "flappybird.Pipebody",
       "Control": [
         {
-          "action": "MoveX",
-          "param": "-50",
-          "orientation": "W"
+          "param": "15.0",
+          "action": "MoveX"
+        },
+        {
+          "param": "true",
+          "action": "SetForwards"
         }
-      ]
+      ],
+      "ID": "D"
+    },
+    {
+      "Control": [
+        {
+          "param": "-15.0",
+          "action": "MoveX"
+        },
+        {
+          "param": "false",
+          "action": "SetForwards"
+        }
+      ],
+      "ID": "A"
+    },
+    {
+      "Control": [
+        {
+          "param": "-25",
+          "action": "MoveY"
+        }
+      ],
+      "ID": "W"
+    },
+    {
+      "Control": [
+        {
+          "param": "+15.0",
+          "action": "MoveY"
+        }
+      ],
+      "ID": "S"
+    },
+    {
+      "Control": [
+        {
+          "param": "-500.0",
+          "cooldown": "1000.0",
+          "action": "InfiniteJump"
+        },
+        {
+          "param": "200.0",
+          "action": "VelocityX"
+        }
+      ],
+      "ID": "SPACE"
     }
   ]
 }

@@ -1,0 +1,34 @@
+{
+  "levelType": "FiniteLevel",
+  "players": "2",
+  "tileArrangement": [
+    {
+      "EntityName": "unittest.FixedTestEntity3",
+      "Arrangement": [
+        {
+          "3": [
+            "0"
+          ]
+        }
+      ]
+    }
+  ],
+  "levelName": "testLevel1",
+  "playerArrangement": [
+  ],
+  "tileWidth": 50,
+  "tileHeight": 50,
+  "enemyArrangement": [
+    {
+      "EntityName": "unittest.FixedTestEntity2",
+      "Arrangement": [
+        {
+          "12": [
+            "1000", "1001",
+            "1100"
+          ]
+        }
+      ]
+    }
+  ]
+}

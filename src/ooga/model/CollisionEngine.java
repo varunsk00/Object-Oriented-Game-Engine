@@ -1,13 +1,8 @@
 package ooga.model;
 
 
-import java.sql.Array;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import javafx.util.Pair;
 import ooga.model.actions.Action;
-import ooga.model.actions.CollisionKey;
 import ooga.model.actions.MoveX;
 import ooga.model.actions.MoveY;
 import ooga.model.actions.NoAction;
@@ -32,22 +27,15 @@ public class CollisionEngine {
       Map.entry(THREE, TOP)
       );
 
-  public CollisionEngine() {
-    //TODO: do I need a parameter to the constructor?
-    //if this doesnt need to construct anything, consider making it static? -- alex
-  }
+  public CollisionEngine() {}
 
   public void produceCollisionActions(EntityModel subjectEntity, EntityModel targetEntity) {
     Map<CollisionKey, Action> subjectEntityCollisionMap = subjectEntity.getCollisionMap();
     if (!subjectEntity.equals(targetEntity) && detectCollision(subjectEntity, targetEntity)) {
-      //move it outside
       moveEntityOut(subjectEntity, targetEntity);
-
-
       String targetEntityID = targetEntity.getEntityID();
       String targetEntityCollisionSide = determineTargetEntityCollisionSide(subjectEntity,
           targetEntity);
-
       CollisionKey targetEntityCollisionKey = new CollisionKey(targetEntityID,
           targetEntityCollisionSide);
       for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
@@ -62,8 +50,7 @@ public class CollisionEngine {
       for (CollisionKey collisionMapKey : subjectEntityCollisionMap.keySet()) {
         if (noCollisionKey.equals(collisionMapKey)) {
           Action collisionAction = subjectEntityCollisionMap.get(collisionMapKey);
-          subjectEntity.getActionStack().push(collisionAction);//.execute(subjectEntity);
-
+          subjectEntity.getActionStack().push(collisionAction);
         }
       }
     }

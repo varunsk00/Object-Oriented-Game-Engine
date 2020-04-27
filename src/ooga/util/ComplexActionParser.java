@@ -6,42 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionFactory;
-import ooga.model.actions.CollisionKey;
 import ooga.model.controlschemes.controlSchemeExceptions.InvalidControlSchemeException;
+import ooga.util.config.Parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
-public class ComplexActionParser {
-  private String myFileName;
+public class ComplexActionParser extends Parser {
   private static final String TXT_FILEPATH = "src/resources/";
-  private static final String IMG_FILEPATH = "resources/";
-  private static final String PACKAGE_PREFIX_NAME = "ooga.model.";
-  private static final String ACTIONS_PREFIX = PACKAGE_PREFIX_NAME + "actions.";
-  private static final String CONTROLS_PREFIX = PACKAGE_PREFIX_NAME + "controlschemes.";
 
   private JSONObject jsonObject;
 
   public ComplexActionParser(String gameName, String fileName) {
-    myFileName = TXT_FILEPATH + gameName + "/" + "complexactions/" + fileName + ".json";
+    setMyFileName(TXT_FILEPATH + gameName + "/" + "complexactions/" + fileName + ".json");
     jsonObject = (JSONObject) readJsonFile();
   }
 
-  //FIXME add error handling
-  public Object readJsonFile() {
-    try {
-      FileReader reader = new FileReader(myFileName);
-      JSONParser jsonParser = new JSONParser();
-      return jsonParser.parse(reader);
-    } catch (IOException | ParseException e){
-      throw new InvalidControlSchemeException(e);
-    }
-  }
 
   public List<Action> createComplexAction(){
-    List<Action> output = new ArrayList<Action>();
+    List<Action> output = new ArrayList<>();
     JSONArray actionArray = (JSONArray) jsonObject.get("actionList");
     if(actionArray != null) {
 
@@ -50,10 +35,15 @@ public class ComplexActionParser {
         ActionFactory actionFactory = new ActionFactory();
         String actionName = (String) actionEntry.get("action");
         String paramName = (String) actionEntry.get("param");
-        String orientation = (String) actionEntry.get("duration");
-
-        Action newAction = actionFactory
-            .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
+        String duration = (String) actionEntry.get("duration");
+        Action newAction = null;
+        if(duration != null){
+          newAction = actionFactory
+              .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName, duration});
+        } else {
+          newAction = actionFactory
+              .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
+        }
         output.add(newAction);
       }
     }

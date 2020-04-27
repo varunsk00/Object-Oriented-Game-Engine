@@ -1,17 +1,26 @@
 {
   "gameName": "FlappyBird",
-  "players": "1",
+  "playerCount": "1",
+  "gameStatusProfile": [
+    {
+      "scrollingStatusX" : "1",
+      "scrollingStatusY" : "0",
+      "spawningInterval" : "500",
+      "levelSpawnOffset": "2",
+      "startingLevelIndex": "0"
+    }
+  ],
   "physicsProfile": [
     {
-      "Friction": "0",
-      "Drag": "0",
-      "Gravity": "20"
+      "friction": "0",
+      "drag": "0",
+      "gravity": "20"
     }
   ],
   "levelArrangement": [
     {
-      "Level_2": "flappybird.Pipe2",
       "Level_1": "flappybird.Pipe1",
+      "Level_2": "flappybird.Pipe2",
       "Level_4": "flappybird.Pipe4",
       "Level_3": "flappybird.Pipe3",
       "Level_5": "flappybird.Pipe5"

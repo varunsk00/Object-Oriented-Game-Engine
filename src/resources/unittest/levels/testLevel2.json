@@ -1,0 +1,35 @@
+{
+  "levelType": "FiniteLevel",
+  "players": "2",
+  "tileArrangement": [
+    {
+      "EntityName": "mario.MarioFlagTop",
+      "Arrangement": [
+        {
+          "3": [
+            "199"
+          ]
+        }
+      ]
+    }
+  ],
+  "levelName": "testLevel2",
+  "playerArrangement": [
+  ],
+  "tileWidth": 50,
+  "tileHeight": 50,
+  "enemyArrangement": [
+    {
+      "EntityName": "mario.Goomba",
+      "Arrangement": [
+        {
+          "12": [
+            "20",
+            "39",
+            "134"
+          ]
+        }
+      ]
+    }
+  ]
+}

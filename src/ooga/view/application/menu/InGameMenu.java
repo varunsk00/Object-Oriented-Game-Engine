@@ -1,39 +1,44 @@
 package ooga.view.application.menu;
 
-import javafx.geometry.Pos;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
+
+import java.util.ResourceBundle;
 
 public class InGameMenu extends VBox{
-    private boolean rightPressed;
+    private final String RESOURCES_PACKAGE = "resources.guiText";
+    private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
+    private final String DEFAULT_MENU_TEXT = myResources.getString("defaultStatus");
+    private final int SCENE_WIDTH = 1280;
+    private final int SCROLL_DURATION = 10;
+    private boolean savePressed;
     private boolean controlsPressed;
     private boolean resumePressed;
     private boolean exitPressed;
+    private boolean rebootPressed;
     private VBox myButtons;
+    private Text gameResult;
 
-    /**
-     * Constructor that sets Resource Bundle and initializes all initial states of buttons      *
-     * * Button states are initially False; ComboBox states have a defined initial String      *
-     * * @param language the current language passed in from ParserController      * @throws
-     * FileNotFoundException in case the File does not exist
-     */
-    public InGameMenu(String currentGame) {
-        this.rightPressed = false;
+    public InGameMenu() {
+        this.savePressed = false;
         this.controlsPressed = false;
         this.exitPressed = false;
         this.resumePressed = false;
+        this.rebootPressed = false;
         renderButtons();
-        getChildren().add(myButtons);
-    }
-
-    /**
-     * @return the JavaFX HBox that contains all the buttons
-     */
-    public VBox getVBox() {
-        return myButtons;
+        this.gameResult = new Text(DEFAULT_MENU_TEXT);
+        this.gameResult.setId("status");
+        scrollText(this.gameResult);
+        getChildren().addAll(myButtons, gameResult);
     }
 
     public boolean getResumePressed() {
@@ -44,7 +49,6 @@ public class InGameMenu extends VBox{
         resumePressed = false;
     }
 
-
     public boolean getExitPressed() {
         return exitPressed;
     }
@@ -53,12 +57,20 @@ public class InGameMenu extends VBox{
         exitPressed = false;
     }
 
-    public boolean getRightPressed() {
-        return rightPressed;
+    public boolean getSavePressed() {
+        return savePressed;
     }
 
-    public void setRightOff() {
-        rightPressed = false;
+    public void setSaveOff() {
+        savePressed = false;
+    }
+
+    public boolean getRebootPressed() {
+        return rebootPressed;
+    }
+
+    public void setRebootOff() {
+        rebootPressed = false;
     }
 
     public boolean getControlsPressed() {
@@ -69,32 +81,64 @@ public class InGameMenu extends VBox{
         controlsPressed = false;
     }
 
-    /**
-     * Creates and initializes all Buttons based on Regex Values
-     */
     private void renderButtons() {
         myButtons = new VBox();
-        Button ResumeButton = makeButton(" Resume ", event -> resumePressed = true);
-        Button DownButton = makeButton("Setting 2", event -> rightPressed = true);
-        Button ControlsButton = makeButton(" Controls ", event -> controlsPressed = true);
-        Button ExitButton = makeButton("Go Home", event -> exitPressed = true);
-        myButtons.setTranslateX(590);
-        myButtons.setSpacing(70); //FIXME: MAGIC NUMBER
-        myButtons.getChildren().addAll(ResumeButton, DownButton, ControlsButton, ExitButton);
-        formatButton(ResumeButton);
-        formatButton(DownButton);
-        formatButton(ControlsButton);
-        formatButton(ExitButton);
+        Button resumeButton = makeButton(myResources.getString("Play"), event -> resumePressed = true);
+
+        Button saveButton = makeButton(myResources.getString("Save"), event -> savePressed = true);
+        Button controlsButton = makeButton(myResources.getString("Config"), event -> controlsPressed = true);
+        Button exitButton = makeButton(myResources.getString("Exit"), event -> exitPressed = true);
+        Button restartButton = makeButton(myResources.getString("Reboot"), event -> rebootPressed = true);
+        myButtons.getChildren().addAll(resumeButton, saveButton, controlsButton, exitButton, restartButton);
+        formatButton(resumeButton);
+        formatButton(saveButton);
+        formatButton(controlsButton);
+        formatButton(exitButton);
+        formatButton(restartButton);
     }
 
     private Button makeButton(String key, EventHandler e) {
         Button tempButton = new Button(key);
-        //tempButton.setMaxWidth(Double.MAX_VALUE);
         tempButton.setOnAction(e);
+        String id = key.toLowerCase().replace(" ", "");
+        tempButton.setId(id);
         return tempButton;
     }
 
     private void formatButton(Button tempButton) {
         myButtons.setVgrow(tempButton, Priority.ALWAYS);
     }
+
+    public void updateGameResult(String status) {
+        this.gameResult = new Text(status);
+        this.gameResult.setId("status");
+        if(!getStatus().equals(DEFAULT_MENU_TEXT)) {
+            this.gameResult = moveToCenter(gameResult); }
+        scrollText(this.gameResult);
+        getChildren().set(getChildren().size() - 1, this.gameResult);
+    }
+
+    private Text moveToCenter(Text oldMessage){
+        Text newMessage = new Text(oldMessage.getText());
+        newMessage.setId("centerStatus");
+        return newMessage;
+    }
+
+    public String getStatus() {
+        return gameResult.getText();
+    }
+
+    private void scrollText(Text status){
+        KeyValue initKeyValue = new KeyValue(status.translateXProperty(), SCENE_WIDTH);
+        KeyFrame initFrame = new KeyFrame(Duration.ZERO, initKeyValue);
+        KeyValue endKeyValue = new KeyValue(status.translateXProperty(), -2.5*status.getLayoutBounds().getWidth());
+        KeyFrame endFrame = new KeyFrame(Duration.seconds(SCROLL_DURATION), endKeyValue);
+        Timeline timeline = new Timeline(initFrame, endFrame);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+
+
+
 }

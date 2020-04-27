@@ -1,0 +1,38 @@
+{
+  "gameName": "Jumpman",
+  "playerCount": "1",
+  "gameStatusProfile": [
+    {
+      "scrollingStatusX" : "0",
+      "scrollingStatusY" : "1",
+      "spawningInterval" : "300",
+      "levelSpawnOffset": "2",
+      "startingLevelIndex": "0"
+    }
+  ],
+  "physicsProfile": [
+    {
+      "friction": "0",
+      "drag": "5",
+      "gravity": "5"
+    }
+  ],
+  "levelArrangement": [
+    {
+      "Level_1": "jumpman.Platform1",
+      "Level_2": "jumpman.Platform2",
+      "Level_4": "jumpman.Platform3",
+      "Level_3": "jumpman.Platform4",
+      "Level_5": "jumpman.Platform5"
+    }
+  ],
+  "playerArrangement": [
+    {
+      "EntityName": "jumpman.Jump_Man",
+      "Arrangement": {
+        "X": "100",
+        "Y": "100"
+      }
+    }
+  ]
+}

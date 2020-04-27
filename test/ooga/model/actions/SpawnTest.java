@@ -3,9 +3,7 @@ package ooga.model.actions;
 import static org.junit.jupiter.api.Assertions.*;
 
 import javafx.stage.Stage;
-import ooga.controller.Controller;
 import ooga.controller.EntityWrapper;
-import ooga.controller.FinalController;
 import ooga.view.gui.managers.StageManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,6 @@ class SpawnTest extends DukeApplicationTest {
   private String param;
   private Action myAction;
   private EntityWrapper myEntity;
-  private Controller myController;
 
 //  @BeforeEach
 //  void setUp() {

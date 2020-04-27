@@ -11,6 +11,7 @@ public interface ViewInternalAPI {
    * other entity
    * @param newx - the new X position to move to
    * @param newy - the new y position to move to
+   * @param direction - UPDATED: THE DIRECTION THE ENTITY IS FACING
    */
-  void update(double newx, double newy);
+  void update(double newx, double newy, boolean direction);
 }

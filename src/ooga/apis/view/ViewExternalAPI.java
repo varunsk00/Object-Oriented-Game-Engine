@@ -11,17 +11,10 @@ import javax.swing.text.html.parser.Entity;
  */
 public interface ViewExternalAPI {
 
-  /**
-   * Model-called update entity method, which
-   * specifies the entity and where its coordinates should take it.
-   * Called by the model to update specific entities on the view side
-   * @param id - the id of the entity to move
-   * @param newx - the new x coordinate for the entity
-   * @param newy - the new y coordinate for the entity
-   */
-  void updateEntityPosition(int id, double newx, double newy);
 
   /**
+   * @deprecated: removeEntity takes in an EntityWrapper allowing us to
+   * remove both the rendering and the object representing it.
    * Removes an entity from rendering.
    * Called by model in cases such as a character dying, block being destroyed,
    * etc
@@ -30,30 +23,12 @@ public interface ViewExternalAPI {
   void removeEntity(Node node);
 
   /**
+   * @deprecated: replaced by spawnEntity() in MainController class, which takes
+   * in an EntityWrapper to be added instead of just a JFX node.
    * Adds an entity to rendering. Called
    * when a new entity is added to the game
    * (called in parallel to the model)
    */
   void addEntity(Node node);
 
-  /**
-   * Updates the status of a specific entity
-   * with a new value. Used in cases such as
-   * updating the score.
-   * @param id - the entity to be updated
-   * @param newValue - the new value for the entity
-   */
-  void updateEntity(int id, String newValue);
-
-  /**
-   * Sets up the front end side of the game
-   * @param gameSelect : game selected
-   */
-  void setUpGameView(String gameSelect);
-
-  /**
-   * Iterates through all Entities and checks if their renderings are
-   * colliding on screen.
-   */
-  void checkCollisions();
 }

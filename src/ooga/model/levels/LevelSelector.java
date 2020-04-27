@@ -2,66 +2,86 @@ package ooga.model.levels;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
 import ooga.controller.ViewManager;
-import ooga.model.EntityModel;
+import ooga.util.GameStatusProfile;
+import ooga.view.application.Camera;
 
 public class LevelSelector {
 
   private List<Level> parsedLevels;
   private Level activeLevel;
+  private int spawningInterval;
+  private GameStatusProfile gameStatusProfile;
+  private Camera gameCamera;
+  private List<EntityWrapper> playerList;
+  private static final int ORIGINAL_LEVEL_INTERVAL = -1;
+  private static final int CAMERA_BUFFER = 500;
 
-
-  private static final int spawningInterval = 500;
-  private int currentPlayerInterval = -1;
-
-
-  public LevelSelector(List<Level> levelList){
+  public LevelSelector(List<Level> levelList, List<EntityWrapper> players, GameStatusProfile gameProfile, Camera camera){
     parsedLevels = levelList;
-    activeLevel = parsedLevels.get(0);
+    playerList = players;
+    gameStatusProfile = gameProfile;
+    gameCamera = camera;
+    spawningInterval = gameStatusProfile.readSpawningInterval();
+    int startingLevelIndex = gameStatusProfile.readStartingLevelIndex();
+    activeLevel = parsedLevels.get(startingLevelIndex);
   }
 
-  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, ViewManager viewManager) {
-//    System.out.println(currentEntityList.size());
-    if (currentEntityList.get(0).getModel().getLevelAdvancementStatus()) {
-      //TODO: find a better way that the interval to spawn pipes only once
-      currentEntityList.get(0).getModel().setLevelAdvancementStatus(false);
-      switchLevel(currentEntityList.get(0).getModel().getNextLevelIndex());
-      activeLevel.setCurrentPlayerInterval(calculatePlayerInterval(currentEntityList.get(0)));
+  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn){
+    activeLevel.spawnEntities(currentEntityList);
+    this.despawnEntities(currentEntityList, entitiesToDespawn);
+  }
+
+  public void changeCurrentLevel(int nextLevel, EntityWrapper player) {
+    switchLevel(nextLevel);
+    activeLevel.setCurrentPlayerInterval(activeLevel.calculatePlayerInterval(player));
+  }
+
+  public void resetLevel(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn) {
+    for(EntityWrapper player : playerList) {
+      player.getModel().setHealth();
+      player.getModel().loadStats();
     }
-    activeLevel.spawnEntities(currentEntityList, viewManager);
-    activeLevel.despawnEntities(currentEntityList, viewManager);
-//    this.despawnEntities(currentEntityList, viewManager);
-
+    despawnAllEntities(currentEntityList, entitiesToDespawn);
+    this.updateCurrentLevel(currentEntityList, entitiesToDespawn);
+    for(Level level : parsedLevels){
+      level.setCurrentPlayerInterval(ORIGINAL_LEVEL_INTERVAL);
+    }
   }
+
 
   private void switchLevel(int levelIndex){
     activeLevel = parsedLevels.get(levelIndex);
   }
 
-  private int calculatePlayerInterval(EntityWrapper player) {
-    return (int) player.getModel().getX()
-        / spawningInterval; //TODO: generalize for X and Y scrollers
-  }
-//TODO: decide whether or not to have despawning done by level selector or levels (actually has
-// nothing pertaining to individual levels.
-  private void despawnEntities(List<EntityWrapper> currentEntityList, ViewManager viewManager){
-      List<EntityWrapper> entitiesToDespawn = new ArrayList<>();
-      for (EntityWrapper targetEntity : currentEntityList) {
-        if (!currentEntityList.get(0).equals(targetEntity) && !isInRange(currentEntityList.get(0).getModel(), targetEntity.getModel())) {
-          entitiesToDespawn.add(targetEntity);
-        }
-      }
-      for(EntityWrapper despawnedEntity : entitiesToDespawn){
-        currentEntityList.remove(despawnedEntity);
-        viewManager.removeEntityGroup(despawnedEntity.getRender());
+  private void despawnAllEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn) {
+    for (EntityWrapper targetEntity : currentEntityList) {
+      if (!playerList.contains(targetEntity)) {
+        entitiesToDespawn.add(targetEntity);
       }
     }
 
-  private boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity){
-    if(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), 2) + Math.pow(subjectEntity.getY() - targetEntity.getY(), 2)) < 1500){
-      return true;
-    }
-    return false;
   }
+
+  private void despawnEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn){
+    for (EntityWrapper targetEntity : currentEntityList) {
+      if (!playerList.contains(targetEntity) && !isInRangeofCamera(targetEntity)) {
+        entitiesToDespawn.add(targetEntity);
+      }
+    }
+  }
+
+  public List<Level> getParsedLevels() {
+    return parsedLevels.subList(parsedLevels.indexOf(activeLevel), parsedLevels.size());
+  }
+
+  private boolean isInRangeofCamera(EntityWrapper targetEntity){
+    return targetEntity.getModel().getX() < gameCamera.getViewPort().getBoundsInParent().getMaxX() + CAMERA_BUFFER &&
+        targetEntity.getModel().getX() > gameCamera.getViewPort().getBoundsInParent().getMinX() - CAMERA_BUFFER &&
+        targetEntity.getModel().getY() < gameCamera.getViewPort().getBoundsInParent().getMaxY() + CAMERA_BUFFER &&
+        targetEntity.getModel().getY() > gameCamera.getViewPort().getBoundsInParent().getMinY() - CAMERA_BUFFER;
+  }
+
 }

@@ -1,17 +1,16 @@
 {
-  "gameName": "Mario",
-  "players": "1",
+  "gameName": "Smash",
+  "playerCount": "1",
   "physicsProfile": [
     {
-      "Friction": "50",
-      "Drag": "50",
-      "Gravity": "50"
+      "gravity": "10",
+      "drag": "1",
+      "friction": "20"
     }
   ],
   "levelArrangement": [
     {
-      "Level_2": "Level2",
-      "Level_1": "MarioLevel"
+      "Level_1": "smash.finaldestination"
     }
   ],
   "playerArrangement": [
@@ -21,13 +20,15 @@
         "X": "100",
         "Y": "100"
       }
-    },
+    }
+  ],
+  "gameStatusProfile": [
     {
-      "EntityName": "smash.link",
-      "Arrangement": {
-        "X": "0",
-        "Y": "100"
-      }
+      "scrollingStatusY": "1",
+      "spawningInterval": "0",
+      "scrollingStatusX": "1",
+      "levelSpawnOffset": "0",
+      "startingLevelIndex": "0"
     }
   ]
 }

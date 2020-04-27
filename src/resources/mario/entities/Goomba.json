@@ -23,8 +23,8 @@
           "param": "15.0"
         },
         {
-          "action": "SetXDirection",
-          "param": "forwards"
+          "action": "SetForwards",
+          "param": "true"
         }
       ]
     },
@@ -37,8 +37,8 @@
           "param": "-15.0"
         },
         {
-          "action": "SetXDirection",
-          "param": "backwards"
+          "action": "SetForwards",
+          "param": "false"
         }
       ]
     },
@@ -371,6 +371,26 @@
           "action": "SetBoundedTop",
           "param": "true",
           "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "mario.Mario_Fire",
+      "Control": [
+        {
+          "action": "Die",
+          "param": "Goomba",
+          "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "mario.Mario_Fireball",
+      "Control": [
+        {
+          "action": "Die",
+          "param": "",
+          "orientation": "W"
         }
       ]
     },

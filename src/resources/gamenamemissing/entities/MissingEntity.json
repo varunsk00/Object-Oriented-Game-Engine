@@ -1,0 +1,23 @@
+{
+  "entityName": "MissingEntity",
+  "image": "missing_texture.png",
+  "health": 10,
+  "fixed": true,
+  "permeable": false,
+  "xPos": 100,
+  "yPos": 100,
+  "xVel": 0,
+  "yVel": 0,
+  "maxXVel": 500,
+  "maxYVel": 500,
+  "height": 50,
+  "width": 50,
+  "scheme": "NoControls",
+  "actionBundles": [
+
+  ],
+  "collisionBundles": [
+
+  ]
+
+}

@@ -1,0 +1,21 @@
+{
+  "entityName": "FixedTestEntity1",
+  "image": "fixedTestEntity.png",
+  "health": 1,
+  "xPos": 100,
+  "yPos": 100,
+  "xVel": 10,
+  "yVel": 10,
+  "permeable": false,
+  "fixed":true,
+  "maxXVel": 500,
+  "maxYVel": 500,
+  "height": 40,
+  "width": 40,
+  "scheme": "AI",
+  "actionBundles": [
+  ],
+  "collisionBundles": [
+
+  ]
+}

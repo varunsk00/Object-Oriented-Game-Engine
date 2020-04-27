@@ -1,0 +1,34 @@
+{
+  "gameName": "GameNameMissing",
+  "playerCount": "1",
+  "physicsProfile": [
+    {
+      "friction": "20",
+      "drag": "1",
+      "gravity": "20"
+    }
+  ],
+  "levelArrangement": [
+    {
+      "Level_1": "gamenamemissing.MissingLevel"
+    }
+  ],
+  "playerArrangement": [
+    {
+      "EntityName": "gamenamemissing.MissingEntity",
+      "Arrangement": {
+        "X": "100",
+        "Y": "100"
+      }
+    }
+  ],
+  "gameStatusProfile": [
+    {
+      "scrollingStatusY": "0",
+      "spawningInterval": "0",
+      "scrollingStatusX": "1",
+      "levelSpawnOffset": "0",
+      "startingLevelIndex": "0"
+    }
+  ]
+}

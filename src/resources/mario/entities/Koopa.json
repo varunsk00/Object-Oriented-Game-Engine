@@ -10,36 +10,84 @@
   "permeable": false,
 
   "maxXVel": 500,
-  "maxYVel": 500,
-  "height": 40,
-  "width": 40,
-  "scheme": "AI",
+  "maxYVel": 1000,
+  "height": 45,
+  "width": 41,
+  "scheme": "Pattern",
   "actionBundles": [
     {
       "ID": "50",
       "Control": [
         {
-
           "action": "AccelerateX",
-          "param": "15.0"
+          "param": "10.0"
         },
         {
-          "action": "SetXDirection",
-          "param": "forwards"
+          "action": "SetForwards",
+          "param": "true"
         }
       ]
     },
     {
-      "ID": "50",
+      "ID": "250",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-750.0"
+        }
+      ]
+    },
+    {
+      "ID": "20",
       "Control": [
         {
 
           "action": "AccelerateX",
-          "param": "-15.0"
+          "param": "10.0"
         },
         {
-          "action": "SetXDirection",
-          "param": "backwards"
+          "action": "SetForwards",
+          "param": "true"
+        }
+      ]
+    },
+    {
+      "ID": "150",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-750.0"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "5.0"
+        }
+      ]
+    },
+    {
+      "ID": "20",
+      "Control": [
+        {
+
+          "action": "AccelerateX",
+          "param": "10.0"
+        },
+        {
+          "action": "SetForwards",
+          "param": "true"
+        }
+      ]
+    },
+    {
+      "ID": "700",
+      "Control": [
+        {
+          "action": "Jump",
+          "param": "-750.0"
+        },
+        {
+          "action": "AccelerateX",
+          "param": "10.0"
         }
       ]
     }
@@ -362,6 +410,26 @@
           "action": "SetBoundedTop",
           "param": "true",
           "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "mario.Mario_Fire",
+      "Control": [
+        {
+          "action": "Die",
+          "param": "Koopa",
+          "orientation": "S"
+        }
+      ]
+    },
+    {
+      "ID": "mario.Mario_Fireball",
+      "Control": [
+        {
+          "action": "Die",
+          "param": "",
+          "orientation": "W"
         }
       ]
     },

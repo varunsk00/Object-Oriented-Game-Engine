@@ -1,77 +1,94 @@
 package ooga.view.gui.managers;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import ooga.exceptions.ParameterMissingException;
 import ooga.view.application.games.Game;
-import ooga.view.gui.userinterface.TitleScreen;
 
 import java.io.File;
-import java.util.ResourceBundle;
 
 public class AudioVideoManager {
-    private static final String GAME_PACKAGE = Game.class.getPackageName();
-    private final String RESOURCES_PACKAGE = "src/ooga/view/gui/resources/";
-    private final String RESOURCES_PACKAGE1 = "ooga.view.gui.resources.";
-    private final String MUSIC_PACKAGE = RESOURCES_PACKAGE1 + "soundtrack";
+    private final String RESOURCES_PACKAGE = "src/resources/sounds/";
+    private final String MUSIC_PACKAGE = "resources.sounds.soundtrack";
+    private final String MUSIC_EXTENSION = ".mp3";
+    private final double DEFAULT_VOLUME = 0.1;
+    private double songVolume = DEFAULT_VOLUME;
+    private double soundEffectVolume = DEFAULT_VOLUME;
     private ResourceBundle myMusic = ResourceBundle.getBundle(MUSIC_PACKAGE);
     private Game currentGame;
     private MediaPlayer currentSong;
     private MediaPlayer currentSoundEffect;
     private boolean destroyed;
     private Map<String, Object> myInPlayGames;
-    //TODO: FIX THIS DUMB IMPLEMENTATION OF DISABLING THE AV MANAGER FOR THE GLOBAL RESET
+
+    //FIXME: FIX THIS ATROCIOUS METHOD OF CLOSING AVMANAGER WHEN RESETTING
 
     public AudioVideoManager(){
-        myInPlayGames = new HashMap<String, Object>();
+        myInPlayGames = new HashMap<>();
     }
 
     public void close(){
         this.destroyed = true;
     }
 
+    public void setMusicVolume(double sliderVal){
+        currentSong.setVolume(songVolume*(sliderVal/2));
+    }
+
+    public void setFXVolume(double sliderVal){
+        this.soundEffectVolume = (DEFAULT_VOLUME*(sliderVal/2));
+    }
+
     public void switchMusic(StageManager sm){
         if (currentSong != null) {
-            currentSong.stop();
+            currentSong.stop(); }
+        try {
+            this.currentSong = new MediaPlayer
+                    (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sm.getCurrentTitle()) + MUSIC_EXTENSION).toURI().toString()));
         }
-        this.currentSong = new MediaPlayer
-                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sm.getCurrentTitle()) + ".mp3").toURI().toString()));
+        catch (MissingResourceException e) {
+            new ParameterMissingException(e, "myMusicPropertiesKey");
+            this.currentSong = new MediaPlayer
+                    (new Media(new File(RESOURCES_PACKAGE + "default_sound" + MUSIC_EXTENSION).toURI().toString()));
+        }
         if(!destroyed) {
-            playSong(currentSong);
-        }
+            playSong(currentSong); }
     }
 
-    public void switchGame(StageManager sm, String gameName) throws Exception {
-        if (!myInPlayGames.containsKey(gameName)) {
+    public void switchGame(StageManager sm, String gameName, boolean loadGame) throws Exception {
+        if (loadGame || !myInPlayGames.containsKey(gameName)) {
             currentGame = new Game(sm);
-            currentGame.loadGame(gameName);
-            myInPlayGames.put(gameName, currentGame);
-        } else {
-            sm.switchScenes(gameName);
-        }
+            currentGame.loadGame(gameName, loadGame);
+            myInPlayGames.put(gameName, currentGame); }
+        else {
+            sm.switchScenes(gameName); }
     }
 
-    public String playerParser(String id){
+    public String playerParser(String id){ // PARSING P2_, using universal format of JSON files
         if(id.indexOf('_') == 2){
-            return id.substring(3);
-        }
+            return id.substring(3); }
         return id;
     }
 
     public void playSoundEffect(String sound){
-        this.currentSoundEffect = new MediaPlayer
-                (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
-        currentSoundEffect.seek(Duration.ZERO);
-        currentSoundEffect.setVolume(0.1);
-        currentSoundEffect.play();
+        if (!myMusic.getString(sound).equals("NOSOUND")) {
+            this.currentSoundEffect = new MediaPlayer
+                    (new Media(new File(RESOURCES_PACKAGE + myMusic.getString(sound) + ".mp3").toURI().toString()));
+            playSound(currentSoundEffect); }
+    }
+
+    private void playSound(MediaPlayer song){
+        song.setVolume(soundEffectVolume);
+        song.seek(Duration.ZERO);
+        song.play();
     }
 
     private void playSong(MediaPlayer song){
         song.seek(Duration.ZERO);
+        song.setVolume(songVolume);
         song.setCycleCount(MediaPlayer.INDEFINITE);
-        song.setVolume(0.1);
         song.play();
     }
 }
