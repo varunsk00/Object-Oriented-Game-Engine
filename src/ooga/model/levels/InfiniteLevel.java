@@ -48,10 +48,9 @@ public class InfiniteLevel extends Level{
 
   private void setEntityPositions(EntityWrapper newSpawn, EntityWrapper copyEntity, int tileInterval) {
     double spawnCoordinate = tileInterval * this.spawningInterval;
-    newSpawn.getModel()
-        .setX(spawnCoordinate * this.scrollingStatusX + copyEntity.getModel().getX() * this.scrollingStatusY);
-    newSpawn.getModel()
-        .setY(-spawnCoordinate * this.scrollingStatusY + copyEntity.getModel().getY() * this.scrollingStatusX);
+    newSpawn.getModel().setX(spawnCoordinate * this.scrollingStatusX + copyEntity.getModel().getX() * this.scrollingStatusY + copyEntity.getModel().getX() * this.scrollingStatusX);
+
+    newSpawn.getModel().setY(-spawnCoordinate * this.scrollingStatusY + copyEntity.getModel().getY() * this.scrollingStatusX + copyEntity.getModel().getY() * this.scrollingStatusY);
   }
 
 

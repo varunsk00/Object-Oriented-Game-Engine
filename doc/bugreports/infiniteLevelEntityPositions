@@ -64,4 +64,7 @@ newSpawn.getModel().setY(-spawnCoordinate * this.scrollingStatusY + copyEntity.g
 
 We can see that the only change done to these lines of code is adding an additional X or Y of the initial copyEntity
 that comes from the initial configuration. We multiply these additional sum parts with the scrolling status because
-we only want this offset in specific scrolling directions.  
+we only want this offset in specific scrolling directions.
+
+After implementing these additional lines of code, we can see that our testSpawnEntitiesPosition() test
+passes and it works in the actual game itself.
