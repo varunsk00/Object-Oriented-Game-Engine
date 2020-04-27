@@ -1,0 +1,77 @@
+{
+  "image": "body.png",
+  "yPos": 100,
+  "scheme": "Keyboard",
+  "permeable": false,
+  "health": 100,
+  "xPos": 100,
+  "xVel": 10,
+  "maxXVel": 5000,
+  "width": 101,
+  "height": 100,
+  "maxYVel": 10000,
+  "fixed": false,
+  "yVel": 10,
+  "entityName": "Dino",
+  "collisionBundles": [
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "5",
+          "action": "RandomLevelSwitch"
+        }
+      ],
+      "ID": "dinorun.ClearLevelBlock"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        }
+      ],
+      "ID": "dinorun.Grass"
+    }
+  ],
+
+  "actionBundles": [
+    {
+      "Control": [
+        {
+          "param": "500.0",
+          "action": "VelocityX"
+        },
+        {
+          "param": "true",
+          "action": "SetForwards"
+        }
+      ],
+      "ID": "D"
+    },
+    {
+      "Control": [
+        {
+          "param": "-50.0",
+          "action": "MoveY"
+        }
+      ],
+      "ID": "W"
+    },
+    {
+      "Control": [
+        {
+          "param": "-10000.0",
+          "action": "Jump"
+        }
+      ],
+      "ID": "SPACE"
+    }
+  ]
+}

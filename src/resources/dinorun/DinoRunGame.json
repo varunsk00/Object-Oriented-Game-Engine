@@ -1,0 +1,38 @@
+{
+  "gameName": "DinoRun",
+  "playerCount": "1",
+  "gameStatusProfile": [
+    {
+      "scrollingStatusX" : "1",
+      "scrollingStatusY" : "0",
+      "spawningInterval" : "500",
+      "levelSpawnOffset": "1",
+      "startingLevelIndex": "0"
+    }
+  ],
+  "physicsProfile": [
+    {
+      "friction": "0",
+      "drag": "0",
+      "gravity": "10"
+    }
+  ],
+  "levelArrangement": [
+    {
+      "Level_1": "dinorun.FlatGroundLevel",
+      "Level_2": "dinorun.PlatformLevel",
+      "Level_4": "dinorun.DoublePlatformLevel",
+      "Level_3": "dinorun.TreeLevel",
+      "Level_5": "dinorun.DoubleTreeLevel"
+    }
+  ],
+  "playerArrangement": [
+    {
+      "EntityName": "dinorun.Dino",
+      "Arrangement": {
+        "X": "100",
+        "Y": "100"
+      }
+    }
+  ]
+}
