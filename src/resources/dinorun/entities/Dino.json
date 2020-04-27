@@ -38,6 +38,21 @@
         }
       ],
       "ID": "dinorun.Grass"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        }
+      ],
+      "ID": "dinorun.Ground"
     }
   ],
 
