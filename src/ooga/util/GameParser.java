@@ -135,11 +135,12 @@ public class GameParser extends Parser {
       List<EntityWrapper> tiles = parsedLevel.parseTileEntities();
       List<EntityWrapper> enemies = parsedLevel.parseEnemyEntities();
       try {
+        System.out.println("yeet");
         Level newLevel = (Level) Class.forName(LEVELS_PREFIX + levelType).getDeclaredConstructor
             (List.class, List.class, List.class, GameStatusProfile.class, String.class).newInstance(tiles, playerList, enemies, gameStatusProfile, levelName);
         levelList.add(newLevel);
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-          throw new InvalidActionException("Level could not be found."); //TODO: change exception heading
+        throw new InvalidActionException("Level could not be found."); //TODO: change exception heading
       }
     }
   }

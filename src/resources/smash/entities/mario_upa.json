@@ -27,7 +27,7 @@
       "ID": "1",
       "Control": [
         {
-          "action": "SpawnRelative",
+          "action": "SpawnAndBind",
           "param": "smash.resetAttack"
         }
       ]
@@ -73,7 +73,7 @@
       "Control": [
         {
           "orientation": "A",
-          "action": "SetPermeable",
+          "action": "Die",
           "param": "true"
         }
       ]

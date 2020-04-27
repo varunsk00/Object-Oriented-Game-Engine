@@ -20,7 +20,25 @@ import org.json.simple.JSONObject;
 //import org.json.simple.parser.ParseException;
 
 public class EntityJSONParser extends Parser {
-
+  public static final String ACTION_BUNDLES = "actionBundles";
+  public static final String CONTROL_FIELD = "Control";
+  public static final String PARAM_FIELD = "param";
+  public static final String ID_FIELD = "ID";
+  public static final String SCHEME_FIELD = "scheme";
+  public static final String COLLISION_BUNDLE_FIELD = "collisionBundles";
+  public static final String ACTION_FIELD = "action";
+  public static final String ORIENTATION_FIELD = "orientation";
+  public static final String IMAGE_FIELD = "image";
+  public static final String COOLDOWN_FIELD = "coolDown";
+  public static final String WIDTH_FIELD = "width";
+  public static final String HEIGHT_FIELD = "height";
+  public static final String XPOS_FIELD = "xPos";
+  public static final String YPOS_FIELD = "yPos";
+  public static final String MAX_X_VEL_FIELD = "maxXVel";
+  public static final String MAX_Y_VEL_FIELD = "maxYVel";
+  public static final String HEALTH_FIELD = "health";
+  public static final String FIXED_FIELD = "fixed";
+  public static final String PERMEABLE_FIELD = "permeable";
   private String myGame;
   private static final String TXT_FILEPATH = "src/resources/";
   private static final String RESOURCES = "resources/";
@@ -42,9 +60,9 @@ public class EntityJSONParser extends Parser {
 
 
   public ControlScheme parseControls() {
-    JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
+    JSONArray actionBundlesArray = (JSONArray) jsonObject.get(ACTION_BUNDLES);
     List<ActionBundle> controlMap = new ArrayList<ActionBundle>();
-    String controlType = (String) jsonObject.get("scheme");
+    String controlType = (String) jsonObject.get(SCHEME_FIELD);
 
     controlMap = readControlMap(actionBundlesArray);
 
@@ -68,16 +86,16 @@ public class EntityJSONParser extends Parser {
 
   public void updateControlScheme(String newScheme) {
     JSONObject root = jsonObject;
-    root.put("scheme", newScheme);
+    root.put(SCHEME_FIELD, newScheme);
     write2JSON(root, "Successfully Updated Control Scheme!");
   }
 
   public List<String> updateControls(String param, String newKeyBind, boolean write) {
     List<String> ret = new ArrayList<>();
     JSONObject root = jsonObject;
-    JSONArray actionBundlesArray = (JSONArray) jsonObject.get("actionBundles");
+    JSONArray actionBundlesArray = (JSONArray) jsonObject.get(ACTION_BUNDLES);
     updateActionBundleArray(actionBundlesArray, param, newKeyBind, ret);
-    root.put("actionBundles", actionBundlesArray);
+    root.put(ACTION_BUNDLES, actionBundlesArray);
     if(write){
       write2JSON(root, "Successfully Updated Control Scheme!"); }
     return ret;
@@ -90,7 +108,7 @@ public class EntityJSONParser extends Parser {
       Iterator<Map.Entry> itr1 = ((Map) itr2.next()).entrySet().iterator();
       while (itr1.hasNext()) {
         Map.Entry keybind = itr1.next();
-        if(keybind.getKey().equals("ID")){
+        if(keybind.getKey().equals(ID_FIELD)){
           ret.add((String) keybind.getValue());
           if(match){
             keybind.setValue(newKeyBind);
@@ -100,7 +118,7 @@ public class EntityJSONParser extends Parser {
   }
 
   private boolean isMatch(String param, List<String> ret, boolean match, Entry keybind) {
-    if(keybind.getKey().equals("Control")){
+    if(keybind.getKey().equals(CONTROL_FIELD)){
       JSONArray controlArray = (JSONArray) keybind.getValue();
       ret.add(controlArray.toString());
       Iterator itr3 = controlArray.iterator();
@@ -108,29 +126,29 @@ public class EntityJSONParser extends Parser {
         Iterator<Entry> itr4 = ((Map) itr3.next()).entrySet().iterator();
         while(itr4.hasNext()){
           Entry action = itr4.next();
-          if(action.getKey().equals("param")){
+          if(action.getKey().equals(PARAM_FIELD)){
             if(action.getValue().equals(param)){
               match = true; } } } } }
     return match;
   }
 
   public Map<CollisionKey, Action> parseCollisions() {
-    JSONArray collisionArray = (JSONArray) jsonObject.get("collisionBundles");
+    JSONArray collisionArray = (JSONArray) jsonObject.get(COLLISION_BUNDLE_FIELD);
     Map<CollisionKey, Action> collisionMap = new HashMap<CollisionKey, Action>();
 
     if(collisionArray != null) {
 
       for (int i = 0; i < collisionArray.size(); i++) {
         JSONObject collisionEntry = (JSONObject) collisionArray.get(i);
-        String key = (String) collisionEntry.get("ID");
+        String key = (String) collisionEntry.get(ID_FIELD);
 
-        JSONArray controlArr = (JSONArray) collisionEntry.get("Control");
+        JSONArray controlArr = (JSONArray) collisionEntry.get(CONTROL_FIELD);
         for (int j = 0; j < controlArr.size(); j++) {
           JSONObject controlEntry = (JSONObject) controlArr.get(j);
           ActionFactory actionFactory = new ActionFactory();
-          String actionName = (String) controlEntry.get("action");
-          String paramName = (String) controlEntry.get("param");
-          String orientation = (String) controlEntry.get("orientation");
+          String actionName = (String) controlEntry.get(ACTION_FIELD);
+          String paramName = (String) controlEntry.get(PARAM_FIELD);
+          String orientation = (String) controlEntry.get(ORIENTATION_FIELD);
 
           Action newAction = actionFactory
               .makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
@@ -145,18 +163,18 @@ public class EntityJSONParser extends Parser {
   public ImageView generateImage() {
     String imageName = "missing_texture.png";
     try {
-      imageName = (String) jsonObject.get("image");
+      imageName = (String) jsonObject.get(IMAGE_FIELD);
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "image");
+      new ParameterMissingException(e, IMAGE_FIELD);
     }
     ImageView output = null;
 
     output = loadImage(imageName);
-    output.setX(Double.parseDouble(jsonObject.get("xPos").toString()));
-    output.setY(Double.parseDouble(jsonObject.get("yPos").toString()));
-    output.setFitHeight(Double.parseDouble(jsonObject.get("height").toString()));
-    output.setFitWidth(Double.parseDouble(jsonObject.get("width").toString()));
+    output.setX(Double.parseDouble(jsonObject.get(XPOS_FIELD).toString()));
+    output.setY(Double.parseDouble(jsonObject.get(YPOS_FIELD).toString()));
+    output.setFitHeight(Double.parseDouble(jsonObject.get(HEIGHT_FIELD).toString()));
+    output.setFitWidth(Double.parseDouble(jsonObject.get(WIDTH_FIELD).toString()));
     return output;
   }
 
@@ -184,22 +202,22 @@ public class EntityJSONParser extends Parser {
 
   private ActionBundle readControls(JSONObject bundleElement) {
     ActionBundle outputBundle = new ActionBundle();
-    JSONArray controlArray = (JSONArray) bundleElement.get("Control");
-    outputBundle.setId((String) bundleElement.get("ID"));
+    JSONArray controlArray = (JSONArray) bundleElement.get(CONTROL_FIELD);
+    outputBundle.setId((String) bundleElement.get(ID_FIELD));
     JSONObject temp = null;
 
     for(int i = 0; i < controlArray.size(); i++) {
       JSONObject controlArrayEntry = (JSONObject) controlArray.get(i);
       ActionFactory actionFactory = new ActionFactory();
 
-      String paramName = (String) controlArrayEntry.get("param");
-      String actionName = (String) controlArrayEntry.get("action");
+      String paramName = (String) controlArrayEntry.get(PARAM_FIELD);
+      String actionName = (String) controlArrayEntry.get(ACTION_FIELD);
       Action newAction;
-      if(!controlArrayEntry.containsKey("coolDown")) {
+      if(!controlArrayEntry.containsKey(COOLDOWN_FIELD)) {
         newAction = actionFactory.makeAction(actionName, new Class<?>[]{String.class}, new Object[]{paramName});
       }
       else {
-        String coolDown = (String) controlArrayEntry.get("coolDown");
+        String coolDown = (String) controlArrayEntry.get(COOLDOWN_FIELD);
         newAction = actionFactory.makeAction(actionName, new Class<?>[]{String.class, String.class}, new Object[]{paramName, coolDown});
       }
       outputBundle.addAction(newAction);
@@ -217,84 +235,84 @@ public class EntityJSONParser extends Parser {
     }
   }
 
-  public String readImage() { return (String) jsonObject.get("image"); }
+  public String readImage() { return (String) jsonObject.get(IMAGE_FIELD); }
 
   public double readWidth() {
     try {
-      return Double.parseDouble(jsonObject.get("width").toString());
+      return Double.parseDouble(jsonObject.get(WIDTH_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "width");
+      new ParameterMissingException(e, WIDTH_FIELD);
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "width");
+      new ParameterInvalidException(e, WIDTH_FIELD);
     }
     return DEFAULT_DIMENSION;
   }
 
   public double readHeight() {
     try {
-      return Double.parseDouble(jsonObject.get("height").toString());
+      return Double.parseDouble(jsonObject.get(HEIGHT_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "height");
+      new ParameterMissingException(e, HEIGHT_FIELD);
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "height");
+      new ParameterInvalidException(e, HEIGHT_FIELD);
     }
     return DEFAULT_DIMENSION;
   }
 
   public double readXPosition() {
     try {
-      return Double.parseDouble(jsonObject.get("xPos").toString());
+      return Double.parseDouble(jsonObject.get(XPOS_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "xPos");
+      new ParameterMissingException(e, XPOS_FIELD);
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "xPos");
+      new ParameterInvalidException(e, XPOS_FIELD);
     }
     return DEFAULT_POSITION;
   }
 
   public double readYPosition(){
     try {
-      return Double.parseDouble(jsonObject.get("yPos").toString());
+      return Double.parseDouble(jsonObject.get(YPOS_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "yPos");
+      new ParameterMissingException(e, YPOS_FIELD);
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "yPos");
+      new ParameterInvalidException(e, YPOS_FIELD);
     }
     return DEFAULT_DIMENSION;
   }
 
   public double readMaxXVelocity(){
     try {
-      return Double.parseDouble(jsonObject.get("maxXVel").toString());
+      return Double.parseDouble(jsonObject.get(MAX_X_VEL_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "maxXVel");
+      new ParameterMissingException(e, MAX_X_VEL_FIELD);
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "maxXVel");
+      new ParameterInvalidException(e, MAX_X_VEL_FIELD);
     } return DEFAULT_MAX_VELOCITY;
 
   }
 
   public double readMaxYVelocity(){
     try {
-      return Double.parseDouble(jsonObject.get("maxYVel").toString());
+      return Double.parseDouble(jsonObject.get(MAX_Y_VEL_FIELD).toString());
     }
     catch (NullPointerException e) {
-      throw new ParameterMissingException(e, "maxYVel");
+      throw new ParameterMissingException(e, MAX_Y_VEL_FIELD);
 
     } catch (NumberFormatException e) {
-      throw new ParameterInvalidException(e, "maxYVel");
+      throw new ParameterInvalidException(e, MAX_Y_VEL_FIELD);
     } finally {
       return DEFAULT_MAX_VELOCITY;
     }
@@ -302,34 +320,34 @@ public class EntityJSONParser extends Parser {
 
   public double readHealth() {
     try {
-      return Double.parseDouble(jsonObject.get("health").toString());
+      return Double.parseDouble(jsonObject.get(HEALTH_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "health");
+      new ParameterMissingException(e, HEALTH_FIELD);
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, "health");
+      new ParameterInvalidException(e, HEIGHT_FIELD);
     }
     return DEFAULT_HEALTH;
   }
 
   public boolean readFixed() {
     try {
-      return Boolean.parseBoolean(jsonObject.get("fixed").toString());
+      return Boolean.parseBoolean(jsonObject.get(FIXED_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "fixed");
+      new ParameterMissingException(e, FIXED_FIELD);
       return false;
     }
   }
 
   public boolean readPermeable() {
     try {
-      return Boolean.parseBoolean(jsonObject.get("permeable").toString());
+      return Boolean.parseBoolean(jsonObject.get(PERMEABLE_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, "permeable");
+      new ParameterMissingException(e, PERMEABLE_FIELD);
       return false;
     }
   }

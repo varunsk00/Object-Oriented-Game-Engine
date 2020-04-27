@@ -1,1 +1,34 @@
-{"gameName":"Smash","playerCount":"1","physicsProfile":[{"gravity":"20","drag":"20","friction":"20"}],"levelArrangement":[{"Level_1":"smash.finaldestination"}],"playerArrangement":[{"EntityName":"smash.mario","Arrangement":{"X":"100","Y":"100"}},{"EntityName":"smash.link","Arrangement":{"X":"500","Y":"100"}}],"gameStatusProfile":[{"scrollingStatusY":"1","spawningInterval":"0","scrollingStatusX":"1","levelSpawnOffset":"0","startingLevelIndex":"0"}]}
+{
+  "gameName": "Smash",
+  "playerCount": "1",
+  "physicsProfile": [
+    {
+      "gravity": "10",
+      "drag": "1",
+      "friction": "20"
+    }
+  ],
+  "levelArrangement": [
+    {
+      "Level_1": "smash.finaldestination"
+    }
+  ],
+  "playerArrangement": [
+    {
+      "EntityName": "smash.mario",
+      "Arrangement": {
+        "X": "100",
+        "Y": "100"
+      }
+    }
+  ],
+  "gameStatusProfile": [
+    {
+      "scrollingStatusY": "1",
+      "spawningInterval": "0",
+      "scrollingStatusX": "1",
+      "levelSpawnOffset": "0",
+      "startingLevelIndex": "0"
+    }
+  ]
+}

@@ -143,7 +143,7 @@ class EntityJSONParserTest {
 
   @Test
   void readMaxYVelocity() {
-    assertEquals(1000, entityJSONParser.readMaxYVelocity());
+    assertEquals(500, entityJSONParser.readMaxYVelocity());
   }
 
   @Test

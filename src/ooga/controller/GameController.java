@@ -23,10 +23,12 @@ import ooga.view.gui.managers.StageManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+/**
+ * This class handles the interaction between the front end and backend. This is where most of the physics/collision interactions between
+ * entities happen
+ */
 public class GameController {
 
-  //  private PhysicsEngine physicsEngine;
-//  private CollisionEngine collisionEngine;
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entitySpawnBuffer;
   private List<EntityWrapper> entityDespawnBuffer;
@@ -42,6 +44,13 @@ public class GameController {
   private GameParser gameParser;
   private List<EntityWrapper> playerList;
 
+  /**
+   * Constructor for game controller
+   * @param stageManager : stage manager
+   * @param gameName : name of the game
+   * @param loadedGame : whether or not game should be loaded from file
+   * @throws XInputNotLoadedException
+   */
   public GameController(StageManager stageManager, String gameName, boolean loadedGame)
           throws XInputNotLoadedException { //FIXME add exception stuff
 
@@ -70,6 +79,22 @@ public class GameController {
     setUpTimeline();
 
   }
+
+  /**
+   * gets the entity list
+   * @return list of entities
+   */
+  public List<EntityWrapper> getEntityList() {
+    return entityList;
+  }
+
+  /**
+   * changes level
+   * @param levelIndex : new level index
+   * @param player : current player entity
+   */
+  public void changeLevel(int levelIndex, EntityWrapper player) {levelSelector.changeCurrentLevel(levelIndex, player); }
+
 
   private void setUpKeyInputs() {
     myViewManager.getTestScene().setOnKeyPressed(e -> {
@@ -117,10 +142,18 @@ public class GameController {
     }
   }
 
+  /**
+   * removes entity from wrapper list and view
+   * @param node : node to remove
+   */
   public void removeEntity(EntityWrapper node) {
     entityDespawnBuffer.add(node);
   }
 
+  /**
+   * adds entity to wrapper list and view
+   * @param newEntity : node to add
+   */
   public void addEntity(EntityWrapper newEntity) {
     entitySpawnBuffer.add(newEntity);
   }
@@ -179,6 +212,5 @@ public class GameController {
       }
     }
 
-  public void changeLevel(int levelIndex, EntityWrapper player) {levelSelector.changeCurrentLevel(levelIndex, player); }
 }
 

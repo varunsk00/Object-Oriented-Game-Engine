@@ -13,7 +13,7 @@ class SetForwardsTest {
 
   @BeforeEach
   void setUp() {
-    param = "forwards";
+    param = "true";
     myAction = new SetForwards(param);
     myEntity = new EntityWrapper("unittest.UnitTestEntity", null);
   }
