@@ -1,0 +1,67 @@
+## Description
+
+This bug causes the positions of entities in infinite levels to not have the correct coordinate positions.
+Instead, all the entities will be clumped into a single line of entities. This line of entities will be 
+vertical or horizontal depending on if the game is scrolling in the X or Y direction respectively.
+
+## Expected Behavior
+
+We expect the entities to be positioned according to the InfiniteLevel .json configuration. For example,
+if we have an arrangement of "3": ["3","4"] in an X scrolling game, we expect there to be two entities 
+in the third row side by side. Their absolute positions will depend on where the player is currently in the game.
+
+## Current Behavior
+
+The current behavior of the program is that the entities will bunch up together on the same coordinate. Using
+our previous arrangement above, the entities will both be in the correct third row, but will be on
+top of each other for their X position. Instead of having the arrangement of "3": ["3","4"], their
+arrangement is "3": ["0","0"].
+
+## Steps to Reproduce
+
+This bug seems to be an issue of not adding an additional piece of the X position calculation. To produce
+this bug, it is easier to do the following:
+
+ 1. Set one Entity to have an arrangement of "3": ["3"].
+ 2. In the same InfiniteLevel configuration, set a different Entity to have an arrangement of "3": ["4"]. 
+    These two entities are expected to be side by side.
+ 3. Run the program and it can be seen that the two entities will be on top of each other instead of side by side. 
+ 
+## Failure Logs
+
+This print statement from the InfiniteLevelTest can be seen with the expected X and Y compared to
+the actual X and Y.
+``
+Expected X: 1100        Actual X: 1000
+Expected Y: 300        Actual Y: 300
+``
+
+From this print statement, we see that there is a difference of 100 pixels from the expected X.
+
+## Hypothesis for Fixing the Bug
+
+To fix this, I need to add code to account for the offset expected for the positioning of the entities.
+Right now, it appears that I neglected to add this offset and only added the positioning necessary to move
+the infinite levels relative to the player. This offset to make the entities relative to the player
+is the same for all entities, so I would only need to add the offset from the initial level configuration
+to move the position of each entity to what they were intended to be.
+
+This additional code needed to fix this would be to change the following lines in the setEntityPositions() method:
+
+```
+newSpawn.getModel().setX(spawnCoordinate * this.scrollingStatusX + copyEntity.getModel().getX() * this.scrollingStatusY);
+
+newSpawn.getModel().setY(-spawnCoordinate * this.scrollingStatusY + copyEntity.getModel().getY() * this.scrollingStatusX);
+```
+
+to 
+
+```aidl
+newSpawn.getModel().setX(spawnCoordinate * this.scrollingStatusX + copyEntity.getModel().getX() * this.scrollingStatusY + copyEntity.getModel().getX() * this.scrollingStatusX);
+
+newSpawn.getModel().setY(-spawnCoordinate * this.scrollingStatusY + copyEntity.getModel().getY() * this.scrollingStatusX + copyEntity.getModel().getY() * this.scrollingStatusY);
+```
+
+We can see that the only change done to these lines of code is adding an additional X or Y of the initial copyEntity
+that comes from the initial configuration. We multiply these additional sum parts with the scrolling status because
+we only want this offset in specific scrolling directions.  

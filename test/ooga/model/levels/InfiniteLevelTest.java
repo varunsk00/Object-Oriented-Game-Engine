@@ -17,7 +17,12 @@ class InfiniteLevelTest {
   private List<EntityWrapper> testPlayers;
   private List<EntityWrapper> testTiles;
   private List<EntityWrapper> testEnemies;
-
+  private final int[] expectedStartingPositionsX = new int[]{1, 1, 1, 1, 2};
+  private final int[] expectedStartingPositionsY = new int[]{3, 4, 5, 6, 6};
+  private final int spawningInterval = 500;
+  private final int levelSpawnOffset = 2;
+  private final int tileHeight = 100;
+  private final int tileWidth = 100;
 
   @BeforeEach
   void setUp(){
@@ -30,7 +35,7 @@ class InfiniteLevelTest {
     testTiles = testLevelParser.parseTileEntities();
     testEnemies = testLevelParser.parseEnemyEntities();
     testLevel = new InfiniteLevel(testTiles, testPlayers, testEnemies, testGameParser.parseGameStatusProfile(), gameName);
-    testEntityList.addAll(testPlayers);
+
   }
 
   @Test
@@ -39,7 +44,7 @@ class InfiniteLevelTest {
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
     testLevel.spawnEntities(testEntityList);
-    assertTrue(testEntityList.size() - testPlayers.size() == 4);
+    assertTrue(testEntityList.size() == 5);
   }
 
   @Test
@@ -48,7 +53,7 @@ class InfiniteLevelTest {
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
     testLevel.spawnEntities(testEntityList);
-    assertTrue(testEntityList.size() - testPlayers.size() == 4);
+    assertTrue(testEntityList.size() == 5);
   }
 
   @Test
@@ -57,7 +62,7 @@ class InfiniteLevelTest {
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
     testLevel.spawnEntities(testEntityList);
-    assertTrue(testEntityList.size() - testPlayers.size() == 4);
+    assertTrue(testEntityList.size() == 5);
   }
 
   @Test
@@ -66,12 +71,40 @@ class InfiniteLevelTest {
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
     testLevel.spawnEntities(testEntityList);
-    assertTrue(testEntityList.size() - testPlayers.size() == 4);
+    assertTrue(testEntityList.size() == 5);
     xPosition = 600;
     yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
     testLevel.spawnEntities(testEntityList);
-    assertTrue(testEntityList.size() - testPlayers.size() == 8);
+    assertTrue(testEntityList.size() == 10);
+  }
+
+  @Test
+  void testSpawnEntitiesPosition() {
+    double xPosition = 100;
+    double yPosition = 150;
+    setPlayersLocation(xPosition, yPosition);
+    testLevel.spawnEntities(testEntityList);
+    int tileInterval = testLevel.getCurrentPlayerInterval() + levelSpawnOffset;
+    for(int i = 0; i < testEntityList.size(); i++){
+      try {
+        assertTrue(testEntityList.get(i).getModel().getX()
+            == spawningInterval * tileInterval + tileWidth * expectedStartingPositionsX[i]);
+        assertTrue(
+            testEntityList.get(i).getModel().getY() == tileHeight * expectedStartingPositionsY[i]);
+      }
+      catch(AssertionError e){
+        System.out.println("entityList Index: " + i);
+        int expectedX = spawningInterval * tileInterval + tileWidth * expectedStartingPositionsX[i];
+        int actualX = (int) testEntityList.get(i).getModel().getX();
+        int expectedY = tileHeight * expectedStartingPositionsY[i];
+        int actualY = (int) testEntityList.get(i).getModel().getY();
+
+        System.out.println("Expected X: " + expectedX + "        " + "Actual X: " + actualX);
+        System.out.println("Expected Y: " + expectedY + "        " + "Actual Y: " + actualY);
+        throw e;
+      }
+    }
   }
 
   void setPlayersLocation(double xPosition, double yPosition){
