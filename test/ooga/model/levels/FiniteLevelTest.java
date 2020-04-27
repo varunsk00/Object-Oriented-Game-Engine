@@ -41,7 +41,7 @@ class FiniteLevelTest {
     double xPosition = 250;
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     assertTrue(testEntityList.size() - testPlayers.size() == 1);
   }
 
@@ -51,7 +51,7 @@ class FiniteLevelTest {
     double xPosition = 5000;
     double yPosition = 5000;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     assertTrue(testEntityList.size() - testPlayers.size() == 0);
   }
 
@@ -60,7 +60,7 @@ class FiniteLevelTest {
     double xPosition = 50000;
     double yPosition = 600;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     assertTrue(testEntityList.size() - testPlayers.size() == 2);
   }
 

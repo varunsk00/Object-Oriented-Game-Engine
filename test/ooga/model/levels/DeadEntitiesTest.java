@@ -47,8 +47,8 @@ class DeadEntitiesTest {
     testEntityList.add(deadEntity);
     testEntityRemovedList.add(deadEntity);
     testEntityList.remove(deadEntity);
-    testLevel.spawnEntities(testEntityList);
-    assertEquals(2, testEntityList.size());
+    testLevel.spawnEntities(testEntityList, testEntityRemovedList);
+    assertEquals(2, testEntityList.size() - testEntityRemovedList.size());
   }
 
   @Test
@@ -61,8 +61,8 @@ class DeadEntitiesTest {
     testEntityList.add(deadEntity);
     testEntityRemovedList.add(deadEntity);
     testEntityList.remove(deadEntity);
-    testLevel.spawnEntities(testEntityList);
-    assertEquals(1, testEntityList.size());
+    testLevel.spawnEntities(testEntityList, testEntityRemovedList);
+    assertEquals(1, testEntityList.size() - testEntityRemovedList.size());
   }
 
   @Test
@@ -74,8 +74,8 @@ class DeadEntitiesTest {
     testEntityList.add(deadEntity);
     testEntityRemovedList.add(deadEntity);
     testEntityList.remove(deadEntity);
-    testLevel.spawnEntities(testEntityList);
-    assertEquals(3, testEntityList.size());
+    testLevel.spawnEntities(testEntityList, testEntityRemovedList);
+    assertEquals(3, testEntityList.size() - testEntityRemovedList.size());
   }
 
   void setPlayersLocation(double xPosition, double yPosition){

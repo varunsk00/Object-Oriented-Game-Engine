@@ -29,8 +29,8 @@ public class LevelSelector {
     activeLevel = parsedLevels.get(startingLevelIndex);
   }
 
-  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn){
-    activeLevel.spawnEntities(currentEntityList);
+  public void updateCurrentLevel(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn, List<EntityWrapper> entityRemoved){
+    activeLevel.spawnEntities(currentEntityList, entityRemoved);
     this.despawnEntities(currentEntityList, entitiesToDespawn);
   }
 
@@ -45,7 +45,7 @@ public class LevelSelector {
       player.getModel().loadStats();
     }
     despawnAllEntities(currentEntityList, entitiesToDespawn);
-    this.updateCurrentLevel(currentEntityList, entitiesToDespawn);
+    this.updateCurrentLevel(currentEntityList, entitiesToDespawn, new ArrayList<EntityWrapper>());
     for(Level level : parsedLevels){
       level.setCurrentPlayerInterval(ORIGINAL_LEVEL_INTERVAL);
     }
