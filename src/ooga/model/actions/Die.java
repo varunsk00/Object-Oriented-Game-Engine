@@ -11,5 +11,6 @@ public class Die extends Action {
   @Override
   public void execute(EntityModel entity) {
     entity.despawnEntity();
+    entity.killEntity();
   }
 }

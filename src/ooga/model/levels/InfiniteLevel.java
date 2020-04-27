@@ -18,7 +18,7 @@ public class InfiniteLevel extends Level{
   }
 
   @Override
-  public void spawnEntities(List<EntityWrapper> currentEntityList) {
+  public void spawnEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entityRemoved) {
     for (EntityWrapper player : playerEntities) {
       if (calculatePlayerInterval(player) > this.getCurrentPlayerInterval()) {
         this.setCurrentPlayerInterval(calculatePlayerInterval(player));

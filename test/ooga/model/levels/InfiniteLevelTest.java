@@ -43,7 +43,7 @@ class InfiniteLevelTest {
     double xPosition = 0;
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     assertTrue(testEntityList.size() == 5);
   }
 
@@ -52,7 +52,7 @@ class InfiniteLevelTest {
     double xPosition = 600;
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     assertTrue(testEntityList.size() == 5);
   }
 
@@ -61,7 +61,7 @@ class InfiniteLevelTest {
     double xPosition = 1100;
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     assertTrue(testEntityList.size() == 5);
   }
 
@@ -70,12 +70,12 @@ class InfiniteLevelTest {
     double xPosition = 100;
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     assertTrue(testEntityList.size() == 5);
     xPosition = 600;
     yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     assertTrue(testEntityList.size() == 10);
   }
 
@@ -84,7 +84,7 @@ class InfiniteLevelTest {
     double xPosition = 100;
     double yPosition = 150;
     setPlayersLocation(xPosition, yPosition);
-    testLevel.spawnEntities(testEntityList);
+    testLevel.spawnEntities(testEntityList, new ArrayList<>());
     int tileInterval = testLevel.getCurrentPlayerInterval() + levelSpawnOffset;
     for(int i = 0; i < testEntityList.size(); i++){
       try {

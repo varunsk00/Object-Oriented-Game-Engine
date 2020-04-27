@@ -29,7 +29,7 @@ public abstract class Level {
     levelSpawnOffset = gameProfile.readLevelSpawnOffset();
   }
 
-  public abstract void spawnEntities(List<EntityWrapper> currentEntityList);
+  public abstract void spawnEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entityRemoved);
 
   public boolean isInRange(EntityModel subjectEntity, EntityModel targetEntity){
     return(Math.sqrt(Math.pow(subjectEntity.getX() - targetEntity.getX(), TWO) + Math.pow(subjectEntity.getY() - targetEntity.getY(), TWO)) < SPAWN_RANGE);
