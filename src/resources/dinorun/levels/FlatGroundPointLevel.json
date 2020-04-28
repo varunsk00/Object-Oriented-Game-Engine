@@ -1,5 +1,5 @@
 {
-  "levelName": "TallTree",
+  "levelName": "FlatGround",
   "levelType": "InfiniteLevel",
   "tileWidth": 100,
   "tileHeight": 100,
@@ -8,7 +8,7 @@
       "EntityName": "dinorun.Grass",
       "Arrangement": [
         {
-          "6": ["0-8"]
+          "6": ["0-7"]
         }
       ]
     },
@@ -16,7 +16,7 @@
       "EntityName": "dinorun.Ground",
       "Arrangement": [
         {
-          "7": ["0-8"]
+          "7": ["0-7"]
         }
       ]
     },
@@ -32,14 +32,6 @@
           "5": ["0"]
         }
       ]
-    },
-    {
-      "EntityName": "dinorun.DeadTreeTop",
-      "Arrangement": [
-        {
-          "5": ["3"]
-        }
-      ]
     }
   ],
   "enemyArrangement": [
@@ -47,7 +39,7 @@
       "EntityName": "dinorun.BOOGACoin",
       "Arrangement": [
         {
-          "5": ["4"]
+          "5": ["3"]
         }
       ]
     }

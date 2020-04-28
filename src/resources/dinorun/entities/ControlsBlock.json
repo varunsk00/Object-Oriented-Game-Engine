@@ -1,6 +1,6 @@
 {
-  "entityName": "ClearSwitchBlock",
-  "image": "transparent.png",
+  "entityName": "ControlsBlock",
+  "image": "controls.png",
   "health": 1,
   "fixed": true,
   "permeable": true,
@@ -11,8 +11,8 @@
   "yVel": 0,
   "maxXVel": 0,
   "maxYVel": 0,
-  "height": 100,
-  "width": 100,
+  "height": 150,
+  "width": 150,
   "health":1,
   "scheme": "NoControls",
   "actionBundles": [

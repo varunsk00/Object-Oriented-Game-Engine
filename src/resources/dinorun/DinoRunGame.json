@@ -12,7 +12,7 @@
   ],
   "physicsProfile": [
     {
-      "friction": "0",
+      "friction": "20",
       "drag": "20",
       "gravity": "30"
     }
@@ -20,7 +20,7 @@
   "levelArrangement": [
     {
       "Level_1": "dinorun.FlatGroundLevel",
-      "Level_2": "dinorun.FlatGroundLevel",
+      "Level_2": "dinorun.FlatGroundPointLevel",
       "Level_3": "dinorun.FlatGroundLevel",
       "Level_4": "dinorun.PlatformLevel",
       "Level_5": "dinorun.TreeLevel",

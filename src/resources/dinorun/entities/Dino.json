@@ -53,6 +53,31 @@
       "Control": [
         {
           "orientation": "N",
+          "param": "1",
+          "action": "IncrementScore"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "IncrementScore"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "IncrementScore"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "IncrementScore"
+        }
+      ],
+      "ID": "dinorun.BOOGACoin"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
           "param": "true",
           "action": "SetBoundedBottom"
         },
@@ -63,6 +88,26 @@
         }
       ],
       "ID": "dinorun.Ground"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "N",
+          "param": "false",
+          "action": "SetConditional"
+        }
+      ],
+      "ID": "dinorun.Start_Stone"
     }
   ],
   "actionBundles": [
@@ -122,9 +167,13 @@
     {
       "Control": [
         {
-          "param": "dinorun.Fireball",
+          "param": "mario.Mario_Fireball",
           "action": "SpawnRelative",
           "coolDown": "1000"
+        },
+        {
+          "param": "",
+          "action": "ExecuteConditional"
         }
       ],
       "ID": "F"

@@ -9,7 +9,20 @@
       "Arrangement": [
         {
           "6": [
-            "0-15"
+            "8-15"
+          ]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.Start_Stone",
+      "Arrangement": [
+        {
+          "6": [
+            "0-8"
+          ],
+          "7": [
+            "0-8"
           ]
         }
       ]
@@ -19,7 +32,7 @@
       "Arrangement": [
         {
           "7": [
-            "0-15"
+            "8-15"
           ]
         }
       ]
@@ -39,5 +52,29 @@
     }
   ],
   "enemyArrangement": [
+    {
+      "EntityName": "dinorun.IntroBlock",
+      "Arrangement": [
+        {
+          "2": ["3"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.ControlsBlock",
+      "Arrangement": [
+        {
+          "2": ["7"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.BOOGACoin",
+      "Arrangement": [
+        {
+          "5": ["3"]
+        }
+      ]
+    }
   ]
 }

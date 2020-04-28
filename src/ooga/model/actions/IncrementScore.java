@@ -12,6 +12,7 @@ public class IncrementScore extends Action {
 
   @Override
   public void execute(EntityModel entity) {
+    System.out.println("     zdfsdfa");
     entity.updateScore(entity.getScore() + newScore);
   }
 }
