@@ -7,23 +7,27 @@
       "scrollingStatusY" : "0",
       "spawningInterval" : "500",
       "levelSpawnOffset": "1",
-      "startingLevelIndex": "0"
+      "startingLevelIndex": "8"
     }
   ],
   "physicsProfile": [
     {
       "friction": "0",
-      "drag": "0",
-      "gravity": "10"
+      "drag": "20",
+      "gravity": "30"
     }
   ],
   "levelArrangement": [
     {
       "Level_1": "dinorun.FlatGroundLevel",
-      "Level_2": "dinorun.PlatformLevel",
-      "Level_4": "dinorun.DoublePlatformLevel",
-      "Level_3": "dinorun.TreeLevel",
-      "Level_5": "dinorun.DoubleTreeLevel"
+      "Level_2": "dinorun.FlatGroundLevel",
+      "Level_3": "dinorun.FlatGroundLevel",
+      "Level_4": "dinorun.PlatformLevel",
+      "Level_5": "dinorun.TreeLevel",
+      "Level_6": "dinorun.ShrubLevel",
+      "Level_7": "dinorun.DoublePlatformLevel",
+      "Level_8": "dinorun.TreeStumpGapLevel",
+      "Level_9": "dinorun.StartingLevel"
     }
   ],
   "playerArrangement": [

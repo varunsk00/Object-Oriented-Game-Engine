@@ -48,7 +48,7 @@ public class EntityWrapper {
    */
   public void handleKeyInput(String key) {myModel.handleKeyInput(key); }
 
-//<<<<<<< HEAD
+  //<<<<<<< HEAD
 //  /**
 //   * handles controller input
 //   * @param key : button on controller pressed

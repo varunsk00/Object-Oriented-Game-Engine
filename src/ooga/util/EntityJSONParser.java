@@ -309,13 +309,12 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get(MAX_Y_VEL_FIELD).toString());
     }
     catch (NullPointerException e) {
-      throw new ParameterMissingException(e, MAX_Y_VEL_FIELD);
+      new ParameterMissingException(e, MAX_Y_VEL_FIELD);
 
     } catch (NumberFormatException e) {
-      throw new ParameterInvalidException(e, MAX_Y_VEL_FIELD);
-    } finally {
-      return DEFAULT_MAX_VELOCITY;
+      new ParameterInvalidException(e, MAX_Y_VEL_FIELD);
     }
+    return DEFAULT_MAX_VELOCITY;
   }
 
   public double readHealth() {

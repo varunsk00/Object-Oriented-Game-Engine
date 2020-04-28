@@ -1,6 +1,6 @@
 {
-  "entityName": "DeadTreeTop",
-  "image": "tree_top.png",
+  "entityName": "DeadTreeFull",
+  "image": "tree_full.png",
   "health": 1,
   "fixed": true,
   "permeable": false,
@@ -11,7 +11,7 @@
   "yVel": 10,
   "maxXVel": 100,
   "maxYVel": 100,
-  "height": 75,
+  "height": 200,
   "width": 75,
   "health": 1,
   "scheme": "NoControls",

@@ -6,10 +6,10 @@
   "health": 100,
   "xPos": 100,
   "xVel": 10,
-  "maxXVel": 5000,
-  "width": 101,
+  "maxXVel": 1500,
+  "width": 90,
   "height": 100,
-  "maxYVel": 10000,
+  "maxYVel": 2000,
   "fixed": false,
   "yVel": 10,
   "entityName": "Dino",
@@ -18,11 +18,21 @@
       "Control": [
         {
           "orientation": "W",
-          "param": "5",
+          "param": "true",
+          "action": "SetConditional"
+        }
+      ],
+      "ID": "dinorun.TestBlock"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "8",
           "action": "RandomLevelSwitch"
         }
       ],
-      "ID": "dinorun.ClearLevelBlock"
+      "ID": "dinorun.ClearSwitchBlock"
     },
     {
       "Control": [
@@ -55,8 +65,20 @@
       "ID": "dinorun.Ground"
     }
   ],
-
   "actionBundles": [
+    {
+      "Control": [
+        {
+          "param": "-500.0",
+          "action": "VelocityX"
+        },
+        {
+          "param": "true",
+          "action": "SetForwards"
+        }
+      ],
+      "ID": "A"
+    },
     {
       "Control": [
         {
@@ -82,11 +104,30 @@
     {
       "Control": [
         {
-          "param": "-10000.0",
+          "param": "10.0",
+          "action": "AccelerateY"
+        }
+      ],
+      "ID": "S"
+    },
+    {
+      "Control": [
+        {
+          "param": "-1000.0",
           "action": "Jump"
         }
       ],
       "ID": "SPACE"
+    },
+    {
+      "Control": [
+        {
+          "param": "dinorun.Fireball",
+          "action": "SpawnRelative",
+          "coolDown": "1000"
+        }
+      ],
+      "ID": "F"
     }
   ]
 }

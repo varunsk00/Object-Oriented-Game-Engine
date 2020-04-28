@@ -1,5 +1,5 @@
 {
-  "levelName": "Platform",
+  "levelName": "TallTree",
   "levelType": "InfiniteLevel",
   "tileWidth": 100,
   "tileHeight": 100,
@@ -8,9 +8,7 @@
       "EntityName": "dinorun.Grass",
       "Arrangement": [
         {
-          "2": ["5-8"],
-          "4": ["3-5"],
-          "6": ["5-7"]
+          "6": ["0-4","5-8"]
         }
       ]
     },
@@ -18,7 +16,7 @@
       "EntityName": "dinorun.Ground",
       "Arrangement": [
         {
-          "7": ["6-8"]
+          "7": ["0-4","5-8"]
         }
       ]
     },
@@ -32,6 +30,14 @@
           "3": ["0"],
           "4": ["0"],
           "5": ["0"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.DeadTreeBottom",
+      "Arrangement": [
+        {
+          "5": ["3"]
         }
       ]
     }

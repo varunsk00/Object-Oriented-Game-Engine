@@ -1,6 +1,6 @@
 {
-  "levelName": "Platform",
-  "levelType": "InfiniteLevel",
+  "levelName": "Tree",
+  "levelType": "FiniteLevel",
   "tileWidth": 100,
   "tileHeight": 100,
   "tileArrangement": [
@@ -8,9 +8,9 @@
       "EntityName": "dinorun.Grass",
       "Arrangement": [
         {
-          "2": ["5-8"],
-          "4": ["3-5"],
-          "6": ["5-7"]
+          "6": [
+            "0-15"
+          ]
         }
       ]
     },
@@ -18,7 +18,9 @@
       "EntityName": "dinorun.Ground",
       "Arrangement": [
         {
-          "7": ["6-8"]
+          "7": [
+            "0-15"
+          ]
         }
       ]
     },
@@ -26,12 +28,12 @@
       "EntityName": "dinorun.ClearSwitchBlock",
       "Arrangement": [
         {
-          "0": ["0"],
-          "1": ["0"],
-          "2": ["0"],
-          "3": ["0"],
-          "4": ["0"],
-          "5": ["0"]
+          "0": ["2"],
+          "1": ["2"],
+          "2": ["2"],
+          "3": ["2"],
+          "4": ["2"],
+          "5": ["2"]
         }
       ]
     }
