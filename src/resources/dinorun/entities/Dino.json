@@ -22,13 +22,13 @@
           "action": "SetConditional"
         }
       ],
-      "ID": "dinorun.TestBlock"
+      "ID": "dinorun.IonBlock"
     },
     {
       "Control": [
         {
           "orientation": "W",
-          "param": "8",
+          "param": "9",
           "action": "RandomLevelSwitch"
         }
       ],
@@ -77,6 +77,26 @@
     {
       "Control": [
         {
+          "orientation": "W",
+          "param": "10",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "300",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "300",
+          "action": "SetY"
+        }
+      ],
+      "ID": "dinorun.PurplePortal"
+    },
+    {
+      "Control": [
+        {
           "orientation": "N",
           "param": "true",
           "action": "SetBoundedBottom"
@@ -89,6 +109,36 @@
       ],
       "ID": "dinorun.Ground"
     },
+    ,{
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "N",
+          "param": "false",
+          "action": "SetConditional"
+        }
+      ],
+      "ID": "dinorun.Start_Stone"
+    },
     {
       "Control": [
         {
@@ -102,23 +152,28 @@
           "action": "SetBoundedTop"
         },
         {
-          "orientation": "N",
-          "param": "false",
-          "action": "SetConditional"
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
         }
       ],
-      "ID": "dinorun.Start_Stone"
+      "ID": "dinorun.End_Stone"
     }
   ],
   "actionBundles": [
     {
       "Control": [
         {
-          "param": "-500.0",
-          "action": "VelocityX"
+          "param": "-30.0",
+          "action": "AccelerateX"
         },
         {
-          "param": "true",
+          "param": "false",
           "action": "SetForwards"
         }
       ],
@@ -127,8 +182,8 @@
     {
       "Control": [
         {
-          "param": "500.0",
-          "action": "VelocityX"
+          "param": "30.0",
+          "action": "AccelerateX"
         },
         {
           "param": "true",
@@ -167,7 +222,7 @@
     {
       "Control": [
         {
-          "param": "mario.Mario_Fireball",
+          "param": "dinorun.QuantumProjectile",
           "action": "SpawnRelative",
           "coolDown": "1000"
         },

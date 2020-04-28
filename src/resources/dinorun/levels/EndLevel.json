@@ -1,0 +1,35 @@
+{
+  "levelName": "EndLevel",
+  "levelType": "FiniteLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "dinorun.End_Stone",
+      "Arrangement": [
+        {
+          "0": ["0-20"],
+          "1": ["0", "10"],
+          "2": ["0"],
+          "3": ["0"],
+          "4": ["0"],
+          "5": ["0", "10"],
+          "6": ["0-20"],
+          "7": ["0-20"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.IonBlock",
+      "Arrangement": [
+        {
+          "2": ["10"],
+          "3": ["10"],
+          "4": ["10"]
+        }
+      ]
+    }
+  ],
+  "enemyArrangement": [
+  ]
+}

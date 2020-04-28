@@ -7,7 +7,7 @@
       "scrollingStatusY" : "0",
       "spawningInterval" : "500",
       "levelSpawnOffset": "1",
-      "startingLevelIndex": "8"
+      "startingLevelIndex": "9"
     }
   ],
   "physicsProfile": [
@@ -19,22 +19,24 @@
   ],
   "levelArrangement": [
     {
-      "Level_1": "dinorun.FlatGroundLevel",
-      "Level_2": "dinorun.FlatGroundPointLevel",
-      "Level_3": "dinorun.FlatGroundLevel",
-      "Level_4": "dinorun.PlatformLevel",
-      "Level_5": "dinorun.TreeLevel",
-      "Level_6": "dinorun.ShrubLevel",
-      "Level_7": "dinorun.DoublePlatformLevel",
-      "Level_8": "dinorun.TreeStumpGapLevel",
-      "Level_9": "dinorun.StartingLevel"
+      "Level_A": "dinorun.FlatGroundLevel",
+      "Level_B": "dinorun.FlatGroundPointLevel",
+      "Level_C": "dinorun.FlatGroundLevel",
+      "Level_D": "dinorun.PlatformLevel",
+      "Level_E": "dinorun.TreeLevel",
+      "Level_F": "dinorun.ShrubLevel",
+      "Level_G": "dinorun.DoublePlatformLevel",
+      "Level_H": "dinorun.TreeStumpGapLevel",
+      "Level_I": "dinorun.PortalLevel",
+      "Level_J": "dinorun.StartingLevel",
+      "Level_K": "dinorun.EndLevel"
     }
   ],
   "playerArrangement": [
     {
       "EntityName": "dinorun.Dino",
       "Arrangement": {
-        "X": "100",
+        "X": "10200",
         "Y": "100"
       }
     }

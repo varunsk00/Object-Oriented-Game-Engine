@@ -1,6 +1,6 @@
 {
-  "entityName": "Fireball",
-  "image": "bird.png",
+  "entityName": "QuantumProjectile",
+  "image": "quantum_projectile.gif",
   "health": 1,
   "fixed": false,
   "permeable": true,

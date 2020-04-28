@@ -1,5 +1,5 @@
 {
-  "levelName": "Tree",
+  "levelName": "Starting",
   "levelType": "FiniteLevel",
   "tileWidth": 100,
   "tileHeight": 100,
@@ -9,7 +9,7 @@
       "Arrangement": [
         {
           "6": [
-            "8-15"
+            "105-115"
           ]
         }
       ]
@@ -18,12 +18,14 @@
       "EntityName": "dinorun.Start_Stone",
       "Arrangement": [
         {
-          "6": [
-            "0-8"
-          ],
-          "7": [
-            "0-8"
-          ]
+          "0": ["90-100"],
+          "1": ["90-100"],
+          "2": ["90-100"],
+          "3": ["90-100"],
+          "4": ["90-100"],
+          "5": ["90-100"],
+          "6": ["90-105"],
+          "7": ["90-105"]
         }
       ]
     },
@@ -32,7 +34,7 @@
       "Arrangement": [
         {
           "7": [
-            "8-15"
+            "105-115"
           ]
         }
       ]
@@ -41,12 +43,12 @@
       "EntityName": "dinorun.ClearSwitchBlock",
       "Arrangement": [
         {
-          "0": ["2"],
-          "1": ["2"],
-          "2": ["2"],
-          "3": ["2"],
-          "4": ["2"],
-          "5": ["2"]
+          "0": ["102"],
+          "1": ["102"],
+          "2": ["102"],
+          "3": ["102"],
+          "4": ["102"],
+          "5": ["102"]
         }
       ]
     }
@@ -56,7 +58,7 @@
       "EntityName": "dinorun.IntroBlock",
       "Arrangement": [
         {
-          "2": ["3"]
+          "2": ["103"]
         }
       ]
     },
@@ -64,15 +66,15 @@
       "EntityName": "dinorun.ControlsBlock",
       "Arrangement": [
         {
-          "2": ["7"]
+          "2": ["107"]
         }
       ]
     },
     {
-      "EntityName": "dinorun.BOOGACoin",
+      "EntityName": "dinorun.PurplePortal",
       "Arrangement": [
         {
-          "5": ["3"]
+          "5": ["103"]
         }
       ]
     }

@@ -1,5 +1,6 @@
 package ooga.model.levels;
 
+import java.util.ArrayList;
 import java.util.List;
 import ooga.controller.EntityWrapper;
 import ooga.util.GameStatusProfile;
