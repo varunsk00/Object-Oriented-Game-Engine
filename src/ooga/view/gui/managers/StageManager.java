@@ -92,10 +92,15 @@ public class StageManager {
         lastScene.put(title, saveScene);
     }
 
-    public void reboot() throws Exception {
-        ProgramLauncher launcher = new ProgramLauncher(stage);
-        avManager.close();
-        avManager.switchMusic(this);
-        launcher.start();
+    public void reboot() {
+        try {
+            ProgramLauncher launcher = new ProgramLauncher(stage);
+            avManager.close();
+            avManager.switchMusic(this);
+            launcher.start();
+        } catch (Exception e) {
+            new MissingFileException(e);
+        }
+
     }
 }
