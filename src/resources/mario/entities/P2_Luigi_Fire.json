@@ -1,7 +1,7 @@
 {
   "image": "fireluigi_walk.gif",
   "yPos": 100,
-  "scheme": "GamePad",
+  "scheme": "Keyboard",
   "permeable": false,
   "health": 1,
   "xPos": 100,
@@ -369,7 +369,7 @@
           "action": "SetForwards"
         }
       ],
-      "ID": "LEFT_THUMBSTICK_LEFT"
+      "ID": "UP_Arrow"
     },
     {
       "Control": [
@@ -378,7 +378,7 @@
           "action": "AccelerateY"
         }
       ],
-      "ID": "I"
+      "ID": "UP_Arrow"
     },
     {
       "Control": [
@@ -409,22 +409,22 @@
       "ID": "B_BUTTON"
     },
     {
-      "ID": "U",
       "Control": [
         {
-          "action": "ChangeImage",
-          "param": "mario/images/fireluigi_walk.gif"
+          "param": "mario\/images\/fireluigi_walk.gif",
+          "action": "ChangeImage"
         }
-      ]
+      ],
+      "ID": "U"
     },
     {
-      "ID": "Y",
       "Control": [
         {
-          "action": "ChangeImage",
-          "param": "mario/images/firemario_walk.gif"
+          "param": "mario\/images\/firemario_walk.gif",
+          "action": "ChangeImage"
         }
-      ]
+      ],
+      "ID": "Y"
     }
   ],
   "height": 100
