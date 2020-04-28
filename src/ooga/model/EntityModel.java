@@ -244,5 +244,10 @@ public class EntityModel {
   public void setConditional(boolean newvalue){conditional = newvalue;}
 
   public boolean getConditional(){return conditional;}
+
+  public void killEntity() {
+    myEntity.killEntity();
+  }
+
 }
 

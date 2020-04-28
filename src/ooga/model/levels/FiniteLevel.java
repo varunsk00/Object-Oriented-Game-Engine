@@ -22,7 +22,7 @@ public class FiniteLevel extends Level{
 
 
   @Override
-  public void spawnEntities(List<EntityWrapper> currentEntityList){
+  public void spawnEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entityRemoved){
     for (EntityWrapper player : playerEntities) {
       for (EntityWrapper tileEntity : tileEntities) {
         if (!playerEntities.contains(tileEntity) && isInRange(player.getModel(), tileEntity.getModel()) && !currentEntityList.contains(tileEntity)) {
@@ -30,7 +30,8 @@ public class FiniteLevel extends Level{
         }
       }
       for (EntityWrapper enemyEntity : enemyEntities) {
-        if (!playerEntities.contains(enemyEntity) && isInRange(player.getModel(), enemyEntity.getModel()) && !currentEntityList.contains(enemyEntity)) {
+        if (!playerEntities.contains(enemyEntity) && isInRange(player.getModel(), enemyEntity.getModel()) && !currentEntityList.contains(enemyEntity)
+            && !entityRemoved.contains(enemyEntity)) {
           addEntity(enemyEntity, currentEntityList);
         }
       }

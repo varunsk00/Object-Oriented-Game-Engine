@@ -12,5 +12,6 @@ public class Die extends Action {
   public void execute(EntityModel entity) {
     System.out.println("asdfasdf");
     entity.despawnEntity();
+    entity.killEntity();
   }
 }
