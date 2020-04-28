@@ -1,7 +1,10 @@
 package ooga.model.actions.actionExceptions;
 
-public class InvalidActionException extends RuntimeException {
-  public static final String CLASS_NOT_FOUND = "Control Scheme not valid";
+import javafx.scene.control.Alert;
+import ooga.exceptions.DisplayExceptions;
+
+public class InvalidActionException extends DisplayExceptions {
+  public static final String type = "Action not valid in data file or properties file";
   /**
    * Create an Exception based on an issue during parsing
    *
@@ -22,6 +25,7 @@ public class InvalidActionException extends RuntimeException {
    */
   public InvalidActionException(Throwable cause, String message, Object... values) {
     super(String.format(message, values), cause);
+
   }
 
   /**
@@ -31,6 +35,14 @@ public class InvalidActionException extends RuntimeException {
    */
   public InvalidActionException(Throwable cause) {
     super(cause);
+
+  }
+
+  @Override
+  public void displayAlert(){
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle(type);
+    alert.show();
   }
 
 

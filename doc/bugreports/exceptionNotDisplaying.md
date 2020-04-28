@@ -67,6 +67,7 @@ try {
     ex.displayAlert();
     stageManager.reboot();
 } catch(Exception ex) {
+    animation.pause();
     createAlert();
     stageManager.reboot();
 }

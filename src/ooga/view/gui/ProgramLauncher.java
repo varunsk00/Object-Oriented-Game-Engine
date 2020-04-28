@@ -2,9 +2,10 @@ package ooga.view.gui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ooga.exceptions.MissingFileException;
+import ooga.exceptions.DisplayExceptions;
 import ooga.view.gui.managers.AudioVideoManager;
 import ooga.view.gui.managers.StageManager;
 import ooga.view.gui.userinterface.GameCabinet;
@@ -14,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.util.ResourceBundle;
 
 public class ProgramLauncher {
+    public static final String UNEXPECTED_ERROR = "Unexpected Error";
+    public static final String ERROR_MSG = "Unexpected Error. Please check data files and run again.";
     private final String RESOURCES_PACKAGE = "resources.guiText";
     private ResourceBundle myResources = ResourceBundle.getBundle(RESOURCES_PACKAGE);
     private static final double FRAMES_PER_SECOND = 60;
@@ -45,11 +48,16 @@ public class ProgramLauncher {
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
             try {
                 step(); }
-            catch (Exception ex) {
-//                animation.stop();
-//                stageManager.createAndSwitchScenes(welcomeScreen);
-                new MissingFileException(ex, "resourceFile");
-            } });
+            catch (DisplayExceptions ex) {
+                animation.pause();
+                ex.displayAlert();
+                stageManager.reboot();
+            } catch(Exception ex) {
+                createAlert();
+                stageManager.reboot();
+            }
+
+        });
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
@@ -64,4 +72,12 @@ public class ProgramLauncher {
         }
         library.updateCurrentGame();
     }
+
+    private void createAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(UNEXPECTED_ERROR);
+        alert.setHeaderText(ERROR_MSG);
+        alert.show();
+    }
+
 }
