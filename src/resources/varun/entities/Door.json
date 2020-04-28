@@ -3,7 +3,7 @@
   "image": "Door.png",
   "health": 1,
   "fixed": true,
-  "permeable": true,
+  "permeable": false,
 
   "xPos": 300,
   "yPos": 275,
@@ -16,5 +16,7 @@
   "scheme": "NoControls",
   "actionBundles": [
 
+  ],
+  "collisionBundles": [
   ]
 }

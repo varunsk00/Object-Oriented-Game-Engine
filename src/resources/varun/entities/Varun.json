@@ -16,6 +16,16 @@
   "scheme": "Keyboard",
   "actionBundles": [
     {
+      "Control": [
+        {
+          "param": "varun.Interact",
+          "action": "SpawnRelative",
+          "coolDown": "1000"
+        }
+      ],
+      "ID": "Z"
+    },
+    {
       "ID": "D",
       "Control": [
         {
@@ -73,17 +83,17 @@
       "ID": "varun.ExitDoor",
       "Control": [
         {
-          "orientation": "S",
+          "orientation": "N",
           "param": "1",
           "action": "LevelSwitch"
         },
         {
-          "orientation": "S",
+          "orientation": "N",
           "param": "640",
           "action": "SetX"
         },
         {
-          "orientation": "S",
+          "orientation": "N",
           "param": "680",
           "action": "SetY"
         }
