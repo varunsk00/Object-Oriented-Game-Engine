@@ -198,6 +198,7 @@ public class GameController {
         myViewManager.updateMenu(LOSS_RESULT);
         myViewManager.pauseGame();
         levelSelector.resetLevel(entityList, entityDespawnBuffer);
+        myViewManager.updateEntityRenders(entityList, entityDespawnBuffer);
         entityRemoved.clear();
         return;
       }
