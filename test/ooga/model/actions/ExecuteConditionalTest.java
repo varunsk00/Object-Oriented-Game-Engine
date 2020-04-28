@@ -24,6 +24,7 @@ class ExecuteConditionalTest {
     myEntity.getModel().getActionStack().push(new MoveX("10"));
     myEntity.getModel().setConditional(false);
     myAction.execute(myEntity.getModel());
+    myEntity.update(2000);
     assertEquals(oldX, myEntity.getModel().getX());
   }
 
@@ -33,6 +34,7 @@ class ExecuteConditionalTest {
     myEntity.getModel().getActionStack().push(new MoveX("10"));
     myEntity.getModel().setConditional(true);
     myAction.execute(myEntity.getModel());
+    myEntity.update(2000);
     assertEquals(oldX + 10, myEntity.getModel().getX());
   }
 }

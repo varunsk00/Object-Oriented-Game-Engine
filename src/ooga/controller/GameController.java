@@ -32,6 +32,7 @@ public class GameController {
   private List<EntityWrapper> entityList;
   private List<EntityWrapper> entitySpawnBuffer;
   private List<EntityWrapper> entityDespawnBuffer;
+  private List<EntityWrapper> entityRemoved;
   private static final int FRAMES_PER_SECOND = 60;
   private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
   private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -62,6 +63,7 @@ public class GameController {
     entityList = new ArrayList<>();
     entitySpawnBuffer = new ArrayList<>();
     entityDespawnBuffer = new ArrayList<>();
+    entityRemoved = new ArrayList<>();
     playerList = gameParser.getPlayerList();
 
     for (EntityWrapper player : playerList) {
@@ -131,7 +133,7 @@ public class GameController {
     myViewManager.handleMenuInput();
     handleGamePadPlayer();
     if (!myViewManager.getIsGamePaused()) {
-      levelSelector.updateCurrentLevel(entityList, entityDespawnBuffer);
+      levelSelector.updateCurrentLevel(entityList, entityDespawnBuffer, entityRemoved);
       this.handleSaveGame();
       myViewManager.updateCamera();
       myViewManager.updateEntityRenders(entityList, entityDespawnBuffer);
@@ -192,9 +194,11 @@ public class GameController {
   private void checkIfResetLevel() {
     for (EntityWrapper player : gameParser.getPlayerList()) {
       if (myModelManager.checkHealthGone(player)) {
+        entityList.addAll(entityRemoved);
         myViewManager.updateMenu(LOSS_RESULT);
         myViewManager.pauseGame();
         levelSelector.resetLevel(entityList, entityDespawnBuffer);
+        entityRemoved.clear();
         return;
       }
     }
@@ -212,5 +216,15 @@ public class GameController {
       myViewManager.setSaveGame();
     }
   }
+
+  /**
+   * Removes entity from list and view when killed
+   * @param entityWrapper : entity to be removed
+   */
+  public void killEntity(EntityWrapper entityWrapper) {
+    entityRemoved.add(entityWrapper);
+    myViewManager.removeEntity(entityWrapper.getRender());
+  }
+
 
 }

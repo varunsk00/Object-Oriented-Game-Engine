@@ -158,4 +158,12 @@ public class EntityWrapper {
    * @param levelIndex level index to change to
    */
   public void changeLevel(int levelIndex) {myController.changeLevel(levelIndex, this);}
+
+  /**
+   * Removes entity from controller when killed
+   */
+  public void killEntity() {
+    myController.killEntity(this);
+  }
+
 }
