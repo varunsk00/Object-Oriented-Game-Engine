@@ -12,11 +12,20 @@
         }
       ]
     },
+
+    {
+      "EntityName": "dinorun.Spike",
+      "Arrangement": [
+        {
+          "6": ["4"]
+        }
+      ]
+    },
     {
       "EntityName": "dinorun.Ground",
       "Arrangement": [
         {
-          "7": ["0-4","5-8"]
+          "7": ["0-8"]
         }
       ]
     },

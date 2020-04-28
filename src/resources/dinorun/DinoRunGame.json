@@ -12,8 +12,8 @@
   ],
   "physicsProfile": [
     {
-      "friction": "20",
-      "drag": "20",
+      "friction": "0",
+      "drag": "0",
       "gravity": "30"
     }
   ],

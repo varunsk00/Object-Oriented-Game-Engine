@@ -3,8 +3,8 @@
   "yPos": 100,
   "scheme": "Keyboard",
   "permeable": false,
-  "health": 100,
-  "xPos": 100,
+  "health": 3,
+  "xPos": 10200,
   "xVel": 10,
   "maxXVel": 1500,
   "width": 90,
@@ -45,6 +45,21 @@
           "orientation": "S",
           "param": "true",
           "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "N",
+          "param": "500",
+          "action": "VelocityX"
         }
       ],
       "ID": "dinorun.Grass"
@@ -83,7 +98,7 @@
         },
         {
           "orientation": "W",
-          "param": "300",
+          "param": "100",
           "action": "SetX"
         },
         {
@@ -105,11 +120,26 @@
           "orientation": "S",
           "param": "true",
           "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "N",
+          "param": "500",
+          "action": "VelocityX"
         }
       ],
       "ID": "dinorun.Ground"
     },
-    ,{
+    {
       "Control": [
         {
           "orientation": "N",
@@ -143,6 +173,106 @@
       "Control": [
         {
           "orientation": "N",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "LoseHealth"
+        }
+      ],
+      "ID": "dinorun.Spike"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "LoseHealth"
+        }
+      ],
+      "ID": "dinorun.DeadTreeTop"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "LoseHealth"
+        }
+      ],
+      "ID": "dinorun.DeadTreeBottom"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "LoseHealth"
+        }
+      ],
+      "ID": "dinorun.DeadTreeFull"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
           "param": "true",
           "action": "SetBoundedBottom"
         },
@@ -163,13 +293,38 @@
         }
       ],
       "ID": "dinorun.End_Stone"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        }
+      ],
+      "ID": "dinorun.RedIonBlock"
     }
   ],
   "actionBundles": [
     {
       "Control": [
         {
-          "param": "-30.0",
+          "param": "-26.5",
           "action": "AccelerateX"
         },
         {
@@ -182,7 +337,7 @@
     {
       "Control": [
         {
-          "param": "30.0",
+          "param": "26.5",
           "action": "AccelerateX"
         },
         {

@@ -9,7 +9,7 @@
       "Arrangement": [
         {
           "6": [
-            "105-115"
+            "105-114"
           ]
         }
       ]
@@ -67,14 +67,6 @@
       "Arrangement": [
         {
           "2": ["107"]
-        }
-      ]
-    },
-    {
-      "EntityName": "dinorun.PurplePortal",
-      "Arrangement": [
-        {
-          "5": ["103"]
         }
       ]
     }

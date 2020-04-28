@@ -51,6 +51,17 @@
           "orientation": "DEFAULT"
         }
       ]
+    },
+    {
+      "ID": "dinorun.RedIonBlock",
+      "Control": [
+        {
+          "action": "NoAction",
+          "param": "false",
+          "orientation": "DEFAULT"
+        }
+      ]
     }
+
   ]
 }

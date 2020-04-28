@@ -15,10 +15,18 @@
       ]
     },
     {
+      "EntityName": "dinorun.Spike",
+      "Arrangement": [
+        {
+          "6": ["2-5"]
+        }
+      ]
+    },
+    {
       "EntityName": "dinorun.Ground",
       "Arrangement": [
         {
-          "7": ["6-8"]
+          "7": ["2-8"]
         }
       ]
     },
