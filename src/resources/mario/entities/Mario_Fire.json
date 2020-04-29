@@ -10,8 +10,6 @@
     {
       "Control": [
         {
-<<<<<<< HEAD
-=======
           "orientation": "W",
           "param": "1",
           "action": "LevelSwitch"
@@ -47,7 +45,6 @@
     {
       "Control": [
         {
->>>>>>> 41de2d1174830525a1b14598ff3cb3690704a011
           "orientation": "W",
           "param": "2",
           "action": "LevelSwitch"
