@@ -4,14 +4,14 @@
   "scheme": "Keyboard",
   "permeable": false,
   "health": 1,
-  "xPos": 8500,
-  "xVel": 10,
+  "xPos": 10200,
+  "xVel": 0,
   "maxXVel": 1500,
   "width": 90,
   "height": 100,
   "maxYVel": 2000,
   "fixed": false,
-  "yVel": 10,
+  "yVel": 0,
   "entityName": "Dino",
   "collisionBundles": [
     {

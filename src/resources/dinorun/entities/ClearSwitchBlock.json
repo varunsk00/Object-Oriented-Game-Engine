@@ -1,6 +1,6 @@
 {
   "entityName": "ClearSwitchBlock",
-  "image": "bird.png",
+  "image": "transparent.png",
   "health": 1,
   "fixed": true,
   "permeable": true,

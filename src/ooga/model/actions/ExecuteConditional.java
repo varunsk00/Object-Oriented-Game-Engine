@@ -14,8 +14,5 @@ public class ExecuteConditional extends Action {
     if(entity.getConditional()){
       action.execute(entity);
     }
-    else{
-      entity.getActionStack().pop();
-    }
   }
 }

@@ -58,7 +58,6 @@ public class LevelSelector {
   }
 
   private void despawnAllEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn) {
-    System.out.println("all entity gone");
     for (EntityWrapper targetEntity : currentEntityList) {
       if (!playerList.contains(targetEntity)) {
         entitiesToDespawn.add(targetEntity);
