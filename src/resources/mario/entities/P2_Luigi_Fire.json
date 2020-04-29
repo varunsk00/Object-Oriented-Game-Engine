@@ -369,7 +369,7 @@
           "action": "SetForwards"
         }
       ],
-      "ID": "UP_Arrow"
+      "ID": "LEFT_THUMBSTICK_LEFT"
     },
     {
       "Control": [
@@ -378,7 +378,7 @@
           "action": "AccelerateY"
         }
       ],
-      "ID": "UP_Arrow"
+      "ID": "LEFT_THUMBSTICK_UP"
     },
     {
       "Control": [
@@ -387,7 +387,7 @@
           "action": "AccelerateY"
         }
       ],
-      "ID": "K"
+      "ID": "LEFT_THUMBSTICK_DOWN"
     },
     {
       "Control": [
@@ -415,7 +415,7 @@
           "action": "ChangeImage"
         }
       ],
-      "ID": "U"
+      "ID": "X_BUTTON"
     },
     {
       "Control": [
@@ -424,7 +424,7 @@
           "action": "ChangeImage"
         }
       ],
-      "ID": "Y"
+      "ID": "Y_BUTTON"
     }
   ],
   "height": 100
