@@ -2,9 +2,7 @@ package ooga.model.levels;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.text.html.parser.Entity;
 import ooga.controller.EntityWrapper;
-import ooga.controller.ViewManager;
 import ooga.util.GameStatusProfile;
 import ooga.view.application.Camera;
 
@@ -12,7 +10,6 @@ public class LevelSelector {
 
   private List<Level> parsedLevels;
   private Level activeLevel;
-  private int spawningInterval;
   private GameStatusProfile gameStatusProfile;
   private Camera gameCamera;
   private List<EntityWrapper> playerList;
@@ -24,7 +21,6 @@ public class LevelSelector {
     playerList = players;
     gameStatusProfile = gameProfile;
     gameCamera = camera;
-    spawningInterval = gameStatusProfile.readSpawningInterval();
     int startingLevelIndex = gameStatusProfile.readStartingLevelIndex();
     activeLevel = parsedLevels.get(startingLevelIndex);
   }
@@ -36,6 +32,11 @@ public class LevelSelector {
 
   public void changeCurrentLevel(int nextLevel, EntityWrapper player) {
     switchLevel(nextLevel);
+    for (EntityWrapper tempPlayer : playerList) {
+      if(!tempPlayer.equals(player)) {
+        tempPlayer.getModel().loadStats();
+      }
+    }
     activeLevel.setCurrentPlayerInterval(activeLevel.calculatePlayerInterval(player));
   }
 

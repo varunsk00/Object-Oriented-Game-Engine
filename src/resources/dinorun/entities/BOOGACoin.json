@@ -1,0 +1,47 @@
+{
+  "entityName": "BOOGACoin",
+  "image": "booga_coin.png",
+  "health": 1,
+  "fixed": true,
+  "permeable": true,
+
+  "xPos": -100,
+  "yPos": -100,
+  "xVel": 0,
+  "yVel": 0,
+  "maxXVel": 0,
+  "maxYVel": 0,
+  "height": 50,
+  "width": 50,
+  "health":1,
+  "scheme": "NoControls",
+  "actionBundles": [
+  ],
+  "collisionBundles": [
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "",
+          "action": "Die"
+        },
+        {
+          "orientation": "S",
+          "param": "",
+          "action": "Die"
+        },
+        {
+          "orientation": "W",
+          "param": "",
+          "action": "Die"
+        },
+        {
+          "orientation": "E",
+          "param": "",
+          "action": "Die"
+        }
+      ],
+      "ID": "dinorun.Dino"
+    }
+  ]
+}

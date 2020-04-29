@@ -163,7 +163,6 @@ public class GameController {
   private void resetEntityBufferLists(){
     entitySpawnBuffer = new ArrayList<>();
     entityDespawnBuffer = new ArrayList<>();
-
   }
 
   private void handleGamePadPlayer() {
@@ -198,6 +197,7 @@ public class GameController {
         myViewManager.updateMenu(LOSS_RESULT);
         myViewManager.pauseGame();
         levelSelector.resetLevel(entityList, entityDespawnBuffer);
+        myViewManager.updateEntityRenders(entityList, entityDespawnBuffer);
         entityRemoved.clear();
         return;
       }

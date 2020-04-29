@@ -1,0 +1,91 @@
+{
+  "levelName": "Starting",
+  "levelType": "FiniteLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "dinorun.Grass",
+      "Arrangement": [
+        {
+          "6": [
+            "105-112"
+          ]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.Reset_Stone",
+      "Arrangement": [
+        {
+          "6": ["80-90"],
+          "7": ["80-90"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.Start_Stone",
+      "Arrangement": [
+        {
+          "0": ["90-100"],
+          "1": ["90-100"],
+          "2": ["90-100"],
+          "3": ["90-100"],
+          "4": ["90-100"],
+          "5": ["90-100"],
+          "6": ["90-105"],
+          "7": ["90-105"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.Ground",
+      "Arrangement": [
+        {
+          "7": [
+            "105-115"
+          ]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.ClearSwitchBlock",
+      "Arrangement": [
+        {
+          "0": ["104"],
+          "1": ["104"],
+          "2": ["104"],
+          "3": ["104"],
+          "4": ["104"],
+          "5": ["104"]
+        }
+      ]
+    }
+  ],
+  "enemyArrangement": [
+    {
+      "EntityName": "dinorun.IntroBlock",
+      "Arrangement": [
+        {
+          "2": ["103"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.ControlsBlock",
+      "Arrangement": [
+        {
+          "2": ["107"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.PurplePortal",
+      "Arrangement": [
+        {
+          "5": ["103"]
+        }
+      ]
+    }
+  ]
+}

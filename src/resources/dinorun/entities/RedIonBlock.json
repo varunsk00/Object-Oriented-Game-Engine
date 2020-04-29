@@ -1,0 +1,47 @@
+{
+  "entityName": "RedIonBlock",
+  "image": "red_ion.png",
+  "health": 1,
+  "fixed": true,
+  "permeable": false,
+
+  "xPos": -100,
+  "yPos": -100,
+  "xVel": 0,
+  "yVel": 0,
+  "maxXVel": 0,
+  "maxYVel": 0,
+  "height": 100,
+  "width": 100,
+  "health":1,
+  "scheme": "NoControls",
+  "actionBundles": [
+  ],
+  "collisionBundles": [
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "",
+          "action": "Die"
+        },
+        {
+          "orientation": "S",
+          "param": "",
+          "action": "Die"
+        },
+        {
+          "orientation": "W",
+          "param": "",
+          "action": "Die"
+        },
+        {
+          "orientation": "E",
+          "param": "",
+          "action": "Die"
+        }
+      ],
+      "ID": "dinorun.QuantumProjectile"
+    }
+  ]
+}

@@ -70,7 +70,7 @@ public class EntityJSONParser extends Parser {
     try{
       controlClass = Class.forName(CONTROLS_PREFIX + controlType);
     } catch (ClassNotFoundException | NullPointerException e) {
-      new ParameterMissingException(e, controlClass.toString());
+      throw new ParameterMissingException(e, controlClass.toString());
     }
 
     ControlScheme myScheme = null;
@@ -79,7 +79,7 @@ public class EntityJSONParser extends Parser {
       myScheme = (ControlScheme) (controlClass.getConstructor(List.class)
           .newInstance(controlMap));
     } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      new ParameterMissingException(e, controlClass.toString());
+      throw new ParameterMissingException(e, controlClass.toString());
     }
     return myScheme;
   }
@@ -166,7 +166,7 @@ public class EntityJSONParser extends Parser {
       imageName = (String) jsonObject.get(IMAGE_FIELD);
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, IMAGE_FIELD);
+      throw new ParameterMissingException(e, IMAGE_FIELD);
     }
     ImageView output = null;
 
@@ -186,8 +186,8 @@ public class EntityJSONParser extends Parser {
       entityImage = new Image(is);
     }
     catch (NullPointerException e) {
-      new ParameterInvalidException(e, "imageName");
       entityImage = new Image(RESOURCES + imageName);
+      throw new ParameterInvalidException(e, "imageName");
     }
     return new ImageView(entityImage);
   }
@@ -231,7 +231,7 @@ public class EntityJSONParser extends Parser {
       file.write(root.toString());
       System.out.println(message);
     } catch (IOException e) {
-      new ParameterInvalidException(e, root.toString());
+      throw new ParameterInvalidException(e, root.toString());
     }
   }
 
@@ -242,12 +242,12 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get(WIDTH_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, WIDTH_FIELD);
+      throw new ParameterMissingException(e, WIDTH_FIELD);
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, WIDTH_FIELD);
+      throw new ParameterInvalidException(e, WIDTH_FIELD);
     }
-    return DEFAULT_DIMENSION;
+//    return DEFAULT_DIMENSION;
   }
 
   public double readHeight() {
@@ -255,12 +255,12 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get(HEIGHT_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, HEIGHT_FIELD);
+      throw new ParameterMissingException(e, HEIGHT_FIELD);
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, HEIGHT_FIELD);
+      throw new ParameterInvalidException(e, HEIGHT_FIELD);
     }
-    return DEFAULT_DIMENSION;
+//    return DEFAULT_DIMENSION;
   }
 
   public double readXPosition() {
@@ -268,12 +268,12 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get(XPOS_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, XPOS_FIELD);
+      throw new ParameterMissingException(e, XPOS_FIELD);
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, XPOS_FIELD);
+      throw new ParameterInvalidException(e, XPOS_FIELD);
     }
-    return DEFAULT_POSITION;
+//    return DEFAULT_POSITION;
   }
 
   public double readYPosition(){
@@ -281,13 +281,13 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get(YPOS_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, YPOS_FIELD);
+      throw new ParameterMissingException(e, YPOS_FIELD);
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, YPOS_FIELD);
+      throw new ParameterInvalidException(e, YPOS_FIELD);
     }
-    return DEFAULT_DIMENSION;
+//    return DEFAULT_DIMENSION;
   }
 
   public double readMaxXVelocity(){
@@ -295,12 +295,12 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get(MAX_X_VEL_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, MAX_X_VEL_FIELD);
+      throw new ParameterMissingException(e, MAX_X_VEL_FIELD);
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, MAX_X_VEL_FIELD);
-    } return DEFAULT_MAX_VELOCITY;
+      throw new ParameterInvalidException(e, MAX_X_VEL_FIELD);
+    } //return DEFAULT_MAX_VELOCITY;
 
   }
 
@@ -313,8 +313,6 @@ public class EntityJSONParser extends Parser {
 
     } catch (NumberFormatException e) {
       throw new ParameterInvalidException(e, MAX_Y_VEL_FIELD);
-    } finally {
-      return DEFAULT_MAX_VELOCITY;
     }
   }
 
@@ -323,13 +321,13 @@ public class EntityJSONParser extends Parser {
       return Double.parseDouble(jsonObject.get(HEALTH_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, HEALTH_FIELD);
+      throw new ParameterMissingException(e, HEALTH_FIELD);
 
     }
     catch (NumberFormatException e) {
-      new ParameterInvalidException(e, HEIGHT_FIELD);
+      throw new ParameterInvalidException(e, HEIGHT_FIELD);
     }
-    return DEFAULT_HEALTH;
+//    return DEFAULT_HEALTH;
   }
 
   public boolean readFixed() {
@@ -337,8 +335,8 @@ public class EntityJSONParser extends Parser {
       return Boolean.parseBoolean(jsonObject.get(FIXED_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, FIXED_FIELD);
-      return false;
+      throw new ParameterMissingException(e, FIXED_FIELD);
+//      return false;
     }
   }
 
@@ -347,8 +345,8 @@ public class EntityJSONParser extends Parser {
       return Boolean.parseBoolean(jsonObject.get(PERMEABLE_FIELD).toString());
     }
     catch (NullPointerException e) {
-      new ParameterMissingException(e, PERMEABLE_FIELD);
-      return false;
+      throw new ParameterMissingException(e, PERMEABLE_FIELD);
+//      return false;
     }
   }
 

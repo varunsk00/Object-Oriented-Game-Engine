@@ -1,0 +1,20 @@
+{
+  "entityName": "IonBlock",
+  "image": "ion.png",
+  "health": 1,
+  "fixed": true,
+  "permeable": true,
+
+  "xPos": -100,
+  "yPos": -100,
+  "xVel": 0,
+  "yVel": 0,
+  "maxXVel": 0,
+  "maxYVel": 0,
+  "height": 100,
+  "width": 100,
+  "health":1,
+  "scheme": "NoControls",
+  "actionBundles": [
+  ]
+}

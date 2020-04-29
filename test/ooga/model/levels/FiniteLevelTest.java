@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 class FiniteLevelTest {
-  private FiniteLevel testLevel;
+  private Level testLevel;
   private List<EntityWrapper> testEntityList;
   private List<EntityWrapper> testPlayers;
   private List<EntityWrapper> testTiles;
