@@ -57,7 +57,7 @@
           "action": "SetBoundedLeft"
         },
         {
-          "orientation": "S",
+          "orientation": "N",
           "param": "500",
           "action": "VelocityX"
         }
