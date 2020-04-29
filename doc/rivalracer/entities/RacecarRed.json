@@ -1,6 +1,6 @@
 {
-  "entityName": "RacecarBlue",
-  "image": "racecar_blue.png",
+  "entityName": "RacecarRed",
+  "image": "racecar_red.png",
   "health": 1,
   "xPos": 100,
   "yPos": 100,
@@ -16,7 +16,7 @@
   "scheme": "Keyboard",
   "actionBundles": [
     {
-      "ID": "LEFT_THUMBSTICK_RIGHT",
+      "ID": "D",
       "Control": [
         {
           "action": "AccelerateX",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "ID": "LEFT_THUMBSTICK_LEFT",
+      "ID": "A",
       "Control": [
         {
           "action": "AccelerateX",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "ID": "A_BUTTON",
+      "ID": "SPACE",
       "Control": [
         {
           "action": "Jump",
