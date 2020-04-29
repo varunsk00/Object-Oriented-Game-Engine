@@ -1,6 +1,6 @@
 {
   "entityName": "WuMat",
-  "image": "Door.png",
+  "image": "interactblock.png",
   "health": 1,
   "fixed": true,
   "permeable": false,
