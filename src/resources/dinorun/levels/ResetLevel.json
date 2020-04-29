@@ -1,0 +1,18 @@
+{
+  "levelName": "Reset",
+  "levelType": "FiniteLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "dinorun.Reset_Stone",
+      "Arrangement": [
+        {
+          "-1": ["30-70"]
+        }
+      ]
+    }
+  ],
+  "enemyArrangement": [
+  ]
+}

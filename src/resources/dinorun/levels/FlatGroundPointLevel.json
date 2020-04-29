@@ -1,0 +1,47 @@
+{
+  "levelName": "FlatGround",
+  "levelType": "InfiniteLevel",
+  "tileWidth": 100,
+  "tileHeight": 100,
+  "tileArrangement": [
+    {
+      "EntityName": "dinorun.Grass",
+      "Arrangement": [
+        {
+          "6": ["0-7"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.Ground",
+      "Arrangement": [
+        {
+          "7": ["0-7"]
+        }
+      ]
+    },
+    {
+      "EntityName": "dinorun.ClearSwitchBlock",
+      "Arrangement": [
+        {
+          "0": ["-1"],
+          "1": ["-1"],
+          "2": ["-1"],
+          "3": ["-1"],
+          "4": ["-1"],
+          "5": ["-1"]
+        }
+      ]
+    }
+  ],
+  "enemyArrangement": [
+    {
+      "EntityName": "dinorun.BOOGACoin",
+      "Arrangement": [
+        {
+          "5": ["3"]
+        }
+      ]
+    }
+  ]
+}

@@ -314,9 +314,6 @@ public class EntityJSONParser extends Parser {
     } catch (NumberFormatException e) {
       throw new ParameterInvalidException(e, MAX_Y_VEL_FIELD);
     }
-//    finally {
-//      return DEFAULT_MAX_VELOCITY;
-//    }
   }
 
   public double readHealth() {

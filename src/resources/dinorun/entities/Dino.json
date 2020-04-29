@@ -1,0 +1,749 @@
+{
+  "image": "dino_run.gif",
+  "yPos": 200,
+  "scheme": "Keyboard",
+  "permeable": false,
+  "health": 1,
+  "xPos": 10200,
+  "xVel": 0,
+  "maxXVel": 1500,
+  "width": 90,
+  "height": 100,
+  "maxYVel": 2000,
+  "fixed": false,
+  "yVel": 0,
+  "entityName": "Dino",
+  "collisionBundles": [
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetConditional"
+        }
+      ],
+      "ID": "dinorun.IonBlock"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "RandomLevelSwitch"
+        }
+      ],
+      "ID": "dinorun.ClearSwitchBlock"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "N",
+          "param": "500",
+          "action": "VelocityX"
+        }
+      ],
+      "ID": "dinorun.Grass"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "1",
+          "action": "IncrementScore"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "IncrementScore"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "IncrementScore"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "IncrementScore"
+        }
+      ],
+      "ID": "dinorun.BOOGACoin"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "W",
+          "param": "10",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "100",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "300",
+          "action": "SetY"
+        }
+      ],
+      "ID": "dinorun.PurplePortal"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "N",
+          "param": "500",
+          "action": "VelocityX"
+        }
+      ],
+      "ID": "dinorun.Ground"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "N",
+          "param": "false",
+          "action": "SetConditional"
+        }
+      ],
+      "ID": "dinorun.Start_Stone"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+
+        {
+          "orientation": "N",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "-200",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
+        }
+      ],
+      "ID": "dinorun.Spike"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+
+
+        {
+          "orientation": "N",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "-200",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
+        }
+      ],
+      "ID": "dinorun.DeadTreeTop"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+
+
+        {
+          "orientation": "N",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "-200",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
+        }
+      ],
+      "ID": "dinorun.DeadTreeBottom"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "S",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "W",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+        {
+          "orientation": "E",
+          "param": "1",
+          "action": "LoseHealth"
+        },
+
+
+        {
+          "orientation": "N",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "-200",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
+        }
+      ],
+      "ID": "dinorun.DeadTreeFull"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        }
+      ],
+      "ID": "dinorun.End_Stone"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "N",
+          "param": "10200",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "10200",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "10200",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "10200",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "100",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "100",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "100",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "100",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "N",
+          "param": "0",
+          "action": "VelocityX"
+        },
+        {
+          "orientation": "S",
+          "param": "0",
+          "action": "VelocityX"
+        },
+        {
+          "orientation": "W",
+          "param": "0",
+          "action": "VelocityX"
+        },
+        {
+          "orientation": "E",
+          "param": "0",
+          "action": "VelocityX"
+        }
+      ],
+      "ID": "dinorun.Reset_Stone"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        }
+      ],
+      "ID": "dinorun.RedIonBlock"
+    }
+  ],
+  "actionBundles": [
+    {
+      "Control": [
+        {
+          "param": "-26.5",
+          "action": "AccelerateX"
+        },
+        {
+          "param": "false",
+          "action": "SetForwards"
+        }
+      ],
+      "ID": "A"
+    },
+    {
+      "Control": [
+        {
+          "param": "26.5",
+          "action": "AccelerateX"
+        },
+        {
+          "param": "true",
+          "action": "SetForwards"
+        }
+      ],
+      "ID": "D"
+    },
+    {
+      "Control": [
+        {
+          "param": "-50.0",
+          "action": "MoveY"
+        }
+      ],
+      "ID": "W"
+    },
+    {
+      "Control": [
+        {
+          "param": "10.0",
+          "action": "AccelerateY"
+        }
+      ],
+      "ID": "S"
+    },
+    {
+      "Control": [
+        {
+          "param": "-1000.0",
+          "action": "Jump"
+        }
+      ],
+      "ID": "SPACE"
+    },
+    {
+      "Control": [
+        {
+          "param": "dinorun.QuantumProjectile",
+          "action": "SpawnRelative",
+          "coolDown": "1000"
+        },
+        {
+          "param": "",
+          "action": "ExecuteConditional"
+        }
+      ],
+      "ID": "F"
+    }
+  ]
+}
