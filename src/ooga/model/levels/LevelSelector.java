@@ -32,6 +32,7 @@ public class LevelSelector {
 
   public void changeCurrentLevel(int nextLevel, EntityWrapper player) {
     switchLevel(nextLevel);
+    System.out.println(activeLevel.calculatePlayerInterval(player));
     activeLevel.setCurrentPlayerInterval(activeLevel.calculatePlayerInterval(player));
   }
 
@@ -53,6 +54,7 @@ public class LevelSelector {
   }
 
   private void despawnAllEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entitiesToDespawn) {
+    System.out.println("all entity gone");
     for (EntityWrapper targetEntity : currentEntityList) {
       if (!playerList.contains(targetEntity)) {
         entitiesToDespawn.add(targetEntity);

@@ -29,15 +29,16 @@
       "Level_H": "dinorun.TreeStumpGapLevel",
       "Level_I": "dinorun.PortalLevel",
       "Level_J": "dinorun.StartingLevel",
-      "Level_K": "dinorun.EndLevel"
+      "Level_K": "dinorun.EndLevel",
+      "Level_L": "dinorun.ResetLevel"
     }
   ],
   "playerArrangement": [
     {
       "EntityName": "dinorun.Dino",
       "Arrangement": {
-        "X": "10200",
-        "Y": "100"
+        "X": "8000",
+        "Y": "200"
       }
     }
   ]

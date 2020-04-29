@@ -21,6 +21,8 @@ public class InfiniteLevel extends Level{
   public void spawnEntities(List<EntityWrapper> currentEntityList, List<EntityWrapper> entityRemoved) {
     for (EntityWrapper player : playerEntities) {
       if (calculatePlayerInterval(player) > this.getCurrentPlayerInterval()) {
+        System.out.print("levelMade");
+        System.out.println(this.getLevelName());
         this.setCurrentPlayerInterval(calculatePlayerInterval(player));
         int tileInterval = calculatePlayerInterval(player) + levelSpawnOffset;
 

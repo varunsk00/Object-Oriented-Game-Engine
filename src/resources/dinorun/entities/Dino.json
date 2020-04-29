@@ -1,10 +1,10 @@
 {
   "image": "dino_run.gif",
-  "yPos": 100,
+  "yPos": 200,
   "scheme": "Keyboard",
   "permeable": false,
-  "health": 3,
-  "xPos": 10200,
+  "health": 1,
+  "xPos": 8500,
   "xVel": 10,
   "maxXVel": 1500,
   "width": 90,
@@ -57,7 +57,7 @@
           "action": "SetBoundedLeft"
         },
         {
-          "orientation": "N",
+          "orientation": "S",
           "param": "500",
           "action": "VelocityX"
         }
@@ -190,6 +190,68 @@
           "orientation": "E",
           "param": "1",
           "action": "LoseHealth"
+        },
+
+        {
+          "orientation": "N",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "-200",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
         }
       ],
       "ID": "dinorun.Spike"
@@ -215,6 +277,69 @@
           "orientation": "E",
           "param": "1",
           "action": "LoseHealth"
+        },
+
+
+        {
+          "orientation": "N",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "-200",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
         }
       ],
       "ID": "dinorun.DeadTreeTop"
@@ -240,6 +365,69 @@
           "orientation": "E",
           "param": "1",
           "action": "LoseHealth"
+        },
+
+
+        {
+          "orientation": "N",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "-200",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
         }
       ],
       "ID": "dinorun.DeadTreeBottom"
@@ -265,6 +453,69 @@
           "orientation": "E",
           "param": "1",
           "action": "LoseHealth"
+        },
+
+
+        {
+          "orientation": "N",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "8000",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "-200",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "-200",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
         }
       ],
       "ID": "dinorun.DeadTreeFull"
@@ -293,6 +544,112 @@
         }
       ],
       "ID": "dinorun.End_Stone"
+    },
+    {
+      "Control": [
+        {
+          "orientation": "N",
+          "param": "true",
+          "action": "SetBoundedBottom"
+        },
+        {
+          "orientation": "S",
+          "param": "true",
+          "action": "SetBoundedTop"
+        },
+        {
+          "orientation": "W",
+          "param": "true",
+          "action": "SetBoundedRight"
+        },
+        {
+          "orientation": "E",
+          "param": "true",
+          "action": "SetBoundedLeft"
+        },
+        {
+          "orientation": "N",
+          "param": "10200",
+          "action": "SetX"
+        },
+        {
+          "orientation": "S",
+          "param": "10200",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "10200",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "10200",
+          "action": "SetX"
+        },
+        {
+          "orientation": "N",
+          "param": "100",
+          "action": "SetY"
+        },
+        {
+          "orientation": "S",
+          "param": "100",
+          "action": "SetY"
+        },
+        {
+          "orientation": "W",
+          "param": "100",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "100",
+          "action": "SetY"
+        },
+
+        {
+          "orientation": "N",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "S",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "9",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "N",
+          "param": "0",
+          "action": "VelocityX"
+        },
+        {
+          "orientation": "S",
+          "param": "0",
+          "action": "VelocityX"
+        },
+        {
+          "orientation": "W",
+          "param": "0",
+          "action": "VelocityX"
+        },
+        {
+          "orientation": "E",
+          "param": "0",
+          "action": "VelocityX"
+        }
+      ],
+      "ID": "dinorun.Reset_Stone"
     },
     {
       "Control": [
