@@ -133,12 +133,12 @@
           "action": "LevelSwitch"
         },
         {
-          "orientation": "S",
+          "orientation": "W",
           "param": "640",
           "action": "SetX"
         },
         {
-          "orientation": "S",
+          "orientation": "W",
           "param": "680",
           "action": "SetY"
         }
