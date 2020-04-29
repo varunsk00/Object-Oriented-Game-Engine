@@ -1,5 +1,5 @@
 {
-  "entityName": "Interact",
+  "entityName": "Enter",
   "image": "interactblock.png",
   "health": 1,
   "fixed": false,
@@ -18,42 +18,7 @@
   ],
   "collisionBundles": [
     {
-      "ID": "varun.Door",
-      "Control": [
-        {
-          "orientation": "S",
-          "param": "",
-          "action": "Die"
-        }
-      ]
-    },
-    {
-      "ID": "varun.LockedDoor",
-      "Control": [
-        {
-          "orientation": "S",
-          "param": "",
-          "action": "Die"
-        },
-        {
-          "orientation": "N",
-          "param": "",
-          "action": "Die"
-        },
-        {
-          "orientation": "E",
-          "param": "",
-          "action": "Die"
-        },
-        {
-          "orientation": "W",
-          "param": "",
-          "action": "Die"
-        }
-      ]
-    },
-    {
-      "ID": "varun.ExitDoor",
+      "ID": "varun.Bus",
       "Control": [
         {
           "orientation": "S",

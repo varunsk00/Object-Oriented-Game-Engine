@@ -11,7 +11,8 @@
   "levelArrangement": [
     {
       "Level_1": "varun.Dorm",
-      "Level_2": "varun.Outside"
+      "Level_2": "varun.Outside",
+      "Level_3": "varun.WestUnion"
     }
   ],
   "playerArrangement": [

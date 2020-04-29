@@ -3,11 +3,21 @@
   "players": "1",
   "tileArrangement": [
     {
-      "EntityName": "varun.Bus",
+      "EntityName": "varun.StopBus",
       "Arrangement": [
         {
           "-17": [
-            "13"
+            "105"
+          ]
+        }
+      ]
+    },
+    {
+      "EntityName": "varun.OpaqueVarun",
+      "Arrangement": [
+        {
+          "-16": [
+            "104"
           ]
         }
       ]
@@ -17,8 +27,8 @@
       "Arrangement": [
         {
           "-15": [
-            "8",
-            "18"
+            "0-8",
+            "18-100"
           ],
           "-14": [
             "8",
@@ -81,15 +91,15 @@
             "14"
           ],
           "1": [
-            "12",
+            "0-12",
             "14"
           ],
           "2": [
-            "12",
+            "0",
             "14"
           ],
           "3": [
-            "12",
+            "0-12",
             "14"
           ],
           "4": [
@@ -141,6 +151,36 @@
   ],
   "tileWidth": 50,
   "enemyArrangement": [
+    {
+      "EntityName": "varun.Bus",
+      "Arrangement": [
+        {
+          "-18": [
+            "10"
+          ]
+        }
+      ]
+    },
+    {
+      "EntityName": "varun.Wu",
+      "Arrangement": [
+        {
+          "-17": [
+            "108"
+          ]
+        }
+      ]
+    },
+    {
+      "EntityName": "varun.WuMat",
+      "Arrangement": [
+        {
+          "-13": [
+            "110"
+          ]
+        }
+      ]
+    }
   ],
   "tileHeight": 50
 }
