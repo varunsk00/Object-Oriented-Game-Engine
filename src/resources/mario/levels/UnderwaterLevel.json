@@ -29,6 +29,16 @@
       ]
     },
     {
+      "EntityName": "mario.MarioPipeWin",
+      "Arrangement": [
+        {
+          "9": [
+            "170"
+          ]
+        }
+      ]
+    },
+    {
       "EntityName": "mario.Koopa",
       "Arrangement": [
         {

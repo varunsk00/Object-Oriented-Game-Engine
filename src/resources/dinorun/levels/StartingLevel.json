@@ -78,6 +78,14 @@
           "2": ["107"]
         }
       ]
+    },
+    {
+      "EntityName": "dinorun.PurplePortal",
+      "Arrangement": [
+        {
+          "5": ["103"]
+        }
+      ]
     }
   ]
 }
