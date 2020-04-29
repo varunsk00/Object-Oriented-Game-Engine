@@ -1,0 +1,48 @@
+{
+  "entityName": "Bus",
+  "image": "Bus.png",
+  "health": 1,
+  "fixed": true,
+  "permeable": false,
+
+  "xPos": 300,
+  "yPos": 275,
+  "xVel": 0,
+  "yVel": 0,
+  "maxXVel": 0,
+  "maxYVel": 0,
+  "height": 200,
+  "width": 600,
+  "scheme": "NoControls",
+  "actionBundles": [
+
+  ],
+  "collisionBundles": [
+    {
+      "ID": "varun.Interact",
+      "Control": [
+        {
+          "orientation": "S",
+          "param": "+300.0",
+          "action": "MoveX"
+        },
+        {
+          "orientation": "W",
+          "param": "300",
+          "action": "MoveX"
+        },
+        {
+          "orientation": "N",
+          "param": "300",
+          "action": "MoveX"
+        },
+        {
+          "orientation": "E",
+          "param": "300",
+          "action": "MoveX"
+        }
+      ]
+    }
+  ]
+
+}

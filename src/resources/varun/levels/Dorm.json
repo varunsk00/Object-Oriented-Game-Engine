@@ -155,7 +155,7 @@
       ]
     },
     {
-      "EntityName": "varun.Door",
+      "EntityName": "varun.LockedDoor",
       "Arrangement": [
         {
           "-1": [
@@ -165,7 +165,7 @@
       ]
     },
     {
-      "EntityName": "varun.LockedDoor",
+      "EntityName": "varun.Door",
       "Arrangement": [
         {
           "-1": [
