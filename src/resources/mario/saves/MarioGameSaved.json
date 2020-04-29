@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "gameName": "Mario",
   "playerCount": "1",
@@ -39,3 +40,6 @@
     }
   ]
 }
+=======
+{"gameName":"Mario","playerCount":"1","physicsProfile":[{"gravity":"10","drag":"1","friction":"20"}],"levelArrangement":[{"Level_1":"mario.UnderwaterLevel"}],"playerArrangement":[{"EntityName":"mario.Mario_Fire","Arrangement":{"X":"100","Y":"100"}},{"EntityName":"mario.P2_Luigi_Fire","Arrangement":{"X":"0","Y":"100"}}],"gameStatusProfile":[{"scrollingStatusY":"0","spawningInterval":"0","scrollingStatusX":"1","levelSpawnOffset":"0","startingLevelIndex":"0"}]}
+>>>>>>> master

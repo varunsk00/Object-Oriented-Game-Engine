@@ -14,7 +14,7 @@ import util.DukeApplicationTest;
  * ExceptionAlert Test to ensure exceptions are being handled correctly.
  * Note: Must make starter game (as of this commit, Flappy Bird) have a
  * bad data file so the alert can be generated
- * @author Alex Oesterling, axo
+ * @author Alex Oesterling, axo; Shruthi Kumar, sk593
  */
 class ExceptionAlertTest extends DukeApplicationTest {
   Button playButton;
@@ -31,6 +31,8 @@ class ExceptionAlertTest extends DukeApplicationTest {
     clickOn(playButton);
     selectButton = (Button) lookup("#selectGameButton").queryLabeled();
     clickOn(selectButton);
+    Button playerButton = (Button) lookup("#player1").queryLabeled();
+    clickOn(playerButton);
     Button alertButton = lookup("OK").queryButton();
     clickOn(alertButton);
   }

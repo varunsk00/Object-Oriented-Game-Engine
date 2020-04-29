@@ -32,7 +32,11 @@ public class LevelSelector {
 
   public void changeCurrentLevel(int nextLevel, EntityWrapper player) {
     switchLevel(nextLevel);
-    System.out.println(activeLevel.calculatePlayerInterval(player));
+    for (EntityWrapper tempPlayer : playerList) {
+      if(!tempPlayer.equals(player)) {
+        tempPlayer.getModel().loadStats();
+      }
+    }
     activeLevel.setCurrentPlayerInterval(activeLevel.calculatePlayerInterval(player));
   }
 

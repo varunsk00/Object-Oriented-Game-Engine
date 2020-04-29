@@ -79,7 +79,7 @@ public class GameParser extends Parser {
       file.write(root.toString());
       System.out.println("Successfully updated json object to file"); }
     catch (IOException e) {
-      new ParameterInvalidException(e, filepath);   }
+      throw new ParameterInvalidException(e, filepath);   }
   }
 
   public void updateJSONValue(String key, Object newValue){
@@ -89,7 +89,7 @@ public class GameParser extends Parser {
         file.write(root.toString());
         System.out.println("Successfully updated json object to file"); }
       catch (IOException e) {
-        new ParameterInvalidException(e, root.toString()); }
+        throw new ParameterInvalidException(e, root.toString()); }
   }
 
   private List<String> sortLevelKeySet(Set keySet){
@@ -116,10 +116,10 @@ public class GameParser extends Parser {
       sortedLevelKeys = sortLevelKeySet(levels.keySet());
     }
     catch(NullPointerException e){
-      new ParameterMissingException(e, "levelArrangement");
-      levels = new JSONObject();
-      levels.put("Level_1", "gamenamemissing.MissingLevel");
-      sortedLevelKeys = sortLevelKeySet(levels.keySet());
+      throw new ParameterMissingException(e, "levelArrangement");
+//      levels = new JSONObject();
+//      levels.put("Level_1", "gamenamemissing.MissingLevel");
+//      sortedLevelKeys = sortLevelKeySet(levels.keySet());
     }
     createLevels(levelList, sortedLevelKeys, levels);
 
