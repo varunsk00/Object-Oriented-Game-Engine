@@ -10,6 +10,8 @@
     {
       "Control": [
         {
+<<<<<<< HEAD
+=======
           "orientation": "W",
           "param": "1",
           "action": "LevelSwitch"
@@ -41,6 +43,42 @@
         }
       ],
       "ID": "mario.MarioFlagPole"
+    },
+    {
+      "Control": [
+        {
+>>>>>>> 41de2d1174830525a1b14598ff3cb3690704a011
+          "orientation": "W",
+          "param": "2",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "W",
+          "param": "100",
+          "action": "SetX"
+        },
+        {
+          "orientation": "W",
+          "param": "100",
+          "action": "SetY"
+        },
+        {
+          "orientation": "E",
+          "param": "2",
+          "action": "LevelSwitch"
+        },
+        {
+          "orientation": "E",
+          "param": "100",
+          "action": "SetX"
+        },
+        {
+          "orientation": "E",
+          "param": "100",
+          "action": "SetY"
+        }
+      ],
+      "ID": "mario.MarioPipeWin"
     },
     {
       "Control": [
